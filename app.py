@@ -11,3 +11,4 @@ def index():
 @app.route("/add_dream", methods=["GET", "POST"])
 def add_dream():
     return render_template("add_dream.html")
+
