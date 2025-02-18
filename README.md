@@ -4,7 +4,7 @@ A little exercise to build a web application following an agile development proc
 
 ## Product vision statement
 
-See instructions. Delete this line and place the Product Vision Statement here.
+Our product aims to provide accessibility and purchase functions to consumers who would like to make a purchase at our bakery, while also increasing profits with intentional marketing through its design.
 
 ## User stories
 
