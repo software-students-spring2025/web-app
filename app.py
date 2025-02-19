@@ -8,9 +8,9 @@ def index():
     return render_template("index.html")
 
 # register page
-@app.route("/register")
+@app.route("/signup")
 def register():
-    return render_template("register.html")
+    return render_template("signup.html")
 
 # add dream page
 @app.route("/add_dream", methods=["GET", "POST"])
