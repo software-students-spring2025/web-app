@@ -65,8 +65,7 @@ nav{
     justify-content: space-between; 
     /* align-items: center;  */
     width: 100vw;
-    height: auto;
-    overflow-y:hidden;
+    height: 100vh;
 }
 
 
@@ -135,4 +134,19 @@ nav{
     flex-direction: column;
     justify-content: flex-end;
     height:auto;
+}
+
+.analysis-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+    /* align-items: center;  */
+    width: 100vw;
+    height: 100vh;
+}
+
+#dream-search{
+    width:624px;
+    height: 42px; 
+    font-size:24pt;
 }
