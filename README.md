@@ -8,7 +8,7 @@ See instructions. Delete this line and place the Product Vision Statement here.
 
 ## User stories
 
-See instructions. Delete this line and place a link to the user stories here.
+<a href = 'https://github.com/orgs/software-students-spring2025/projects/10/views/1'>User Stories Taskboard Link</a>
 
 ## Steps necessary to run the software
 
