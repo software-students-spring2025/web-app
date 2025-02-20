@@ -16,5 +16,6 @@ complete later
 
 ## Task boards
 
-[Sprint 1](https://github.com/orgs/software-students-spring2025/projects/6)
-[Sprint 2](https://github.com/orgs/software-students-spring2025/projects/17)
+- [Sprint 1](https://github.com/orgs/software-students-spring2025/projects/6)
+
+- [Sprint 2](https://github.com/orgs/software-students-spring2025/projects/17)
