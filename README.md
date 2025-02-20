@@ -12,7 +12,7 @@ See instructions. Delete this line and place a link to the user stories here.
 
 ## Steps necessary to run the software
 
-See instructions. Delete this line and place instructions to download, configure, and run the software here.
+Link to User Stories: https://github.com/software-students-spring2025/2-web-app-duodice/issues
 
 ## Task boards
 
