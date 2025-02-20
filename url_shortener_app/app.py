@@ -1,25 +1,20 @@
 from flask import Flask
-from flask_login import LoginManager
 from flask_pymongo import PyMongo
-from config import Config
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env
+load_dotenv()
 
 app = Flask(__name__)
-app.config.from_object(Config)
 
-# Initialize MongoDB
+# Configure MongoDB
+app.config["MONGO_URI"] = os.getenv("MONGO_URI")
 mongo = PyMongo(app)
 
-# Initialize Login Manager
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = "auth.login"
-
-# Register Blueprints
-from routes.auth import auth
-from routes.urls import urls
-
-app.register_blueprint(auth, url_prefix="/auth")
-app.register_blueprint(urls, url_prefix="/urls")
+@app.route("/")
+def index():
+    return "MongoDB is connected!"
 
 if __name__ == "__main__":
     app.run(debug=True)
