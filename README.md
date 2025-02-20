@@ -9,10 +9,12 @@ A web application that helps students track their study sessions, manage their t
 ## User stories
 
 Link to User Stories: https://github.com/software-students-spring2025/2-web-app-duodice/issues
+
 ## Steps necessary to run the software
 
-Link to User Stories: https://github.com/software-students-spring2025/2-web-app-duodice/issues
+complete later
 
 ## Task boards
 
-See instructions. Delete this line and place a link to the task boards here.
+[Sprint 1](https://github.com/orgs/software-students-spring2025/projects/6)
+[Sprint 2](https://github.com/orgs/software-students-spring2025/projects/17)
