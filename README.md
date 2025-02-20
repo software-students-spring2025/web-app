@@ -14,9 +14,20 @@ See instructions. Delete this line and place the Product Vision Statement here.
 
 See instructions. Delete this line and place instructions to download, configure, and run the software here.
 
-1. Install dependencies
+1. Virtual environment setup
+```
+python3 -m venv venv
+source venv/bin/activate
+```
+
+2. Install dependencies
 ```
 pip install flask pymongo flask-login python-dotenv bcrypt
+```
+
+3. Freeze requirements
+```
+pip freeze > requirements.txt
 ```
 
 ## Task boards
