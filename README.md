@@ -14,8 +14,9 @@ See instructions. Delete this line and place the Product Vision Statement here.
 
 See instructions. Delete this line and place instructions to download, configure, and run the software here.
 
+1. Install dependencies
 ```
-
+pip install flask pymongo flask-login python-dotenv bcrypt
 ```
 
 ## Task boards
