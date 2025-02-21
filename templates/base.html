@@ -10,20 +10,30 @@
   <body>
     <div class="container">
       <header>
-        <h1> Rental Surfer</h1>
-        <nav>
-          <!-- <a href="{{ url_for('home')}}">Home</a> -->
-        </nav>
+        <div>
+          <img id="top-right-logo-image" src="/static/images/logo.png" alt="logo" width="300" height="300"/>
+        </div>
+        <div id="top-left-avatar">
+          <img id="user-avatar-image" src="/static/images/user-avatar.png" alt="user avatar" width="250" height="250"/>
+          <span id = "username">Username</span>
+        </div>
+        
+        <!-- <nav>
+          <a href="{{ url_for('home')}}">Home</a>
+        </nav> -->
       </header>
       <main>{% block container %} {% endblock %}</main>
       <footer>
         <p>
-          &copy; 2025. © 2025. All rights reserved team Web Surfer. Source code available at
+          &copy; 2025. All rights reserved team Web Surfer. 
+          <br>
+          Source code available at
           <a
             href="https://github.com/software-students-spring2025/2-web-app-web-surfer.git"
             >available on Github</a
           >.
         </p>
+
       </footer>
     </div>
   </body>

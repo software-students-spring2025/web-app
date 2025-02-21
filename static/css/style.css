@@ -1,3 +1,44 @@
-body{
-    color:coral
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* border: 1px solid #000;   */
+    height: 300px;
+    background-color: #f4f4f4;
 }
+
+#top-left-avatar{
+    display:flex;
+    flex-direction: column;
+    /* background-color: aqua; */
+}
+
+#username{
+    font-size: 50px;
+    text-align: center;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    font-size: 50px;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+}
+
+main{
+    min-height: 1700px;
+}
+
+footer{
+    height: 115px;
+    background-color: #f4f4f4;
+    align-content: center;
+}
+
+footer p{
+    text-align: center;
+    font-size: 30px;
+    color:#7e7e7e
+}
+
