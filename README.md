@@ -27,4 +27,4 @@ See instructions. Delete this line and place instructions to download, configure
 
 ## Task boards
 
-[Task Board Link] (https://github.com/orgs/software-students-spring2025/projects/10/)
+[Task Board Link](https://github.com/orgs/software-students-spring2025/projects/10/)
