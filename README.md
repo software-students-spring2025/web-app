@@ -4,7 +4,7 @@ A little exercise to build a web application following an agile development proc
 
 ## Product vision statement
 
-See instructions. Delete this line and place the Product Vision Statement here.
+We want to create an application that shortens urls for ease of access and readability.
 
 ## User stories
 
