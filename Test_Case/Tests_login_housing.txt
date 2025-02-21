@@ -1,0 +1,43 @@
+SWE Project 2 Test Cases
+
+Test Login
+curl -X POST http://127.0.0.1:5000/login/login -H "Content-Type: application/json" -d '{
+"username": "Bob",
+"password": "1234567"
+}'
+
+
+Test Add House
+curl -X POST http://127.0.0.1:5000/house/create \
+     -H "Content-Type: application/json" \
+     -H "Authorization: Bearer add_your_token_here" \
+     -d '{
+    "building": "Jackson Park",
+    "apt_num": "#512",
+    "price": 1350.50,
+    "bedroom": "2",
+    "bathroom": "2",
+    "area": "1200 sqft",
+    "available_date": "2025-06-01",
+    "address": "28-16 Jackson Ave, Long Island City, NY 11101",
+    "about_info": "Spacious 2-bedroom apartment with modern finishes and a great city view.",
+    "policy": { "pet_allowed": 0, "guarantor_accepted": 1, "smoke_free": 1 },
+    "home_feature": { "centralair": 1, "dishwasher": 1, "hardwoodfloor": 1, "view": 1, "privateoutdoor": 0, "washerdryer": 1, "fridge": 1, "oven": 1 },
+    "amenities": { "doorman": 1, "bikeroom": 1, "elevator": 1, "laundry": 1, "gym": 1, "packageroom": 1, "parking": 0, "concierge": 1, "library": 0 },
+    "picture": "https://example.com/new-house-image.jpg"
+}'
+
+Test Show Details of Specific House
+curl -X GET http://127.0.0.1:5000/house/ObjectId
+
+Test Show All Houses
+curl -X GET http://127.0.0.1:5000/house/list
+
+
+Test Delete House
+curl -X DELETE http://127.0.0.1:5000/house/delete/ObjectId
+
+
+
+
+
