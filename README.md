@@ -8,7 +8,7 @@ See instructions. Delete this line and place the Product Vision Statement here.
 
 ## User stories
 
-See instructions. Delete this line and place a link to the user stories here.
+[User Stories](https://github.com/software-students-spring2025/2-web-app-web-surfer/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22User%20Stories%22)
 
 ## Steps necessary to run the software
 
