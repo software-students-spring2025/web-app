@@ -4,11 +4,38 @@ A little exercise to build a web application following an agile development proc
 
 ## Product vision statement
 
-See instructions. Delete this line and place the Product Vision Statement here.
+A decluttered, streamlined experience for simple and quick task management.
 
 ## User stories
 
-See instructions. Delete this line and place a link to the user stories here.
+
+### Screens
+
+
+1. **Login Screen:**  
+   - **Purpose:** Authenticate the user.
+   - **Database Interaction:** Verify credentials against stored user data.
+
+2. **Todo List Screen:**  
+   - **Purpose:** Display all todos (retrieved from the database) in a clear, ordered manner (e.g., by deadline).
+   - **Database Interaction:** Reads data from the database.
+
+3. **Todo Detail Screen:**  
+   - **Purpose:** Show detailed information for a selected todo, including deadline, details, and status.
+   - **Database Interaction:** Displays data fetched from the database.
+
+4. **Add Todo Screen:**  
+   - **Purpose:** Allow the user to add a new todo.
+   - **Database Interaction:** Inserts new data into the database.
+
+5. **Edit/Delete Todo Screen:**  
+   - **Purpose:** Enable the user to modify an existing todo (update deadline, details, etc.).
+   - **Database Interaction:** Updates existing data in the database.
+
+6. **Search Screen:**  
+   - **Purpose:** Allow the user to search for todos using keywords or deadlines.
+   - **Database Interaction:** Queries the database based on user input.
+
 
 ## Steps necessary to run the software
 
@@ -16,4 +43,4 @@ See instructions. Delete this line and place instructions to download, configure
 
 ## Task boards
 
-See instructions. Delete this line and place a link to the task boards here.
+https://github.com/orgs/software-students-spring2025/projects/30
