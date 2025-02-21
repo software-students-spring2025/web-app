@@ -59,7 +59,7 @@ class Building(Document):
 #houses table
 class House(Document):
     meta = {'collection': 'houses'}
-    building = ReferenceField(Building, required=True)  
+    building = StringField(required=True)
     apt_num = StringField(required=True)
     price = FloatField(required=True)
     bedroom = StringField(required=True)
@@ -83,7 +83,7 @@ class Wishlist(Document):
 
 
 #Insert data
-#Insert a user
+""" #Insert a user
 user_admin = UserInformation(
     username="Bob",
     password="1234567",
@@ -161,6 +161,6 @@ house = House(
 wishlist = Wishlist(
     user=user_guest,
     house=house
-).save()
+).save() """
 
 print("Data inserted successfully!")
