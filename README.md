@@ -4,7 +4,7 @@ A little exercise to build a web application following an agile development proc
 
 ## Product vision statement
 
-A decluttered, streamlined experience for simple and quick task management.
+A minimalist and intuitive to-do list app designed for simple and quick task management.
 
 ## User stories
 
