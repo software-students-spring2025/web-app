@@ -80,3 +80,6 @@ python3 app.py
 
 ## Wireframe
 ![Wireframe](images/webslingersWireframe.png)
+
+## Clickable Prototype
+>[Clickable Protoype Link](https://www.figma.com/proto/3TcJrdvhNp3ve0cc9o9UdQ/web-slingers-Wireframe?node-id=1-2&p=f&t=6lmYLB6YDQNYvoWx-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A2)
