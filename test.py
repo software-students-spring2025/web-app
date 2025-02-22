@@ -12,8 +12,8 @@ FLASK_PORT=5000
 import os
 import datetime
 from flask import Flask, render_template, request, redirect, url_for
-# import pymongo
-# from bson.objectid import ObjectId
+import pymongo
+from bson.objectid import ObjectId
 from dotenv import load_dotenv, dotenv_values
 
 load_dotenv()  # load environment variables from .env file
@@ -48,7 +48,71 @@ def create_app():
         """
 
         # docs = db.messages.find({}).sort("created_at", -1)
-        return render_template("login.html", name="Rin")
+        return render_template("login.html")
+
+
+    
+    @app.route("/profile")
+    def profile():
+        """
+        Route for the home page.
+        Returns:
+            rendered template (str): The rendered HTML template.
+        """
+
+        # docs = db.messages.find({}).sort("created_at", -1)
+        return render_template("profile.html", 
+                               userInfo={
+                                   "username":"Rin",
+                                   "usertype":1,
+                                   "avatar":"",
+                                   "email":"yq2290@nyu.edu"
+                               },
+                               houseInfo=[{
+                                "building": "Jackson Park",
+                                "apt_num": "#512",
+                                "price": 1350.50,
+                                "bedroom": "2",
+                                "bathroom": "2",
+                                "area": "1200",
+                                "available_date": "2025-06-01",
+                                "city":"Long Island City, NY 11101"
+                               },
+                               {
+                                "building": "Tower 28",
+                                "apt_num": "#5312",
+                                "price": 1000.,
+                                "bedroom": "1",
+                                "bathroom": "2",
+                                "area": "1400",
+                                "available_date": "2025-06-01",
+                                "city":"Long Island City, NY 11101"
+                               },
+                               {
+                                "building": "Jackson f",
+                                "apt_num": "#512",
+                                "price": 1350.50,
+                                "bedroom": "Studio",
+                                "bathroom": "Studio",
+                                "area": "12020",
+                                "available_date": "2025-03-01",
+                                "city":"Jercey City, NJ 11101"
+                               }])
+       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     # @app.route("/create", methods=["POST"])
     # def create_post():
@@ -150,7 +214,7 @@ def create_app():
 app = create_app()
 
 if __name__ == "__main__":
-    FLASK_PORT = os.getenv("FLASK_PORT", "5000")
+    FLASK_PORT = os.getenv("FLASK_PORT", "6000")
     FLASK_ENV = os.getenv("FLASK_ENV")
     print(f"FLASK_ENV: {FLASK_ENV}, FLASK_PORT: {FLASK_PORT}")
 
