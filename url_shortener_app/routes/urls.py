@@ -47,3 +47,11 @@ def edit(short_url):
 def history():
     user_urls = URL.get_user_urls(current_user.id)
     return render_template("history.html", urls=user_urls)
+
+# Given a short url, redirect to the corresponding long url
+@urls.route("/s/<short_url>", methods=["GET"])
+def s(short_url):
+    long_url = URL.short_to_long(short_url)
+    if long_url:
+        return redirect(long_url)
+    return redirect(url_for("urls.dashboard"))
