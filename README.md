@@ -12,12 +12,15 @@ Link to User Stories: https://github.com/software-students-spring2025/2-web-app-
 
 ## Steps necessary to run the software
 
-complete later
+Install and setup [MongoDB]{https://www.mongodb.com/} [server]{https://www.mongodb.com/products/platform/atlas-database} + [Client]{https://www.mongodb.com/try/download/shell}
+
+Run these commands on terminal:
+- python -m venv env
+- source env/bin/activate
+-python -m pip install "pymongo[srv]"
 
 ## Task boards
 
 - [Sprint 1](https://github.com/orgs/software-students-spring2025/projects/6)
 
 - [Sprint 2](https://github.com/orgs/software-students-spring2025/projects/17)
-
-Database branch testing-5:15 pm 2/22/205
