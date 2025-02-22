@@ -1,3 +1,4 @@
+{% from 'macros.html' import list_url %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,11 +10,9 @@
 <body>
     <div class="container">
         <h1>History</h1>
-        <ul>
-            {% for url in urls %}
-                <li>{{ url.short_url }} → <a href="{{ url.long_url }}" target="_blank">{{ url.long_url }}</a></li>
-            {% endfor %}
-        </ul>
+            <ul>
+                {{ list_url(urls, url_for('urls.history')) }}
+            </ul>
         <a href="{{ url_for('urls.dashboard') }}">Back</a>
         <a href="{{ url_for('auth.logout') }}">Logout</a>
     </div>

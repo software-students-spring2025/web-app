@@ -1,0 +1,8 @@
+{% macro list_url(urls, redirect) %}
+    {% for url in urls %}
+        <li>
+            {{ url.short_url }} → <a href="{{ url.long_url }}" target="_blank">{{ url.long_url }}</a>
+            <a href="{{ url_for('urls.delete', short_url=url.short_url, next=redirect) }}" class="url-options">Delete</button>
+        </li>
+    {% endfor %}
+{% endmacro %}

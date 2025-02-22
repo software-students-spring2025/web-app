@@ -23,10 +23,14 @@ def shorten():
     URL.create_url(current_user.id, long_url, short_url)
     return redirect(url_for("urls.dashboard"))
 
-@urls.route("/delete/<short_url>")
+@urls.route("/delete", methods=["GET"])
 @login_required
-def delete(short_url):
+def delete():
+    short_url = request.args.get('short_url')
+    next = request.args.get('next')
     URL.delete_url(short_url)
+    if next:
+        return redirect(next)
     return redirect(url_for("urls.dashboard"))
 
 @urls.route("/edit/<short_url>", methods=["GET", "POST"])
