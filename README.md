@@ -12,7 +12,7 @@ See instructions. Delete this line and place a link to the user stories here.
 
 ## Site Map
 
-![sitemap](images\wireframes.png)
+![sitemap](images/wireframes.png)
 
 ## Prototype
 
