@@ -1,17 +1,23 @@
 from pymongo import MongoClient
+import os
+
+# This function serves to get access and retrieve necessaary data from MongoDB which we will use throughout the application
 def get_database():
- 
-   # Provide the mongodb atlas url to connect python to mongodb using pymongo
-   CONNECTION_STRING = "mongodb+srv://user:pass@cluster.mongodb.net/myFirstDatabase"
- 
-   # Create a connection using MongoClient. You can import MongoClient or use pymongo.MongoClient
-   client = MongoClient(CONNECTION_STRING)
- 
-   # Create the database for our example (we will use the same database throughout the tutorial
-   return client['user_shopping_list']
+   CONNECTION_STRING = os.environ['MONGO_CONNECTION']
+
+   if (CONNECTION_STRING):
+        client = MongoClient(CONNECTION_STRING)
+
+        if (client):
+            return client['name of database']
+        else:
+            return("Err: Could not make connection with database, please check Connection String!")
+        
+   else:
+       return("Err: Connection string is incorrect or invalid!")
   
 # This is added so that many files can reuse the function get_database()
 if __name__ == "__main__":   
   
    # Get the database
-   dbname = get_database()
+   name_of_database = get_database()
