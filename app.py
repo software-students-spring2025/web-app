@@ -1,7 +1,15 @@
 from flask import Flask, render_template, request, redirect, url_for
+from pymongo import MongoClient
+from werkzeug.security import generate_password_hash
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
+
+
+client = MongoClient("mongodb+srv://xl4358:linxiangyu2004@project2-blabla.zeyv4.mongodb.net/?retryWrites=true&w=majority&appName=project2-blabla")
+db = client["users"]     
+users_collection = db["users"] 
+
 # default landing page: login 
 @app.route("/")
 def index():
