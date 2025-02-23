@@ -6,9 +6,7 @@ A little exercise to build a web application following an agile development proc
 
 To help university students filter, search for, and find campus bathrooms.
 
-## User stories
-
-See instructions. Delete this line and place a link to the user stories here.
+## [User Stories](https://github.com/orgs/software-students-spring2025/projects/13/views/1)
 
 ## Steps necessary to run the software
 
