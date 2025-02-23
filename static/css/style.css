@@ -1,0 +1,337 @@
+@import url("https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap");
+
+body {
+    font-family: 'Indie Flower', cursive;
+    overflow-y:hidden
+}
+
+nav{
+    display: flex;
+    align-items: center;
+    height: 100px;
+    padding: 12px;
+}
+
+.home-container{
+    padding:12px; 
+}
+
+.search-icon{
+    width: 60px;
+    height: 60px; 
+}
+
+.bubble-container {
+    position: absolute; 
+    left: 50%;
+    transform: translateX(-50%); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw; 
+    z-index: 2; 
+}
+
+.bubble-img{
+    height:860px;
+}
+
+.bear-container{
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height:90vh;
+}
+
+.dream-button{
+    position:absolute; 
+    width:260px; 
+    height:198px;
+    z-index: 2;
+    font-size: 24pt;
+    font-family: 'Indie Flower', cursive;
+    top:80%;
+    left: 50%;
+    transform: translateX(-50%); 
+    fill:none;
+    background-color: white;
+    border: 12pt solid black;
+    border-radius: 5pt;
+}
+
+.edit-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+    width: 100vw;
+    height: 100vh;
+}
+
+#tag-container{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width:100vw;
+    gap:50px;
+    padding:12px;
+    margin-top:80px;
+}
+
+.tag{
+    width:156px;
+    height:67px;
+    font-size:24pt;
+    background-color: transparent;
+    border: 2pt solid black;
+    border-radius: 5pt;
+
+}
+
+.back-link{
+    font-size: 24pt;
+    text-decoration: none;
+    padding:50px 10px;
+    color:black;
+    display: block;
+    text-align: left;
+}
+
+.input-container{
+    display:flex;
+    justify-content:center;
+    margin-top: 40px;
+}
+
+#dream-description {
+    width: 80%; 
+    max-width: 624px; 
+    height: 400px; 
+    padding: 10px;
+    font-size: 18px;
+    box-sizing: border-box;
+    border: 2px solid black; 
+}
+
+.button-container{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    margin-top:40px;
+}
+
+.edit-button{
+    width: 156px;
+    height:67px;
+    font-size:24pt;
+    background-color: transparent;
+    border: 2px solid black;
+    border-radius: 5px
+}
+
+.bear{
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height:auto;
+}
+
+.analysis-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+    width: 100vw;
+    height: 100vh;
+}
+
+#dream-search{
+    width:624px;
+    height: 42px; 
+    font-size:24pt;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.input-container label {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.input-container input {
+    width: 260px;
+    height: 30px;
+    font-size: 16px;
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.button-container {
+    margin-top: 20px;
+}
+
+.login-button {
+    width: 260px;
+    height: 40px;
+    font-size: 18px;
+    background-color: #D9D9D9;
+    border: 2px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.signup-text {
+    font-size: 14px;
+    margin-top: 15px;
+}
+
+.signup-link {
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+}
+
+.login-image {
+    width: 125px;
+    height: 125px;
+}
+
+.signup-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.signup-button {
+    width: 260px;
+    height: 40px;
+    font-size: 18px;
+    background-color: #D9D9D9;
+    border: 2px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.signup-image {
+    width: 125px;
+    height: 125px;
+}
+
+.adddream-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    padding: 20px;
+}
+
+.bear-header {
+    margin-top: 60px;
+    margin-bottom: 20px;
+}
+.bear-image {
+    width: 150px;
+    height: auto; 
+}
+
+.date-container {
+    margin-bottom: 20px;
+    text-align: left;
+    width: 80%;
+    max-width: 624px;
+}
+.date-label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+.date-inputs {
+    display: flex;
+    gap: 10px;
+}
+.date-inputs input {
+    width: 90px;
+    border: 1px solid black;
+    padding: 5px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.tags-container {
+    margin-bottom: 20px;
+    width: 80%;
+    max-width: 624px;
+}
+.tags-container p {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+.tag {
+    background-color: transparent;
+    border: 2px solid black;
+    border-radius: 5px;
+    font-size: 18px;
+    margin: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.description-container {
+    width: 80%;
+    max-width: 624px;
+    margin-bottom: 20px;
+}
+.description-container label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+#dream-description {
+    width: 100%;
+    height: 150px;
+    border: 2px solid black;
+    font-size: 16px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.save-dream-button {
+    width: 220px;
+    height: 40px;
+    font-size: 18px;
+    background-color: #D9D9D9;
+    border: 2px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.flash-message {
+    font-weight: bold;
+    margin: 10px 0;
+  }
+  
+  .flash-message.error {
+    color: red;        
+  }
+  
+  .flash-message.success {
+    color: green;     
+  }

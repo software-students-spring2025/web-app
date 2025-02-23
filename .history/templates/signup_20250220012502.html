@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="signup-container">
+        <!-- Back link -->
+        <a class="back-link" href="/home">← Back</a>
+
+        <!-- Page title -->
+        <h1 class="title">SIGN UsP</h1>
+
+        <!-- Sign-up Form -->
+        <form action="/signup" method="POST">
+            <div class="input-container">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="input-container">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="input-container">
+                <label for="password2">Re-enter Password</label>
+                <input type="password" id="password2" name="password2" required>
+            </div>
+            <div class="button-container">
+                <button class="signup-button" type="submit">Sign Up</button>
+            </div>
+        </form>
+
+        <!-- Bear Image -->
+        <div class="bear-container">
+            <!-- Update image source to your actual file name -->
+            <img src="/static/images/signup_bear.svg" alt="sleepy bear" class="signup-image">
+        </div>
+    </div>
+</body>
+</html>

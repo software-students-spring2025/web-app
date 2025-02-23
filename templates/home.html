@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>home Page</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  
+  <body>
+    <header>
+      <h1>Welcome, {{ username }}!</h1>
+    </header>
+    <nav>
+      <img
+        class="search-icon"
+        src="/static/images/search.svg"
+        alt="search icon"
+      />
+    </nav>
+    <div class="home-container">
+        <div class = "bubble-container">
+            <img class="bubble-img" src = "/static/images/thought_bubble.svg" alt = "thought-bubble">
+        </div>
+        <div class ="bear-container">
+            <img src="/static/images/homepg_bear.svg" alt="home-bear" />
+            <a href = "/add_dream"><button class="dream-button">Add Dream</button></a>
+        </div>
+       
+       
+    </div>
+  </body>
+</html>
