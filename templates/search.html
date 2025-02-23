@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Bathrooms</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 dark:bg-neutral-900 text-gray-900 dark:text-white">
+    {% include 'navbar.html' %}
+
+    <!-- Search Bar -->
+    <div class="p-4">
+        <input 
+            type="text" 
+            id="searchInput" 
+            class="w-full p-3 rounded-lg border border-gray-300 focus:ring focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:text-white"
+            placeholder="Search for a building..."
+        >
+    </div>
+
+    <!-- Results Container -->
+    <div id="resultsContainer" class="p-4">
+        <ul id="resultsList" class="space-y-3"></ul>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async function() {
+            const searchInput = document.getElementById("searchInput");
+            const resultsList = document.getElementById("resultsList");
+
+            // filter and display search results function
+            async function search(query) {
+                resultsList.innerHTML = ""; // clear previous results
+                if (!query.trim()) return;  // don't search empty input
+
+                try {
+                    const response = await fetch(`/api/search?q=${query}`);
+                    const data = await response.json();
+
+                    // check if bathrooms are found
+                    if (data.bathrooms.length === 0) {
+                        resultsList.innerHTML = `<li class="text-gray-500 dark:text-neutral-400">No bathrooms found for this building</li>`;
+                        return;
+                    }
+
+                    // render bathrooms
+                    data.bathrooms.forEach(bathroom => {
+                        const listItem = document.createElement("li");
+                        listItem.className = "p-3 bg-white rounded-lg shadow-md dark:bg-neutral-800";
+                        listItem.textContent = bathroom.label + " (Floor " + bathroom.floor + ")";
+                        resultsList.appendChild(listItem);
+                    });
+                } catch (error) {
+                    console.error("Error fetching search results:", error);
+                }
+            }
+
+            // event listener for search input
+            searchInput.addEventListener("input", () => {
+                search(searchInput.value);
+            });
+        });
+    </script>
+
+</body>
+</html>
