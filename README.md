@@ -7,6 +7,7 @@ A little exercise to build a web application following an agile development proc
 Our product aims to provide accessibility and purchase functions to consumers who would like to make a purchase at our bakery, while also increasing profits with intentional marketing through its design.
 
 ## User stories
+
 - As a consumer, I want to be able to view item information, so that I know what the item tastes like.
 - As a consumer, I want to be able to view allergy information, so that I can make an informed decision without physical harm.
 - As a consumer, I want to be able to select items and place them in my shopping cart, so that I can collect the goods that I want to buy.
