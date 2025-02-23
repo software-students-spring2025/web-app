@@ -68,6 +68,7 @@ def signup():
         # Insert new user into the database
         new_user = {"username": username, "password": password}
         users_collection.insert_one(new_user)
+        session['username'] = username
         return redirect(url_for("home"))
 
     return render_template("signup.html")
