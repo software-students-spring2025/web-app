@@ -3,8 +3,11 @@
 ## Team Members
 
 Brian Zou https://github.com/brianzou03
+
 Jasmine Fan https://github.com/jasmine7310
+
 Johnny Ding https://github.com/yd2960
+
 Ray Ochotta https://github.com/SnowyOchole
 
 ## Product vision statement
