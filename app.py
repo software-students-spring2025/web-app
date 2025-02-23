@@ -27,7 +27,22 @@ users_collection = db["users"]
 # default landing page: login 
 @app.route("/", methods=['GET', 'POST'])
 def index():
+    if request.method == 'POST':
+        username = request.form.get("username")
+        password = request.form.get("password")
+        
+        user = users_collection.find_one({"username": username})
 
+        if not user:
+            flash("Username not found. Please try again.", "error")
+            return redirect(url_for("index"))
+        
+        if user['password'] != password:
+            flash("Invalid password. Please try again.", "error")
+            return redirect(url_for("index"))
+        
+        session['username'] = username
+        return redirect(url_for("home"))
     
     return render_template("index.html")
 
