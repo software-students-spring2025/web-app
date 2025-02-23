@@ -5,5 +5,10 @@
 </head>
 <body>
     <p>test</p>
+    <ul>
+        {% for item in doc %}
+            <li>{{ item.title }}</li>
+        {% endfor %}
+    </ul>
 </body>
 </html>

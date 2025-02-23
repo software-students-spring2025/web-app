@@ -16,7 +16,7 @@ app.config["MONGO_URI"] = os.getenv("MONGO_URI")
 app.secret_key = os.getenv("SECRET_KEY")
 
 #mongodb setup
-mongo = pymongo.MongoClient(os.getenv("MONGO_URI"))
+mongo = pymongo.MongoClient(os.getenv("MONGO_URI"), ssl = True)
 db = mongo[os.getenv("MONGO_DBNAME")]
 
 #verify mongodb connection
@@ -28,7 +28,8 @@ except Exception as exception:
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    doc = db.movies.find({"year":1914})
+    return render_template("index.html", doc=doc)
 
 if __name__ == '__main__':
     app.run()
