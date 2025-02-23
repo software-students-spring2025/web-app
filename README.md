@@ -8,6 +8,18 @@ Our product aims to provide accessibility and purchase functions to consumers wh
 
 ## User stories
 
+- As a consumer, I want to be able to view item information, so that I know what the item tastes like.
+- As a consumer, I want to be able to view allergy information, so that I can make an informed decision without physical harm.
+- As a consumer, I want to be able to select items and place them in my shopping cart, so that I can collect the goods that I want to buy.
+- As a bakery employee, I want to be able to add new menu items, so that our customers can access our latest goods.
+- As a consumer, I want to be able to view and edit my shopping cart, so that I can change my mind about what I want to buy.
+- As a bakery employee, I want to be able to delete menu items, so that our customers won’t try to buy items that we no longer sell.
+- As a bakery employee, I want to indicate when menu items are temporarily sold out, so that our customers are aware of what is unavailable now but will return later.
+- As a consumer, I want to be able to save my account information, so that I do not need to re-enter personal information every time I return to make a new purchase.
+- As a bakery employee, I want to be able to display our best products, so that they can grab the attention of our potential customers.
+- As a bakery employee, I want to be able to save order history, so that I can view the analytics for our products and keep track of orders for customer complaints.
+- As a customer, I want to be able to contact the bakery, so that I can file complaints.
+
 
 ## Steps necessary to run the software
 
