@@ -7,14 +7,19 @@
 </head>
 <body>
     <div class="adddream-container">
+        <!-- Back link -->
         <a class="back-link" href="/home">← Back</a>
 
+        <!-- Bear Image at the top -->
         <div class="bear-header">
+            <!-- Replace with your actual bear image file/path -->
             <img src="/static/images/dream_bear.svg" alt="dream-bear" class="bear-image">
         </div>
 
+        <!-- Form for adding a dream -->
         <form action="/add_dream" method="POST">
             
+            <!-- Date fields -->
             <div class="date-container">
                 <label class="date-label" for="day">Date</label>
                 <div class="date-inputs">
@@ -24,8 +29,10 @@
                 </div>
             </div>
 
+            <!-- Tags -->
             <div class="tags-container">
                 <p>Choose Your Tags:</p>
+                <!-- Example tag buttons -->
                 <button type="button" class="tag">Happy</button>
                 <button type="button" class="tag">Funny</button>
                 <button type="button" class="tag">Sad</button>
@@ -34,11 +41,13 @@
                 <button type="button" class="tag">xx-xx-xxxx</button>
             </div>
 
+            <!-- Description -->
             <div class="description-container">
                 <label for="dream-description">Input Description</label>
                 <textarea id="dream-description" name="dream-description" placeholder="Description..."></textarea>
             </div>
 
+            <!-- Save Button -->
             <div class="button-container">
                 <button type="submit" class="save-dream-button">Save Your Dream</button>
             </div>
