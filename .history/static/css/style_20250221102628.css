@@ -63,6 +63,7 @@ nav{
     display: flex;
     flex-direction: column;
     justify-content: space-between; 
+    /* align-items: center;  */
     width: 100vw;
     height: 100vh;
 }
@@ -139,6 +140,7 @@ nav{
     display: flex;
     flex-direction: column;
     justify-content: space-between; 
+    /* align-items: center;  */
     width: 100vw;
     height: 100vh;
 }
@@ -313,6 +315,7 @@ nav{
     box-sizing: border-box;
 }
 
+/* Save button (similar to .edit-button, .login-button, etc.) */
 .save-dream-button {
     width: 220px;
     height: 40px;
