@@ -4,7 +4,7 @@ A little exercise to build a web application following an agile development proc
 
 ## Product vision statement
 
-\[WIP\] Gathr allows friend groups and families to more easily organize and plan events removing the hassle of communicating and updating guests on changes and rescheduling.
+Gathr simplifies event planning for organizers and guests by providing a platform where hosts can create events, manage guest lists, track RSVPs, and update event details while guests stay informed about upcoming events and update their RSVP status, ensuring seamless communication for friend groups and families.
 
 ## User stories
 
