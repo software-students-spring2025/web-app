@@ -66,7 +66,7 @@ cd url_shortener_app
 python3 app.py
 ```
 
-### Page is located at http://127.0.0.1:5000
+### Page is located at http://127.0.0.1:8000
 
 
 ## Task boards

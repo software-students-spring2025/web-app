@@ -1,5 +1,6 @@
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+from bson.objectid import ObjectId
 
 # Lazy import to prevent circular import issues
 def get_mongo():
@@ -18,7 +19,7 @@ class User(UserMixin):
 
     @staticmethod
     def find_by_id(user_id):
-        return get_mongo().db.users.find_one({"_id": user_id})
+        return get_mongo().db.users.find_one({"_id": ObjectId(user_id)})
 
     @staticmethod
     def create_user(username, password):
@@ -31,15 +32,15 @@ class User(UserMixin):
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    # These methods are required for Flask-Login
-    def is_authenticated(self):
-        return True
+    # # These methods are required for Flask-Login
+    # def is_authenticated(self):
+    #     return True
 
-    def is_active(self):
-        return True  # Users should always be active
+    # def is_active(self):
+    #     return True  # Users should always be active
 
-    def is_anonymous(self):
-        return False  # This app does not support anonymous users
+    # def is_anonymous(self):
+    #     return False  # This app does not support anonymous users
 
-    def get_id(self):
-        return str(self.id)
+    # def get_id(self):
+    #     return str(self.id)

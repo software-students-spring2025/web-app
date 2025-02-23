@@ -19,3 +19,10 @@ class URL:
     @staticmethod
     def update_url(short_url, new_long_url):
         get_mongo().db.urls.update_one({"short_url": short_url}, {"$set": {"long_url": new_long_url}})
+
+    @staticmethod
+    def short_to_long(short_url):
+        document = get_mongo().db.urls.find_one({"short_url": short_url})
+        if document:
+            return (document.get("long_url"))
+        return None
