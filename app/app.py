@@ -28,6 +28,7 @@ except Exception as exception:
 
 @app.route("/")
 def home():
+    #movies is collection in sample database, remove and switch later
     doc = db.movies.find({"year":1914})
     return render_template("index.html", doc=doc)
 
