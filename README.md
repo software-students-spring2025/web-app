@@ -8,12 +8,15 @@ Our mission is to inspire and empower NYU students to take control of their fitn
 ## Team Members
 Andrew Jung: AndrewJung03  
 
+Josh Lavroff: joshlavroff
+
 
 
 ## User stories
 1. As a user, I want to be able to track my treadmill workouts (pace, distance, incline, calories), so that I can increase my stamina.  
 2. As a user, I want to be able to see my friends' workout progress so that I can stay motivated and engage with their fitness journey.  
-
+3. As someone trying to put on weight, I want to track my meals in macros in an organized way.
+4. As a beginner to the gym, I want to be able to plan my workouts and find exercises tailored to my fitness goals.
 
 ## Steps necessary to run the software
 
