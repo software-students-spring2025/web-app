@@ -11,7 +11,15 @@
 <body>
     <div class="login-container">
         <h1>Login Page</h1>
-        <form action="/login" method="POST">
+        <a class="back-link" href="/">← Back</a>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <p class="flash-message {{ category }}">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <form action="/" method="POST">
             <div class="input-container">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" required>

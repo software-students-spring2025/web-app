@@ -13,6 +13,17 @@
         <!-- Page title -->
         <h1 class="title">SIGN UsP</h1>
 
+        <!-- Display flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <!-- Each message is in its own paragraph -->
+                    <p class="flash-message {{ category }}">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+
         <!-- Sign-up Form -->
         <form action="/signup" method="POST">
             <div class="input-container">

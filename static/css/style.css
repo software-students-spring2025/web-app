@@ -322,3 +322,16 @@ nav{
     border-radius: 5px;
     cursor: pointer;
 }
+
+.flash-message {
+    font-weight: bold;
+    margin: 10px 0;
+  }
+  
+  .flash-message.error {
+    color: red;        
+  }
+  
+  .flash-message.success {
+    color: green;     
+  }

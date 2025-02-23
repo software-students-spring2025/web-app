@@ -1,23 +1,60 @@
-from flask import Flask, render_template, request, redirect, url_for
+import os
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 from pymongo import MongoClient
 from werkzeug.security import generate_password_hash
+from dotenv import load_dotenv
+from bson.objectid import ObjectId
+
+
+load_dotenv("config.env")
+MONGO_URI = os.getenv("MONGO_URI")
+if not MONGO_URI:
+    raise ValueError("No MongoDB URI found in environment variables. Please set MONGO_URI.")
+SECRET_KEY = os.getenv("SECRET_KEY", "default_secret_key") 
+
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
+app.secret_key = SECRET_KEY
 
 
-client = MongoClient("mongodb+srv://xl4358:linxiangyu2004@project2-blabla.zeyv4.mongodb.net/?retryWrites=true&w=majority&appName=project2-blabla")
-db = client["users"]     
-users_collection = db["users"] 
+# Connect to MongoDB
+client = MongoClient(MONGO_URI)
+db = client["users"]            
+users_collection = db["users"]  
+
 
 # default landing page: login 
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def index():
+
+    
     return render_template("index.html")
 
 # register page
-@app.route("/signup")
-def register():
+@app.route("/signup", methods=["GET", "POST"])
+def signup():
+    if request.method == "POST":
+
+        username = request.form.get("username")
+        password = request.form.get("password")
+        password2 = request.form.get("password2")
+
+        # Check if username exists
+        if users_collection.find_one({"username": username}):
+            flash("Username already exists. Please choose another.", "error")
+            return redirect(url_for("signup"))
+        
+        # Check if passwords match
+        if password != password2:
+            flash("Passwords do not match. Please try again.", "error")
+            return redirect(url_for("signup"))
+        
+        # Insert new user into the database
+        new_user = {"username": username, "password": password}
+        users_collection.insert_one(new_user)
+        return redirect(url_for("home"))
+
     return render_template("signup.html")
 
 # add dream page
@@ -28,7 +65,8 @@ def add_dream():
 # home page
 @app.route("/home")
 def home():
-    return render_template("home.html")
+    user = session.get('username')
+    return render_template("home.html", username=user)
 
 # analysis page
 @app.route("/analysis")
