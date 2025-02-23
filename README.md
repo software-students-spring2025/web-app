@@ -26,3 +26,5 @@ Our product aims to provide accessibility and purchase functions to consumers wh
 See instructions. Delete this line and place instructions to download, configure, and run the software here.
 
 ## Task boards
+
+[Task Board Link](https://github.com/orgs/software-students-spring2025/projects/10/)
