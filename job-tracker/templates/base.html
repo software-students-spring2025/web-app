@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Hello World</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Flask Pymongo Hello World</h1>
+        </header>
+        <main>{% block container %} {% endblock %}</main>
+        <footer>
+            <p>
+                &copy; 2022. Shared under the GPL3 license. Source code available at
+                <a href="https://github.com/nyu-software-engineering/flask-pymongo-web-app-example">available on
+                    Github</a>.
+            </p>
+        </footer>
+    </div>
+</body>
+
+</html>
