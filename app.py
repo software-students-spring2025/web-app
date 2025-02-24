@@ -74,9 +74,60 @@ def signup():
     return render_template("signup.html")
 
 # add dream page
+from datetime import datetime
+from bson import ObjectId
+
 @app.route("/add_dream", methods=["GET", "POST"])
 def add_dream():
+    # Ensure the user is logged in
+    if "username" not in session:
+        flash("Please log in to add a dream.", "error")
+        return redirect(url_for("index"))
+    
+    if request.method == "POST":
+        # Get date parts from the form
+        day = request.form.get("day")
+        month = request.form.get("month")
+        year = request.form.get("year")
+        try:
+            dream_date = datetime.strptime(f"{day}-{month}-{year}", "%d-%m-%Y")
+        except ValueError:
+            flash("Invalid date provided. Please use valid day, month, and year.", "error")
+            return redirect(url_for("add_dream"))
+        
+        # Get the dream description
+        description = request.form.get("dream-description")
+        
+        # Optionally, get the tags from a hidden input or a comma-separated string
+        tags_str = request.form.get("tags", "")
+        tags = [tag.strip() for tag in tags_str.split(",") if tag.strip()] if tags_str else []
+        
+        # Construct a new dream object
+        dream_data = {
+            "date": dream_date,
+            "description": description,
+            "tags": tags
+        }
+        
+        username = session.get("username")
+        result = users_collection.update_one(
+            {"username": username},
+            {"$push": {"dreams": dream_data}}
+        )
+        
+        if result.modified_count:
+            flash("Dream added successfully!", "success")
+        else:
+            flash("Failed to add dream. Please try again.", "error")
+        
+        # Redirect back to add_dream page so notifications appear there
+        return redirect(url_for("add_dream"))
+    
     return render_template("add_dream.html")
+
+
+
+
 
 # home page
 @app.route("/home")
