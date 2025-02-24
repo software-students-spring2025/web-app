@@ -4,11 +4,11 @@ A little exercise to build a web application following an agile development proc
 
 ## Product vision statement
 
-See instructions. Delete this line and place the Product Vision Statement here.
+Our platform empowers job seekers to organize, track, and manage all their job applications by providing an intuitive and structural way to maximize their chances of success.  
 
 ## User stories
 
-User stories can be found listed below, or as issues in our team's [Github project board](https://github.com/orgs/software-students-spring2025/projects/40/views/1). 
+User stories can be found listed below, or as issues in our team's [Github issues page](https://github.com/software-students-spring2025/2-web-app-anything/issues). 
 
 1. As a job seeker, I want to add a new job application so that I can keep track of all the positions I have applied to.
 2. As a job seeker, I want to update the status of my job application (e.g., Applied, Interview Scheduled, Offer Received, Rejected) so that I can easily see where I am in the hiring process.
