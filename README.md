@@ -26,4 +26,4 @@ See instructions. Delete this line and place instructions to download, configure
 
 ## Task boards
 
-See instructions. Delete this line and place a link to the task boards here.
+Our workflow was broken down into two sprints for this project. The task board for Sprint 1 can be found [here](https://github.com/orgs/software-students-spring2025/projects/40), and the task board for Sprint 2 can be found [here](https://github.com/orgs/software-students-spring2025/projects/44).
