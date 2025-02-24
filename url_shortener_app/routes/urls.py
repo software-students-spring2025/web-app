@@ -33,6 +33,13 @@ def delete():
         return redirect(next)
     return redirect(url_for("urls.dashboard"))
 
+@urls.route("/favorites", methods=["GET","POST"])
+@login_required
+def favorites():
+    fav_urls = URL.get_user_favs(current_user.id)
+    return render_template("favorites.html", favorite_urls=fav_urls)
+
+
 @urls.route("/edit/<short_url>", methods=["GET", "POST"])
 @login_required
 def edit(short_url):
