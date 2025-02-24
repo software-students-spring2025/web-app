@@ -20,6 +20,10 @@ Run these commands on terminal:
 - python -m venv env
 - source env/bin/activate
 
+Ensure you are loading your env variables into the code file
+
+Test to establish connection with MongoDB and upon successfull connection you are successful
+
 See [requiremnets.txt](requirements.txt) for necessary libraries and installations.
 Ensure all libraries have been installed within your virtual enviornment
 

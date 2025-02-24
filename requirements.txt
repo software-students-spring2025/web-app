@@ -1,5 +1,7 @@
 # Install MongoDB using the follow command
 # python -m pip install "pymongo[srv]"
 pymongo
+--upgrade certifi
+python-dotenv
 
 

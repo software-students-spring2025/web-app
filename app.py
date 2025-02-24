@@ -11,10 +11,10 @@ uri = os.getenv("MONGO_URI")
 if not uri:
     raise ValueError("MONGO_CONNECTION is not set in the .env file")
 
-#Create a new client and connect to the server
+# Create a new client and connect to the server
 client = MongoClient(uri, server_api=ServerApi('1'), tlsCAFile=certifi.where())
 
-#Send a ping to confirm a successful connection
+# Send a ping to confirm a successful connection
 try:
     client.admin.command('ping')
     print("Pinged your deployment. You successfully connected to MongoDB!")
