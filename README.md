@@ -21,8 +21,8 @@ Use Docker Compose to boot up both the mongodb database and the flask app using 
 
 - Navigate to app directory which contains `Dockerfile`
 - open Docker
-- `docker-compose up --build` ... add -d to run in detached/background mode.
-- Ctrl + C then `docker-compose down` when done to stop containers
+- `docker compose up --build` ... add -d to run in detached/background mode.
+- Ctrl + C then `docker compose down` when done to stop containers
 
 If port number already use, select different port for `flask-app` or `mongodb` by changing their values in `docker-compose.yml`
 
