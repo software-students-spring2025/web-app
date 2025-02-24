@@ -73,6 +73,7 @@ def show_login():
     # if information has been submitted to login: 
     elif request.method == "POST":
         uname = request.form['username']
+        pwd = request.form['password']
         ## 
         ## authenticate the username and password
         ##
@@ -92,7 +93,8 @@ def show_signup():
     
     # if information has been submitted to signup: 
     elif request.method == "POST":
-        print('form', request.form)
+        uname = request.form['username']
+        pwd = request.form['password']
         ## 
         ## authenticate the username and password, create new user in mongo
         ##
@@ -100,7 +102,7 @@ def show_signup():
         # set the uid cookie as the value of the user id
         # redirect to the dashboard
         response = redirect(url_for('show_dashboard'))
-        response.set_cookie('uid', request.form['uname'])
+        response.set_cookie('uid', uname)
         return response
 
 # profile
@@ -112,13 +114,16 @@ def show_profile():
     
     # if user has clicked "sign out": clear session cookies and redirect to login page
     elif request.method == "POST":
-        # DELETE the uid cookie 
-        # redirect to the login page
-        response = redirect(url_for('show_login'))
-        response.delete_cookie("uid")
-        return response
+        pass
 
-
+# sign out
+@app.route("/logout", methods=["GET"])
+def logout():
+    # DELETE the uid cookie 
+    # redirect to the login page
+    response = redirect(url_for('show_login'))
+    response.delete_cookie("uid")
+    return response
 
 
 # keep alive
