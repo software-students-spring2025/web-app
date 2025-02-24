@@ -31,16 +31,3 @@ class User(UserMixin):
 
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
-
-    # # These methods are required for Flask-Login
-    # def is_authenticated(self):
-    #     return True
-
-    # def is_active(self):
-    #     return True  # Users should always be active
-
-    # def is_anonymous(self):
-    #     return False  # This app does not support anonymous users
-
-    # def get_id(self):
-    #     return str(self.id)

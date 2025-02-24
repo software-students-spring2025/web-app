@@ -1,3 +1,5 @@
+from bson.objectid import ObjectId
+
 # Lazy import to prevent circular import issues
 def get_mongo():
     from app import mongo
@@ -6,7 +8,7 @@ def get_mongo():
 class URL:
     @staticmethod
     def create_url(user_id, long_url, short_url):
-        get_mongo().db.urls.insert_one({"user_id": user_id, "long_url": long_url, "short_url": short_url})
+        get_mongo().db.urls.insert_one({"user_id": user_id, "long_url": long_url, "short_url": short_url, "favorite": False})
 
     @staticmethod
     def get_user_urls(user_id):
@@ -17,11 +19,21 @@ class URL:
         return get_mongo().db.urls.find({"user_id": user_id, "favorite": True})
     
     @staticmethod
-    def mark_favorite(user_id, short_url):
-        return get_mongo().db.urls.update_one(
-        {"user_id": user_id, "short_url": short_url},
-        {"$set": {"favorite": True}}
-    )
+    def get_fav_status(user_id, short_url):
+        result = get_mongo().db.urls.find_one({"user_id": user_id, "short_url": short_url}, {"favorite": 1})
+        if result:
+            return result["favorite"]
+        return None
+    
+    @staticmethod
+    def toggle_favorite(user_id, short_url):
+        fav = URL.get_fav_status(user_id, short_url)
+        if fav is not None:
+            return get_mongo().db.urls.update_one(
+                {"user_id": user_id, "short_url": short_url},
+                {"$set": {"favorite": not fav}}
+            )
+
 
     @staticmethod
     def delete_url(short_url):

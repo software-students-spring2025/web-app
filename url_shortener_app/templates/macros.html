@@ -1,47 +1,63 @@
 {% macro list_url(urls, redirect) %}
-    {% for url in urls %}
-        <li>
-            {{ url.short_url }}: <a href="{{ url.long_url }}" target="_blank">{{ url.long_url }}</a><br>
-            <a href="{{ url_for('urls.delete', short_url=url.short_url, next=redirect) }}" class="url-options"><img src="{{ url_for('static', filename='images/bin.png') }}">
-            </a>
-            <button class="url-copy" data-copy="{{ url.short_url }}"><img src="{{ url_for('static', filename='images/copy-document.png') }}">
-            </button>
-            <button class="url-favorite" id="{{ url.short_url }}" data-favorite="{{ url.short_url }}"><img src="{{ url_for('static', filename='images/favorite.png') }}">
-            </button>
-        </li>
-    {% endfor %}
+{% for url in urls %}
+    <li>
+        {{ url.short_url }}: <a href="{{ url.long_url }}" target="_blank">{{ url.long_url }}</a>
+        <br>
+        <a href="{{ url_for('urls.delete', short_url=url.short_url, next=redirect) }}" class="url-options">
+            <img src="{{ url_for('static', filename='images/bin.png') }}">
+        </a>
+        <button class="url-copy" data-copy="{{ url.short_url }}">
+            <img src="{{ url_for('static', filename='images/copy-document.png') }}">
+        </button>
+        <button class="url-favorite" id="{{ url.short_url }}" data-favorite="{{ url.short_url }}">
+            {% if url.favorite %}
+                <img src="{{ url_for('static', filename='images/favorited.png') }}">
+            {% else %}
+                <img src="{{ url_for('static', filename='images/favorite.png') }}">
+            {% endif %}
+        </button>
+    </li>
+{% endfor %}
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         console.log("DOM content loaded");
-        document.querySelectorAll(".url-copy").forEach(function(btn){ 
-            btn.addEventListener("click", function(){
+
+        // binds copy to clickboard action
+        document.querySelectorAll(".url-copy").forEach(function (btn) {
+            btn.addEventListener("click", function () {
                 console.log("User clicked copy button!");
-                const url = btn.dataset.copy;
-                navigator.clipboard.writeText(btn.dataset.copy).then(()=>{
+                const shortened_url = window.location.host + "/urls/s/" + btn.dataset.copy
+                navigator.clipboard.writeText(shortened_url).then(() => {
                     alert("Copied short URL!");
                 });
             });
         });
 
-        document.querySelectorAll(".url-favorite").forEach(function(btn){
-            btn.addEventListener("click", function(){
-                const url = btn.dataset.favorite;
-                document.querySelector(`#${url} > img`).src = "{{ url_for('static', filename='images/favorited.png') }}";
+        function setFavButton(btn, isFav) {
+            if (isFav)
+                btn.querySelector("img").src = "{{ url_for('static', filename='images/favorited.png') }}";
+            else
+                btn.querySelector("img").src = "{{ url_for('static', filename='images/favorite.png') }}";
+        }
 
+        // binds favorite/unfavorite action
+        document.querySelectorAll(".url-favorite").forEach(function (btn) {
+            btn.addEventListener("click", function () {
+                const url = btn.dataset.favorite;
                 fetch("/urls/favorites", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({short_url: url})
+                    body: JSON.stringify({ short_url: url })
                 })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.message){
-                        console.log("Added to favorites");
-                        btn.disabled = true;
-                    }
+                    if (data.success)
+                        setFavButton(btn, data.fav)
+                    else
+                        alert("Fav/Unfav request unsuccessful")
                 })
             });
         });
@@ -49,6 +65,4 @@
     });
 </script>
 
-
 {% endmacro %}
-

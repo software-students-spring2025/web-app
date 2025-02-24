@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, jsonify
 from flask_login import login_required, current_user
 from models.url import URL
 import random
@@ -36,8 +36,17 @@ def delete():
 @urls.route("/favorites", methods=["GET","POST"])
 @login_required
 def favorites():
-    fav_urls = URL.get_user_favs(current_user.id)
-    return render_template("favorites.html", favorite_urls=fav_urls)
+    if request.method == "GET":
+        favs = URL.get_user_favs(current_user.id)
+        return render_template("favorites.html", urls=favs)
+    # Toggle favorite
+    if request.method == "POST":
+        data = request.get_json()
+        if not data:
+            return jsonify({"error": "No JSON data provided"}), 400
+        URL.toggle_favorite(current_user.id, data["short_url"])
+        fav = URL.get_fav_status(current_user.id, data["short_url"])
+        return jsonify({"success": "favorite added", "fav": fav}), 200
 
 
 @urls.route("/edit/<short_url>", methods=["GET", "POST"])
