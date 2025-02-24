@@ -105,3 +105,80 @@ a:hover {
         width: 90%;
     }
 }
+
+img{
+    height: 20px;
+    width: auto;
+}
+
+.url-copy {
+    background: none;
+    
+}
+
+.url-copy:hover {
+    background: none;
+}
+
+.url-copy:click {
+    background: none;
+}
+
+a.url-options {
+    text-decoration: none;
+}
+
+.url-copy{
+    margin: 0px;
+    padding: 0px;
+}
+
+li{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+h2{
+    padding-top: 15px;
+    padding-bottom: 10px;
+}
+
+#view-log-container{
+    padding-top: 10px;
+}
+
+#view-log-container a{
+    padding: 6px;
+    margin-left: 5px;
+    margin-right: 5px;
+    background-color: #007bff;
+    color:#f4f4f4;
+    border-radius: 3px;
+    font-weight: normal;
+}
+
+p{
+    margin-top: 10px;
+}
+
+
+.url-favorite {
+    margin: 0px;
+    padding: 0px;
+}
+
+.url-favorite {
+    background: none;
+    
+}
+
+.url-favorite:hover {
+    background: none;
+}
+
+.url-favorite:click {
+    background: none;
+}

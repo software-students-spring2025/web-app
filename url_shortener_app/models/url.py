@@ -11,6 +11,17 @@ class URL:
     @staticmethod
     def get_user_urls(user_id):
         return get_mongo().db.urls.find({"user_id": user_id})
+    
+    @staticmethod
+    def get_user_favs(user_id):
+        return get_mongo().db.urls.find({"user_id": user_id, "favorite": True})
+    
+    @staticmethod
+    def mark_favorite(user_id, short_url):
+        return get_mongo().db.urls.update_one(
+        {"user_id": user_id, "short_url": short_url},
+        {"$set": {"favorite": True}}
+    )
 
     @staticmethod
     def delete_url(short_url):

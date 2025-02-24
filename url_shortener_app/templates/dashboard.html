@@ -20,8 +20,11 @@
             {{ list_url(urls, url_for('urls.dashboard')) }}
         </ul>
 
-        <a href="{{ url_for('urls.history') }}">View All</a>
-        <a href="{{ url_for('auth.logout') }}">Logout</a>
+        <div id="view-log-container">
+            <a href="{{ url_for('urls.favorites') }}">Favorites</a>
+            <a href="{{ url_for('urls.history') }}">History</a>
+            <a href="{{ url_for('auth.logout') }}">Logout</a>
+        </div>
     </div>
 </body>
 </html>
