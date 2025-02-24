@@ -1,0 +1,42 @@
+
+.category{
+    border: solid 2px black;
+    width: 350px;
+    height: 120px;
+    display: flex;
+    flex-direction: row;
+}
+
+img{
+    height: 120px;
+    width: 120px;
+    object-fit: cover;
+}
+
+.itemInfo{
+    text-align: center;
+    width: 230px;
+    font-size: 20px;
+    height: 120px;
+}
+
+h2{
+    text-align: center;
+    font-size: 40px;
+}
+
+.moreInfo{
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+    top: -30px;
+    height:120px;
+}
+
+.moreInfoB{
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+    top: -7px;
+    height:120px;
+}
