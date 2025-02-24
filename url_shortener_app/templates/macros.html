@@ -17,8 +17,8 @@
         document.querySelectorAll(".url-copy").forEach(function(btn){ 
             btn.addEventListener("click", function(){
                 console.log("User clicked copy button!");
-                const url = btn.dataset.copy;
-                navigator.clipboard.writeText(btn.dataset.copy).then(()=>{
+                const shortened_url = window.location.host + "/urls/s/" + btn.dataset.copy
+                navigator.clipboard.writeText(shortened_url).then(()=>{
                     alert("Copied short URL!");
                 });
             });
@@ -38,8 +38,8 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.message){
-                        console.log("Added to favorites");
+                    if (data.success){
+                        console.log(data.success);
                         btn.disabled = true;
                     }
                 })

@@ -1,3 +1,5 @@
+from bson.objectid import ObjectId
+
 # Lazy import to prevent circular import issues
 def get_mongo():
     from app import mongo
