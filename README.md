@@ -12,8 +12,25 @@ See instructions. Delete this line and place a link to the user stories here.
 
 ## Steps necessary to run the software
 
-See instructions. Delete this line and place instructions to download, configure, and run the software here.
+Required software:
+
+- install and run [docker desktop](https://www.docker.com/get-started)
+- create a [dockerhub](https://hub.docker.com/signup) account
+
+Use Docker Compose to boot up both the mongodb database and the flask app using one command:
+
+- open Docker
+- `docker-compose up --build` ... add -d to run in detached/background mode.
+- Ctrl + C then `docker compose down` when done to stop containers
+
+If port number already use, select different port for `flask-app` or `mongodb` by changing their values in `docker-compose.yml`
+
+View the app in browser:
+
+- open `http://localhost:5001` in preferred web browser (or whatever port number used for host) 
+
+_Note that if any files were edited, container must be stopped then restarted_
 
 ## Task boards
 
-See instructions. Delete this line and place a link to the task boards here.
+[Task Board Link](https://github.com/orgs/software-students-spring2025/projects/50/)
