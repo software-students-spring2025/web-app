@@ -4,7 +4,7 @@ A little exercise to build a web application following an agile development proc
 
 ## Product vision statement
 
-See instructions. Delete this line and place the Product Vision Statement here.
+Our product will give users the ability to keep track of movies they’d like to watch and allow them to add, edit, delete, and search for specific movies on their watchlist.
 
 ## User stories
 
