@@ -20,14 +20,14 @@
         <ul>
             {% for show in shows %}
             <li>
-              <strong>Title:</strong> {{ show.title }}<br>
-              <strong>Genre:</strong> {{ show.genre }}<br>
-              <strong>Episode:</strong> {{ show.episode }}<br>
-              <strong>Rating:</strong> {{ show.rating }}<br>
-              <strong>Tags:</strong> {{ show.tags | join(', ') }}<br>
-              <strong>Status:</strong> {{ show.status }}<br>
-              <strong>Date:</strong> {{ show.date.strftime('%Y-%m-%d') }}<br>
-              <strong>Comment:</strong> {{ show.comment }}
+              <b>Title:</b> {{ show.title }}<br>
+              <b>Genre:</b> {{ show.genre }}<br>
+              <b>Episode:</b> {{ show.episode }}<br>
+              <b>Rating:</b> {{ show.rating }}<br>
+              <b>Tags:</b> {{ show.tags | join(', ') }}<br>
+              <b>Status:</b> {{ show.status }}<br>
+              <b>Date:</b> {{ show.date }}<br>
+              <b>Comment:</b> {{ show.comment }}
               <hr>
             </li>
             {% endfor %}
