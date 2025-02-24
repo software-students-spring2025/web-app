@@ -1,23 +1,22 @@
-from pymongo import MongoClient
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
+import certifi
 import os
+from dotenv import load_dotenv
 
-# This function serves to get access and retrieve necessaary data from MongoDB which we will use throughout the application
-def get_database():
-   CONNECTION_STRING = os.environ['MONGO_CONNECTION']
+load_dotenv()
 
-   if (CONNECTION_STRING):
-        client = MongoClient(CONNECTION_STRING)
+uri = os.getenv("MONGO_URI")
 
-        if (client):
-            return client['name of database']
-        else:
-            return("Err: Could not make connection with database, please check Connection String!")
-        
-   else:
-       return("Err: Connection string is incorrect or invalid!")
-  
-# This is added so that many files can reuse the function get_database()
-if __name__ == "__main__":   
-  
-   # Get the database
-   name_of_database = get_database()
+if not uri:
+    raise ValueError("MONGO_CONNECTION is not set in the .env file")
+
+#Create a new client and connect to the server
+client = MongoClient(uri, server_api=ServerApi('1'), tlsCAFile=certifi.where())
+
+#Send a ping to confirm a successful connection
+try:
+    client.admin.command('ping')
+    print("Pinged your deployment. You successfully connected to MongoDB!")
+except Exception as e:
+    print(e)

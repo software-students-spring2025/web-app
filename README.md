@@ -28,3 +28,7 @@ Ensure all libraries have been installed within your virtual enviornment
 - [Sprint 1](https://github.com/orgs/software-students-spring2025/projects/6)
 
 - [Sprint 2](https://github.com/orgs/software-students-spring2025/projects/17)
+
+# Virtual Enviroment  dependeces:  
+python -m pip install "pymongo[srv]"
+pip install --upgrade certifi
