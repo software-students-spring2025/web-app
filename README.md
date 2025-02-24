@@ -8,7 +8,7 @@ See instructions. Delete this line and place the Product Vision Statement here.
 
 ## User stories
 
-See instructions. Delete this line and place a link to the user stories here.
+[User Stories](https://github.com/software-students-spring2025/2-web-app-sjsj/issues)
 
 ## Steps necessary to run the software
 
@@ -16,4 +16,4 @@ See instructions. Delete this line and place instructions to download, configure
 
 ## Task boards
 
-See instructions. Delete this line and place a link to the task boards here.
+[SJSJ – Sprint 1](https://github.com/orgs/software-students-spring2025/projects/48/views/1)
