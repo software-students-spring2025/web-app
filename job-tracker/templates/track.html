@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block container %}
+<main>
+    <form method="POST" class="search" action="/track">
+        <label for="search">Search by...</label>
+        <select name="status" id="status">
+            <optgroup label="Status">
+                <option value="Applied">Applied</option>
+                <option value="Interviewing">Interviewing</option>
+                <option value="Rejected">Rejected</option>
+            </optgroup>
+            <optgroup label="Date">
+                <option value="ascending">Most recent (default)</option>
+                <option value="descending">Least recent</option>
+            </optgroup>
+        </select>
+        <button type="submit">Search</button>
+    </form>
+
+
+    <table class="app track-header">
+        <tr>
+            <th>Company</th>
+            <th>Role</th>
+            <th>Category</th>
+            <th>Location</th>
+            <th>Flexibility</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Link</th>
+        </tr>
+        {% for app in applications %}
+        <tr class="app">
+            <td class="company">{{app.company}}</td>
+            <td class="role">{{app.role}}</td>
+            <td class="category">{{app.category}}</td>
+            <td class="location">{{app.location}}</td>
+            <td class="flexibility">{{app.flexibility}}</td>
+            <td class="status">{{app.status}}</td>
+            <td class="date">{{app.date}}</td>
+            <td class="link"><a href="{{ app.link }}">link</a></td>
+        </tr>
+        {%endfor%}
+    </table>
+</main>
+{% endblock %}
