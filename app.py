@@ -153,7 +153,7 @@ def analysis():
 @app.route("/edit_dream")
 def edit_dream():
     # 获取 URL 参数中的 dream_id
-    dream_id = request.args.get("id")
+    dream_id = request.args.get("dream_id")
     # 从 session 中获取当前登录用户名
     username = session.get("username")
     
