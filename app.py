@@ -22,6 +22,14 @@ def create_app():
         """
         return "<p>Hello, World!</p>"
     
+    @app.route("/search")
+    def show_search():
+        return render_template("search.html")
+    
+    @app.errorhandler(Exception)
+    def handle_error(e):
+        return render_template("error.html", error=e)
+    
     return app
 
 
