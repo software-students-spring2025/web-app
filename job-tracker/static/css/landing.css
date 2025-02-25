@@ -1,0 +1,25 @@
+/* Landing Page Specific Styles */
+.landing-container {
+    background: url('../images/LandingDesign.png') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    color: white;
+    padding: 20px;
+}
+
+.landing-content h2 {
+    font-size: 32px;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.landing-content h3 {
+    font-size: 20px;
+    font-weight: normal;
+    margin: 10px 0;
+}
