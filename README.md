@@ -12,7 +12,13 @@ Gathr simplifies event planning for organizers and guests by providing a platfor
 
 ## Steps necessary to run the software
 
-See instructions. Delete this line and place instructions to download, configure, and run the software here.
+1. Clone the project: `git clone https://github.com/software-students-spring2025/2-web-app-the-get-requesters.git`
+2. `cd` into the project directory: `cd 2-web-app-the-get-requesters`
+3. Set up a Virtual Environment: `python3 -m venv venv`
+4. Activate the Virtual Environment: `source venv/bin/activate`
+5. Install the necessary libraries: `pip install -r requirements.txt`
+6. Run the web app: `python3 app.py`
+7. View the web app in the browser: `http://localhost:5001/`
 
 ## Task boards
 
