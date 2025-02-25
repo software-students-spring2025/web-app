@@ -7,21 +7,16 @@ import pymongo
 from bson.objectid import ObjectId
 from dotenv import load_dotenv, dotenv_values
 
-<<<<<<< Updated upstream
-load_dotenv()  # load environment variables from .env file
-=======
+
 load_dotenv(dotenv_path='static/.env')  # load environment variables from .env file
->>>>>>> Stashed changes
 
 
 def create_app():
     app = Flask(__name__)
-<<<<<<< Updated upstream
-=======
+
     app.config['TEMPLATES_AUTO_RELOAD'] = True
     app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
->>>>>>> Stashed changes
 
     config = dotenv_values()
     app.config.from_mapping(config)
@@ -57,11 +52,8 @@ def create_app():
     # home page
     @app.route('/home')
     def home():
-<<<<<<< Updated upstream
-=======
-        # calculations for dashboard
 
->>>>>>> Stashed changes
+        # calculations for dashboard
         # finding total apps of user
         total = db.Apps.count_documents({"user": loggedUser})
 
@@ -93,20 +85,6 @@ def create_app():
         docs_month = list(docs_month_cursor)
 
         # finding number of apps based on status
-<<<<<<< Updated upstream
-        accepted = db.Apps.count_documents({
-            "status": "Accepted",
-            "user": loggedUser
-        })
-        interviewing = db.Apps.count_documents({
-            "status": "Interviewing",
-            "user": loggedUser
-        })
-        rejected = db.Apps.count_documents({
-            "status": "Rejected",
-            "user": loggedUser
-        })
-=======
         accepted = list(
             db.Apps.find({
                 "status": "Accepted",
@@ -122,17 +100,12 @@ def create_app():
                 "status": "Rejected",
                 "user": loggedUser
             }))
->>>>>>> Stashed changes
 
         return render_template("home.html",
                                week=len(docs_week),
                                month=len(docs_month),
                                total=total,
-<<<<<<< Updated upstream
-                               accepted=accepted,
-                               interviewing=interviewing,
-                               rejected=rejected)
-=======
+
                                accepted=len(accepted),
                                interviewing=len(interviewing),
                                rejected=len(rejected))
@@ -156,7 +129,6 @@ def create_app():
 
         # get request
         return render_template("edit-profile.html", user=user)
->>>>>>> Stashed changes
 
     # job tracking page
     @app.route('/track', methods=['GET', 'POST'])
@@ -164,23 +136,7 @@ def create_app():
         # post request
         if request.method == 'POST':
             # get user input from search bar
-<<<<<<< Updated upstream
-            choice = request.form.get('status')
 
-            if choice.lower() in 'applied interviewing rejected':
-                applications = db.Apps.find({
-                    "user": loggedUser,
-                    "status": choice
-                })
-            elif choice.lower() == 'descending':
-                applications = db.Apps.find({
-                    "user": loggedUser
-                }).sort("date", -1)
-            elif choice.lower() == 'ascending':
-                applications = db.Apps.find({
-                    "user": loggedUser
-                }).sort("date", 1)
-=======
             search_query = request.form.get('search')
 
             # search applications based on input (just company name for now)
@@ -188,7 +144,6 @@ def create_app():
                 "user": loggedUser,
                 "company": search_query
             })
->>>>>>> Stashed changes
 
             return render_template("track.html", applications=applications)
 
@@ -196,19 +151,7 @@ def create_app():
         applications = db.Apps.find({"user": loggedUser})
         return render_template("track.html", applications=applications)
 
-<<<<<<< Updated upstream
-    # delete app
-    @app.route('/delete', methods=['GET', 'POST'])
-    def delete():
-        # post request
-        # if request.method == 'POST':
-        db.Apps.delete_one({"_id": ObjectId('67bdf16a3028f7eee227824d')})
 
-        applications = db.Apps.find({"user": loggedUser})
-        return render_template("delete.html", applications=applications)
-
-=======
->>>>>>> Stashed changes
     @app.errorhandler(Exception)
     def handle_error(e):
         """
@@ -229,9 +172,6 @@ if __name__ == "__main__":
     FLASK_PORT = os.getenv("FLASK_PORT", "5000")
     FLASK_ENV = os.getenv("FLASK_ENV")
     print(f"FLASK_ENV: {FLASK_ENV}, FLASK_PORT: {FLASK_PORT}")
-<<<<<<< Updated upstream
 
-    app.run(port=FLASK_PORT)
-=======
+
     app.run(port=FLASK_PORT, debug=True)
->>>>>>> Stashed changes
