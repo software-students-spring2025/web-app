@@ -1,13 +1,29 @@
 from flask import Flask, render_template as rt, session, redirect, url_for, request
+import pymongo
 app = Flask(__name__)
 app.secret_key = 'duck'
 
-#This is just a temp database which I will later replace with a mongoDB database
-menu_items = [
-    {'id': 'scone', 'name': 'Scone', 'description': 'Tasty savory scone made with love.', 'price': 5},
-    {'id': 'croissant', 'name': 'Croissant', 'description': 'Made fresh this morning by real ducks.', 'price': 3},
-    {'id': 'salad', 'name': 'Salad', 'description': 'Contains high fructose corn syrup.', 'price': 1000}
-    ]
+client = pymongo.MongoClient("mongodb://localhost:27017/")
+db = client.my_database
+menu_collection = db.menu_items
+menu_collection.drop()
+if menu_collection.count_documents({}) == 0:
+    menu_collection.insert_many([
+        {'id': 'baguette', 'name': 'Baguette', 'description': 'A scrumptious baguette that would make France proud.', 'price': 1},
+        {'id': 'croissant', 'name': 'Croissant', 'description': 'Decadent and Flakey. Perfect piece of bread.', 'price': 2},
+        {'id': 'focaccia', 'name': 'Focaccia', 'description': 'Oven baked Italian flat bread. Very Tasty!.', 'price': 3},
+        {'id': 'sourdough', 'name': 'Sourdough', 'description': "Tangy and delicious loaf that you'll love", 'price': 4},
+        {'id': 'whole_grain', 'name': 'Whole Grain', 'description': "Tangy and delicious loaf that you'll love", 'price': 5},
+        {'id': 'almond_cookie', 'name': 'Almond Cookie', 'description': "Delicious cookie topped with Almonds",'price': 6},
+        {'id': 'chocolate_cookie', 'name': 'Chocolate Cookie', 'description': "Rich and flavorful cookie for your chocolate cravings",'price': 7},
+        {'id': 'chocolate_chip_cookie', 'name': 'Chocolate Chip Cookie', 'description': "Our take on the classic simple cookie!", 'price': 8},
+        {'id': 'chocolate_filled_cookie', 'name': 'Chocolate Filled Cookie', 'description': "Enjoy a crisp cookie and gooey center", 'price': 9},
+        {'id': 'gingerbread', 'name': 'Gingerbread', 'description': "Enjoy the seasonal cookie all year round!", 'price': 10},
+        {'id': 'matcha_cookie', 'name': 'Matcha Cookie', 'description': "Made with fresh green tea leaves at our bakery!", 'price': 11},
+        {'id': 'peanut_utter_cookie', 'name': 'Peanut Butter Cookie', 'description': "Soft and chewy while being sweet and salty", 'price': 12},
+        {'id': 'thumbprint_cookies', 'name': 'Thumbprint Cookies', 'description': "Shortbread Cookies with a delicious jam in the middle", 'price': 13},
+    ])
+menu_collection.create_index([("name", "text"), ("description", "text")])
 
 @app.route("/")
 def home():
@@ -23,19 +39,27 @@ def contact():
 
 @app.route('/order')
 def order():
-    query = request.args.get('query', '').strip().lower()
+    query = request.args.get('query', '').strip()
     if query:
-        filtered = [item for item in menu_items if query in item['name'].lower() or query in item['description'].lower()]
+        regex = {"$regex": query, "$options": "i"}
+        menu_items = list(menu_collection.find(
+            {"$or": [{"name": regex}, {"description": regex}]},
+            {"_id": 0}))
     else:
-        filtered = menu_items
-    return rt('order.html', menu_items=filtered)
+        menu_items = list(menu_collection.find({}, {"_id": 0}))
+    return rt('order.html', menu_items=menu_items)
 
 @app.route('/item_info/<item_id>')
 def item_info(item_id):
-    item = next((item for item in menu_items if item['id'] == item_id), None)
+    item = menu_collection.find_one({'id': item_id}, {"_id": 0})
     if not item:
-        return f"Item '{item_id}' not found.", 404
+        return 404
     return rt('item_info.html', item=item)
+
+@app.before_request
+def initialize_cart():
+    if 'cart' not in session:
+        session['cart'] = {}
 
 @app.route('/add_to_cart/<item_id>')
 def add_to_cart(item_id):
@@ -48,11 +72,11 @@ def add_to_cart(item_id):
 def cart():
     cart = session.get('cart', {})
     cart_items = []
-    for item in menu_items:
-        if item['id'] in cart:
-            item_copy = item.copy()
-            item_copy['quantity'] = cart[item['id']]
-            cart_items.append(item_copy)
+    for item_id, quantity in cart.items():
+        item = menu_collection.find_one({'id': item_id}, {"_id": 0})
+        if item:
+            item['quantity'] = quantity
+            cart_items.append(item)
     total_items = sum(cart.values())
     return rt('cart.html', cart_items=cart_items, total_items=total_items)
 
@@ -72,14 +96,14 @@ def checkout():
     cart = session.get('cart', {})
     cart_items = []
     total_price = 0
-    for item in menu_items:
-        if item['id'] in cart:
-            item_copy = item.copy()
-            item_copy['quantity'] = cart[item['id']]
-            item_total = item_copy['price'] * item_copy['quantity']
-            item_copy['total'] = item_total
+    for item_id, quantity in cart.items():
+        item = menu_collection.find_one({'id': item_id}, {"_id": 0})
+        if item:
+            item['quantity'] = quantity
+            item_total = item['price'] * quantity
+            item['total'] = item_total
             total_price += item_total
-            cart_items.append(item_copy)
+            cart_items.append(item)
     return rt('checkout.html', cart_items=cart_items, total_price=total_price)
 
 if __name__ == "__main__":
