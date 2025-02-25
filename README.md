@@ -4,7 +4,7 @@ A little exercise to build a web application following an agile development proc
 
 ## Product vision statement
 
-See instructions. Delete this line and place the Product Vision Statement here.
+A mobile friendly app that helps travelers find compatible travel partners based on their personal preferences and traveling habits which fosters a new way to meet friends and emphasize traveling safely.
 
 ## User stories
 
