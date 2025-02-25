@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friend Profile - RecipeShare</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <header>
+        <a href="friends-list.html" class="back-button">← Friends</a>
+        <h1>Friend Profile</h1>
+    </header>
+    
+    <div class="message-container" style="display: none;">
+        <div class="message info">Example message</div>
+    </div>
+    
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-image">
+                <img src="../images/profile-placeholder.jpg" alt="Profile Picture">
+            </div>
+            <h2 class="profile-name">Alex Johnson</h2>
+            <p class="profile-bio">Passionate about baking and Italian cuisine.</p>
+            
+            <div class="profile-stats">
+                <div class="stat">
+                    <span class="stat-value">12</span>
+                    <span class="stat-label">Recipes</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">Italian</span>
+                    <span class="stat-label">Favorite Cuisine</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">Intermediate</span>
+                    <span class="stat-label">Skill Level</span>
+                </div>
+            </div>
+            
+            <form action="friend-profile.html" method="POST">
+                <input type="hidden" name="user_id" value="1">
+                <button type="submit" class="follow-button following">Following</button>
+            </form>
+        </div>
+        
+        <div class="profile-tabs">
+            <a href="friend-profile.html" class="profile-tab active">Recipes</a>
+            <a href="friend-profile.html?tab=favorites" class="profile-tab">Favorites</a>
+        </div>
+        
+        <div class="tab-content active">
+            <div class="recipe-container">
+                <a href="../recipes/recipe-detail.html" class="recipe-card">
+                    <div class="recipe-image">
+                        <img src="../images/placeholder.jpg" alt="Pasta Recipe">
+                    </div>
+                    <div class="recipe-info">
+                        <h3>Homemade Pasta</h3>
+                        <div class="recipe-meta">
+                            <span class="time">45 mins</span>
+                            <span class="difficulty">Intermediate</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <a href="../recipes/recipe-detail.html" class="recipe-card">
+                    <div class="recipe-image">
+                        <img src="../images/placeholder.jpg" alt="Tiramisu Recipe">
+                    </div>
+                    <div class="recipe-info">
+                        <h3>Classic Tiramisu</h3>
+                        <div class="recipe-meta">
+                            <span class="time">60 mins</span>
+                            <span class="difficulty">Intermediate</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <a href="../recipes/recipe-detail.html" class="recipe-card">
+                    <div class="recipe-image">
+                        <img src="../images/placeholder.jpg" alt="Pizza Recipe">
+                    </div>
+                    <div class="recipe-info">
+                        <h3>Neapolitan Pizza</h3>
+                        <div class="recipe-meta">
+                            <span class="time">90 mins</span>
+                            <span class="difficulty">Advanced</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

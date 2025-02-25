@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - RecipeShare</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <header>
+        <a href="../index.html" class="back-button">← Home</a>
+        <h1>My Profile</h1>
+        <a href="edit-profile.html" class="edit-button">Edit</a>
+    </header>
+    
+    <div class="message-container" style="display: none;">
+        <div class="message info">Example message</div>
+    </div>
+    
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-image">
+                <img src="../images/profile-placeholder.jpg" alt="Profile Picture">
+            </div>
+            <h2 class="profile-name">Username</h2>
+            <p class="profile-bio">Food enthusiast who loves experimenting with new flavors.</p>
+        </div>
+        
+        <div class="profile-tabs">
+            <a href="profile.html" class="profile-tab active">My Recipes</a>
+            <a href="profile.html?tab=favorites" class="profile-tab">Favorites</a>
+        </div>
+        
+        <div class="tab-content active">
+            <div class="recipe-container">
+                <!-- Example recipe card -->
+                <a href="../recipes/recipe-detail.html" class="recipe-card">
+                    <div class="recipe-image">
+                        <img src="../images/placeholder.jpg" alt="Chocolate Cake">
+                    </div>
+                    <div class="recipe-info">
+                        <h3>Chocolate Cake</h3>
+                        <div class="recipe-meta">
+                            <span class="time">60 mins</span>
+                            <span class="difficulty">Intermediate</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <a href="../recipes/recipe-detail.html" class="recipe-card">
+                    <div class="recipe-image">
+                        <img src="../images/placeholder.jpg" alt="Grilled Salmon">
+                    </div>
+                    <div class="recipe-info">
+                        <h3>Grilled Salmon</h3>
+                        <div class="recipe-meta">
+                            <span class="time">30 mins</span>
+                            <span class="difficulty">Easy</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <a href="../recipes/create-recipe.html" class="floating-action-button">+</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
