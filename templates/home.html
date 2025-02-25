@@ -1,12 +1,55 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>home Page</title>
+    <title>Home Page</title>
     <link rel="stylesheet" href="/static/css/style.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap"
       rel="stylesheet"
     />
+    <style>
+      /* home-container 设置为 relative，使内部绝对定位的元素以此为参考 */
+      .home-container {
+        position: relative;
+        padding: 12px;
+      }
+      /* 星星容器绝对定位于 home-container 内 */
+      #star-container {
+        position: absolute;
+        top: 90px;
+        left: 140px;
+        width: 70%;
+        height: 550px; /* 可根据需要调整 */
+        pointer-events: auto; /* 如果不需要星星本身阻挡其他点击，可添加 */
+      }
+      /* 每个星星使用链接包裹，样式设置为绝对定位 */
+      .star {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        cursor: pointer;
+        pointer-events: auto; /* 链接可点击 */
+      }
+      /* tooltip 效果 */
+      .star:hover::after {
+        content: attr(title);
+        position: absolute;
+        bottom: -25px;
+        left: 0;
+        background: rgba(255, 255, 255, 0.8);
+        color: #000;
+        padding: 3px 5px;
+        border-radius: 3px;
+        white-space: nowrap;
+        z-index: 10;
+      }
+      /* 为 img 设置铺满星星 div */
+      .star img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    </style>
   </head>
   <body>
     <!-- Flash message block -->
@@ -30,14 +73,72 @@
         alt="search icon"
       />
     </nav>
+    
+    <!-- 合并 bubble, star, bear 三个容器 -->
     <div class="home-container">
       <div class="bubble-container">
         <img class="bubble-img" src="/static/images/thought_bubble.svg" alt="thought-bubble">
       </div>
+      
+      <!-- 星星容器：星星会随机定位在该区域内 -->
+      <div id="star-container">
+        {% for dream in dreams %}
+        <a href="/edit_dream?dream_id={{ dream.id }}" class="star" title="{{ dream.description }}">
+          <img src="/static/images/star.svg" alt="star icon">
+        </a>        
+        {% endfor %}
+      </div>
+      
+      
       <div class="bear-container">
         <img src="/static/images/homepg_bear.svg" alt="home-bear" />
         <a href="/add_dream"><button class="dream-button">Add Dream</button></a>
       </div>
     </div>
+    
+    <script>
+      window.onload = function() {
+        const container = document.getElementById('star-container');
+        const containerWidth = container.offsetWidth;
+        const containerHeight = container.offsetHeight;
+        const stars = Array.from(container.getElementsByClassName('star'));
+        const placedStars = []; // 保存已经定位好的星星
+    
+        stars.forEach(star => {
+          let maxAttempts = 100;  // 避免无限循环，最多尝试100次
+          let placed = false;
+    
+          while (!placed && maxAttempts > 0) {
+            // 随机生成 left 和 top 值
+            const left = Math.random() * (containerWidth - star.offsetWidth);
+            const top = Math.random() * (containerHeight - star.offsetHeight);
+            star.style.left = left + 'px';
+            star.style.top = top + 'px';
+    
+            // 获取当前星星的位置信息
+            const starRect = star.getBoundingClientRect();
+            // 检测是否与已放置的星星重叠
+            const overlap = placedStars.some(otherStar => {
+              const otherRect = otherStar.getBoundingClientRect();
+              return !(
+                starRect.right < otherRect.left ||
+                starRect.left > otherRect.right ||
+                starRect.bottom < otherRect.top ||
+                starRect.top > otherRect.bottom
+              );
+            });
+    
+            if (!overlap) {
+              placed = true;
+              placedStars.push(star);
+            }
+    
+            maxAttempts--;
+          }
+         
+        })
+      };
+    </script>
+    
   </body>
 </html>

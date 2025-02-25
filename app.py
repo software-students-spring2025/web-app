@@ -103,11 +103,14 @@ def add_dream():
         tags = [tag.strip() for tag in tags_str.split(",") if tag.strip()] if tags_str else []
         
         # Construct a new dream object
+        import uuid
         dream_data = {
-            "date": dream_date,
-            "description": description,
-            "tags": tags
-        }
+        "id": str(uuid.uuid4()), 
+        "date": dream_date,
+        "description": description,
+        "tags": tags
+}
+
         
         username = session.get("username")
         result = users_collection.update_one(
@@ -132,8 +135,14 @@ def add_dream():
 # home page
 @app.route("/home")
 def home():
-    user = session.get('username')
-    return render_template("home.html", username=user)
+    username = session.get("username")
+    if not username:
+        return redirect(url_for("index"))
+    
+    user_doc = users_collection.find_one({"username": username})
+    dreams = user_doc.get("dreams", [])
+    
+    return render_template("home.html", username=username, dreams=dreams)
 
 # analysis page
 @app.route("/analysis")
@@ -143,8 +152,42 @@ def analysis():
 #edit_dream page
 @app.route("/edit_dream")
 def edit_dream():
+    # 获取 URL 参数中的 dream_id
+    dream_id = request.args.get("id")
+    # 从 session 中获取当前登录用户名
+    username = session.get("username")
+    
+    # 检查 username 和 dream_id 是否存在
+    if not username or not dream_id:
+        flash("Invalid access. Please select a dream to edit.", "error")
+        return redirect(url_for("home"))
+    
+    # 输出调试信息
+    app.logger.debug(f"edit_dream: username={username}, dream_id={dream_id}")
+    
+    # 从数据库中获取该用户的文档
+    user_doc = users_collection.find_one({"username": username})
+    if not user_doc or "dreams" not in user_doc:
+        flash("User data error.", "error")
+        return redirect(url_for("home"))
+    
+    # 查找匹配的梦境，确保每个梦都有一个唯一的 id 字段
+    dream = None
+    for d in user_doc["dreams"]:
+        if d.get("id") == dream_id:
+            dream = d
+            break
+    
+    if not dream:
+        flash("Dream not found.", "error")
+        return redirect(url_for("home"))
+    
+    # 定义一些示例标签，可根据需要调整
     tags = ["Happy", "Funny", "Excited", "XXXX"]
-    return render_template("edit_dream.html", tags=tags)
+    
+    # 渲染 edit_dream 模板，并传递当前梦的数据和标签
+    return render_template("edit_dream.html", dream=dream, tags=tags)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
