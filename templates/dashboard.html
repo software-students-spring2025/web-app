@@ -61,6 +61,8 @@ data = {
                 <input type="text" id="new-task" placeholder="New task">
                 <input type="date" id="task-date">
                 <button onclick="addTask()">Add Task</button>
+                <button onclick="editTask()">Edit Task</button>
+                <button onclick="deleteTask()">Delete Task</button>
             </div>
 
             <div id="study-sessions">
@@ -71,6 +73,9 @@ data = {
                 <input type="text" id="new-session" placeholder="New session">
                 <input type="date" id="session-date">
                 <button onclick="addSession()">Add Session</button>
+                <button onclick="editSession()">Edit Session</button>
+                <button onclick="deleteSession()">Delete Session</button>
+                <button onclick="startStudySession()">Start Study Session</button>
             </div>
 
             <div>
@@ -170,6 +175,21 @@ data = {
             document.getElementById('task-date').value = '';
         }
 
+        function editTask(className, index) {
+            let newTask = prompt("Edit your task:", classData[className].tasks[index]);
+            if (newTask) {
+                classData[className].tasks[index] = newTask;
+                localStorage.setItem('classData', JSON.stringify(classData));
+                loadTasks(className);
+            }
+        }
+        function deleteTask(className, index) {
+            classData[className].tasks.splice(index, 1);
+            localStorage.setItem('classData', JSON.stringify(classData));
+            loadTasks(className);
+        }
+
+        // study sessions
         function addSession() {
             let sessionName = document.getElementById('new-session').value;
             let sessionDate = document.getElementById('session-date').value;
@@ -188,6 +208,29 @@ data = {
 
             document.getElementById('new-session').value = '';
             document.getElementById('session-date').value = '';
+        }
+
+        function editSession(className, index) {
+            let newSession = prompt('Edit session:', classData[className].sessions[index]);
+            if (newSession) {
+                classData[className].sessions[index] = newSession;
+                localStorage.setItem('classData', JSON.stringify(classData));
+                loadSessions(className);
+            }
+        }
+
+        function deleteSession(className, index) {
+            classData[className].sessions.splice(index, 1);
+            localStorage.setItem('classData', JSON.stringify(classData));
+            loadSessions(className);
+        }
+
+        function startStudySession() {
+            let duration = prompt("Enter study duration in minutes:");
+            let goals = prompt("Enter your study goals:");
+            if (duration && goals) {
+                alert(`Study session started for ${duration} minutes. Goals: ${goals}`);
+            }
         }
 
         function backToClasses() {
