@@ -12,7 +12,7 @@ Mongo_DBNAME= os.getenv("MONGO_DBNAME")
 if not uri:
     raise ValueError("MONGO_CONNECTION is not set in the .env file")
 
-#Create a new client and connect to the server
+# Create a new client and connect to the server
 client = MongoClient(uri, server_api=ServerApi('1'), tlsCAFile=certifi.where())
 #acess database
 #create DB/Acess
