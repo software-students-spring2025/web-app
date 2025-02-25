@@ -23,30 +23,44 @@ A minimalist and intuitive to-do list app designed for simple and quick task man
 
    - **Purpose:** Authenticate the user.
    - **Database Interaction:** Verify credentials against stored user data.
+   - Endpoints:
+      - POST /login (username + passsword)
+      - POST /signup (username + passsword)
 
 2. **Todo List Screen:**
 
    - **Purpose:** Display all todos (retrieved from the database) in a clear, ordered manner (e.g., by deadline).
    - **Database Interaction:** Reads data from the database.
-
+   - Endpoints:
+      - GET /todos
+        
 3. **Todo Detail Screen:**
 
    - **Purpose:** Show detailed information for a selected todo, including deadline, details, and status.
    - **Database Interaction:** Displays data fetched from the database.
-
+   - Endpoints:
+      - GET /todos/<id>
+        
 4. **Add Todo Screen:**
 
    - **Purpose:** Allow the user to add a new todo.
    - **Database Interaction:** Inserts new data into the database.
+   - Endpoints:
+      - POST /todos
 
 5. **Edit/Delete Todo Screen:**
 
    - **Purpose:** Enable the user to modify an existing todo (update deadline, details, etc.).
    - **Database Interaction:** Updates existing data in the database.
+  - Endpoints:
+      - PUT /todos/<id>
+      - DELETE /todos/<id>
 
 6. **Search Screen:**
    - **Purpose:** Allow the user to search for todos using keywords or deadlines.
    - **Database Interaction:** Queries the database based on user input.
+   - Endpoints:
+      - (same as above) GET /todos?filtersxyz=123
 
 ## Steps necessary to run the software
 
