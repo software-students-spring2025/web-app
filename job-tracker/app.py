@@ -1,11 +1,7 @@
 #!/usr/bin/env python3
-"""
-Example flask-based web application.
-See the README.md file for instructions how to set up and run the app in development mode.
-"""
-
 import os
 import datetime
+import certifi
 from flask import Flask, render_template, request, redirect, url_for
 import pymongo
 from bson.objectid import ObjectId
@@ -15,16 +11,63 @@ load_dotenv()  # load environment variables from .env file
 
 
 def create_app():
-    """
-    Create and configure the Flask application.
-    returns: app: the Flask application object
-    """
-
     app = Flask(__name__)
 
+    config = dotenv_values()
+    app.config.from_mapping(config)
+
+    cxn = pymongo.MongoClient(os.getenv("MONGO_URI"),
+                              tlsCAFile=certifi.where())
+    db = cxn[os.getenv("MONGO_DBNAME")]
+
+    try:
+        cxn.admin.command("ping")
+        print(" *", "Connected to MongoDB!")
+    except Exception as e:
+        print(" * MongoDB connection error:", e)
+
+    # ObjectId of current logged in user. Will have to fetch this with pymongo commands later
+    loggedUser = ObjectId('67bd0feb736f2e7829d2dbe9')
+
+    # landing page
     @app.route('/')
+    def landing():
+        return render_template("landing.html")
+
+    # login page
+    @app.route('/login')
+    def login():
+        return render_template("login.html")
+
+    # signup page
+    @app.route('/signup')
+    def signup():
+        return render_template("signup.html")
+
+    # home page
+    @app.route('/home')
     def home():
-        return render_template("index.html")
+        return render_template("home.html")
+
+    # job tracking page
+    @app.route('/track', methods=['GET', 'POST'])
+    def track():
+        # post request
+        if request.method == 'POST':
+            # get user input from search bar
+            search_query = request.form.get('search')
+
+            # search applications based on input (just company name for now)
+            applications = db.Apps.find({
+                "user": loggedUser,
+                "company": search_query
+            })
+
+            return render_template("track.html", applications=applications)
+
+        # get request
+        applications = db.Apps.find({"user": loggedUser})
+        return render_template("track.html", applications=applications)
 
     @app.errorhandler(Exception)
     def handle_error(e):
