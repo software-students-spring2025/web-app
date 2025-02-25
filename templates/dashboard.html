@@ -18,25 +18,12 @@
         </nav>
     </header>
     
-<!--
-data from the database will be passed to the page in this format:
-
-data = {
-    deadlines = [{}, {}],
-    classes = [{}, {}], 
-    tasks = [{}, {}]
-}
-    
-<li>Example Deadline - <strong>March 1</strong></li>
--->
 
     <main>
         <section id="deadlines">
             <h2>Upcoming Deadlines</h2>
             <ul id="deadline-list">
-                {% for deadline in data["deadlines"] %}
-                    <li>{{deadline.name}} - <strong>{{deadline.date}}</strong></li>
-                {% endfor %}
+
             </ul>
         </section>
         
