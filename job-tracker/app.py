@@ -7,11 +7,13 @@ import pymongo
 from bson.objectid import ObjectId
 from dotenv import load_dotenv, dotenv_values
 
-load_dotenv()  # load environment variables from .env file
+load_dotenv(dotenv_path='static/.env')  # load environment variables from .env file
 
 
 def create_app():
     app = Flask(__name__)
+    app.config['TEMPLATES_AUTO_RELOAD'] = True
+
 
     config = dotenv_values()
     app.config.from_mapping(config)
@@ -164,5 +166,4 @@ if __name__ == "__main__":
     FLASK_PORT = os.getenv("FLASK_PORT", "5000")
     FLASK_ENV = os.getenv("FLASK_ENV")
     print(f"FLASK_ENV: {FLASK_ENV}, FLASK_PORT: {FLASK_PORT}")
-
-    app.run(port=FLASK_PORT)
+    app.run(port=FLASK_PORT, debug=True)
