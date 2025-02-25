@@ -47,8 +47,6 @@ def create_app():
     # home page
     @app.route('/home')
     def home():
-        # calculations for dashboard
-
         # finding total apps of user
         total = db.Apps.count_documents({"user": loggedUser})
 
@@ -80,29 +78,26 @@ def create_app():
         docs_month = list(docs_month_cursor)
 
         # finding number of apps based on status
-        accepted = list(
-            db.Apps.find({
-                "status": "Accepted",
-                "user": loggedUser
-            }))
-        interviewing = list(
-            db.Apps.find({
-                "status": "Interviewing",
-                "user": loggedUser
-            }))
-        rejected = list(
-            db.Apps.find({
-                "status": "Rejected",
-                "user": loggedUser
-            }))
+        accepted = db.Apps.count_documents({
+            "status": "Accepted",
+            "user": loggedUser
+        })
+        interviewing = db.Apps.count_documents({
+            "status": "Interviewing",
+            "user": loggedUser
+        })
+        rejected = db.Apps.count_documents({
+            "status": "Rejected",
+            "user": loggedUser
+        })
 
         return render_template("home.html",
                                week=len(docs_week),
                                month=len(docs_month),
                                total=total,
-                               accepted=len(accepted),
-                               interviewing=len(interviewing),
-                               rejected=len(rejected))
+                               accepted=accepted,
+                               interviewing=interviewing,
+                               rejected=rejected)
 
     # edit profile page
     @app.route('/edit-profile', methods=['GET', 'POST'])
@@ -130,19 +125,37 @@ def create_app():
         # post request
         if request.method == 'POST':
             # get user input from search bar
-            search_query = request.form.get('search')
+            choice = request.form.get('status')
 
-            # search applications based on input (just company name for now)
-            applications = db.Apps.find({
-                "user": loggedUser,
-                "company": search_query
-            })
+            if choice.lower() in 'applied interviewing rejected':
+                applications = db.Apps.find({
+                    "user": loggedUser,
+                    "status": choice
+                })
+            elif choice.lower() == 'descending':
+                applications = db.Apps.find({
+                    "user": loggedUser
+                }).sort("date", -1)
+            elif choice.lower() == 'ascending':
+                applications = db.Apps.find({
+                    "user": loggedUser
+                }).sort("date", 1)
 
             return render_template("track.html", applications=applications)
 
         # get request
         applications = db.Apps.find({"user": loggedUser})
         return render_template("track.html", applications=applications)
+
+    # delete app
+    @app.route('/delete', methods=['GET', 'POST'])
+    def delete():
+        # post request
+        # if request.method == 'POST':
+        db.Apps.delete_one({"_id": ObjectId('67bdf16a3028f7eee227824d')})
+
+        applications = db.Apps.find({"user": loggedUser})
+        return render_template("delete.html", applications=applications)
 
     @app.errorhandler(Exception)
     def handle_error(e):
