@@ -6,21 +6,12 @@ These functions are intended to be called by the main Flask application (app.py)
 #import pymongo
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
-
 import certifi
 import os
 from dotenv import load_dotenv
 from bson.objectid import ObjectId
 #import datetime
-load_dotenv()
-uri = os.getenv("MONGO_URI")
-Mongo_DBNAME= os.getenv("MONGO_DBNAME")
-client = MongoClient(uri, server_api=ServerApi('1'), tlsCAFile=certifi.where())
-#acess database
-#create DB/Acess
-myDb= client["DuoProject"]
-#create table
-myTable= myDb["users"]
+
 
 ######## USER AUTHENTICATION
 
@@ -31,7 +22,7 @@ myTable= myDb["users"]
 ##          If login is valid, return the user ID
 ##          If login is not valid, return None
 ## 
-def pwd_auth(username, password):
+def pwd_auth(mydb, username, password):
     return None
 
 
@@ -41,7 +32,7 @@ def pwd_auth(username, password):
 ##          If username already exists, return None
 ##          If username is new, create a new user entry in the data table and return the user ID
 ## 
-def new_account(username, password):
+def new_account(mydb, username, password):
     return None
 
 
@@ -54,7 +45,7 @@ def new_account(username, password):
 ## Function: get deadlines
 ## Usage: get all deadlines belonging to a specific user
 ## 
-def get_deadlines(username):
+def get_deadlines(mydb, userID):
     return None
 
 
@@ -62,7 +53,7 @@ def get_deadlines(username):
 ## Function: get classes
 ## Usage: get all classes belonging to a specific user
 ## 
-def get_classes(username):
+def get_classes(mydb, userID):
     return None
 
 
@@ -70,7 +61,7 @@ def get_classes(username):
 ## Function: get study sessions
 ## Usage: get all study sessions belonging to a specific user
 ## 
-def get_study_sessions(username):
+def get_study_sessions(mydb, userID):
     return None
 
 
@@ -78,7 +69,7 @@ def get_study_sessions(username):
 ## Function: get tasks
 ## Usage: get all current tasks belonging to a specific user
 ## 
-def get_tasks(username):
+def get_tasks(mydb, userID):
     return None
 
 
@@ -86,7 +77,7 @@ def get_tasks(username):
 ## Function: get info associated with a user
 ## Usage: get all account info belonging to a specific user
 ## 
-def get_user_info(username):
+def get_user_info(mydb, userID):
     return None
 
 
@@ -95,10 +86,18 @@ def get_user_info(username):
 
 
 ##
-## Function: delete a deadline
-## Usage: delete a deadline from the database
+## Function: delete an assignment
+## Usage: delete an assignment from the database
 ## 
-def delete_deadline(username, deadline):
+def delete_assignment(mydb, userID, assignmentID):
+    return None
+
+
+##
+## Function: delete an exam
+## Usage: delete an exam from the database
+## 
+def delete_exam(mydb, userID, examID):
     return None
 
 
@@ -106,7 +105,7 @@ def delete_deadline(username, deadline):
 ## Function: delete a study session
 ## Usage: delete a study session from the database
 ## 
-def delete_study_session(username, study_session):
+def delete_study_session(mydb, userID, study_sessionID):
     return None
 
 
@@ -114,7 +113,7 @@ def delete_study_session(username, study_session):
 ## Function: delete a task
 ## Usage: delete a task from the database
 ## 
-def delete_task(username, study_session):
+def delete_task(mydb, userID, taskID):
     return None
 
 
@@ -122,7 +121,7 @@ def delete_task(username, study_session):
 ## Function: delete a class
 ## Usage: delete a class from the database
 ## 
-def delete_class(username, study_session):
+def delete_class(mydb, userID, classID):
     return None
 
 
@@ -134,5 +133,5 @@ def delete_class(username, study_session):
 ## Function: edit user info
 ## Usage: edit user info in user table according to specifications
 ## 
-def edit_profile(username, password, bio, pic, age):
+def edit_profile(mydb, userID, password, bio, pic, dark_mode):
     return None
