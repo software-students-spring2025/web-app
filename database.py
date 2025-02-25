@@ -3,6 +3,24 @@ This file contains custom helper functions necessary to load, process, and handl
 
 These functions are intended to be called by the main Flask application (app.py) and returned to it for use
 '''
+#import pymongo
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
+
+import certifi
+import os
+from dotenv import load_dotenv
+from bson.objectid import ObjectId
+#import datetime
+load_dotenv()
+uri = os.getenv("MONGO_URI")
+Mongo_DBNAME= os.getenv("MONGO_DBNAME")
+client = MongoClient(uri, server_api=ServerApi('1'), tlsCAFile=certifi.where())
+#acess database
+#create DB/Acess
+myDb= client["DuoProject"]
+#create table
+myTable= myDb["users"]
 
 ######## USER AUTHENTICATION
 
