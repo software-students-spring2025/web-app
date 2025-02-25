@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block container %}
+<main>
+    <p>getajob login page</p>
+    <form method="POST" class="login" action="/login">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit">Login</button>
+    </form>
+</main>
+{% endblock %}
