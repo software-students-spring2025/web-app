@@ -12,7 +12,7 @@ header{
     flex-direction: column;
     align-items: center;
 
-    /* background-color: aqua; */
+    
 }
 
 #top-left-username{
@@ -25,6 +25,7 @@ body {
     font-size: 45px;
     margin: 0;
     background-color: #ffffff;
+    /* background-color: aqua; */
 }
 
 main{

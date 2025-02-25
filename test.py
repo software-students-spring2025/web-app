@@ -54,17 +54,10 @@ def create_app():
     
     @app.route("/profile")
     def profile():
-        """
-        Route for the home page.
-        Returns:
-            rendered template (str): The rendered HTML template.
-        """
-
-        # docs = db.messages.find({}).sort("created_at", -1)
         return render_template("profile.html", 
                                userInfo={
                                    "username":"Rin",
-                                   "usertype":1,
+                                   "usertype":0,
                                    "avatar":"",
                                    "email":"yq2290@nyu.edu"
                                },
@@ -100,10 +93,38 @@ def create_app():
                                }])
        
 
+    @app.route("/admin_dashboard")
+    def admin_dashboard():
+        return render_template("admin-dashboard.html")
 
+    @app.route("/userlist")
+    def userlist():
+        return render_template("userlist.html", userInfo={
+                                   "username":"Rin",
+                                   "usertype":0,
+                                   "avatar":"",
+                                   "email":"yq2290@nyu.edu"
+                               },)
+    
+    @app.route("/search_user")
+    def search_user():
+        return render_template("search-user.html")
 
+    @app.route("/buildinglist")
+    def buildinglist():
+        return render_template("buildinglist.html")
+    
+    @app.route("/delete/<user_id>", methods=['POST'])
+    def delete_user_q(user_id):
+        print("req for delete user from Userlist")
+        return render_template("delete-user.html", username=user_id)
+    
 
-
+    @app.route("/delete/<user_id>", methods=['GET'])
+    def delete_user1(user_id):
+        print("req for delete user from Userlist")
+        return render_template("delete-user.html", username=user_id)
+    
 
 
 
