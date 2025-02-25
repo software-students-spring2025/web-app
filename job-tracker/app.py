@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import os
-import datetime
+from datetime import datetime, timedelta
 import certifi
 from flask import Flask, render_template, request, redirect, url_for
 import pymongo
@@ -47,7 +47,62 @@ def create_app():
     # home page
     @app.route('/home')
     def home():
-        return render_template("home.html")
+        # calculations for dashboard
+
+        # finding total apps of user
+        total = db.Apps.count_documents({"user": loggedUser})
+
+        # calculating dates
+        today = datetime.now()
+
+        week = today - timedelta(days=today.weekday())
+        month = datetime(today.year, today.month, 1)
+
+        iso_week = week.replace(hour=0, minute=0, second=0, microsecond=0)
+        iso_month = month.replace(hour=0, minute=0, second=0, microsecond=0)
+
+        # documents created this week and month
+        docs_week_cursor = db.Apps.find({
+            "date": {
+                "$gte": iso_week
+            },
+            "user": loggedUser
+        })
+        docs_month_cursor = db.Apps.find({
+            "date": {
+                "$gte": iso_month
+            },
+            "user": loggedUser
+        })
+
+        # convert to lists
+        docs_week = list(docs_week_cursor)
+        docs_month = list(docs_month_cursor)
+
+        # finding number of apps based on status
+        accepted = list(
+            db.Apps.find({
+                "status": "Accepted",
+                "user": loggedUser
+            }))
+        interviewing = list(
+            db.Apps.find({
+                "status": "Interviewing",
+                "user": loggedUser
+            }))
+        rejected = list(
+            db.Apps.find({
+                "status": "Rejected",
+                "user": loggedUser
+            }))
+
+        return render_template("home.html",
+                               week=len(docs_week),
+                               month=len(docs_month),
+                               total=total,
+                               accepted=len(accepted),
+                               interviewing=len(interviewing),
+                               rejected=len(rejected))
 
     # edit profile page
     @app.route('/edit-profile', methods=['GET', 'POST'])
