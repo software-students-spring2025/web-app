@@ -99,26 +99,6 @@ def create_app():
                                interviewing=interviewing,
                                rejected=rejected)
 
-    # edit profile page
-    @app.route('/edit-profile', methods=['GET', 'POST'])
-    def edit_profile():
-        user = db.Users.find_one({"_id": loggedUser})
-
-        # post request
-        if request.method == 'POST':
-            new_name = request.form.get('newUsername')
-
-            # update the database
-            db.Users.update_one({"_id": ObjectId(loggedUser)},
-                                {"$set": {
-                                    "username": new_name
-                                }})
-
-            return redirect(url_for('edit_profile'))
-
-        # get request
-        return render_template("edit-profile.html", user=user)
-
     # job tracking page
     @app.route('/track', methods=['GET', 'POST'])
     def track():
