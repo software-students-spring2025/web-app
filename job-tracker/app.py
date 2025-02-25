@@ -8,7 +8,7 @@ from bson.objectid import ObjectId
 from dotenv import load_dotenv, dotenv_values
 
 
-load_dotenv(dotenv_path='static/.env')  # load environment variables from .env file
+load_dotenv()  # load environment variables from .env file
 
 
 def create_app():
