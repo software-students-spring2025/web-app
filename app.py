@@ -119,9 +119,20 @@ def show_signup():
 def show_profile():
     # simply show the profile page
     if request.method == "GET":   
-        return render_template('profile.html') # render home page template 
+        #user_data = database.get_user_info(myDb)
+        data = {
+            "user": {
+                "userID": "",
+                "name": "John Doe",
+                "age": 25,
+                "username": "John", 
+                "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae urna euismod, blandit felis at, suscipit orci."
+            }
+        }
+        
+        return render_template('profile.html', data=data) # render home page template 
     
-    # if user has clicked "sign out": clear session cookies and redirect to login page
+    # 
     elif request.method == "POST":
         pass
 
@@ -133,6 +144,25 @@ def logout():
     response = redirect(url_for('show_login'))
     response.delete_cookie("uid")
     return response
+
+# edit profile
+@app.route("/profile-edit", methods=["POST"])
+def edit_profile():
+    pic = request.form['pic']
+    name = request.form['name']
+    age = request.form['age']
+    bio = request.form['bio']
+    print("profile edited in backend")
+    data = {
+        "user": {
+            "userID": "",
+            "name": name,
+            "age": age,
+            "username": "John", 
+            "bio": bio
+        }
+    }
+    return redirect(url_for('show_profile'))
 
 
 # keep alive
