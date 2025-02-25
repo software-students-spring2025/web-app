@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, url_for, redirect 
 import pymongo
 from bson.objectid import ObjectId
+import database
+
 '''
 notes / instructions
 
@@ -52,8 +54,15 @@ def show_dashboard():
         print('cookies', request.cookies)
         # if we are logged in (uid cookie has been set) - load the dashboard page
         if 'uid' in request.cookies:
-            print(request.cookies['uid'])
-            return render_template('dashboard.html') # render home page template 
+            data = {
+                "deadlines": [
+                    {"name": 'example deadline 1', "date": "March 1"}, 
+                    {"name": 'example deadline 2', "date": "March 2"}
+                ], 
+                "classes": [], 
+                "tasks": []
+            }
+            return render_template('dashboard.html', data=data) # render home page template 
         # if we are NOT logged in - redirect to login
         return redirect(url_for('show_login'))
     # form handling
