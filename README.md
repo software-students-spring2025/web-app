@@ -8,7 +8,7 @@ See instructions. Delete this line and place the Product Vision Statement here.
 
 ## User stories
 
-See instructions. Delete this line and place a link to the user stories here.
+[Project User Stories and Issues](https://github.com/software-students-spring2025/2-web-app-sweproj2/issues)
 
 ## Steps necessary to run the software
 
