@@ -103,6 +103,25 @@ def create_app():
                                accepted=len(accepted),
                                interviewing=len(interviewing),
                                rejected=len(rejected))
+    
+    # # Login route
+    # @app.route('/login', methods=['GET', 'POST'])
+    # def login():
+    #     if request.method == 'POST':
+    #         username = request.form.get('username')
+    #         password = request.form.get('password')
+
+    #         user = db.Users.find_one({"username": username})  # Find user in MongoDB
+
+    #         if user and check_password_hash(user['password'], password):
+    #             session['user_id'] = str(user['_id'])  # Store user ID in session
+    #             flash("Login successful!", "success")
+    #             return redirect(url_for('home'))
+    #         else:
+    #             flash("Invalid username or password", "danger")
+
+    #     return render_template("login.html")
+
 
     # edit profile page
     @app.route('/edit-profile', methods=['GET', 'POST'])
