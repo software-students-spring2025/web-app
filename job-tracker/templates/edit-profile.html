@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block container %}
+<main>
+    <form class="edit-profile" method="POST" action="/edit-profile">
+        <label for="currUsername">Current username:</label><br>
+        <input type="text" id="currUsername" name="currUsername" value="{{user.username}}"><br>
+        <label for="newUsername">New username:</label><br>
+        <input type="text" id="newUsername" name="newUsername">
+        <button type="submit">Save</button>
+    </form>
+</main>
+{% endblock %}
