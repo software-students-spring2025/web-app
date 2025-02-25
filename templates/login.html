@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="auth-container">
+  <!-- Toggle Buttons -->
+  <div class="auth-toggle">
+    <button id="loginToggle" onclick="showLogin()" class="active">Login</button>
+    <button id="signupToggle" onclick="showSignup()">Signup</button>
+  </div>
+
+  <!-- Display Flash Messages -->
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class="flash-messages">
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+
+  <!-- Login Form -->
+  <div id="loginForm" class="auth-form">
+    <h2>Login</h2>
+    <form action="{{ url_for('login') }}" method="POST">
+      <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+  <!-- Signup Form (initially hidden) -->
+  <div id="signupForm" class="auth-form" style="display: none;">
+    <h2>Signup</h2>
+    <form action="{{ url_for('signup') }}" method="POST">
+      <div>
+        <label for="username_signup">Username:</label>
+        <input type="text" id="username_signup" name="username" required>
+      </div>
+      <div>
+        <label for="password_signup">Password:</label>
+        <input type="password" id="password_signup" name="password" required>
+      </div>
+      <button type="submit">Signup</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  function showLogin() {
+    document.getElementById('loginForm').style.display = 'block';
+    document.getElementById('signupForm').style.display = 'none';
+    document.getElementById('loginToggle').classList.add('active');
+    document.getElementById('signupToggle').classList.remove('active');
+  }
+
+  function showSignup() {
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('signupForm').style.display = 'block';
+    document.getElementById('loginToggle').classList.remove('active');
+    document.getElementById('signupToggle').classList.add('active');
+  }
+</script>
+
+<style>
+  .auth-container {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+  }
+  .auth-toggle {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .auth-toggle button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background-color: #ddd;
+    cursor: pointer;
+  }
+  .auth-toggle button.active {
+    background-color: #35424a;
+    color: #fff;
+  }
+  .flash-messages {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+    color: red;
+  }
+  .auth-form div {
+    margin-bottom: 15px;
+  }
+  .auth-form label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  .auth-form input[type="text"],
+  .auth-form input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+  .auth-form button {
+    background-color: #35424a;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  .auth-form button:hover {
+    background-color: #e8491d;
+  }
+</style>
+{% endblock %}
