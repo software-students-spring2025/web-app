@@ -11,9 +11,9 @@
         <h1>My Profile</h1>
         <nav>
             <ul>
-                <li><a href="dashboard.html">Dashboard</a></li>
-                <li><a href="profile.html">Profile</a></li>
-                <li><a href="index.html">Logout</a></li>
+                <li><a href="{{ url_for('show_dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('show_profile') }}">Profile</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
             </ul>
         </nav>
     </header>
