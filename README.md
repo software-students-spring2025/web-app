@@ -8,12 +8,14 @@ BobstLAF is a mobile web application for the NYU community to report and recover
 
 ## User stories
 
-1. As a campus security officer, I want to be able to make a post of a found item.
+1. As a campus security officer, I want to be able to make a post about a found item.
 2. As a campus security officer, I want to be able to mark items as recovered and remove them from the catalog.
 3. As a campus security officer, I want to be able to update a posting of a found item.
 4. As a student who's lost an item, I want to be able to post about my lost item.
 5. As a student who's lost an item, I want to be able to search the catalog for my lost item.
 6. As a campus security officer, I want to be able to view posts about lost items so I can help find them.
+7. As a campus security officer, I want to ensure that only the NYU community can access the app.
+8. As a user, I want to be able to upload pictures to my posts.
 
 ## Steps necessary to run the software
 
