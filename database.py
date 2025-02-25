@@ -19,11 +19,12 @@ client = MongoClient(uri, server_api=ServerApi('1'), tlsCAFile=certifi.where())
 #acess database
 #create DB/Acess
 myDb= client["DuoProject"]
-#create table
+#List of data Tables
 myTable= myDb["users"]
-
+AssigmentsTable= myDb["Assigments"]
 ######## USER AUTHENTICATION
-
+##password autheenction
+#user
 
 ##
 ## Function: returning user password authentication
@@ -32,7 +33,13 @@ myTable= myDb["users"]
 ##          If login is not valid, return None
 ## 
 def pwd_auth(username, password):
-    return None
+    Data_Base= myDb["users"] 
+    exist= Data_Base.find_one({"username":username,"password":password})
+    if exist:
+        return exist["_id"]
+    else:
+        return None
+    #return None
 
 
 ##
@@ -42,6 +49,7 @@ def pwd_auth(username, password):
 ##          If username is new, create a new user entry in the data table and return the user ID
 ## 
 def new_account(username, password):
+
     return None
 
 
@@ -55,7 +63,15 @@ def new_account(username, password):
 ## Usage: get all deadlines belonging to a specific user
 ## 
 def get_deadlines(username):
-    return None
+    #get name from user database and user id
+    Data_Base= myDb["users"] 
+    exist= Data_Base.find_one({"username":username})
+    use_id= exist["_id"]
+    deadlines = AssigmentsTable.find({"user_ID":use_id})
+    return deadlines
+    #acess Assigments
+
+    #return None
 
 
 ##
