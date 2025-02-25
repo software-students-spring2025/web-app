@@ -8,7 +8,7 @@ A mobile friendly app that helps travelers find compatible travel partners based
 
 ## User stories
 
-See instructions. Delete this line and place a link to the user stories here.
+https://github.com/software-students-spring2025/2-web-app-diet-coke/issues/
 
 ## Steps necessary to run the software
 
