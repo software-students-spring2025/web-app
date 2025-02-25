@@ -188,6 +188,79 @@ def edit_dream():
     # 渲染 edit_dream 模板，并传递当前梦的数据和标签
     return render_template("edit_dream.html", dream=dream, tags=tags)
 
+@app.route("/update_dream", methods=["POST"])
+def update_dream():
+    username = session.get("username")
+    if not username:
+        flash("Please log in.", "error")
+        return redirect(url_for("index"))
+
+    # 从表单中获取 dream_id 和操作类型
+    dream_id = request.form.get("dream_id")
+    action = request.form.get("action")  # "edit" 或 "delete"
+
+    # 获取其他表单字段（例如描述、日期、标签等）
+    day = request.form.get("day")
+    month = request.form.get("month")
+    year = request.form.get("year")
+    description = request.form.get("dream-description")
+    tags_str = request.form.get("tags", "")
+    tags = [tag.strip() for tag in tags_str.split(",") if tag.strip()] if tags_str else []
+
+    # 查找当前用户
+    user_doc = users_collection.find_one({"username": username})
+    if not user_doc or "dreams" not in user_doc:
+        flash("User data error.", "error")
+        return redirect(url_for("home"))
+
+    # 找到要编辑或删除的 dream
+    dream_list = user_doc["dreams"]
+    target_dream = None
+    for d in dream_list:
+        if d.get("id") == dream_id:
+            target_dream = d
+            break
+
+    if not target_dream:
+        flash("Dream not found.", "error")
+        return redirect(url_for("home"))
+
+    # 执行编辑或删除操作
+    if action == "edit":
+        # 更新梦数据
+        from datetime import datetime
+        try:
+            new_date = datetime.strptime(f"{day}-{month}-{year}", "%d-%m-%Y")
+        except ValueError:
+            flash("Invalid date provided.", "error")
+            return redirect(url_for("edit_dream", dream_id=dream_id))
+
+        target_dream["date"] = new_date
+        target_dream["description"] = description
+        target_dream["tags"] = tags
+
+        # 写回数据库
+        users_collection.update_one(
+            {"username": username, "dreams.id": dream_id},
+            {"$set": {
+                "dreams.$.date": new_date,
+                "dreams.$.description": description,
+                "dreams.$.tags": tags
+            }}
+        )
+        flash("Dream updated successfully!", "success")
+
+    elif action == "delete":
+        # 从 dream_list 中移除目标梦
+        dream_list = [d for d in dream_list if d.get("id") != dream_id]
+        # 更新数据库
+        users_collection.update_one(
+            {"username": username},
+            {"$set": {"dreams": dream_list}}
+        )
+        flash("Dream deleted successfully!", "success")
+
+    return redirect(url_for("home"))
 
 if __name__ == "__main__":
     app.run(debug=True)
