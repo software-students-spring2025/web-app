@@ -64,7 +64,7 @@ A minimalist and intuitive to-do list app designed for simple and quick task man
 
 ## Steps necessary to run the software
 
-See instructions. Delete this line and place instructions to download, configure, and run the software here.
+You can run `docker-compose up --build`
 
 ## Task boards
 
