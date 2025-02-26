@@ -98,6 +98,10 @@ th:nth-child(5) {
     background-color: #FFECDE;
 }
 
+th:nth-child(6) {
+    background-color: #FFB0B2;
+}
+
 .app td { /* inputs */
     padding: 10px;
     border-bottom: 1px solid #ddd;
@@ -114,7 +118,12 @@ th:nth-child(5) {
     cursor: pointer;
 }
 
-.magnifying-img {
+.edit-img {
+    width: 14px;
+    height: 14px;
+}
+
+.rubbish-img {
     width: 14px;
     height: 14px;
 }
@@ -182,7 +191,7 @@ th:nth-child(5) {
     color: #333;
 }
 
-.input-pink { /* Colors */
+.input-pink { /* colors */
     background-color: #FEEBEE;
 }
 
@@ -208,18 +217,4 @@ th:nth-child(5) {
 
 .input-orange {
     background-color: #FFECDE;
-}
-
-.input-blue2 {
-    background-color: #E4EEFF;
-}
-
-.input-blue2 a {
-    text-decoration: none;
-    color: #007bff;
-    font-weight: bold;
-}
-
-.input-blue2 a:hover {
-    text-decoration: underline;
 }
