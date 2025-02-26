@@ -1,0 +1,115 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f9fc;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.dashboard {
+    margin-top: 50px;
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.dashboard h1 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.dashboard p {
+    font-size: 14px;
+    color: #555;
+}
+
+/* stats section */
+.stats {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.stats div {
+    background-color: white;
+    border-radius: 12px;
+    padding: 15px;
+    width: 48%;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.stats p {
+    font-size: 12px;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.stats h2 {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.weekly {
+    background-color: #fde8e8;
+}
+
+.monthly {
+    background-color: #fef7e4;
+}
+
+/* monthly insights */
+.monthly-insights {
+    background-color: #e7f0fe;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.monthly-insights h3 {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.monthly-insights p {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.insights {
+    display: flex;
+    justify-content: space-between;
+}
+
+.insights div {
+    background: white;
+    border-radius: 10px;
+    padding: 10px;
+    width: 30%;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.insights h2 {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.insights p {
+    font-size: 10px;
+    font-weight: bold;
+    color: #555;
+}
+
+/* colors */
+.accepted h2 {
+    color: #4caf50;
+}
+
+.interviewing h2 {
+    color: #f4b400;
+}
+
+.rejected h2 {
+    color: #e63946;
+}
