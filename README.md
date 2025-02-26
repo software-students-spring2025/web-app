@@ -1,10 +1,10 @@
 # Web Application Exercise
 
 ## Team Members
-Shaurya
-Ethan Zheng
-Jake Chang
-David Yu[DavidYu00](https://github.com/DavidYu00)
+Shaurya <br>
+Ethan Zheng <br>
+Jake Chang <br>
+David Yu[DavidYu00](https://github.com/DavidYu00) <br>
 
 ## Product vision statement
 
