@@ -1,14 +1,31 @@
-<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Test</title>
+    <title>{% block title %}Recipes{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <p>test</p>
-    <ul>
-        {% for item in doc %}
-            <li>{{ item.title }}</li>
-        {% endfor %}
-    </ul>
+    {% if current_user.is_authenticated %}
+        <h2 class="welcome-text">Welcome, {{ current_user.username }}!</h2>
+    {% endif %}
+    <nav>
+        <ul>
+            {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            {% else %}
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('register') }}">Register</a></li>
+            {% endif %}
+        </ul>
+        <ul> <!--entirely for testing database connection, delete later, replace with whatever we're actually doing/using-->
+            {% for item in doc %}
+                <li>{{ item.title }}</li>
+            {% endfor %}
+        </ul>
+    </nav>
+
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+
 </body>
 </html>

@@ -1,7 +1,11 @@
-from flask import Flask, render_template, request, redirect, abort, url_for, make_response
+#later get rid of unused modules
+from flask import Flask, render_template, request, redirect, abort, url_for, make_response, session
 from dotenv import load_dotenv 
 import os
 import pymongo
+from flask_bcrypt import Bcrypt
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+from bson.objectid import ObjectId
 
 #loading env file
 load_dotenv()
@@ -15,9 +19,15 @@ app = Flask(__name__)
 app.config["MONGO_URI"] = os.getenv("MONGO_URI")
 app.secret_key = os.getenv("SECRET_KEY")
 
+#initialize login manager and necessary objects
+login_manager = LoginManager(app)
+login_manager.login_view = "login"
+bcrypt = Bcrypt(app)
+
 #mongodb setup
 mongo = pymongo.MongoClient(os.getenv("MONGO_URI"), ssl = True)
 db = mongo[os.getenv("MONGO_DBNAME")]
+users = db.users
 
 #verify mongodb connection
 try:
@@ -26,11 +36,65 @@ try:
 except Exception as exception:
     print("MongoDB connection error:", exception)
 
+#user class for login
+class User(UserMixin):
+    def __init__(self, user_data):
+        self.id = str(user_data["_id"])
+        self.username = user_data["username"]
+
+#user registration
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+
+        #check if user already exists
+        if users.find_one({"username": username}):
+            return "User already exists"
+
+        #hash password and store user
+        hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
+        user_id = users.insert_one({"username": username, "password": hashed_password}).inserted_id
+        return redirect(url_for("login"))
+
+    return render_template("register.html")
+
+#user login
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+
+        user_data = users.find_one({"username": username})
+
+        if user_data and bcrypt.check_password_hash(user_data["password"], password):
+            user = User(user_data)
+            login_user(user)
+            return redirect(url_for("home"))
+
+        return "Invalid credentials"
+
+    return render_template("login.html")
+
+@login_manager.user_loader
+def load_user(user_id):
+    user_data = users.find_one({"_id": ObjectId(user_id)})
+    return User(user_data) if user_data else None
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for("home"))
+
+#home route
 @app.route("/")
 def home():
-    #movies is collection in sample database, remove and switch later
+    #movies is collection in sample database, remove and switch later - recipes or something
     doc = db.movies.find({"year":1914})
     return render_template("index.html", doc=doc)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
