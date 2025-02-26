@@ -34,9 +34,9 @@ from bson.objectid import ObjectId
 ##          If login is not valid, return None
 ## 
 
-def pwd_auth(myDb,username, password):
+def pwd_auth(mydb,username, password):
     print("Hello World")
-    usertable= myDb["users"] 
+    usertable= mydb["users"] 
     exist= usertable.find_one({"username":username,"password":password})
     if exist:
         return exist["_id"]
@@ -54,10 +54,25 @@ def pwd_auth(myDb,username, password):
 ##          If username already exists, return None
 ##          If username is new, create a new user entry in the data table and return the user ID
 ## 
-
+#works 
 def new_account(mydb, username, password):
+    #print("Hello new account")
+    acconttable= mydb["users"]
+    exist = acconttable.find_one({"username": username, "password": password})
+
+    if exist:
+       # print("User found:")
+        return None
+    else:
+        newuser= {
+            "username": username, "password": password
+        }
+        acconttable.insert_one(newuser)
+        r=  acconttable.find_one({"username": username, "password": password},{"_id":1})
+       # print(r["_id"])
+       # print(result.inserted_id)
+    return r["_id"]
     
-    return None
 
 
 
@@ -107,17 +122,22 @@ def get_study_sessions(mydb, userID):
 ##
 ## Function: get tasks
 ## Usage: get all current tasks belonging to a specific user
-## 
+##  return that tasks but will have to loop through in order to print each tasks
 def get_tasks(mydb, userID):
-    return None
+    tasktable = mydb["Tasks"]
+    tasks=tasktable.find({"user_ID":ObjectId(userID)})
+    return tasks
 
 
 ##
 ## Function: get info associated with a user
 ## Usage: get all account info belonging to a specific user
-## 
+## return poy cursor can turn into a list if need be
 def get_user_info(mydb, userID):
-    return None
+   usetable= mydb["users"]
+   user=  usetable.find({"_id":ObjectId(userID)})
+   return user
+   
 
 
 
