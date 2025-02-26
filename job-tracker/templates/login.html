@@ -2,6 +2,31 @@
 
 {% block container %}
 <main>
-    <p>getajob login page</p>
+    <h2>Get A Job - Login</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul>
+          {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+
+    <form method="POST" action="/login">
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" required>
+
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <p>Don’t have an account? 
+       <a href="{{ url_for('signup') }}">Sign up here</a>.
+    </p>
 </main>
 {% endblock %}
