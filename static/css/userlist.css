@@ -3,7 +3,7 @@
     gap: 20px;
     align-items: center;
     justify-content: center;
-    margin-top: 40px;
+    margin-top: 80px;
 }
 
 .search-form {
@@ -24,7 +24,7 @@
 
 .search-form button {
     padding: 8px 20px;
-    background: #48646f;
+    background: rgb(208, 208, 208);
     color: white;
     border: none;
     border-radius: 4px;
@@ -50,7 +50,7 @@
 .user-widgets-w-delete-button{
     display: flex;
     flex-direction: row;
-    gap: 40px;
+    gap: 20px;
 }
 /* 
 .delete-btn{
@@ -70,11 +70,20 @@
     display: flex;
     flex-direction: column;
     gap:30px;
-    margin-top: 40px;
+    /* margin-top: 40px; */
+}
+
+.user-widget-container>ul{
+    list-style-type:none;
+    padding-left: 0px;
+}
+
+.user-widget-container>ul>li{
+    margin-bottom:30px;
 }
 
 .user-widget-info-only {
-    width: 80%;
+    width: 90%;
     background-color: #d1d1d1;
     padding: 40px;
     border-radius: 8px;
@@ -86,25 +95,15 @@
     margin:5px;
 }
 
-/* .close-btn {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    background: white;
-    border: 1px solid black;
-    cursor: pointer;
-    font-size: 14px;
-    padding: 3px;
-} */
-
 .delete-icon-container{
     display: flex;
     align-items: center;
     justify-items: center;
 }
-.delete-icon{
-    align-self: center;
-    justify-self: center;
+
+.delete-icon-container > form > button{
+    background-color: transparent;
+    border: transparent;
 }
 
 .user-content {
@@ -147,4 +146,8 @@
     color:#ffffff;
     font-size: larger;
 }
+
+
+
+
 

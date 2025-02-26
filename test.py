@@ -97,14 +97,36 @@ def create_app():
     def admin_dashboard():
         return render_template("admin-dashboard.html")
 
-    @app.route("/userlist")
+    @app.route("/userlist", methods=["GET"])
     def userlist():
-        return render_template("userlist.html", userInfo={
+        query = request.args.get('q', '')  # Retrieve the 'q' parameter, default to empty string if not provided
+        print(f"userlist requests for q: {query}") 
+        return render_template("userlist.html", usersInfo=[{
                                    "username":"Rin",
                                    "usertype":0,
                                    "avatar":"",
                                    "email":"yq2290@nyu.edu"
-                               },)
+                               },{
+                                   "username":"Cindy",
+                                   "usertype":1,
+                                   "avatar":"",
+                                   "email":"12341241@nyu.edu"
+                               },{
+                                   "username":"Hang",
+                                   "usertype":0,
+                                   "avatar":"",
+                                   "email":"safsfd@nyu.edu"
+                               },{
+                                   "username":"Hang",
+                                   "usertype":0,
+                                   "avatar":"",
+                                   "email":"safsfd@nyu.edu"
+                               },{
+                                   "username":"Hang",
+                                   "usertype":0,
+                                   "avatar":"",
+                                   "email":"safsfd@nyu.edu"
+                               }],)
     
     @app.route("/search_user")
     def search_user():
@@ -116,14 +138,39 @@ def create_app():
     
     @app.route("/delete/<user_id>", methods=['POST'])
     def delete_user_q(user_id):
-        print("req for delete user from Userlist")
-        return render_template("delete-user.html", username=user_id)
+        if request.method == 'POST':
+            username = request.form.get('username')
+            email = request.form.get("email")
+            # process the submitted data here
+            print(f"Received username: {username}")
+            print(f"Received email: {email}")
+
+
+        print("req post for delete user from Userlist")
+        return render_template("delete-user.html", q_message = "Are you sure that you want to detele this user",
+                               username=username,
+                               email=email)
     
 
     @app.route("/delete/<user_id>", methods=['GET'])
-    def delete_user1(user_id):
-        print("req for delete user from Userlist")
+    def delete_user(user_id):
+        print("req get for delete user from Userlist")
         return render_template("delete-user.html", username=user_id)
+    
+    @app.route("/message", methods=['POST'])
+    def message():
+        message_from_req= request.form.get('message')
+        if message_from_req == "User Deleted":
+            username = request.form.get('username')
+            email = request.form.get("email")
+            
+            # do something in backend to deleted the user
+            # can retrieve user id if needed
+            # if success, proceed with message user deleted
+            # else, change the message and show the user that the deletion failed
+        
+        
+        return render_template("message.html", message=message_from_req)
     
 
 

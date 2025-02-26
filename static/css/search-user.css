@@ -5,7 +5,6 @@
     min-height: 1600px;
 }
 
-
 .search-section {
     display: flex;
     gap: 20px;
@@ -28,7 +27,7 @@
 
 .search-form button {
     padding: 8px 20px;
-    background: #48646f;
+    background: rgb(208, 208, 208);
     color: white;
     border: none;
     border-radius: 4px;
