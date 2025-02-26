@@ -115,7 +115,7 @@ def create_app():
                 return render_template("signup.html")
 
             # hash password for security
-            hashed_password = generate_password_hash(password, method='sha256')
+            hashed_password = generate_password_hash(password, method='md5')
 
             #insert into database
             insert_result = users_collection.insert_one({
