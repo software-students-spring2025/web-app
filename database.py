@@ -33,7 +33,6 @@ from bson.objectid import ObjectId
 ##          If login is valid, return the user ID
 ##          If login is not valid, return None
 ## 
-
 def pwd_auth(myDb,username, password):
     print("Hello World")
     usertable= myDb["users"] 
@@ -129,15 +128,47 @@ def get_user_info(mydb, userID):
 ## Usage: delete an assignment from the database
 ## 
 def delete_assignment(mydb, userID, assignmentID):
-    return None
+    usertable = mydb["Assigments"]
 
+    exist = usertable.find_one({
+        "user_ID": ObjectId(userID),
+        "_id": ObjectId(assignmentID)
+    })
+
+    print("testing", exist)
+
+    if exist:
+        result = usertable.delete_one({
+            "user_ID": ObjectId(userID),
+            "_id": ObjectId(assignmentID)
+        })
+        
+        return result.deleted_count
+    
+    else:
+        print("Assignment not found.")
+        return 0
 
 ##
 ## Function: delete an exam
 ## Usage: delete an exam from the database
 ## 
 def delete_exam(mydb, userID, examID):
-    return None
+    usertable= mydb["Exams"]
+
+    exist = usertable.find_one({
+        "username":userID,
+        "exam":examID
+    })
+
+    if exist:
+        return usertable.delete_one({
+            "username":userID,
+            "exam":examID
+        })
+    
+    else:
+        return print (0)
 
 
 ##
@@ -145,7 +176,21 @@ def delete_exam(mydb, userID, examID):
 ## Usage: delete a study session from the database
 ## 
 def delete_study_session(mydb, userID, study_sessionID):
-    return None
+    usertable= mydb["Studies"]
+
+    exist = usertable.find_one({
+        "username":userID,
+        "study_session":study_sessionID
+    })
+
+    if exist:
+        return usertable.delete_one({
+            "username":userID,
+            "study_session":study_sessionID
+        })
+    
+    else:
+        return print (0)
 
 
 ##
@@ -153,15 +198,40 @@ def delete_study_session(mydb, userID, study_sessionID):
 ## Usage: delete a task from the database
 ## 
 def delete_task(mydb, userID, taskID):
-    return None
+    usertable= mydb["Tasks"]
 
+    exist = usertable.find_one({
+        "username":userID,
+        "task":taskID
+    })
+
+    if exist:
+        return usertable.delete_one({
+            "username":userID,
+            "task":taskID
+        })
+    
+    else:
+        return print (0)
 
 ##
 ## Function: delete a class
 ## Usage: delete a class from the database
 ## 
 def delete_class(mydb, userID, classID):
-    return None
+    usertable= mydb["Class"]
+    exist = usertable.find_one({
+        "username":userID,
+        "class":classID
+    })
+
+    if exist:
+        return usertable.delete_one({
+            "username":userID,
+            "class":classID
+        })
+    else:
+        return print (0)
 
 
 
