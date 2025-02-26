@@ -130,7 +130,19 @@ def create_app():
                 flash("An error occurred during signup. Please try again.", "danger")
         return render_template("signup.html")
 
-    # home page
+    @app.route('/addapplication')
+    @login_required
+    def addapplication():
+        current_date = datetime.now().strftime("%B %d, %Y")
+        return render_template('addapplication.html',
+                               current_date=current_date)
+
+    @app.route('/addnew')
+    @login_required
+    def addnew():
+        return render_template('addnew.html')
+
+    # home dashboard page
     @app.route('/home')
     @login_required
     def home():
@@ -178,7 +190,11 @@ def create_app():
             "user": loggedUser
         })
 
+        # finding current logged user for name
+        user = db.Users.find_one({"_id": loggedUser})
+
         return render_template("home.html",
+                               user=user,
                                week=len(docs_week),
                                month=len(docs_month),
                                total=total,
@@ -195,7 +211,8 @@ def create_app():
             # get user input from search bar
             choice = request.form.get('status')
 
-            if choice.lower() in 'applied interviewing rejected':
+            if 'applied' in choice.lower() or 'interview' in choice.lower(
+            ) or 'rejected' in choice.lower() or 'offer' in choice.lower():
                 applications = db.Apps.find({
                     "user": loggedUser,
                     "status": choice

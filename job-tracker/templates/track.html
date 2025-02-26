@@ -1,47 +1,98 @@
 {% extends 'base.html' %}
 
 {% block container %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/track.css') }}">
+
 <main>
     <form method="POST" class="search" action="/track">
-        <label for="search">Search by...</label>
-        <select name="status" id="status">
-            <optgroup label="Status">
-                <option value="Applied">Applied</option>
-                <option value="Interviewing">Interviewing</option>
-                <option value="Rejected">Rejected</option>
-            </optgroup>
-            <optgroup label="Date">
-                <option value="ascending">Most recent (default)</option>
-                <option value="descending">Least recent</option>
-            </optgroup>
-        </select>
-        <button type="submit">Search</button>
+        <div class="search-container">
+            <select name="status" id="status" onchange="this.form.submit()">
+                <option value="" disabled selected hidden>Search by...</option>
+                <optgroup label="Status">
+                    <option value="Applied">Applied</option>
+                    <option value="Interviewing">Interviewing</option>
+                    <option value="Rejected">Rejected</option>
+                </optgroup>
+                <optgroup label="Date">
+                    <option value="ascending">Most recent (default)</option>
+                    <option value="descending">Least recent</option>
+                </optgroup>
+            </select>
+        </div>
     </form>
 
-
-    <table class="app track-header">
+    <table class="app labels">
         <tr>
+            <th><img src="{{ url_for('static', filename='images/Magnifying.png') }}" alt="Magnifying Icon"
+                    class="magnifying-img"></th>
             <th>Company</th>
             <th>Role</th>
-            <th>Category</th>
-            <th>Location</th>
-            <th>Flexibility</th>
             <th>Status</th>
             <th>Date</th>
-            <th>Link</th>
         </tr>
         {% for app in applications %}
         <tr class="app">
-            <td class="company">{{app.company}}</td>
-            <td class="role">{{app.role}}</td>
-            <td class="category">{{app.category}}</td>
-            <td class="location">{{app.location}}</td>
-            <td class="flexibility">{{app.flexibility}}</td>
-            <td class="status">{{app.status}}</td>
-            <td class="date">{{app.date}}</td>
-            <td class="link"><a href="{{ app.link }}">link</a></td>
+            <td>
+                <!-- Hidden checkbox to control the popup -->
+                <input type="checkbox" id="popup-toggle-{{ loop.index }}" class="popup-toggle">
+                <label for="popup-toggle-{{ loop.index }}">
+                    <img src="{{ url_for('static', filename='images/Magnifying.png') }}" alt="Search Icon"
+                        class="magnifying-img">
+                </label>
+
+                <!-- Popup content -->
+                <div class="popup-content">
+                    <label for="popup-toggle-{{ loop.index }}" class="close-button">✖</label>
+
+                    <div class="form-group">
+                        <label>Company</label>
+                        <p class="input-pink">{{ app.company }}</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Role</label>
+                        <p class="input-blue">{{ app.role }}</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Category</label>
+                        <p class="input-yellow">{{ app.category }}</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Location</label>
+                        <p class="input-green">{{ app.location }}</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Flexibility</label>
+                        <p class="input-purple">{{ app.flexibility }}</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Status</label>
+                        <p class="input-pink2">{{ app.status }}</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Date</label>
+                        <p class="input-orange">{{ app.date }}</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Applied Link</label>
+                        <p class="input-blue2">
+                            <a href="{{ app.applied_link }}" target="_blank">{{ app.applied_link }}</a>
+                        </p>
+                    </div>
+                </div>
+            </td>
+            <td class="company">{{ app.company }}</td>
+            <td class="role">{{ app.role }}</td>
+            <td class="status">{{ app.status }}</td>
+            <td class="date">{{ app.date }}</td>
         </tr>
-        {%endfor%}
+        {% endfor %}
     </table>
 </main>
 {% endblock %}
