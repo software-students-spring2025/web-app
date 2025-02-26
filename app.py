@@ -1,6 +1,6 @@
-from flask import Flask, request, jsonify, session
+from flask import Flask, request, jsonify, session, render_template, redirect, url_for, abort
 from flask_cors import CORS
-from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user, UserMixin
 from dotenv import load_dotenv
 from pymongo import MongoClient
 import os
@@ -48,39 +48,63 @@ def load_user(user_id):
 @app.route('/api/hello_world', methods=['GET'])
 def health_check():
     """Health check endpoint to verify API is running"""
-    return jsonify({"status": "ok", "message": "Hello World"}), 200
+    return jsonify({"status": "success", "message": "API is running"})
 
-# Authentication Routes
+# Route to serve HTML templates
+@app.route('/', defaults={'page_name': 'index'})
+@app.route('/<page_name>')
+def serve_page(page_name):
+    """
+    Serve HTML templates based on the page name
+    This allows for dynamic routing to any template
+    """
+    # List of valid pages (add more as needed) #TODO: Add more pages
+    valid_pages = [
+        'index', 'login', 'register', 'profile', 'preferences',
+        'matches', 'messages', 'notifications', 'bookmarks'
+    ]
+    
+    # Check if the requested page exists
+    if page_name not in valid_pages:
+        abort(404)
+    
+    try:
+        # Set active page for navigation highlighting
+        return render_template(f'{page_name}.html', active_page=page_name)
+    except:
+        # If template doesn't exist, return 404
+        abort(404)
+
+# Authentication routes
 @app.route('/api/auth/register', methods=['POST'])
 def register():
     """Register a new user"""
     # TODO: Implement user registration
-    # - Get username, email, password from request
-    # - Check if user already exists
-    # - Hash password
-    # - Store user in database
-    # - Return success/error response
-    pass
+    return jsonify({"status": "success", "message": "Registration endpoint"})
 
 @app.route('/api/auth/login', methods=['POST'])
 def login():
     """Login a user"""
     # TODO: Implement user login
-    # - Get username/email and password from request
-    # - Check if user exists
-    # - Verify password
-    # - Login user with Flask-Login
-    # - Return user data
-    pass
+    return jsonify({"status": "success", "message": "Login endpoint"})
 
-@app.route('/api/auth/logout', methods=['POST'])
+@app.route('/api/auth/logout')
 @login_required
 def logout():
     """Logout a user"""
-    # TODO: Implement user logout
-    # - Logout user with Flask-Login
-    # - Return success response
-    pass
+    logout_user()
+    return jsonify({"status": "success", "message": "Logged out successfully"})
+
+# Error handlers
+@app.errorhandler(404)
+def page_not_found(e):
+    """Handle 404 errors"""
+    return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def server_error(e):
+    """Handle 500 errors"""
+    return render_template('500.html'), 500
 
 # User Profile Routes
 @app.route('/api/users/profile', methods=['GET'])
