@@ -59,6 +59,13 @@ body {
     font-weight: bold;
 }
 
+.weekly h2 {
+    font-size: 30px;
+}
+
+.monthly h2 {
+    font-size: 30px;
+}
 
 /* monthly insights */
 .monthly-insights {
