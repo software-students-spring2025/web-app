@@ -58,7 +58,6 @@ def create_app():
         return render_template('addnew.html')
 
 
-
     # home page
     @app.route('/home')
     def home():

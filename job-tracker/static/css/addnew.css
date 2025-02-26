@@ -1,0 +1,162 @@
+/* General Reset */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #fff;
+    overflow-x: hidden;
+}
+
+/* Main Container */
+.addnew-container {
+    text-align: center;
+    padding: 20px;
+    color: #333;
+    margin-top: 50px;
+}
+
+/* Date */
+.date {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: left;
+    padding-left: 10%;
+}
+
+/* Form Styles */
+.addnew-form {
+    width: 80%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.addnew-form select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: transparent;
+    padding: 10px 30px 10px 15px;
+    border-radius: 25px;
+    border: none;
+    box-sizing: border-box;
+    font-size: 14px;
+    outline: none;
+    transition: box-shadow 0.3s ease;
+    width: 100%;
+    cursor: pointer;
+    position: relative;
+    color: #333;
+    background-clip: padding-box;
+    padding-right: 40px; /* Make space for the dropdown arrow */
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="black" d="M7 10l5 5 5-5H7z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: calc(100% - 10px) center;
+    background-size: 18px;
+}
+
+/* Fix for Dropdown Background Colors */
+.addnew-form select.input-yellow {
+    background-color: #FFFAE3;
+}
+
+.addnew-form select.input-purple {
+    background-color: #EDE4FD;
+}
+
+.addnew-form select.input-pink2 {
+    background-color: #FFEBFC;
+}
+
+/* Fix for Dropdown Options Background */
+.addnew-form select.input-yellow option,
+.addnew-form select.input-purple option,
+.addnew-form select.input-pink2 option {
+    background-color: inherit;
+    color: #333;
+}
+
+
+.form-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="url"],
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 25px;
+    border: none;
+    box-sizing: border-box;
+    font-size: 14px;
+    outline: none;
+    transition: box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Input Colors */
+.input-pink {
+    background-color: #FEEBEE;
+}
+
+.input-blue {
+    background-color: #DEF8FC;
+}
+
+.input-yellow {
+    background-color: #FFFAE3;
+}
+
+.input-green {
+    background-color: #EFFDE7;
+}
+
+.input-purple {
+    background-color: #EDE4FD;
+}
+
+.input-pink2 {
+    background-color: #FFEBFC;
+}
+
+.input-orange {
+    background-color: #FFECDE;
+}
+
+.input-blue2 {
+    background-color: #E4EEFF;
+}
+
+/* Save Button */
+.save-button {
+    background-color: #C2E1FF;
+    color: #333;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 15px;
+    width: 100%;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 50px;
+
+}
+
+.save-button:hover {
+    background-color: #b3d4ff;
+}
