@@ -19,7 +19,9 @@ BobstLAF is a mobile web application for the NYU community to report and recover
 
 ## Steps necessary to run the software
 
-See instructions. Delete this line and place instructions to download, configure, and run the software here.
+1. run `pipenv install` to install necessary modules
+2. run `python run.py` to start app
+3. navigate to the given URL to access the landing page
 
 ## Task boards
 
