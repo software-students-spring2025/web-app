@@ -46,6 +46,17 @@ def create_app():
     @app.route('/signup')
     def signup():
         return render_template("signup.html")
+    
+
+    @app.route('/addapplication')
+    def addapplication():
+        current_date = datetime.now().strftime("%B %d, %Y")
+        return render_template('addapplication.html', current_date=current_date)
+    
+    @app.route('/addnew')
+    def addnew():
+        return render_template('addnew.html')
+
 
     # home page
     @app.route('/home')

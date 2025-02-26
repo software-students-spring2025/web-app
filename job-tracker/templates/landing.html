@@ -2,11 +2,11 @@
 
 {% block container %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
-<img src="{{ url_for('static', filename='images/LandingDesign.png') }}" alt="Background Image">
 
 <main class="landing-container">
+    <!-- Navigation Header -->
     <header class="landing-header">
-        <h1>GiveMeJob</h1>
+        <h1 class="logo">GiveMeJob</h1>
         <div class="menu-toggle">
             <span></span>
             <span></span>
@@ -14,12 +14,15 @@
         </div>
     </header>
 
+    <!-- Main Content Section -->
     <section class="landing-content">
-        <h2>Track, Apply, Succeed</h2>
-        <h3>Stay Organized in Your Job Hunt!</h3>
+        <div class="background-image"></div>
+        <h2 class="headline">Track, Apply, Succeed<br>Stay Organized in Your Job Hunt!</h2>
 
         <div class="cta">
-            <p>Easily manage your job applications, track progress, and never miss an opportunity—all in one place</p>
+            <p class="description">
+                Easily manage your job applications, track progress, and never miss an opportunity—all in one place
+            </p>
             <div class="cta-buttons">
                 <a href="{{ url_for('login') }}" class="cta-button">Log-in</a>
                 <a href="{{ url_for('signup') }}" class="cta-button">Sign-up</a>
