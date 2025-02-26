@@ -28,8 +28,6 @@ def create_app():
                               tlsCAFile=certifi.where())
     db = cxn[os.getenv("MONGO_DBNAME")]
 
-    users_collection = db['Users']
-
     try:
         cxn.admin.command("ping")
         print(" *", "Connected to MongoDB!")
@@ -38,6 +36,8 @@ def create_app():
 
     # ObjectId of current logged in user. Will have to fetch this with pymongo commands later
     loggedUser = ObjectId('67bd0feb736f2e7829d2dbe9')
+
+    users_collection = db["Users"]
 
     # sign up page -- only username and password - NO EMAIL YET
     @app.route('/signup', methods=['GET', 'POST'])
