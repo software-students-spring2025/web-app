@@ -2,6 +2,8 @@
 
 {% block container %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/track.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='images/Magnifying.png') }}">
+
 
 <main class="track-page">
     <h1>Track Applications</h1>
@@ -35,7 +37,7 @@
             <tbody>
                 {% for app in applications %}
                 <tr>
-                    <td class="search-icon">🔍</td>
+                    <td class="search-icon"><img src="{{ url_for('static', filename='images/Magnifying.png') }}" alt="Search" class="search-img"></td>
                     <td class="company">{{ app.company }}</td>
                     <td class="role">{{ app.role }}</td>
                     <td class="status">{{ app.status }}</td>
