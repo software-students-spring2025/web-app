@@ -35,6 +35,8 @@ jobs:
           pipenv install build
           pipenv install requests
           pipenv install gitcommitlogger
+      - name: Lock pipenv dependencies with pre-release flag
+        run: pipenv lock --pre
       - name: Log pull request opened
         if: github.event_name == 'pull_request' && github.event.action == 'opened'
         run: |
