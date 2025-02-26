@@ -61,7 +61,7 @@ def create_app():
     @login_required
     def add_todo_form():
         return render_template("add_todo.html")
-
+    
     @app.route("/todos/<id>/edit", methods=["GET"])
     @login_required
     def edit_todo_form(id):
@@ -116,17 +116,19 @@ def create_app():
     @app.route("/todos", methods=["POST"])
     @login_required
     def create_todo():
-        name = request.form.get("fname")
-        message = request.form.get("fmessage")
+        name = request.form.get("name")
+        message = request.form.get("message")
         if not name or not message:
+            flash("Missing name or message!", "error")
             return "Missing name or message", 400
         todo = {
             "name": name,
             "message": message,
             "created_at": datetime.utcnow(),
-            "user_id": current_user.id,  # Associate with the logged in user.
+            "user_id": current_user.id, 
         }
         db.todos.insert_one(todo)
+        flash("Task added successfully!", "success")
         return redirect(url_for("home"))
 
     @app.route("/todos/<id>", methods=["POST"])
