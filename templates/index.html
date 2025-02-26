@@ -13,6 +13,9 @@
       <strong>{{ todo.name }}</strong>: {{ todo.message }}
       <a href="{{ url_for('get_todo', id=todo._id) }}">View</a>
       <a href="{{ url_for('edit_todo_form', id=todo._id)}}">Edit</a>
+      <a href="{{ url_for('add_todo_form') }}">
+        <button>Add New Task</button>
+      </a>
       <form action="{{ url_for('delete_todo', id=todo._id) }}" method="POST" style="display:inline;">
         <!-- HTML forms do not support PUT/DELETE so we use a hidden input for method override -->
         <input type="hidden" name="_method" value="DELETE">
