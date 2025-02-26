@@ -1,0 +1,148 @@
+/* General styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8fafc;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Centering the main container */
+main {
+    width: 90%;
+    max-width: 800px;
+    margin: 50px auto;
+}
+
+/* Search bar styling */
+.search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f1f5f9;
+    border-radius: 20px;
+    padding: 10px;
+    width: 80%;
+    margin: 20px auto;
+}
+
+.search label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #555;
+    margin-right: 10px;
+}
+
+.search select {
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 14px;
+    background: white;
+    outline: none;
+    cursor: pointer;
+}
+
+.search button {
+    padding: 8px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 14px;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Header row styling */
+.track-header th {
+    background: #f1f5f9;
+    padding: 12px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Row styling */
+.app td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Status column - color coding */
+.status {
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.status:contains("Applied") {
+    background-color: #ffecec;
+    color: #ff6060;
+}
+
+.status:contains("Interviewing") {
+    background-color: #fff4e3;
+    color: #f4b400;
+}
+
+.status:contains("Rejected") {
+    background-color: #fbe4e4;
+    color: #e63946;
+}
+
+/* Role column color */
+.role {
+    background-color: #e3f7f7;
+    padding: 5px 8px;
+    border-radius: 5px;
+}
+
+/* Company column color */
+.company {
+    background-color: #fff2f2;
+    padding: 5px 8px;
+    border-radius: 5px;
+}
+
+/* Date column */
+.date {
+    background-color: #fffae6;
+    padding: 5px 8px;
+    border-radius: 5px;
+}
+
+/* Link */
+.link a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    table {
+        font-size: 12px;
+    }
+
+    .search {
+        flex-direction: column;
+    }
+
+    .search select {
+        margin-bottom: 10px;
+    }
+}
