@@ -90,21 +90,18 @@ body {
 
 .insights {
     display: flex;
-    justify-content: space-around;
-    gap: 20px;
+    justify-content: space-between;
+    gap: 10px;
 }
 
 .insights div {
     background: white;
     border-radius: 10px;
-    padding: 20px;
-    width: 100px; /* Set a fixed width */
-    height: 100px; /* Match height to width to create a square */
+    padding: 10px;
+    width: 33%;
+    height: 33%;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; /* Center content */
+    overflow: hidden;
 }
 
 .insights h2 {
