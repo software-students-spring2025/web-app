@@ -1,4 +1,4 @@
-/* General styling */
+/* General Styling */
 body {
     font-family: 'Arial', sans-serif;
     background-color: #f7f9fc;
@@ -8,15 +8,15 @@ body {
     justify-content: center;
 }
 
-/* Dashboard container */
+/* Center Dashboard */
 .dashboard {
-    max-width: 420px;
     width: 100%;
+    max-width: 420px;
     padding: 20px;
     text-align: center;
 }
 
-/* Header */
+/* Title Styling */
 .dashboard h1 {
     font-size: 24px;
     font-weight: bold;
@@ -28,7 +28,7 @@ body {
     color: #555;
 }
 
-/* Stats section */
+/* Stats Section */
 .stats {
     display: flex;
     justify-content: space-between;
@@ -45,7 +45,7 @@ body {
     position: relative;
 }
 
-/* Icon placement */
+/* Icon Placement */
 .stats div::before {
     content: '📊';
     position: absolute;
@@ -67,7 +67,7 @@ body {
     margin-top: 5px;
 }
 
-/* Background colors */
+/* Background Colors */
 .weekly {
     background-color: #fde8e8;
 }
@@ -76,7 +76,7 @@ body {
     background-color: #fef7e4;
 }
 
-/* Colors for numbers */
+/* Colors for Numbers */
 .weekly h2 {
     color: #e15555;
 }
@@ -85,7 +85,7 @@ body {
     color: #e7a236;
 }
 
-/* Monthly insights */
+/* Monthly Insights Section */
 .monthly-insights {
     background-color: #e7f0fe;
     padding: 25px;
@@ -110,7 +110,7 @@ body {
     margin-bottom: 15px;
 }
 
-/* Insights section */
+/* Insights Section */
 .insights {
     display: flex;
     justify-content: space-between;
@@ -125,7 +125,7 @@ body {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Centered text in insights */
+/* Centered Text in Insights */
 .insights h2 {
     font-size: 24px;
     font-weight: bold;
