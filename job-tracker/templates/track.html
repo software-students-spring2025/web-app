@@ -31,7 +31,60 @@
         </tr>
         {% for app in applications %}
         <tr class="app">
-            <td class="search-icon"><img src="{{ url_for('static', filename='images/Magnifying.png') }}" alt="Search Icon" class="magnifying-img"></td>
+            <td>
+                <!-- Hidden checkbox to control the popup -->
+                <input type="checkbox" id="popup-toggle-{{ loop.index }}" class="popup-toggle">
+                <label for="popup-toggle-{{ loop.index }}">
+                    <img src="{{ url_for('static', filename='images/Magnifying.png') }}" alt="Search Icon" class="magnifying-img">
+                </label>
+
+                <!-- Popup content -->
+                <div class="popup-content">
+                    <label for="popup-toggle-{{ loop.index }}" class="close-button">✖</label>
+
+                    <div class="form-group">
+                        <label>Company</label>
+                        <p class="input-pink">{{ app.company }}</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Role</label>
+                        <p class="input-blue">{{ app.role }}</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Category</label>
+                        <p class="input-yellow">{{ app.category }}</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Location</label>
+                        <p class="input-green">{{ app.location }}</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Flexibility</label>
+                        <p class="input-purple">{{ app.flexibility }}</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Status</label>
+                        <p class="input-pink2">{{ app.status }}</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Date</label>
+                        <p class="input-orange">{{ app.date }}</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Applied Link</label>
+                        <p class="input-blue2">
+                            <a href="{{ app.applied_link }}" target="_blank">{{ app.applied_link }}</a>
+                        </p>
+                    </div>
+                </div>
+            </td>
             <td class="company">{{ app.company }}</td>
             <td class="role">{{ app.role }}</td>
             <td class="status">{{ app.status }}</td>
