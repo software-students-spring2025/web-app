@@ -6,9 +6,9 @@ A little exercise to build a web application following an agile development proc
 
 See instructions. Delete this line and place the Product Vision Statement here.
 
-## User stories
+## User stories 
 
-See instructions. Delete this line and place a link to the user stories here.
+[Issues](https://github.com/software-students-spring2025/2-web-app-toast/issues)
 
 ## Steps necessary to run the software
 
@@ -16,4 +16,4 @@ See instructions. Delete this line and place instructions to download, configure
 
 ## Task boards
 
-See instructions. Delete this line and place a link to the task boards here.
+[Projects Page](https://github.com/software-students-spring2025/2-web-app-toast/projects?query=is%3Aopen)
