@@ -42,10 +42,35 @@ def handle_register():
 
     return flask.render_template('register.html', message="Username Already Exist or Passwork too Short")
 
-# Homepage
+# Homepage get
 @app.route('/home')
 def home():
     return flask.render_template('home.html')
+
+# Homepage Post
+@app.route('/home', methods=['POST'])
+def handle_home():
+    return flask.render_template('home.html')
+
+# DetailPage get
+@app.route('/detail')
+def home():
+    return 'Detail'
+
+# DetailPage Post
+@app.route('/detail', methods=['POST'])
+def handle_home():
+    return 'Detail'
+
+# NewOrder get
+@app.route('/newOrder')
+def home():
+    return 'NewOrder'
+
+# NewOrder Post
+@app.route('/newOrder', methods=['POST'])
+def handle_home():
+    return 'NewOrder'
 
 if __name__ == '__main__':
     app.run(debug=True, port=config.PORT)
