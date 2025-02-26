@@ -119,12 +119,13 @@ def create_app():
         name = request.form.get("name")
         message = request.form.get("message")
         if not name or not message:
+            flash("Missing name or message!", "error")
             return "Missing name or message", 400
         todo = {
             "name": name,
             "message": message,
             "created_at": datetime.utcnow(),
-            "user_id": current_user.id,  # Associate with the logged in user.
+            "user_id": current_user.id, 
         }
         db.todos.insert_one(todo)
         flash("Task added successfully!", "success")
