@@ -2,7 +2,7 @@
 import os
 from datetime import datetime, timedelta
 import certifi
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_login import LoginManager, UserMixin, login_user, current_user, login_required, logout_user
 import pymongo
 from bson.objectid import ObjectId
@@ -93,9 +93,9 @@ def create_app():
                     flash("Logged in successfully!", "success")
                     return redirect("/home")
                 else:
-                    flash("Invalid email or password.", "danger")
+                    flash("Invalid username or password.", "danger")
             else:
-                flash("Invalid email or password.", "danger")
+                flash("Invalid username or password.", "danger")
 
             # If login failed, re-render the login form
             return render_template("login.html")
@@ -242,6 +242,14 @@ def create_app():
 
         applications = db.Apps.find({"user": loggedUser})
         return render_template("delete.html", applications=applications)
+    
+    @app.route('/logout')
+    @login_required
+    def logout():
+        logout_user()
+        session.pop('_flashes', None)
+        flash("You have been logged out.", "info")
+        return redirect(url_for('login'))
 
     @app.errorhandler(Exception)
     def handle_error(e):
