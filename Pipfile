@@ -6,8 +6,15 @@ name = "pypi"
 [packages]
 flask = "*"
 pymongo = "*"
-python-dotenv = "*"
 flask-login = "*"
+blinker = "*"
+click = "*"
+python-dotenv = "*"
+flask-debugtoolbar = "*"
+itsdangerous = "*"
+jinja2 = "*"
+werkzeug = "*"
+gunicorn = "*"
 
 [dev-packages]
 

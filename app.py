@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for, flash, abort
 import pymongo
-from dotenv import load_dotenv, dotenv_values
+from dotenv import load_dotenv
 from bson.objectid import ObjectId
 from datetime import datetime
 
@@ -15,6 +15,7 @@ from flask_login import (
 )
 from werkzeug.security import generate_password_hash, check_password_hash
 
+# Load environment variables
 load_dotenv()
 
 
@@ -28,14 +29,21 @@ class User(UserMixin):
 
 def create_app():
     app = Flask(__name__)
-    config = dotenv_values()
-    app.config.from_mapping(config)
     # Ensure you have a secret key for session management.
     app.secret_key = os.getenv("SECRET_KEY", "defaultsecretkey")
 
-    # Set up MongoDB connection.
-    cxn = pymongo.MongoClient(os.getenv("MONGO_URI"))
-    db = cxn[os.getenv("MONGO_DBNAME")]
+    # Set up MongoDB connection with proper error handling
+    mongo_uri = os.getenv("MONGO_URI")
+    mongo_dbname = os.getenv("MONGO_DBNAME")
+
+    if not mongo_uri or not mongo_dbname:
+        print(" * ERROR: MongoDB environment variables not set")
+        mongo_uri = mongo_uri or "mongodb://localhost:27017"
+        mongo_dbname = mongo_dbname or "todo_app"
+        print(f" * Using fallback values: {mongo_uri}, {mongo_dbname}")
+
+    cxn = pymongo.MongoClient(mongo_uri)
+    db = cxn[mongo_dbname]
 
     try:
         cxn.admin.command("ping")
@@ -100,6 +108,8 @@ def create_app():
         else:
             query = base_query
         todos = list(db.todos.find(query).sort("created_at", -1))
+        for todo in todos:
+            todo["_id_str"] = str(todo["_id"])
         return render_template("index.html", todos=todos)
 
     @app.route("/todos/<id>", methods=["GET"])
@@ -142,6 +152,7 @@ def create_app():
         todo = db.todos.find_one({"_id": ObjectId(id)})
         if not todo or todo.get("user_id") != current_user.id:
             return "Todo not found or unauthorized", 404
+
         try:
             result = db.todos.update_one(
                 {"_id": ObjectId(id), "user_id": current_user.id},
@@ -229,7 +240,8 @@ def create_app():
 app = create_app()
 
 if __name__ == "__main__":
-    FLASK_PORT = os.getenv("FLASK_PORT", "5000")
-    FLASK_ENV = os.getenv("FLASK_ENV")
-    print(f"FLASK_ENV: {FLASK_ENV}, FLASK_PORT: {FLASK_PORT}")
-    app.run(port=int(FLASK_PORT))
+    FLASK_PORT = os.getenv("FLASK_PORT", "8000")
+    FLASK_ENV = os.getenv("FLASK_ENV", "development")
+    DEBUG = os.getenv("DEBUG", "False").lower() == "true"
+    print(f"FLASK_ENV: {FLASK_ENV}, FLASK_PORT: {FLASK_PORT}, DEBUG: {DEBUG}")
+    app.run(host="0.0.0.0", port=int(FLASK_PORT), debug=DEBUG)
