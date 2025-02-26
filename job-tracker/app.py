@@ -2,7 +2,8 @@
 import os
 from datetime import datetime, timedelta
 import certifi
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 import pymongo
 from bson.objectid import ObjectId
 from dotenv import load_dotenv, dotenv_values
@@ -13,6 +14,8 @@ load_dotenv()  # load environment variables from .env file
 
 def create_app():
     app = Flask(__name__)
+    app.secret_key = os.getenv("SECRET_KEY")
+
 
     app.config['TEMPLATES_AUTO_RELOAD'] = True
     app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
@@ -25,6 +28,8 @@ def create_app():
                               tlsCAFile=certifi.where())
     db = cxn[os.getenv("MONGO_DBNAME")]
 
+    users_collection = db['Users']
+
     try:
         cxn.admin.command("ping")
         print(" *", "Connected to MongoDB!")
@@ -34,20 +39,44 @@ def create_app():
     # ObjectId of current logged in user. Will have to fetch this with pymongo commands later
     loggedUser = ObjectId('67bd0feb736f2e7829d2dbe9')
 
+    # sign up page -- only username and password - NO EMAIL YET
+    @app.route('/signup', methods=['GET', 'POST'])
+    def signup():
+        if request.method == 'POST':
+            username = request.form['username']
+            password = request.form['password']
+
+            # Check if the username already exists
+            if users_collection.find_one({'username': username}):
+                flash('Username already exists. Choose a different one.', 'danger')
+            else:
+                users_collection.insert_one({'username': username, 'password': password})
+                flash('Registration successful. You can now log in.', 'success')
+                return redirect(url_for('login'))
+        return render_template('signup.html')
+    
+    # login page
+    @app.route('/login', methods=['GET', 'POST'])
+    def login():
+        if request.method == 'POST':
+            username = request.form['username']
+            password = request.form['password']
+
+            # Check if the username and password match
+            user = users_collection.find_one({'username': username, 'password': password})
+            if user:
+                flash('Login successful.', 'success')
+                return redirect(url_for('home'))
+                # Add any additional logic, such as session management
+            else:
+                flash('Invalid username or password. Please try again.', 'danger')
+
+        return render_template('login.html')
+
     # landing page
     @app.route('/')
     def landing():
         return render_template("landing.html")
-
-    # login page
-    @app.route('/login')
-    def login():
-        return render_template("login.html")
-
-    # signup page
-    @app.route('/signup')
-    def signup():
-        return render_template("signup.html")
 
     # home page
     @app.route('/home')
@@ -109,6 +138,8 @@ def create_app():
                                accepted=len(accepted),
                                interviewing=len(interviewing),
                                rejected=len(rejected))
+
+
 
     # edit profile page
     @app.route('/edit-profile', methods=['GET', 'POST'])
