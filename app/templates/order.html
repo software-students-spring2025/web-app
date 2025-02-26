@@ -16,10 +16,10 @@
     <p>View our seasonal menu items below:</p>
         {% for item in menu_items %}
         <li>
-            <a href="{{ url_for('item_info', item_id=item.id) }}">
+            <a href="{{ url_for('item_info', item_id=item.item_id) }}">
             <strong>{{ item.name }}</strong>
             </a>: {{ item.description }}
-            <a href="{{ url_for('add_to_cart', item_id=item.id) }}">Add to Cart</a>
+            <a href="{{ url_for('add_to_cart', item_id=item.item_id) }}">Add to Cart</a>
         </li>
         {% endfor %}
     {% if request.args.get('query') %}

@@ -1,43 +1,49 @@
-from app import mongo
+from pymongo import MongoClient
 
+# prevent circular imports
+def get_mongo():
+    client = MongoClient("mongodb://localhost:27017/")
+    return client.my_database
 
 class MenuItem:
 
     @staticmethod
-    def createItem(id, name, description, category, price, ingredients):
+    def create_item(id, name, description, category, price, ingredients):
 
-        mongo.db.items.insert_one({
-            'itemID': id, 
+        get_mongo().db.menu_items.insert_one({
+            'item_id': id, 
             'name': name, 
             'description': description, 
             'category': category,
             'price': price,
-            'ingredients': ingredients
+            'ingredients': ingredients,
+            'quantity': 0,
+            'total': 0
             })
 
     @staticmethod
-    def findByID(id):
-        return mongo.db.items.find_one({'itemID': id})
+    def find_by_id(id):
+        return get_mongo().db.menu_items.find_one({'item_id': id})
     
     @staticmethod
-    def findPriceByID(id):
-        item = mongo.db.items.find_one({'itemID': id})
+    def find_price_by_id(id):
+        item = get_mongo().db.menu_items.find_one({'item_id': id})
         if item:
             return item.get('price')
     
     @staticmethod
-    def querySearch(query):
-        queryWords = [word for word in query.split()]
+    def query_search(query):
+        query_words = [word for word in query.split()]
 
-        return mongo.db.items.find({
+        return get_mongo().db.menu_items.find({
             '$or': [
-                {'name': {'$regex': '|'.join(queryWords), '$options': 'i'}, 
-                'description': {'$regex': '|'.join(queryWords), '$options': 'i'},
-                'category': {'$regex': '|'.join(queryWords), '$options': 'i'}}
+                {'name': {'$regex': '|'.join(query_words), '$options': 'i'}, 
+                'description': {'$regex': '|'.join(query_words), '$options': 'i'},
+                'category': {'$regex': '|'.join(query_words), '$options': 'i'}}
                 ]
             })
     
     @staticmethod
-    def findByCategory(category):
-        return mongo.db.items.find({'category': category})
+    def find_by_category(category):
+        return get_mongo().db.menu_items.find({'category': category})
         
