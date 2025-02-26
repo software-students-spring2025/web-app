@@ -1,0 +1,124 @@
+/* General Reset */
+body, html {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+}
+
+/* Main Container */
+.landing-container {
+    text-align: center;
+    color: white;
+}
+
+/* Header */
+.landing-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    color: #333;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.menu-toggle {
+    cursor: pointer;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 4px;
+    background-color: #333;
+    border-radius: 2px;
+}
+
+/* Background Image */
+.background-image {
+    background-image: url('../images/LandingDesign.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    position: relative;
+}
+
+/* Headline */
+.headline {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    width: 80%;
+    line-height: 1.4;
+}
+
+
+/* CTA Section */
+.cta {
+    position: absolute;
+    bottom: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 20px;
+    text-align: center;
+    width: 80%;
+}
+
+.description {
+    font-size: 16px;
+    color: white;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.cta-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cta-button {
+    display: block;
+    text-decoration: none;
+    background: #e6f0ff;
+    color: #333;
+    padding: 10px 20px;
+    border-radius: 25px;
+    width: 140px;
+    margin: 0 auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+    background: #d0e2ff;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Media Queries */
+@media (max-width: 600px) {
+    .headline {
+        font-size: 20px;
+    }
+
+    .description {
+        font-size: 14px;
+    }
+
+    .cta-button {
+        width: 100px;
+    }
+}
