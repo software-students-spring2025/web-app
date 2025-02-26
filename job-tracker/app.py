@@ -32,18 +32,16 @@ def create_app():
     except Exception as e:
         print(" * MongoDB connection error:", e)
 
-    # ObjectId of current logged in user. Will have to fetch this with pymongo commands later
-    loggedUser = ObjectId('67bd0feb736f2e7829d2dbe9')
-
-    #Login stuff
+    #Login
     users_collection = db["Users"]
     login_manager = LoginManager()
     login_manager.init_app(app)
     login_manager.login_view = 'login'
 
     class User(UserMixin):
+
         def __init__(self, user_id, username, is_active=True):
-            self.id = str(user_id)  
+            self.id = str(user_id)
             self.username = username
             self._is_active = is_active
 
@@ -52,19 +50,19 @@ def create_app():
 
         def is_authenticated(self):
             return self.is_authenticated
-        
+
         def get_id(self):
             return self.id
-        
 
     @login_manager.user_loader
     def load_user(user_id):
         user = users_collection.find_one({"_id": ObjectId(user_id)})
         if user:
-            return User(user_id = user["_id"], username = user["username"], is_active=True)
+            return User(user_id=user["_id"],
+                        username=user["username"],
+                        is_active=True)
         else:
             return None
-    
 
     # landing page
     @app.route('/')
@@ -80,15 +78,17 @@ def create_app():
             password = request.form.get("password")
 
             #check database for username
-            user_data = users_collection.find_one({"username":username})
+            user_data = users_collection.find_one({"username": username})
             if user_data:
                 #check database for password
-                if check_password_hash(user_data["password"],password):
+                if check_password_hash(user_data["password"], password):
                     #Create User instance (flask-login)
-                    user = User(user_id = user_data["_id"],
-                                username = user_data["username"],
-                                is_active = True)
-                    
+                    user = User(user_id=user_data["_id"],
+                                username=user_data["username"],
+                                is_active=True)
+
+                    session["user_id"] = str(user_data["_id"])
+
                     login_user(user)
                     flash("Logged in successfully!", "success")
                     return redirect("/home")
@@ -100,34 +100,39 @@ def create_app():
             # If login failed, re-render the login form
             return render_template("login.html")
         return render_template("login.html")
-    
 
     # signup page
-    @app.route('/signup', methods=['GET','POST'])
+    @app.route('/signup', methods=['GET', 'POST'])
     def signup():
         if request.method == "POST":
             username = request.form.get("username")
             password = request.form.get("password")
-        
+
             # Check if the username already exists in the database.
             if users_collection.find_one({"username": username}):
-                flash("Username already exists. Please choose another.", "danger")
+                flash("Username already exists. Please choose another.",
+                      "danger")
                 return render_template("signup.html")
-            
-            # hash password for security 
+
+            # hash password for security
             hashed_password = generate_password_hash(password, method='sha256')
 
             #insert into database
-            insert_result = users_collection.insert_one({"username": username,
-                                         "password": hashed_password})
+            insert_result = users_collection.insert_one({
+                "username":
+                username,
+                "password":
+                hashed_password
+            })
             user_id = insert_result.inserted_id
 
-            #check that insert succesful 
+            #check that insert succesful
             if user_id:
                 flash("Account created successfully!", "success")
                 return redirect("/login")
             else:
-                flash("An error occurred during signup. Please try again.", "danger")
+                flash("An error occurred during signup. Please try again.",
+                      "danger")
         return render_template("signup.html")
 
     @app.route('/addapplication')
@@ -147,7 +152,8 @@ def create_app():
     @login_required
     def home():
         # finding total apps of user
-        total = db.Apps.count_documents({"user": loggedUser})
+        total = db.Apps.count_documents(
+            {"user": ObjectId(session.get("user_id"))})
 
         # calculating dates
         today = datetime.now()
@@ -163,13 +169,15 @@ def create_app():
             "date": {
                 "$gte": iso_week
             },
-            "user": loggedUser
+            "user":
+            ObjectId(session.get("user_id"))
         })
         docs_month_cursor = db.Apps.find({
             "date": {
                 "$gte": iso_month
             },
-            "user": loggedUser
+            "user":
+            ObjectId(session.get("user_id"))
         })
 
         # convert to lists
@@ -178,20 +186,26 @@ def create_app():
 
         # finding number of apps based on status
         accepted = db.Apps.count_documents({
-            "status": "Accepted",
-            "user": loggedUser
+            "status":
+            "Accepted",
+            "user":
+            ObjectId(session.get("user_id"))
         })
         interviewing = db.Apps.count_documents({
-            "status": "Interviewing",
-            "user": loggedUser
+            "status":
+            "Interviewing",
+            "user":
+            ObjectId(session.get("user_id"))
         })
         rejected = db.Apps.count_documents({
-            "status": "Rejected",
-            "user": loggedUser
+            "status":
+            "Rejected",
+            "user":
+            ObjectId(session.get("user_id"))
         })
 
         # finding current logged user for name
-        user = db.Users.find_one({"_id": loggedUser})
+        user = db.Users.find_one({"_id": ObjectId(session.get("user_id"))})
 
         return render_template("home.html",
                                user=user,
@@ -214,22 +228,26 @@ def create_app():
             if 'applied' in choice.lower() or 'interview' in choice.lower(
             ) or 'rejected' in choice.lower() or 'offer' in choice.lower():
                 applications = db.Apps.find({
-                    "user": loggedUser,
-                    "status": choice
+                    "user":
+                    ObjectId(session.get("user_id")),
+                    "status":
+                    choice
                 })
             elif choice.lower() == 'descending':
                 applications = db.Apps.find({
-                    "user": loggedUser
+                    "user":
+                    ObjectId(session.get("user_id"))
                 }).sort("date", -1)
             elif choice.lower() == 'ascending':
                 applications = db.Apps.find({
-                    "user": loggedUser
+                    "user":
+                    ObjectId(session.get("user_id"))
                 }).sort("date", 1)
 
             return render_template("track.html", applications=applications)
 
         # get request
-        applications = db.Apps.find({"user": loggedUser})
+        applications = db.Apps.find({"user": ObjectId(session.get("user_id"))})
         return render_template("track.html", applications=applications)
 
     # delete app
@@ -240,14 +258,15 @@ def create_app():
         # if request.method == 'POST':
         db.Apps.delete_one({"_id": ObjectId('67bdf16a3028f7eee227824d')})
 
-        applications = db.Apps.find({"user": loggedUser})
+        applications = db.Apps.find({"user": ObjectId(session.get("user_id"))})
         return render_template("delete.html", applications=applications)
-    
+
     @app.route('/logout')
     @login_required
     def logout():
         logout_user()
         session.pop('_flashes', None)
+        session.pop("user_id", None)
         flash("You have been logged out.", "info")
         return redirect(url_for('login'))
 
