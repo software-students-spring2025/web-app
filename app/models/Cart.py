@@ -1,36 +1,65 @@
-from app import mongo
+from pymongo import MongoClient
+
+# prevent circular imports
+def get_mongo():
+    client = MongoClient("mongodb://localhost:27017/")
+    return client.my_database
 '''
 doc in progress:
 contains all items, keeps track of total price of items in cart
 Every customer gets only one cart, unique identifier is customerID
+
+TODO: Detach item quantity from menu item, should be a cart property and not tied to 
+specifc items
+
 '''
 
 class Cart:
 
     @staticmethod
-    def createCart(customerID):
+    def get_cart(customer_id):
         # only allow one cart per customer
-        if not mongo.db.carts.find_one({'customerID': customerID}):
-            mongo.db.carts.insert_one({'customerID': customerID, 'items': [], 'totalPrice': 0})
+        cart = get_mongo().carts.find_one({'customer_id': customer_id})
+        if not cart:
+            get_mongo().carts.insert_one({'customer_id': customer_id, 'items': [], 'total_price': 0})
+            cart = get_mongo().carts.find_one({'customer_id': customer_id})
+
+        # cart should have total price 0 if empty
+        if len(cart.get('items')) == 0:
+            get_mongo().carts.update_one({'customer_id': customer_id}, {'$set': {'total_price' : 0}})
+        return cart
 
     @staticmethod
-    def addToCart(customerID, itemID):
-
+    def add_to_cart(customer_id, item_id):
         # make sure cart exists
-        Cart.createCart(customerID)
+        cart = Cart.get_cart(customer_id)
+        items = cart.get('items')
 
         # add item into cart ONLY if item exists
-        item = mongo.db.items.find_one({'itemID': itemID})
+        item = get_mongo().menu_items.find_one({'item_id': item_id})
+        # print("MENU ITEMS LIST: ", list(get_mongo().menu_items.find()))
         if item:
-            mongo.db.carts.update_one({'customerID': customerID}, {'$push': {'items': itemID}})
-            itemPrice = item.get('price') # add item price to total
-            mongo.db.carts.update_one({'customerID': customerID}, {'$inc': {'totalPrice': itemPrice}})
+            #print("ITEM EXISTS")
+            '''
+            # removing to decouple item quantity from item
+
+            if item_id in items: 
+                get_mongo().menu_items.update_one({'item_id': item_id}, {'$inc': {'quantity': 1}})
+                get_mongo().menu_items.update_one({'item_id': item_id}, {'$inc': {'total': item.get('price')}})
+            else:
+                get_mongo().carts.update_one({'customer_id': customer_id}, {'$push': {'items': item_id}})
+                get_mongo().menu_items.update_one({'item_id': item_id}, {'$inc': {'quantity': 1}})
+                get_mongo().menu_items.update_one({'item_id': item_id}, {'$set': {'total': item.get('price')}})
+            '''
+            item_price = item.get('price') # add item price to total
+            get_mongo().carts.update_one({'customer_id': customer_id}, {'$inc': {'total_price': item_price}})
+            get_mongo().carts.update_one({'customer_id': customer_id}, {'$push': {'items': item_id}})
 
 
     @staticmethod
-    def removeFromCart(customerID, itemID):
+    def remove_from_cart(customer_id, item_id):
 
-        cart = mongo.db.carts.find_one({'customerID': customerID})
+        cart = get_mongo().carts.find_one({'customer_id': customer_id})
 
         # make sure cart exists
         if not cart:
@@ -39,37 +68,49 @@ class Cart:
         items = cart.get('items')
 
         # remove single instance of item if it exists
-        if itemID in items:
-            items.remove(itemID)
-            item = mongo.db.items.find_one({'itemID': itemID})
+        if item_id in items:
+            items.remove(item_id)
+            item = get_mongo().menu_items.find_one({'item_id': item_id})
             if item: # subtract item price from total
-                itemPrice = item.get('price')
-                mongo.db.carts.update_one({'customerID': customerID}, {'$inc': {'totalPrice': -itemPrice}})
-
-            mongo.db.carts.update_one({'customerID': customerID}, {'$set': {'items': items}})
+                item_price = item.get('price')
+                get_mongo().carts.update_one({'customer_id': customer_id}, {'$inc': {'total_price': -item_price}})
+            
+            get_mongo().carts.update_one({'customer_id': customer_id}, {'$set': {'items': items}})
 
 
 
     @staticmethod
-    def calculateRawTotal(customerID):
-        cart = mongo.db.carts.find_one({'customerID': customerID})
+    def calculate_raw_total(customer_id):
+        cart = get_mongo().carts.find_one({'customer_id': customer_id})
         # reset price
-        totalPrice = 0
+        total_price = 0
                                   
         if not cart:
             return
         items = cart.get('items')
 
-        for itemID in items:
-            item = mongo.db.items.find_one({'itemID': itemID})
+        for item_id in items:
+            item = get_mongo().menu_items.find_one({'item_id': item_id})
             if item:
-                itemPrice = item.get('price')
-                totalPrice += itemPrice
+                item_price = item.get('price')
+                total_price += item_price
             else:
                 # invalid item
-                mongo.db.carts.update_one({'customerID': customerID}, {'$pull': {'items': itemID}})
+                get_mongo().carts.update_one({'customer_id': customer_id}, {'$pull': {'items': item_id}})
 
-        mongo.db.carts.update_one({'customerID': customerID}, {'$set': {'totalPrice': totalPrice}})
-        return totalPrice
+        get_mongo().carts.update_one({'customer_id': customer_id}, {'$set': {'total_price': total_price}})
+        return total_price
+
+
+    @staticmethod
+    def get_item_count(customer_id, item_id):
+        cart = get_mongo().carts.find_one({'customer_id': customer_id})
+        # reset price
+        total_price = 0
+                                  
+        if not cart:
+            return
+        print("ITEM COUNT: ", cart.get('items').count(item_id))
+        return cart.get('items').count(item_id)
 
                 

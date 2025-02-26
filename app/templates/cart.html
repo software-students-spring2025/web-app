@@ -12,7 +12,7 @@
         {% for item in cart_items %}
         <li>
             <strong>{{ item.name }}</strong> ({{ item.quantity }})
-            <a href="{{ url_for('remove_from_cart', item_id=item.id) }}">Remove</a>
+            <a href="{{ url_for('remove_from_cart', item_id=item.item_id) }}">Remove</a>
         </li>
         {% endfor %}
     </ul>

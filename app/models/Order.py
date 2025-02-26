@@ -1,4 +1,10 @@
-from app import mongo
+from pymongo import MongoClient
+
+# prevent circular imports
+def get_mongo():
+    client = MongoClient("mongodb://localhost:27017/")
+    return client.my_database
+
 '''
 Order record with payment information, can be accessed later
 Currently orderID is just the number order it is, discuss to change
@@ -9,22 +15,22 @@ class Order:
     shipping_price = 2 # 2 dollars shipping price, could make it tied to location?
     
     @staticmethod
-    def create_order(cart, customerID, totalPrice, paymentInfo, shipping, shippingAddress = None):
+    def create_order(cart, customer_id, total_price, payment_info, shipping, shipping_address = None):
         Order.order_count += 1
         # tax and shipment
-        tax = totalPrice * 0.085
-        totalPrice += tax
-        totalPrice += Order.shipping_price * shipping # make this tied to location?
+        tax = total_price * 0.085
+        total_price += tax
+        total_price += Order.shipping_price * shipping # make this tied to location?
 
-        mongo.db.orders.insert_one({
+        get_mongo().db.orders.insert_one({
             'orderID': Order.order_count, 
-            'customerID': customerID,
+            'customerID': customer_id,
             'items': cart, 
-            'totalPrice': totalPrice,
+            'total_price': total_price,
             'tax': tax,
-            'paymentInfo': paymentInfo, 
+            'payment_info': payment_info, 
             'shipping': shipping,
-            'shippingAddress': shippingAddress #geolocation feature?
+            'shippingAddress': shipping_address #geolocation feature?
             })
         
     
