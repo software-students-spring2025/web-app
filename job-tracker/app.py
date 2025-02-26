@@ -7,7 +7,6 @@ import pymongo
 from bson.objectid import ObjectId
 from dotenv import load_dotenv, dotenv_values
 
-
 load_dotenv()  # load environment variables from .env file
 
 
@@ -16,7 +15,6 @@ def create_app():
 
     app.config['TEMPLATES_AUTO_RELOAD'] = True
     app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-
 
     config = dotenv_values()
     app.config.from_mapping(config)
@@ -64,8 +62,6 @@ def create_app():
     # home page
     @app.route('/home')
     def home():
-
-        # calculations for dashboard
         # finding total apps of user
         total = db.Apps.count_documents({"user": loggedUser})
 
@@ -97,50 +93,26 @@ def create_app():
         docs_month = list(docs_month_cursor)
 
         # finding number of apps based on status
-        accepted = list(
-            db.Apps.find({
-                "status": "Accepted",
-                "user": loggedUser
-            }))
-        interviewing = list(
-            db.Apps.find({
-                "status": "Interviewing",
-                "user": loggedUser
-            }))
-        rejected = list(
-            db.Apps.find({
-                "status": "Rejected",
-                "user": loggedUser
-            }))
+        accepted = db.Apps.count_documents({
+            "status": "Accepted",
+            "user": loggedUser
+        })
+        interviewing = db.Apps.count_documents({
+            "status": "Interviewing",
+            "user": loggedUser
+        })
+        rejected = db.Apps.count_documents({
+            "status": "Rejected",
+            "user": loggedUser
+        })
 
         return render_template("home.html",
                                week=len(docs_week),
                                month=len(docs_month),
                                total=total,
-
-                               accepted=len(accepted),
-                               interviewing=len(interviewing),
-                               rejected=len(rejected))
-
-    # edit profile page
-    @app.route('/edit-profile', methods=['GET', 'POST'])
-    def edit_profile():
-        user = db.Users.find_one({"_id": loggedUser})
-
-        # post request
-        if request.method == 'POST':
-            new_name = request.form.get('newUsername')
-
-            # update the database
-            db.Users.update_one({"_id": ObjectId(loggedUser)},
-                                {"$set": {
-                                    "username": new_name
-                                }})
-
-            return redirect(url_for('edit_profile'))
-
-        # get request
-        return render_template("edit-profile.html", user=user)
+                               accepted=accepted,
+                               interviewing=interviewing,
+                               rejected=rejected)
 
     # job tracking page
     @app.route('/track', methods=['GET', 'POST'])
@@ -148,14 +120,21 @@ def create_app():
         # post request
         if request.method == 'POST':
             # get user input from search bar
+            choice = request.form.get('status')
 
-            search_query = request.form.get('search')
-
-            # search applications based on input (just company name for now)
-            applications = db.Apps.find({
-                "user": loggedUser,
-                "company": search_query
-            })
+            if choice.lower() in 'applied interviewing rejected':
+                applications = db.Apps.find({
+                    "user": loggedUser,
+                    "status": choice
+                })
+            elif choice.lower() == 'descending':
+                applications = db.Apps.find({
+                    "user": loggedUser
+                }).sort("date", -1)
+            elif choice.lower() == 'ascending':
+                applications = db.Apps.find({
+                    "user": loggedUser
+                }).sort("date", 1)
 
             return render_template("track.html", applications=applications)
 
@@ -163,6 +142,15 @@ def create_app():
         applications = db.Apps.find({"user": loggedUser})
         return render_template("track.html", applications=applications)
 
+    # delete app
+    @app.route('/delete', methods=['GET', 'POST'])
+    def delete():
+        # post request
+        # if request.method == 'POST':
+        db.Apps.delete_one({"_id": ObjectId('67bdf16a3028f7eee227824d')})
+
+        applications = db.Apps.find({"user": loggedUser})
+        return render_template("delete.html", applications=applications)
 
     @app.errorhandler(Exception)
     def handle_error(e):
@@ -185,5 +173,4 @@ if __name__ == "__main__":
     FLASK_ENV = os.getenv("FLASK_ENV")
     print(f"FLASK_ENV: {FLASK_ENV}, FLASK_PORT: {FLASK_PORT}")
 
-
-    app.run(port=FLASK_PORT, debug=True)
+    app.run(port=FLASK_PORT)
