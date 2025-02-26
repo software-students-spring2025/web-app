@@ -5,6 +5,7 @@ on:
   pull_request:
     types: [opened, closed]
     branches: [main, master]
+  workflow_dispatch:
 jobs:
   log:
     runs-on: ubuntu-latest
