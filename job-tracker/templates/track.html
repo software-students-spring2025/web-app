@@ -6,7 +6,7 @@
 <main>
     <form method="POST" class="search" action="/track">
         <div class="search-container">
-            <select name="status" id="status">
+            <select name="status" id="status" onchange="this.form.submit()">
                 <option value="" disabled selected hidden>Search by...</option>
                 <optgroup label="Status">
                     <option value="Applied">Applied</option>
@@ -23,7 +23,8 @@
 
     <table class="app labels">
         <tr>
-            <th><img src="{{ url_for('static', filename='images/Magnifying.png') }}" alt="Magnifying Icon" class="magnifying-img"></th> 
+            <th><img src="{{ url_for('static', filename='images/Magnifying.png') }}" alt="Magnifying Icon"
+                    class="magnifying-img"></th>
             <th>Company</th>
             <th>Role</th>
             <th>Status</th>
@@ -35,7 +36,8 @@
                 <!-- Hidden checkbox to control the popup -->
                 <input type="checkbox" id="popup-toggle-{{ loop.index }}" class="popup-toggle">
                 <label for="popup-toggle-{{ loop.index }}">
-                    <img src="{{ url_for('static', filename='images/Magnifying.png') }}" alt="Search Icon" class="magnifying-img">
+                    <img src="{{ url_for('static', filename='images/Magnifying.png') }}" alt="Search Icon"
+                        class="magnifying-img">
                 </label>
 
                 <!-- Popup content -->

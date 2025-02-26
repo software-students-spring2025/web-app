@@ -124,7 +124,8 @@ def create_app():
             # get user input from search bar
             choice = request.form.get('status')
 
-            if choice.lower() in 'applied interviewing rejected':
+            if 'applied' in choice.lower() or 'interview' in choice.lower(
+            ) or 'rejected' in choice.lower() or 'offer' in choice.lower():
                 applications = db.Apps.find({
                     "user": loggedUser,
                     "status": choice
