@@ -59,12 +59,12 @@ body {
     font-weight: bold;
 }
 
-.weekly {
-    background-color: #FFF1F3;
+.weekly h2 {
+    font-size: 30px;
 }
 
-.monthly {
-    background-color: #FEFAEB;
+.monthly h2 {
+    font-size: 30px;
 }
 
 /* monthly insights */
@@ -101,7 +101,7 @@ body {
 }
 
 .insights h2 {
-    font-size: 22px;
+    font-size: 28px;
     font-weight: bold;
 }
 
@@ -111,7 +111,15 @@ body {
     color: #555;
 }
 
-/* colors */
+/* number colors */
+.weekly h2 {
+    color: #FF6060
+}
+
+.monthly h2 {
+    color: #FFAC4B
+}
+
 .accepted h2 {
     color: #4caf50;
 }
