@@ -1,0 +1,22 @@
+<!-- PREFERENCES PAGE (preferences.html) -->
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Set Your Travel Preferences</h2>
+    <form action="/preferences" method="POST">
+        <div class="mb-3">
+            <label class="form-label">Preferred Destination</label>
+            <input type="text" class="form-control" name="destination" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Budget Range</label>
+            <select class="form-control" name="budget">
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Preferences</button>
+    </form>
+</div>
+{% endblock %}
