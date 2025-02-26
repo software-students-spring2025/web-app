@@ -1,24 +1,37 @@
 import os
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template
+import pymongo
 from dotenv import load_dotenv, dotenv_values
 
-load_dotenv()  # load environment variables from .env file
+# load environment variables from .env file
+load_dotenv()
 
 def create_app():
     """
     Create and configure the Flask application.
     returns: app: the Flask application object
     """
-
     app = Flask(__name__)
     # load flask config from env variables
     config = dotenv_values()
     app.config.from_mapping(config)
 
+    # create a new client and connect to the server
+    client = pymongo.MongoClient(os.getenv("MONGO_URI"))
+    db = client[os.getenv("MONGO_DBNAME")]
+
+    # Send a ping to confirm a successful connection
+    try:
+        client.admin.command('ping')
+        print(" * Pinged your deployment. You successfully connected to MongoDB!")
+    except Exception as e:
+        print(" * MongoDB connection error:", e)
+
     @app.route("/")
     def hello_world():
         """
         testing home route 
+        returns: paragraph text 
         """
         return "<p>Hello, World!</p>"
     
