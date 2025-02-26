@@ -3,7 +3,6 @@ import os
 from datetime import datetime, timedelta
 import certifi
 from flask import Flask, render_template, request, redirect, url_for, flash
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 import pymongo
 from bson.objectid import ObjectId
 from dotenv import load_dotenv, dotenv_values
@@ -67,7 +66,7 @@ def create_app():
             if user:
                 flash('Login successful.', 'success')
                 return redirect(url_for('home'))
-                # Add any additional logic, such as session management
+                # change once logic is clear
             else:
                 flash('Invalid username or password. Please try again.', 'danger')
 
