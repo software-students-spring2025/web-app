@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
 
 {% block container %}
-<main>
-    <form method="POST" class="search" action="/track">
-        <label for="search">Search by...</label>
-        <select name="status" id="status">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/track.css') }}">
+
+<main class="track-page">
+    <h1>Track Applications</h1>
+    <form method="POST" class="search-form" action="/track">
+        <input type="text" name="search" placeholder="Search by..." class="search-input">
+        <select name="status" id="status" class="filter-dropdown">
             <optgroup label="Status">
                 <option value="Applied">Applied</option>
                 <option value="Interviewing">Interviewing</option>
@@ -15,33 +18,32 @@
                 <option value="descending">Least recent</option>
             </optgroup>
         </select>
-        <button type="submit">Search</button>
+        <button type="submit" class="search-btn">Search</button>
     </form>
 
-
-    <table class="app track-header">
-        <tr>
-            <th>Company</th>
-            <th>Role</th>
-            <th>Category</th>
-            <th>Location</th>
-            <th>Flexibility</th>
-            <th>Status</th>
-            <th>Date</th>
-            <th>Link</th>
-        </tr>
-        {% for app in applications %}
-        <tr class="app">
-            <td class="company">{{app.company}}</td>
-            <td class="role">{{app.role}}</td>
-            <td class="category">{{app.category}}</td>
-            <td class="location">{{app.location}}</td>
-            <td class="flexibility">{{app.flexibility}}</td>
-            <td class="status">{{app.status}}</td>
-            <td class="date">{{app.date}}</td>
-            <td class="link"><a href="{{ app.link }}">link</a></td>
-        </tr>
-        {%endfor%}
-    </table>
+    <div class="table-container">
+        <table class="app-table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Company</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for app in applications %}
+                <tr>
+                    <td class="search-icon">🔍</td>
+                    <td class="company">{{ app.company }}</td>
+                    <td class="role">{{ app.role }}</td>
+                    <td class="status">{{ app.status }}</td>
+                    <td class="date">{{ app.date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </main>
 {% endblock %}
