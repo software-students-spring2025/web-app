@@ -1,12 +1,21 @@
-FROM python:3.8-slim-buster
+FROM python:3.13-slim
 
 WORKDIR /app
 
-COPY requirements.txt ./
-RUN pip3 install -r requirements.txt
+# Install pipenv
+RUN pip install --no-cache-dir pipenv
 
-ADD . .
+# Copy Pipfile and Pipfile.lock
+COPY Pipfile Pipfile.lock ./
 
-EXPOSE 5000
+# Install dependencies using pipenv
+RUN pipenv install --deploy --system
 
-CMD [ "python3", "-m", "flask", "run", "--host=0.0.0.0"]
+# Copy application code
+COPY . .
+
+# Expose port from env
+EXPOSE 8000
+
+# Use gunicorn for production or flask for development
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "app:app"]
