@@ -73,6 +73,7 @@ body {
     padding: 20px;
     border-radius: 10px;
     margin-top: 20px;
+    gap: 20px;
 }
 
 .monthly-insights h3 {
