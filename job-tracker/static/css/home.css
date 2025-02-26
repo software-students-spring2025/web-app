@@ -89,6 +89,7 @@ body {
 .insights {
     display: flex;
     justify-content: space-between;
+    gap: 20px;
 }
 
 .insights div {
@@ -96,7 +97,6 @@ body {
     border-radius: 10px;
     padding: 10px;
     width: 30%;
-    gap: 20px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
