@@ -8,6 +8,7 @@ A mobile friendly app that helps travelers find compatible travel partners based
 
 ## User stories
 
+
 - As a traveler, I want to create a profile with my travel preferences (e.g., early airport arrival, budget, favorite food) so that I can showcase what matters to me.
 - As a college graduate, I would like to create a profile for my trip to London, so I am able to create a group of like-minded travelers. 
 - As a budgeting traveler, I would like to find other budgeting travelers, so I am able to travel efficiently on a budget.
@@ -18,6 +19,9 @@ A mobile friendly app that helps travelers find compatible travel partners based
 - As a solo traveler, I would like to find other solo travelers that enjoy the same food cuisines as me, so I am able to enjoy new types of food. 
 - As a traveler, I want to receive notifications when new profiles that match my travel criteria are added so that I never miss an opportunity to connect with a compatible partner.
 - As a traveler, I want to bookmark profiles of potential travel partners so that I can easily compare and revisit them before making a connection.
+
+https://github.com/software-students-spring2025/2-web-app-diet-coke/issues/
+
 
 ## Steps necessary to run the software
 
@@ -71,4 +75,4 @@ A mobile friendly app that helps travelers find compatible travel partners based
 
 ## Task boards
 
-See instructions. Delete this line and place a link to the task boards here.
+https://github.com/orgs/software-students-spring2025/projects/56/views/1
