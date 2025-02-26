@@ -26,7 +26,6 @@ body {
     box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
     width: 400px;
     text-align: center;
-    animation: fadeIn 0.5s ease-in-out;
 }
 
 /* Page Titles */
