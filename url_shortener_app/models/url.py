@@ -34,6 +34,9 @@ class URL:
                 {"$set": {"favorite": not fav}}
             )
 
+    @staticmethod
+    def query(query):
+        return get_mongo().db.urls.find(query)
 
     @staticmethod
     def delete_url(short_url):

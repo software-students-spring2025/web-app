@@ -61,8 +61,21 @@ def edit(short_url):
 @urls.route("/history", methods=["GET"])
 @login_required
 def history():
-    user_urls = URL.get_user_urls(current_user.id)
-    return render_template("history.html", urls=user_urls)
+    filter = request.args.get("filter")
+    if filter:
+        query = {
+            "$and": [
+                {"user_id": current_user.id},
+                {"$or": [
+                    {"short_url": {"$regex": filter, "$options": "i"}},
+                    {"long_url": {"$regex": filter, "$options": "i"}}
+                ]}
+            ]
+        }
+        urls = URL.query(query)
+    else:
+        urls = URL.get_user_urls(current_user.id)
+    return render_template("history.html", urls=urls)
 
 # Given a short url, redirect to the corresponding long url
 @urls.route("/s/<short_url>", methods=["GET"])
