@@ -54,22 +54,22 @@ def handle_home():
 
 # DetailPage get
 @app.route('/detail')
-def home():
+def detail():
     return 'Detail'
 
 # DetailPage Post
 @app.route('/detail', methods=['POST'])
-def handle_home():
+def handle_detail():
     return 'Detail'
 
 # NewOrder get
 @app.route('/newOrder')
-def home():
+def order():
     return 'NewOrder'
 
 # NewOrder Post
 @app.route('/newOrder', methods=['POST'])
-def handle_home():
+def hanle_odrer():
     return 'NewOrder'
 
 if __name__ == '__main__':
