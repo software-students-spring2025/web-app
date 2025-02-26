@@ -11,21 +11,18 @@ import os
 from dotenv import load_dotenv
 from bson.objectid import ObjectId
 #import datetime
-<<<<<<< HEAD
-load_dotenv()
-uri = os.getenv("MONGO_URI")
-Mongo_DBNAME= os.getenv("MONGO_DBNAME")
-client = MongoClient(uri, server_api=ServerApi('1'), tlsCAFile=certifi.where())
+
+#load_dotenv()
+#uri = os.getenv("MONGO_URI")
+#Mongo_DBNAME= os.getenv("MONGO_DBNAME")
+#lient = MongoClient(uri, server_api=ServerApi('1'), tlsCAFile=certifi.where())
 #acess database
 #create DB/Acess
-myDb= client["DuoProject"]
+#myDb= client["DuoProject"]
 #List of data Tables
-myTable= myDb["users"]
-AssigmentsTable= myDb["Assigments"]
-=======
+#myTable= myDb["users"]
+#AssigmentsTable= myDb["Assigments"]
 
-
->>>>>>> af61a3b4ee8bd930733587c18d6ba77a17bc0f60
 ######## USER AUTHENTICATION
 ##password autheenction
 #user
@@ -36,19 +33,19 @@ AssigmentsTable= myDb["Assigments"]
 ##          If login is valid, return the user ID
 ##          If login is not valid, return None
 ## 
-<<<<<<< HEAD
-def pwd_auth(username, password):
-    Data_Base= myDb["users"] 
-    exist= Data_Base.find_one({"username":username,"password":password})
+
+def pwd_auth(myDb,username, password):
+    print("Hello World")
+    usertable= myDb["users"] 
+    exist= usertable.find_one({"username":username,"password":password})
     if exist:
         return exist["_id"]
     else:
         return None
     #return None
-=======
-def pwd_auth(mydb, username, password):
-    return None
->>>>>>> af61a3b4ee8bd930733587c18d6ba77a17bc0f60
+
+
+
 
 
 ##
@@ -57,12 +54,9 @@ def pwd_auth(mydb, username, password):
 ##          If username already exists, return None
 ##          If username is new, create a new user entry in the data table and return the user ID
 ## 
-<<<<<<< HEAD
-def new_account(username, password):
 
-=======
 def new_account(mydb, username, password):
->>>>>>> af61a3b4ee8bd930733587c18d6ba77a17bc0f60
+    
     return None
 
 
@@ -75,21 +69,21 @@ def new_account(mydb, username, password):
 ## Function: get deadlines
 ## Usage: get all deadlines belonging to a specific user
 ## 
-<<<<<<< HEAD
-def get_deadlines(username):
+
+
+
+def get_deadlines(mydb, userID):
     #get name from user database and user id
-    Data_Base= myDb["users"] 
-    exist= Data_Base.find_one({"username":username})
-    use_id= exist["_id"]
-    deadlines = AssigmentsTable.find({"user_ID":use_id})
+   # Data_Base= myDb["users"] 
+   # exist= Data_Base.find_one({"_id":userID})
+   # use_id= exist["_id"]
+    AsTable= mydb["Assigments"]
+    deadlines = AsTable.find({"user_ID":ObjectId(userID)})
     return deadlines
     #acess Assigments
 
     #return None
-=======
-def get_deadlines(mydb, userID):
-    return None
->>>>>>> af61a3b4ee8bd930733587c18d6ba77a17bc0f60
+
 
 
 ##
@@ -97,7 +91,9 @@ def get_deadlines(mydb, userID):
 ## Usage: get all classes belonging to a specific user
 ## 
 def get_classes(mydb, userID):
-    return None
+    ClassTable= mydb["Class"]
+    Classes= ClassTable.find({"USER_id":userID})
+    return  Classes 
 
 
 ##
