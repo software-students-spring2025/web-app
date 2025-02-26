@@ -46,19 +46,18 @@ def create_app():
     @app.route('/signup')
     def signup():
         return render_template("signup.html")
-    
 
     @app.route('/addapplication')
     def addapplication():
         current_date = datetime.now().strftime("%B %d, %Y")
-        return render_template('addapplication.html', current_date=current_date)
-    
+        return render_template('addapplication.html',
+                               current_date=current_date)
+
     @app.route('/addnew')
     def addnew():
         return render_template('addnew.html')
 
-
-    # home page
+    # home dashboard page
     @app.route('/home')
     def home():
         # finding total apps of user
@@ -105,7 +104,11 @@ def create_app():
             "user": loggedUser
         })
 
+        # finding current logged user for name
+        user = db.Users.find_one({"_id": loggedUser})
+
         return render_template("home.html",
+                               user=user,
                                week=len(docs_week),
                                month=len(docs_month),
                                total=total,

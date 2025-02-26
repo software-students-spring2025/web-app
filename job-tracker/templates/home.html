@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 
 <main class="dashboard">
-    <h1>Hello <span class="username">Blah</span>,</h1>
+    <h1>Hello <span class="username">{{user.username}}</span>,</h1>
     <p>Welcome to your dashboard</p>
 
     <section class="stats">
