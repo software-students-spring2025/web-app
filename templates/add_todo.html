@@ -2,14 +2,12 @@
 {% block content %}
 <h2>Add New Todo</h2>
 <form action="{{ url_for('create_todo') }}" method="POST">
-  <div>
-    <label for="fname">Name:</label>
-    <input type="text" id="fname" name="fname" required>
-  </div>
-  <div>
-    <label for="fmessage">Message:</label>
-    <input type="text" id="fmessage" name="fmessage" required>
-  </div>
-  <button type="submit">Add Todo</button>
+  <label for="name">Task Name:</label>
+  <input type="text" id="name" name="name" required>
+
+  <label for="message">Description:</label>
+  <input type="text" id="message" name="message" required>
+
+  <button type="submit">Add Task</button>
 </form>
 {% endblock %}
