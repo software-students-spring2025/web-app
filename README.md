@@ -6,7 +6,7 @@ A little exercise to build a web application following an agile development proc
 
 See instructions. Delete this line and place the Product Vision Statement here.
 
-WhySpace, is an online web forum that allows students to express their true feelings and ask deep questions to their peers in a safe and nonjudgmental environment with security monitored by administrators encouraging safety and openness. 
+TaskXP is a dynamic task management web app that transforms productivity into a rewarding experience. By allowing users to create, track, and complete tasks while earning points based on difficulty, TaskQuest gamifies productivity, making goal achievement more engaging and motivating
 
 
 ## User stories
