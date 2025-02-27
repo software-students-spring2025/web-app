@@ -1,0 +1,264 @@
+html, body {
+    height: 100%;
+    font-family: 'Arial', sans-serif;
+    background-color: white;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+main {
+    min-height: 100vh;
+    width: 90%;
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    background: white;
+    display: flex;
+    flex-direction: column;
+}
+
+/* SEARCH BAR */
+.search-container {
+    margin-top: 70px;
+    align-items: center; 
+    margin-bottom: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+ 
+.search-container select {
+    width: 300px;
+    padding: 10px;
+    padding-left: 20px;
+    border: none;
+    border-radius: 30px;
+    background-color: #F4F9FF;
+    font-size: 14px;
+    text-align: left;
+    color: #C0C0C0;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.search-container::after { 
+    content: "";
+    margin-top: 5px;
+    position: relative;
+    right: 35px;
+    color: #888;
+    width: 13px; 
+    height: 13px;
+    background-image: url('/static/images/Dropdown.png'); 
+    background-repeat: no-repeat;
+    pointer-events: none;
+}
+
+/* TABLE */
+.app {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.app th { /* labels */
+    font-size: 11px;
+    font-weight: normal;
+    text-align: left;
+    border-bottom: 2px solid #ddd;
+}
+
+.labels th {
+    background-color: #f7f7f7;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+th:nth-child(1) {
+    background-color: #FFFDE1;
+}
+
+th:nth-child(2) {
+    background-color: #FEEBEE;
+}
+
+th:nth-child(3) {
+    background-color: #DEF8FC;
+}
+
+th:nth-child(4) {
+    background-color: #FFEBFC;
+}
+
+th:nth-child(5) {
+    background-color: #FFECDE;
+}
+
+th:nth-child(6) {
+    background-color: #FFB0B2;
+}
+
+.app td { /* inputs */
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    font-size: 11px;
+    gap: 20px;
+}
+
+.app tr:nth-child(even) { 
+    background-color: #F0F4F9;
+}
+
+.app tr:hover {
+    background-color: #eef5ff;
+    cursor: pointer;
+}
+
+.edit-img {
+    width: 14px;
+    height: 14px;
+}
+
+.rubbish-img {
+    width: 14px;
+    height: 14px;
+}
+
+/* POPUP */
+.popup-toggle {
+    display: none;
+}
+
+.popup-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80vw;
+    max-width: 600px;
+    max-height: 70vh;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.popup-toggle:checked + label + .popup-content {
+    display: flex;
+}
+
+.close-button {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.close-img {
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+
+.popup-content .form-group {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 4px;
+    width: 100%;
+    max-width: 350px;
+    border: none;
+    text-align: left;
+}
+
+.popup-content .form-group label { /* labels, outside*/
+    margin-top: 5px;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 2px;
+    display: block;
+}
+
+.popup-content .form-group input,
+.popup-content .form-group select { /* data (text), inside */
+    width: 100%;
+    padding: 10px;
+    padding-left: 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    color: #333;
+}
+
+.input-pink { /* colors */
+    background-color: #FEEBEE;
+    border: none;
+    max-width: 315px;
+}
+
+.input-blue {
+    background-color: #DEF8FC;
+    border: none;
+    max-width: 315px;
+}
+
+.input-yellow {
+    background-color: #FFFAE3;
+    border: none;
+}
+
+.input-green {
+    background-color: #EFFDE7;
+    border: none;
+    max-width: 315px;
+}
+
+.input-purple {
+    background-color: #EDE4FD;
+    border: none;
+}
+
+.input-pink2 {
+    background-color: #FFEBFC;
+    border: none;
+}
+
+.input-orange {
+    background-color: #FFECDE;
+    border: none;
+    max-width: 315px;
+}
+
+.input-blue2 {
+    background-color: #E4EEFF;
+    border: none;
+    max-width: 315px;
+}
+
+.save-button {
+    background-color: #C2E1FF;
+    color: #333;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 15px;
+    width: 100%;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 50px;
+
+}
+
+.save-button:hover {
+    background-color: #b3d4ff;
+}

@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block container %}
+<main>
+    {% for app in applications %}
+    <p>{{app.company}}</p>
+    {%endfor%}
+</main>
+{% endblock %}
