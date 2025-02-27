@@ -1,0 +1,16 @@
+<!-- PROFILE PAGE (profile.html) -->
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Your Profile</h2>
+    <div class="card p-3">
+        <h4>Username: {{ user.username }}</h4>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Bio:</strong> {{ user.bio }}</p>
+        <p><strong>Preferred Destination:</strong> {{ user.destination }}</p>
+        <p><strong>Budget Range:</strong> {{ user.budget }}</p>
+        <p><strong>Travel Style:</strong> {{ user.style }}</p>
+        <a href="/edit-profile" class="btn btn-warning">Edit Profile</a>
+    </div>
+</div>
+{% endblock %}

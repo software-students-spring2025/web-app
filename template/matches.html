@@ -1,0 +1,19 @@
+<!-- MATCHES PAGE (matches.html) -->
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Your Matches</h2>
+    <p>Here are travelers who match your preferences:</p>
+    <div id="matches-container">
+        {% for match in matches %}
+        <div class="card mt-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ match.username }}</h5>
+                <p class="card-text">Preferences: {{ match.preferences }}</p>
+                <a href="/profile/{{ match.id }}" class="btn btn-primary">View Profile</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
