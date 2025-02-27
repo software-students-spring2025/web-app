@@ -135,9 +135,35 @@ def create_app():
                       "danger")
         return render_template("signup.html")
 
-    @app.route('/addapplication')
+    @app.route('/addapplication', methods=['GET', 'POST'])
     @login_required
     def addapplication():
+        if request.method == 'POST':
+            company = request.form.get("company")
+            role = request.form.get("role")
+            category = request.form.get("category")
+            location = request.form.get("location")
+            flexibility = request.form.get("flexibility")
+            status = request.form.get("status")
+            date = request.form.get("date")
+            link = request.form.get("applied-link")
+
+            new_app = {
+                "company": company,
+                "role": role,
+                "category": category,
+                "location": location,
+                "flexibility": flexibility,
+                "status": status,
+                "date": date,
+                "link": link,
+                "user": ObjectId(session.get("user_id"))
+            }
+
+            mongoid = db.Apps.insert_one(new_app)
+
+            return redirect(url_for('addapplication'))
+
         current_date = datetime.now().strftime("%B %d, %Y")
         return render_template('addapplication.html',
                                current_date=current_date)
@@ -151,33 +177,52 @@ def create_app():
     @app.route('/home')
     @login_required
     def home():
-        # finding total apps of user
-        total = db.Apps.count_documents(
-            {"user": ObjectId(session.get("user_id"))})
-
-        # calculating dates
+        # today's date
         today = datetime.now()
 
-        week = today - timedelta(days=today.weekday())
-        month = datetime(today.year, today.month, 1)
+        # beginning of the week (Monday)
+        week_start = today - timedelta(days=today.weekday())
 
-        iso_week = week.replace(hour=0, minute=0, second=0, microsecond=0)
-        iso_month = month.replace(hour=0, minute=0, second=0, microsecond=0)
+        # beginning of the month
+        month_start = datetime(today.year, today.month, 1)
 
-        # documents created this week and month
+        # adjusting time to midnight
+        week_start = week_start.replace(hour=0,
+                                        minute=0,
+                                        second=0,
+                                        microsecond=0)
+        month_start = month_start.replace(hour=0,
+                                          minute=0,
+                                          second=0,
+                                          microsecond=0)
+
+        # getting user ID
+        user_id = ObjectId(session.get("user_id"))
+
+        # documents created this week
         docs_week_cursor = db.Apps.find({
-            "date": {
-                "$gte": iso_week
+            "$expr": {
+                "$gte": [{
+                    "$dateFromString": {
+                        "dateString": "$date",
+                        "format": "%m/%d/%Y"
+                    }
+                }, week_start]
             },
-            "user":
-            ObjectId(session.get("user_id"))
+            "user": user_id
         })
+
+        # documents created this month
         docs_month_cursor = db.Apps.find({
-            "date": {
-                "$gte": iso_month
+            "$expr": {
+                "$gte": [{
+                    "$dateFromString": {
+                        "dateString": "$date",
+                        "format": "%m/%d/%Y"
+                    }
+                }, month_start]
             },
-            "user":
-            ObjectId(session.get("user_id"))
+            "user": user_id
         })
 
         # convert to lists
@@ -187,13 +232,13 @@ def create_app():
         # finding number of apps based on status
         accepted = db.Apps.count_documents({
             "status":
-            "Accepted",
+            "Offer Received",
             "user":
             ObjectId(session.get("user_id"))
         })
         interviewing = db.Apps.count_documents({
             "status":
-            "Interviewing",
+            "Interview Scheduled",
             "user":
             ObjectId(session.get("user_id"))
         })
@@ -203,6 +248,10 @@ def create_app():
             "user":
             ObjectId(session.get("user_id"))
         })
+
+        # finding total apps of user
+        total = db.Apps.count_documents(
+            {"user": ObjectId(session.get("user_id"))})
 
         # finding current logged user for name
         user = db.Users.find_one({"_id": ObjectId(session.get("user_id"))})
@@ -237,29 +286,59 @@ def create_app():
                 applications = db.Apps.find({
                     "user":
                     ObjectId(session.get("user_id"))
-                }).sort("date", -1)
+                }).sort("date", 1)
             elif choice.lower() == 'ascending':
                 applications = db.Apps.find({
                     "user":
                     ObjectId(session.get("user_id"))
-                }).sort("date", 1)
+                }).sort("date", -1)
 
             return render_template("track.html", applications=applications)
 
         # get request
-        applications = db.Apps.find({"user": ObjectId(session.get("user_id"))})
+        applications = db.Apps.find({
+            "user": ObjectId(session.get("user_id"))
+        }).sort("date", -1)
         return render_template("track.html", applications=applications)
 
+    # edit app
+    @app.route('/edit', methods=['POST'])
+    @login_required
+    def edit():
+        app_id = request.form.get("app_id")
+        company = request.form.get("company")
+        role = request.form.get("role")
+        category = request.form.get("category")
+        location = request.form.get("location")
+        flexibility = request.form.get("flexibility")
+        status = request.form.get("status")
+        date = request.form.get("date")
+        link = request.form.get("applied-link")
+
+        # update record
+        updated = db.Apps.update_one({"_id": ObjectId(app_id)}, {
+            "$set": {
+                "company": company,
+                "role": role,
+                "category": category,
+                "location": location,
+                "flexibility": flexibility,
+                "status": status,
+                "date": date,
+                "link": link
+            }
+        })
+
+        return redirect(url_for('track'))
+
     # delete app
-    @app.route('/delete', methods=['GET', 'POST'])
+    @app.route('/delete', methods=['POST'])
     @login_required
     def delete():
-        # post request
-        # if request.method == 'POST':
-        db.Apps.delete_one({"_id": ObjectId('67bdf16a3028f7eee227824d')})
+        app_id = request.form.get("app_id")
+        db.Apps.delete_one({"_id": ObjectId(app_id)})
 
-        applications = db.Apps.find({"user": ObjectId(session.get("user_id"))})
-        return render_template("delete.html", applications=applications)
+        return redirect(url_for('track'))
 
     @app.route('/logout')
     @login_required
