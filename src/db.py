@@ -81,5 +81,17 @@ def create_order(user_name, name, food, address, price):
         print(f"Unexpected error: {e}")
         return None
 
+from bson.objectid import ObjectId
+def get_order(order_id):
+    return mongo.db.orders.find_one({"_id": ObjectId(order_id)})
+
+def update_order(order_id, updated_data):
+    try:
+        order_object_id = ObjectId(order_id) 
+        result = mongo.db.orders.update_one({"_id": order_object_id}, {"$set": updated_data})
+        return result
+
+    except Exception as e:
+        raise Exception(f"Error updating order: {str(e)}")
 
 

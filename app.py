@@ -64,9 +64,18 @@ def detail(order_id):
     return flask.render_template('detail.html', order=order)
 
 # DetailPage Post
-@app.route('/detail', methods=['POST'])
-def handle_detail():
-    return 'NewDetail'
+@app.route('/detail/<order_id>/save', methods=['POST'])
+def handle_detail(order_id):
+    order = db.get_order(order_id)
+    updated_data = {
+        "customer_name": flask.request.form.get("customerName"),
+        "dish_name": flask.request.form.get("dishName"),
+        "price": float(flask.request.form.get("price")),  
+        "address": flask.request.form.get("address")
+    }
+    db.update_order(order_id, updated_data)
+
+    return flask.render_template('detail.html', order=order)
 
 # NewOrder get
 @app.route('/newOrder')
