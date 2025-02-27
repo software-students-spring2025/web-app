@@ -66,19 +66,19 @@ body {
 }
 
 /* monthly insights */
-.monthly-insights {
+.overall-insights {
     background-color: #e7f0fe;
     padding: 20px;
     border-radius: 10px;
     margin-top: 0px;
 }
 
-.monthly-insights h3 {
+.overall-insights h3 {
     font-size: 22px;
     font-weight: bold;
 }
 
-.monthly-insights p {
+.overall-insights p {
     font-size: 12px;
     color: #666;
     margin-bottom: 15px;
