@@ -5,13 +5,13 @@ A little exercise to build a web application following an agile development proc
 ## Team members
 
 Chuqiao Huang(ch3807) (https://github.com/ChuqiaoHuang)
-
+Jasmine Zhang(jz5144) (https://github.com/Jasminezhang666666)
 
 
 
 ## Product vision statement
 
-A simple and efficient to-do list app that helps users manage tasks, stay organized, and track progress seamlessly.
+Our web-based task manager empowers users to seamlessly add, search, edit, and complete tasks with an intuitive interface that transforms everyday productivity.
 
 ## User stories
 
