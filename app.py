@@ -1,15 +1,26 @@
 from flask import Flask, render_template, request, url_for, redirect 
-import pymongo
+#import pymongo
 from bson.objectid import ObjectId
 import database
-
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
+import os
+import certifi
+from dotenv import load_dotenv
+#import os
+#from dotenv import load_dotenv
+#from bson.objectid import ObjectId
 '''
 notes / instructions
 
 run app.py, then go to 127.0.0.1:5000 in browser
 
 '''
-
+load_dotenv()
+uri = os.getenv("MONGO_URI")
+client = MongoClient(uri, server_api=ServerApi('1'), tlsCAFile=certifi.where())
+Mongo_DBNAME= os.getenv("MONGO_DBNAME")
+myDb= client[Mongo_DBNAME]
 
 # start app
 app = Flask(__name__)
@@ -19,7 +30,8 @@ app = Flask(__name__)
 
 # connect MongoDB
 # comment out if you don't have mongo yet, should still be fine 
-client = pymongo.MongoClient('localhost', 27017)
+#client = MongoClient(uri, server_api=ServerApi('1'), tlsCAFile=certifi.where())
+
 
 '''
 # this is the MOST simplified working app
