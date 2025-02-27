@@ -3,8 +3,7 @@
 A little exercise to build a web application following an agile development process. See the [instructions](instructions.md) for more detail.
 
 ## Product vision statement
-
-See instructions. Delete this line and place the Product Vision Statement here.
+A digital journal app that makes it easy to write, organize, and share your thoughts, helping you stay creative and productive.
 
 ## User stories
 
