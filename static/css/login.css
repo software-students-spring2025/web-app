@@ -1,21 +1,3 @@
-.mainHeader {
-    text-align: center;
-    color: white;
-    margin:0px;
-    font-size:35px;
-}
-
-.transparentBar {
-    background-color: rgba(168, 168, 168, 0.197);
-    padding: 20px;
-    width: 100vw;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 8px;
-}
-
 #loginBars {
     padding: 0;
     display: flex;
@@ -43,8 +25,9 @@
     border:none;
     margin-top: 20px;
     border: 1.5px solid black;
-
+    transition: transform 0.35s ease;
 }
+
 
 #loginBars input[type="text"], input[type="password"] {
     margin-bottom: 20px;  
@@ -53,24 +36,15 @@
     width: 250px;      
     max-width: 500px;
     border: 5px;
-    border: 1.5px solid black;
+    border: 2px solid black;
     border-radius: 8px;
 }
 
 #loginBars button:hover {
     background-color: #2d6731;
+    transform: scale(1.1);
 }
 
-#bodyLogin {
-    background: linear-gradient(to right, #420098, #67008c);
-    margin: 0;
-    font-family: "Red Hat Text";
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;         
-    height: 100vh; 
-}
 
 #registerText {
     color: white;
@@ -85,3 +59,4 @@ a {
 a:visited {
     color: rgb(142, 164, 255);
 }
+
