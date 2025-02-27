@@ -13,6 +13,7 @@
             <ul>
                 <li><a href="{{ url_for('show_dashboard') }}">Dashboard</a></li>
                 <li><a href="{{ url_for('show_profile') }}">Profile</a></li>
+                <li><a href="{{ url_for('show_study') }}">Study</a></li>
                 <li><a href="{{ url_for('logout') }}">Logout</a></li>
             </ul>
         </nav>
@@ -35,7 +36,9 @@ data = {
             <h2>Upcoming Deadlines</h2>
             <ul id="deadline-list">
                 {% for deadline in data["deadlines"] %}
-                    <li>{{deadline.name}} - <strong>{{deadline.date}}</strong></li>
+                    <li>{{deadline.name}} - <strong>{{deadline.due_date}}</strong> 
+                        ({{deadline.type}}) 
+                        (class: {% for class in data["classes"] if class["_id"] == deadline["class_ID"] %}{{class["name"]}}{% endfor %})</li>
                 {% endfor %}
             </ul>
         </section>
@@ -43,7 +46,12 @@ data = {
         <section id="classes">
             <h2>Your Classes</h2>
             <ul id="class-list">
-                 <!-- Dynamically generated class list -->
+                {% for class in data["classes"] %}
+                    <li>
+                        <h3>{{class.name}}</h3> 
+                        <p>Total time studied: {{class.time_studied_hours}}</p> 
+                    </li>
+                {% endfor %}
             </ul>
             <input type="text" id="new-class" placeholder="Enter class name">
             <button onclick="addClass()">Add Class</button>
@@ -95,7 +103,7 @@ data = {
         window.onload = function() {
             loadClasses();
         };
-
+        /*
         function loadClasses() {
             let classList = document.getElementById('class-list');
             classList.innerHTML = '';
@@ -105,6 +113,7 @@ data = {
                 classList.appendChild(li);
             });
         }
+            */
 
         function addClass() {
             let className = document.getElementById('new-class').value;
