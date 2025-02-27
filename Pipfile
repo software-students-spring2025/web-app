@@ -15,9 +15,9 @@ pytest = "*"
 pytest-flask = "*"
 coverage = "*"
 dnspython = "*"
-pymongo = {extras = ["tls", "srv"], version = "==4.10.0"}
 gunicorn = "*"
 flask = "*"
+pymongo = "*"
 
 [dev-packages]
 
