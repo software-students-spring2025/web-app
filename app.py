@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
+import certifi
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 import os
@@ -11,7 +12,7 @@ app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY')
 
 MONGO_URI = os.getenv('MONGO_URI')
-client = MongoClient(MONGO_URI)
+client = MongoClient("mongodb+srv://sms10010:Wittmer2@swe-project2.zdloe.mongodb.net/?retryWrites=true&w=majority&appName=SWE-project2",tlsCAFile=certifi.where())
 db = client["movie_tracker"]
 movies_collection = db["movies"]
 users_collection = db["users"]
