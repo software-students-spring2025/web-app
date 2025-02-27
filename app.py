@@ -73,4 +73,16 @@ def hanle_odrer():
     return 'NewOrder'
 
 if __name__ == '__main__':
+    consumer = "Hi"
+    food = "Pizza"
+    address = "123 Main Street",
+    price = 19.99
+    
+    db.create_user("Frank", '123456')
+
+    db.create_order("Frank", consumer, food, address, price)
+    s = db.find_user_order("Frank")
+    print(s)
     app.run(debug=True, port=config.PORT)
+
+
