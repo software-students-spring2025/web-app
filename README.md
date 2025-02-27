@@ -76,4 +76,5 @@ https://github.com/software-students-spring2025/2-web-app-diet-coke/issues/
 ## Task boards
 
 https://github.com/orgs/software-students-spring2025/projects/56/views/1
+
 https://github.com/orgs/software-students-spring2025/projects/70
