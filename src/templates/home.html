@@ -1,56 +1,31 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title> TASK TRACKER </title>
-        <!-- I think this is how we get it to mobile -->
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <style> 
-            body{
-                max-width: 480px; 
-                marin: 0 auto; 
-                padding: 10px; 
-                font-family: Arial, sans-serif; 
-            }
-            table{
-                width: 100%; 
-                border-collapse: collapse; 
-                margin-top: 20px; 
-            }
-            th,
-            td{
-                border: 1px solid #000000;
-                padding: 20px; 
-                text-align: center;
-            }
+{% extends "layout.html" %}
 
-        </style>
-         <!-- We can replace font family later with something like on google fonts maybe? -->
+{% block title %}TASK TRACKER{% endblock %}
 
-    </head>
-    <body>
-        <h1> Home </h1>
-        <h1>Task Tracker</h1>
-    <p><strong>Total XP:</strong> {{ xp_counter }}</p>
-    
-    <h2>Tasks</h2>
-    <table>
-        <tr>
-        <th>Task Name</th>
-        <th>Description</th>
-        <th>Status</th>
-        <th>XP</th>
-        <th>Created</th>
-        <th>Due</th>
-        {% for task in tasks %}
-        <tr>
-        <td>{{ task.name }}</td>
-        <td>{{ task.description }}</td>
-        <td>{{ task.done_status }}</td>
-        <td>{{ task.xp_value }}</td>
-        <td>{{ task.created_date.strftime('%Y-%m-%d') }}</td>
-        <td>{{ task.due_date.strftime('%Y-%m-%d') }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    </body>
-</html>
+{% block content %}
+    <div class="centered-content" style="text-align: center; margin: 0 auto;">
+        <h2>Task Tracker</h2>
+        <p><strong>Total XP:</strong> {{ xp_counter }}</p>
+        <img src="https://preview.redd.it/drinkable-xp-bottle-change-old-xp-bottle-to-have-the-splash-v0-2zlsur7cfqna1.gif?width=320&auto=webp&s=60fde70e71944a9cc341143c50a2806ce695247f" alt="XP">
+        <h2>Tasks</h2>
+        <table>
+            <tr>
+            <th>Task Name</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>XP</th>
+            <th>Created</th>
+            <th>Due</th>
+            {% for task in tasks %}
+            <tr>
+            <td>{{ task.name }}</td>
+            <td>{{ task.description }}</td>
+            <td>{{ task.done_status }}</td>
+            <td>{{ task.xp_value }}</td>
+            <td>{{ task.created_date.strftime('%Y-%m-%d') }}</td>
+            <td>{{ task.due_date.strftime('%Y-%m-%d') }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
