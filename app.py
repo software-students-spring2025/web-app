@@ -19,7 +19,7 @@ users_collection = db["users"]
 @app.route('/home')
 def home():
     return render_template('home.html')
-
+#login
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -34,6 +34,25 @@ def login():
             flash('Invalid username or password')
             return redirect(url_for('login'))
     return render_template('login.html')
+
+#register
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password'].encode('utf-8')
+
+        # Check if user already exists
+        if users_collection.find_one({"username": username}):
+            flash("Username already exists. Please choose a different one.")
+        else:
+            users_collection.insert_one({
+                "username": username,
+                "password": password,
+            })
+            flash("Registration successful! Please log in.")
+            return redirect(url_for('login'))
+    return render_template('register.html')
 
 #add movie route - check to see if links correctly Jime 
 @app.route('/add_movie', methods=['GET', 'POST'])
