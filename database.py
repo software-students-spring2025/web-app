@@ -12,20 +12,10 @@ from dotenv import load_dotenv
 from bson.objectid import ObjectId
 #import datetime
 
-#load_dotenv()
-#uri = os.getenv("MONGO_URI")
-#Mongo_DBNAME= os.getenv("MONGO_DBNAME")
-#lient = MongoClient(uri, server_api=ServerApi('1'), tlsCAFile=certifi.where())
-#acess database
-#create DB/Acess
-#myDb= client["DuoProject"]
-#List of data Tables
-#myTable= myDb["users"]
-#AssigmentsTable= myDb["Assigments"]
+
 
 ######## USER AUTHENTICATION
-##password autheenction
-#user
+
 
 ##
 ## Function: returning user password authentication
@@ -84,16 +74,13 @@ def new_account(mydb, username, password):
 ## Function: get deadlines
 ## Usage: get all deadlines belonging to a specific user
 ## 
-
-
-#works
 def get_deadlines(mydb, userID):
     #get name from user database and user id
    # Data_Base= myDb["users"] 
    # exist= Data_Base.find_one({"_id":userID})
    # use_id= exist["_id"]
-    AsTable= mydb["Assigments"]
-    deadlines = AsTable.find({"user_ID":ObjectId(userID)})
+    asTable= mydb["Assigments"]
+    deadlines = asTable.find({"user_ID":ObjectId(userID)})
     deadlines_dict= [doc for doc in deadlines]
     return deadlines_dict
     #acess Assigments
@@ -107,10 +94,10 @@ def get_deadlines(mydb, userID):
 ## Usage: get all classes belonging to a specific user
 ## works
 def get_classes(mydb, userID):
-    ClassTable= mydb["Class"]
-    Classes= ClassTable.find({"user_ID":ObjectId(userID)})
-    Classes_dict= [doc for doc in Classes]
-    return  Classes_dict
+    classTable= mydb["Class"]
+    classes= classTable.find({"user_ID":ObjectId(userID)})
+    classes_dict= [doc for doc in classes]
+    return  classes_dict
 
 
 ##
@@ -118,10 +105,10 @@ def get_classes(mydb, userID):
 ## Usage: get all study sessions belonging to a specific user
 ## works
 def get_study_sessions(mydb, userID):
-    StudyTable= mydb["Studies"]
-    Study= StudyTable.find({"user_id":ObjectId(userID)})
-    Study_dict= [doc for doc in Study]
-    return Study_dict
+    studyTable= mydb["Studies"]
+    study= studyTable.find({"user_id":ObjectId(userID)})
+    study_dict= [doc for doc in study]
+    return study_dict
 
 
 ##
