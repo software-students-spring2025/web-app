@@ -94,6 +94,12 @@ def logout():
 def home():
     return render_template('index.html')
 
+@app.route('/your_recipes')
+@login_required
+def your_recipes():
+    return render_template('your_recipes.html', recipes=recipes)
+
+
 @app.route('/add_delete', methods=['GET', 'POST'])
 def add_delete():
     if request.method == "POST":
