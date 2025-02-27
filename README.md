@@ -20,5 +20,5 @@ The LFG App helps gamers find teammates quickly by posting and searching for mul
 See instructions. Delete this line and place instructions to download, configure, and run the software here.
 
 ## Task boards
-
-See instructions. Delete this line and place a link to the task boards here.
+Our initial status
+![示例图片](images/pic1.png)
