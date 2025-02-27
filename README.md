@@ -8,7 +8,7 @@ Our platform empowers job seekers to organize, track, and manage all their job a
 
 ## User stories
 
-User stories can be found as issues in our team's [Github issues page](./user-stories.md). 
+User stories can be found as issues in our team's [here](./user-stories.md). 
 
 ## Steps necessary to run the software
 
