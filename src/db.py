@@ -12,5 +12,4 @@ MONGO_DBNAME = os.getenv('MONGO_DBNAME')
 
 connection = MongoClient(MONGO_URI)
 db = connection[MONGO_DBNAME]
-
-reviews = db.reviews
+tasks = db.tasks
