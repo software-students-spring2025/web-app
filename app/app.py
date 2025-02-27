@@ -1,5 +1,4 @@
 from flask import Flask, render_template as rt, session, redirect, url_for, request
-import pymongo
 from flask_pymongo import PyMongo
 app = Flask(__name__)
 app.secret_key = 'duck'
@@ -7,10 +6,12 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-client = pymongo.MongoClient("mongodb://localhost:27017/")
-db = client.my_database
-app.config["MONGO_URI"] = os.getenv("MONGO_URI")
+app.config["MONGO_URI"] = os.getenv("MONGO_URI", "mongodb://localhost:27017/anatidelicious") 
+# if this error: AttributeError: 'NoneType' object has no attribute 'menu_items'
+# run $export MONGO_URI= "mongodb://localhost:27017/anatidelicious" in terminal
+
 mongo = PyMongo(app)
+db = mongo.db  
 
 menu_collection = db.menu_items
 menu_collection.drop() # if we drop this, the cart resets every time, cart information not saved for customer
