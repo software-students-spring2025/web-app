@@ -103,7 +103,7 @@ FullStack
     - Adjust features based on feedback before the final demo.
 
 ### Database Structure
-Users:
+- Users:
     - user_id (unique identifier)
     - username
     - password_hash
