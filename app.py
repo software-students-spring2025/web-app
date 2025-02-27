@@ -16,6 +16,7 @@ db = client.get_database("Cluster0")
 # Collections
 pins_collection = db.pins
 bathrooms_collection = db.bathrooms
+reviews_collection = db.reviews
 
 @app.route("/")
 def home():
@@ -29,12 +30,12 @@ def search():
 
 @app.route("/bathroom/<bathroomID>.html")
 def bathroom(bathroomID):
-    print(bathroomID)
     bathroom = bathrooms_collection.find_one({"_id": ObjectId(bathroomID)})
     bathroomName=pins_collection.find_one({"_id":bathroom.get("location_id")}).get("name")
     fullLocation = bathroomName+", Floor "+str(bathroom.get("floor"))
     description=bathroom.get("type")+" "+bathroom.get("orientation")+" Bathroom"
-    return render_template("bathroom.html",bathroomDescription=description, bathroomLocation=fullLocation,toilets=str(bathroom.get("toilets")),sinks=str(bathroom.get("sinks")))
+    reviews = reviews_collection.find({"bathroom_id": ObjectId(bathroomID)})
+    return render_template("bathroom.html",bathroomDescription=description, bathroomLocation=fullLocation,toilets=str(bathroom.get("toilets")),bathroomReviews=reviews,sinks=str(bathroom.get("sinks")))
 
 
 

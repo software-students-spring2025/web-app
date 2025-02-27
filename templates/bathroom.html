@@ -15,7 +15,7 @@
     </style>
 </head>
 <body>
-    
+    {% include 'navbar.html' %}
     <!--TODO: grab data based on id-->
     <div class="location">{{bathroomLocation}}</div>
     <!--TODO: INCLUDE LOCATION--><br>
@@ -25,7 +25,23 @@
     <br>
     Sinks: {{sinks}}</div>
     <br>
-    <div class="reviews">{{bathroomReviews}}</div>
+    <div class="reviews">
+        {%for review in bathroomReviews%}
+            <div id="stars"></div>
+            {{(review.date|string).split(" ")[0]}} {{(review.date|string).split(" ")[1].split(".")[0]}}<br>     {{review.comment}}
+            <script>
+                j = {{review.rating}};
+                innerString = "";
+                for (let i=0;i<j;i++){
+                    innerString += '<i class="fa-solid fa-star"></i>';
+                }
+                for (let i=j;i<5;i++){
+                    innerString += '<i class="fa-regular fa-star"></i>';
+                }
+                document.getElementById('stars').innerHTML = innerString
+            </script>
+        {%endfor%}
+    </div>
     <!--TODO: INCLUDE REVIEWS-->
     
 </body>
