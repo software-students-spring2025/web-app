@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professor's Courses</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff; 
+            color: #000000; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 375px;
+            height: calc(375px * 16 / 9); 
+            text-align: center;
+            border: 2px solid #ccc; 
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .course-buttons, .course-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .button, .back-btn {
+            background-color: #808080; 
+            color: white; 
+            font-size: 16px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover, .back-btn:hover {
+            background-color: #666666; 
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .back-button {
+            margin-top: 20px;
+            background-color: #404040;
+        }
+
+        /* Roster Page Styles */
+        .roster-list {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .roster-item {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .student-name {
+            font-weight: bold;
+        }
+
+        .student-id {
+            color: #555;
+        }
+
+        .btn {
+            background-color: #808080;
+            color: white;
+            font-size: 16px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 10px;
+
+        }
+
+        .btn:hover {
+            background-color: #666666;
+        }
+
+        .back-btn {
+            margin-top: 20px;
+            background-color: #404040;
+        }
+
+    
+
+
+    </style>
+</head>
+<body>
+
+    <!-- Home Page -->
+    <div id="homePage" class="container">
+        <h1>Courses</h1>
+        <div class="course-buttons">
+            <button class="button" onclick="showPage('coursePage', 'Math 101')">Math 101</button>
+            <button class="button" onclick="showPage('coursePage', 'Physics 202')">Physics 202</button>
+            <button class="button" onclick="showPage('coursePage', 'Chemistry 303')">Chemistry 303</button>
+            <button class="button" onclick="showPage('coursePage', 'Biology 404')">Biology 404</button>
+        </div>
+        <button class="button">Add New Course</button>
+    </div>
+
+    <!-- Course Navigation Page -->
+    <div id="coursePage" class="container hidden">
+        <h1 id="courseTitle"></h1>
+        <div class="course-options">
+            <button class="button" onclick="showPage('rosterPage')">View Class Roster</button>
+            
+            <button class="button">Search a Student</button>
+
+            <button class="button">Manage Grades</button>
+        </div>
+        <button class="button back-button" onclick="showPage('homePage')">Back to Courses</button>
+    </div>
+
+
+
+    <!-- Class Roster Page -->
+    <div id="rosterPage" class="container hidden">
+        <h1 id="rosterTitle">Class Roster</h1>
+        <div class="roster-list">
+            <div class="roster-item">
+                <div class="student-name">John Doe</div>
+                <div class="student-id">ID: 12345</div>
+            </div>
+            <div class="roster-item">
+                <div class="student-name">Jane Smith</div>
+                <div class="student-id">ID: 67890</div>
+            </div>
+            <div class="roster-item">
+                <div class="student-name">Michael Johnson</div>
+                <div class="student-id">ID: 11223</div>
+            </div>
+            <div class="roster-item">
+                <div class="student-name">Emily Brown</div>
+                <div class="student-id">ID: 44556</div>
+            </div>
+            <div class="roster-item">
+                <div class="student-name">Alice Williams</div>
+                <div class="student-id">ID: 78901</div>
+            </div>
+        </div>
+
+        <button class="back-btn" onclick="showPage('coursePage')">Back to Course Management</button>
+    </div>
+
+    
+    
+
+
+    
+
+    
+
+    <script>
+        function showPage(pageId, courseName = 'Course Name') {
+            // Hide all pages
+            document.getElementById('homePage').classList.add('hidden');
+            document.getElementById('coursePage').classList.add('hidden');
+            document.getElementById('rosterPage').classList.add('hidden');
+
+            // Show the selected page
+            document.getElementById(pageId).classList.remove('hidden');
+
+            // Update course title if navigating to course page
+            if (pageId === 'coursePage') {
+                document.getElementById('courseTitle').innerText = courseName;
+            }
+
+            // Update roster title to include the course name
+            if (pageId === 'rosterPage') {
+                document.getElementById('rosterTitle').innerText = "Course Name - Class Roster";
+            }
+        }
+    </script>
+
+</body>
+</html>
