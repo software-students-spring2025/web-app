@@ -6,6 +6,11 @@ app = flask.Flask(__name__)
 
 db.init_db(app)
 
+# Index get
+@app.route('/')
+def index():
+    return flask.redirect('/login')
+
 # Login get
 @app.route('/login')
 def login():
