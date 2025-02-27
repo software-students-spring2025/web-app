@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ building.name }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 dark:bg-neutral-900 text-gray-900 dark:text-white">
+    <div class="container mx-auto p-6">
+        <h1 class="text-3xl font-bold">{{ building.name }}</h1>
+
+        <!-- Bathrooms List -->
+        <ul class="mt-4 space-y-3">
+            {% for bathroom in bathrooms %}
+            <li class="p-4 bg-white rounded-lg shadow-md dark:bg-neutral-800">
+                <h2 class="text-xl font-semibold">{{ bathroom.label }}</h2>
+                <p>Floor: {{ bathroom.floor }}</p>
+                <p>Type: {{ bathroom.type }}</p>
+                <p>Orientation: {{ bathroom.orientation }}</p>
+                <p>Sinks: {{ bathroom.sinks }} | Toilets: {{ bathroom.toilets }}</p>
+                {% if bathroom.img_url %}
+                    <img src="{{ bathroom.img_url }}" alt="Bathroom Image" class="mt-2 w-64 rounded-lg">
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
