@@ -10,7 +10,6 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
     <style>
         body, html { margin: 0; padding: 0; height: 100%; }
-/*        #map { width: 100%; height: 100vh; }*/
         #map {
             position: absolute;
             top: 0;
@@ -49,12 +48,17 @@
             .then(response => response.json())
             .then(data => {
                 data.forEach(pin => {
+                    console.log("Extracted ID:", pin);
                     L.marker([pin.lat, pin.lng], { icon: violetPin })
                         .addTo(map)
-                        .bindPopup(`<b>${pin.name}</b>`);
+                        .bindPopup(`
+                            <b>${pin.name}</b><br>
+                            <a href="/building/${pin._id}" class="text-blue-600 underline" target="_blank">View More</a>
+                        `);
                 });
             })
             .catch(error => console.error('Error loading pins:', error));
+
     </script>
 </body>
 </html>
