@@ -3,7 +3,7 @@
 ## Team Members
 Shaurya Srivastava [(Link to Profile)](https://github.com/shauryasr04)<br>
 Ethan Zheng[(ez2146)](https://github.com/ez2146)<br>
-Jake Chang <br>
+Jake Chang [(Profile)](https://github.com/jakechang1284)<br>
 David Yu[DavidYu00](https://github.com/DavidYu00) <br>
 
 ## Product vision statement
