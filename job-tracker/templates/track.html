@@ -13,6 +13,7 @@
                     <option value="Applied">Applied</option>
                     <option value="Interview Scheduled">Interview Scheduled</option>
                     <option value="Offer Received">Offer Received</option>
+                    <option value="Accepted">Accepted</option>
                     <option value="Rejected">Rejected</option>
                 </optgroup>
                 <optgroup label="Date">
@@ -137,6 +138,11 @@
                                 <option value="Offer Received" selected>Offer Received</option>
                                 {% else %}
                                 <option value="Offer Received">Offer Received</option>
+                                {% endif %}
+                                {% if app.status == 'Accepted' %}
+                                <option value="Accepted" selected>Accepted</option>
+                                {% else %}
+                                <option value="Accepted">Accepted</option>
                                 {% endif %}
                                 {% if app.status == 'Rejected' %}
                                 <option value="Rejected" selected>Rejected</option>
