@@ -25,6 +25,7 @@ def create_app():
     config = dotenv_values()
     app.config.from_mapping(config)
 
+    """
     cxn = pymongo.MongoClient(os.getenv("MONGO_URI"))
     db = cxn[os.getenv("MONGO_DBNAME")]
 
@@ -33,7 +34,7 @@ def create_app():
         print(" *", "Connected to MongoDB!")
     except Exception as e:
         print(" * MongoDB connection error:", e)
-
+    """
 
     ### Add your functions here: ###
 
@@ -44,7 +45,11 @@ def create_app():
     #@app.route("/create", methods=["POST"])
     #def create_post():
 
+    @app.route("/login")
+    def login():
+        return render_template("login.html")
 
+    return app
 
 
 ### Here is where the app gets created: ###
@@ -52,8 +57,5 @@ def create_app():
 app = create_app()
 
 if __name__ == "__main__":
-    FLASK_PORT = os.getenv("FLASK_PORT", "5000")
-    FLASK_ENV = os.getenv("FLASK_ENV")
-    print(f"FLASK_ENV: {FLASK_ENV}, FLASK_PORT: {FLASK_PORT}")
-
-    app.run(port=FLASK_PORT)
+    """
+    FLASK
