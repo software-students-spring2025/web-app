@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  flask-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: todo-app
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGO_URI=mongodb://${MONGO_USER:-admin}:${MONGO_PASSWORD:-secret}@mongodb:27017/${MONGO_DBNAME:-todo_app}?authSource=admin
+      - FLASK_APP=app.py
+      - FLASK_ENV=${FLASK_ENV:-development}
+    volumes:
+      - ./:/app
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+    env_file:
+      - .env
+    networks:
+      - app-network
+
+  mongodb:
+    image: mongo:6
+    container_name: todo-mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USER:-admin}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD:-secret}
+      - MONGO_INITDB_DATABASE=${MONGO_DBNAME:-todo_app}
+    volumes:
+      - mongodb_data:/data/db
+      - ./mongo-init:/docker-entrypoint-initdb.d
+    restart: unless-stopped
+    command: mongod --auth
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:

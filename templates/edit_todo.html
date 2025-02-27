@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Edit Todo</h2>
+<form action="{{ url_for('edit_todo', id=todo._id) }}" method="POST">
+  <!-- Using method override to simulate PUT -->
+  <input type="hidden" name="_method" value="PUT">
+  <div>
+    <label for="fname">Name:</label>
+    <input type="text" id="fname" name="fname" value="{{ todo.name }}" required>
+  </div>
+  <div>
+    <label for="fmessage">Message:</label>
+    <input type="text" id="fmessage" name="fmessage" value="{{ todo.message }}" required>
+  </div>
+  <button type="submit">Update Todo</button>
+</form>
+{% endblock %}
