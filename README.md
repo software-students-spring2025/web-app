@@ -16,7 +16,7 @@ Gathr simplifies event planning for organizers and guests by providing a platfor
 
 ## Prototype
 
-![Prototype Link](https://www.figma.com/proto/jvgqp1poqgeJf1VlBWSHrS/Gathr-Copy?node-id=2-167&t=JiNmdujPt89fpwmJ-0&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=2%3A167)
+[Prototype Link](https://www.figma.com/proto/jvgqp1poqgeJf1VlBWSHrS/Gathr-Copy?node-id=2-167&t=JiNmdujPt89fpwmJ-0&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=2%3A167)
 
 ## Steps necessary to run the software
 
