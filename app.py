@@ -26,7 +26,7 @@ Mongo_DBNAME= os.getenv("MONGO_DBNAME")
 myDb= client[Mongo_DBNAME]
 
 # start app
-app = Flask(__name__)
+app = Flask(__name__, static_folder='assets')
 
 # start new user session
 app.config["SESSION_PERMANENT"] = False
@@ -38,10 +38,15 @@ Session(app)
 # homepage / dashboard
 @app.route("/", methods=('GET', 'POST'))
 def show_dashboard():
+
+    # if we are NOT logged in - redirect to login
+    if 'userid' not in session or session['userid'] is None:
+        return redirect(url_for('show_login'))
+
+    # if we are logged in (session["userid"] is not None) - load the dashboard page
     # show the dashboard
     if request.method == "GET":   
 
-        # if we are logged in (session["userid"] is not None) - load the dashboard page
         if 'userid' in session and session['userid'] is not None:
             data = {
                 "user": database.get_user_info(myDb, ObjectId(session['userid'])),
@@ -49,16 +54,38 @@ def show_dashboard():
                 "classes": database.get_classes(myDb, ObjectId(session['userid'])), 
                 "tasks": database.get_tasks(myDb, ObjectId(session['userid'])) 
             }
+            print(data["deadlines"])
             return render_template('dashboard.html', data=data) # render home page template 
         
-        # if we are NOT logged in - redirect to login
-        return redirect(url_for('show_login'))
+        
+        
     
     # form handling
     elif request.method == "POST":
         pass  
 
     return render_template('dashboard.html') # render home page template 
+
+
+# study session page
+@app.route("/study", methods=('GET', 'POST'))
+def show_study():
+
+    # if we are NOT logged in - redirect to login
+    if 'userid' not in session or session['userid'] is None:
+        return redirect(url_for('show_login'))
+
+    # show study session page
+    if request.method == 'GET':
+        data = {
+                "user": database.get_user_info(myDb, ObjectId(session['userid'])),
+                "deadlines": database.get_deadlines(myDb, ObjectId(session['userid'])), 
+                "classes": database.get_classes(myDb, ObjectId(session['userid'])), 
+                "tasks": database.get_tasks(myDb, ObjectId(session['userid'])), 
+                "study-sessions": database.get_study_sessions(myDb, ObjectId(session['userid']))
+            }
+        return render_template('study_session.html', data=data) # render home page template 
+
 
 # login
 @app.route("/login", methods=('GET', 'POST'))
@@ -112,8 +139,14 @@ def show_signup():
 # profile
 @app.route("/profile", methods=("GET", "POST"))
 def show_profile():
+
+    # if we are NOT logged in - redirect to login
+    if 'userid' not in session or session['userid'] is None:
+        return redirect(url_for('show_login'))
+    
     # simply show the profile page
     if request.method == "GET":   
+        
         data = {
             "user": database.get_user_info(myDb, ObjectId(session['userid']))
         }
