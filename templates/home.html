@@ -1,0 +1,112 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TV Show Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 500px;
+            text-align: center;
+        }
+
+        input, button {
+            padding: 10px;
+            width: 80%;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #5C6BC0;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #3f4b8a;
+        }
+
+        .episode-list {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .episode-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        footer {
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 14px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>TV Show Tracker</h1>
+
+        <form action="{{ url_for('search') }}" method="GET">
+            <input type="text" name="query" placeholder="Search for a show..." required>
+            <button type="submit">Search</button>
+        </form>
+        <h2>Your Episodes</h2>
+        <div class="episode-list">
+            {% for show in episodes %}
+            <div class="episode-item">
+                <b>Title:</b> {{ show.title }}<br>
+                <b>Genre:</b> {{ show.genre }}<br>
+                <b>Episode:</b> {{ show.episode }}<br>
+                <b>Rating:</b> {{ show.rating }}<br>
+                <b>Tags:</b> {{ show.tags | join(', ') }}<br>
+                <b>Date:</b> {{ show.date }}<br>
+                <b>Comment:</b> "{{ show.comment }}"
+
+                <form action="{{ url_for('delete') }}" method="POST" style="margin-top:10px;">
+                    <input type="hidden" name="show_id" value="{{ show._id }}">
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+        <h3>Menu</h3>
+        <a href="{{ url_for('add') }}">
+            <button>Add New Episode</button>
+        </a>
+        </div>
+
+      <footer>
+        <p>&copy; 2025. Shared under the GPL3 license. Source code 
+            <a
+              href="https://github.com/software-students-spring2025/2-web-app-project2_jpeg"
+              >available on Github.
+            </a>
+        </p>
+      </footer>
+  </body>
+</html>
+
