@@ -86,7 +86,7 @@ def new_account(mydb, username, password):
 ## 
 
 
-
+#works
 def get_deadlines(mydb, userID):
     #get name from user database and user id
    # Data_Base= myDb["users"] 
@@ -94,7 +94,8 @@ def get_deadlines(mydb, userID):
    # use_id= exist["_id"]
     AsTable= mydb["Assigments"]
     deadlines = AsTable.find({"user_ID":ObjectId(userID)})
-    return deadlines
+    deadlines_dict= [doc for doc in deadlines]
+    return deadlines_dict
     #acess Assigments
 
     #return None
@@ -104,29 +105,35 @@ def get_deadlines(mydb, userID):
 ##
 ## Function: get classes
 ## Usage: get all classes belonging to a specific user
-## 
+## works
 def get_classes(mydb, userID):
     ClassTable= mydb["Class"]
-    Classes= ClassTable.find({"USER_id":userID})
-    return  Classes 
+    Classes= ClassTable.find({"user_ID":ObjectId(userID)})
+    Classes_dict= [doc for doc in Classes]
+    return  Classes_dict
 
 
 ##
 ## Function: get study sessions
 ## Usage: get all study sessions belonging to a specific user
-## 
+## works
 def get_study_sessions(mydb, userID):
-    return None
+    StudyTable= mydb["Studies"]
+    Study= StudyTable.find({"user_id":ObjectId(userID)})
+    Study_dict= [doc for doc in Study]
+    return Study_dict
 
 
 ##
 ## Function: get tasks
 ## Usage: get all current tasks belonging to a specific user
 ##  return that tasks but will have to loop through in order to print each tasks
+#works
 def get_tasks(mydb, userID):
     tasktable = mydb["Tasks"]
-    tasks=tasktable.find({"user_ID":ObjectId(userID)})
-    return tasks
+    tasks=tasktable.find({"user_id":ObjectId(userID)})
+    task_dict= [doc for doc in tasks]
+    return task_dict
 
 
 ##
@@ -136,7 +143,8 @@ def get_tasks(mydb, userID):
 def get_user_info(mydb, userID):
    usetable= mydb["users"]
    user=  usetable.find({"_id":ObjectId(userID)})
-   return user
+   user_dict= [doc for doc in user]
+   return  user_dict
    
 
 
