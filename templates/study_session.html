@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Session</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Study Tracker Dashboard</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('show_dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('show_profile') }}">Profile</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <h1>Study Session</h1>
+        
+        <div class="timer-section">
+            <label for="study-time">Set Study Time (minutes):</label>
+            <input type="number" id="study-time" min="1" value="25">
+            <button id="start-timer">Start Session</button>
+            <button id="pause-timer">Pause Timer</button>
+            <h2 id="countdown">00:00:00</h2>
+        </div>
+        
+        <div class="goals-section">
+            <h2>Session Goals</h2>
+            <input type="text" id="goal-input" placeholder="Enter a goal">
+            <button id="add-goal">Add Goal</button>
+            <ul id="goals-list"></ul>
+        </div>
+    </div>
+</body>
+</html>
+<footer>
+        <p>&copy; 2025 Study Tracker</p>
+    </footer>

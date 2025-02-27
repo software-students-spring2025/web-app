@@ -26,34 +26,38 @@
                 <img src="profile-placeholder.jpg" alt="Profile Picture" id="profile-pic">
             </div>
             <div id="profile-details">
-                <h2 id="name">John Doe</h2>
-                <p><strong>Age:</strong> <span id="age">25</span></p>
-                <p><strong>Bio:</strong> <span id="bio">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae urna euismod, blandit felis at, suscipit orci.</span></p>
+                <h2 id="name">Welcome, {{data["user"].name}}</h2>
+                <p><strong>Username:</strong> <span id="username">{{data["user"].username}}</span></p>
+                <p><strong>Age:</strong> <span id="age">{{data["user"].age}}</span></p>
+                <p><strong>Bio:</strong> <span id="bio">{{data["user"].bio}}</span></p>
             </div>
             <button onclick="editProfile()">Edit Profile</button>
         </section>
 
         <!-- Profile Edit Section -->
         <section id="profile-edit" style="display: none;">
+        <form method="post" action="/profile-edit">
             <h2>Edit Profile</h2>
             <div>
                 <label for="profile-pic-input">Profile Picture</label>
-                <input type="file" id="profile-pic-input" accept="image/*">
+                <input name="pic" type="file" id="profile-pic-input" accept="image/*">
             </div>
             <div>
                 <label for="name-input">Name</label>
-                <input type="text" id="name-input" value="John Doe">
+                <input name="name" type="text" id="name-input" value="John Doe">
             </div>
             <div>
                 <label for="age-input">Age</label>
-                <input type="number" id="age-input" value="25">
+                <input name="age" type="number" id="age-input" value="25">
             </div>
             <div>
                 <label for="bio-input">Bio</label>
-                <textarea id="bio-input">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</textarea>
+                <input name="bio" id="bio-input" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit.">
             </div>
             <button onclick="saveProfile()">Save Changes</button>
-            <button onclick="cancelEdit()">Cancel</button>
+            
+        </form>
+        <button onclick="cancelEdit()">Cancel</button>
         </section>
     </main>
     

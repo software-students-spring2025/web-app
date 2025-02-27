@@ -226,11 +226,7 @@ data = {
         }
 
         function startStudySession() {
-            let duration = prompt("Enter study duration in minutes:");
-            let goals = prompt("Enter your study goals:");
-            if (duration && goals) {
-                alert(`Study session started for ${duration} minutes. Goals: ${goals}`);
-            }
+            window.location.href = "study_session.html";
         }
 
         function backToClasses() {
