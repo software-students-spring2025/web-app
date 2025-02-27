@@ -43,38 +43,49 @@
                     </label>
                     <!-- Popup content -->
                     <div class="popup-content">
-                        <label for="popup-toggle-{{ loop.index }}" class="close-button">✖</label>
-
+                        <label for="popup-toggle-{{ loop.index }}" class="close-button">  
+                            <img src="{{ url_for('static', filename='images/X.png') }}" alt="Close" class="close-img">
+                        </label>
 
                         <div class="form-group">
-                            <label>Company</label>
-                            <p class="input-pink">{{ app.company }}</p>
+                            <label for="company">Company</label>
+                            <input type="text" id="company" name="company" class="input-pink" required>
                         </div>
 
                         <div class="form-group">
-                            <label>Role</label>
-                            <p class="input-blue">{{ app.role }}</p>
+                            <label for="role">Role</label>
+                            <input type="text" id="role" name="role" class="input-blue" required>
                         </div>
 
                         <div class="form-group">
-                            <label>Category</label>
-                            <p class="input-yellow">{{ app.category }}</p>
+                            <label for="category">Category</label>
+                            <select id="category" name="category" class="input-yellow" required>
+                                <option value="">Select Category</option>
+                                <option value="full-time">Full-Time</option>
+                                <option value="part-time">Part-Time</option>
+                                <option value="contract">Contract</option>
+                            </select>            
                         </div>
 
                         <div class="form-group">
-                            <label>Location</label>
-                            <p class="input-green">{{ app.location }}</p>
+                            <label for="location">Location</label>
+                            <input type="text" id="location" name="location" class="input-green" required>
                         </div>
 
                         <div class="form-group">
-                            <label>Flexibility</label>
-                            <p class="input-purple">{{ app.flexibility }}</p>
+                            <label for="flexibility">Flexibility</label>
+                            <select id="flexibility" name="flexibility" class="input-purple" required>
+                                <option value="">Select Flexibility</option>
+                                <option value="remote">Remote</option>
+                                <option value="onsite">On-site</option>
+                                <option value="hybrid">Hybrid</option>
+                            </select>
                         </div>
 
                         <div class="form-group">
-                            <label>Status</label>
-                            <select id="status" name="status" class="input-pink2">
-                                <option value="{{ app.status }}" selected>{{ app.status }}</option>
+                            <label for="status">Status</label>
+                            <select id="status" name="status" class="input-pink2" required>
+                                <option value="">Select Status</option>
                                 <option value="applied">Applied</option>
                                 <option value="interview">Interview Scheduled</option>
                                 <option value="offer">Offer Received</option>
@@ -83,9 +94,17 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Date</label>
-                            <p class="input-orange">{{ app.date }}</p>
+                            <label for="date">Date</label>
+                            <input type="text" id="date" name="date" class="input-orange" placeholder="MM/DD/YYYY" required>
                         </div>
+
+                        <div class="form-group">
+                            <label for="applied-link">Applied Link</label>
+                            <input type="url" id="applied-link" name="applied-link" class="input-blue2" required>
+                        </div>
+            
+                        <button type="submit" class="save-button">Save</button>
+                        
                     </div>
                 </td>
 
@@ -107,4 +126,4 @@
         </tbody>
     </table>
 </main>
-{% endblock %}
+    {% endblock %}
