@@ -53,14 +53,15 @@ def handle_home():
     return flask.render_template('home.html')
 
 # DetailPage get
-@app.route('/detail')
-def detail():
-    return 'Detail'
+@app.route('/detail/<order_id>')
+def detail(order_id): 
+    order = db.get_order(order_id)
+    return flask.render_template('detail.html', order=order)
 
 # DetailPage Post
 @app.route('/detail', methods=['POST'])
 def handle_detail():
-    return 'Detail'
+    return 'NewDetail'
 
 # NewOrder get
 @app.route('/newOrder')
@@ -69,7 +70,7 @@ def order():
 
 # NewOrder Post
 @app.route('/newOrder', methods=['POST'])
-def hanle_odrer():
+def handle_odrer():
     return 'NewOrder'
 
 if __name__ == '__main__':
@@ -84,5 +85,4 @@ if __name__ == '__main__':
     s = db.find_user_order("Frank")
     print(s)
     app.run(debug=True, port=config.PORT)
-
 
