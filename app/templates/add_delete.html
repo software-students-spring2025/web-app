@@ -7,7 +7,8 @@
     <p>this is to add and delete recipes to the list</p>
 
      <h2>Add a new recipe:</h2>
-    <form method="POST">
+    <form method="POST" action="{{url_for('add_delete')}}">
+        <input type="hidden" name="action" value="add">
         <table>
             <tr>
                 <td>        
@@ -95,4 +96,4 @@
 
         </tbody>
     </table>
- {% endblock %}
+ {% endblock %}a
