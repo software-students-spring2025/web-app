@@ -30,7 +30,7 @@ def home():
     Returns:
         rendered template (str): The rendered HTML template.
     """
-    courses = db.courses.find({}).sort("created_at", -1)
+    courses = db.courses.find().sort("created_at", -1)
     return render_template("home.html", docs=courses)
 
 
@@ -53,7 +53,7 @@ def course_roaster(course_id):
     return render_template("course_roaster.html")
 
 @app.route("/course/<course_id>/student_grades/<student_id>")
-def course_roaster(course_id, student_id):
+def studnet_grades(course_id, student_id):
     """
     Route for the course roaster page.
     Returns:

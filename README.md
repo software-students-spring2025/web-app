@@ -64,6 +64,10 @@ To run the app locally in development mode using Flask's built-in development we
 
 Note that this will run the app only on your own computer. Other people will not be able to access it. If you want to allow others to access the app running in development mode on your local machine, try using the [flask-ngrok](https://pypi.org/project/flask-ngrok/) module.
 
+### Populate db data
+
+To populate initial data in your local instance of the database, run `python populate_db_data.py`
+
 ## Task boards
 
 See instructions. Delete this line and place a link to the task boards here.
