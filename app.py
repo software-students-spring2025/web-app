@@ -186,6 +186,33 @@ def edit_profile():
     return redirect(url_for('show_profile'))
 
 
+# add class
+@app.route("/add-class", methods=["POST"])
+def add_class():
+    
+    # add class details to mongodb
+    class_id = database.add_class(session["userid"], request.form["classname"])
+
+    # add deadlines to mongodb 
+    num = 1
+    while True:
+        if "deadline-" + str(num) + "-name" not in request.form:
+            break 
+
+        database.add_deadline(
+            session["userid"], 
+            class_id, 
+            request.form["deadline-" + str(num) + "-name"], 
+            request.form["deadline-" + str(num) + "-type"], 
+            request.form["deadline-" + str(num) + "-due-date"]
+        )
+
+        num += 1
+    
+    # reload dashboard
+    return redirect(url_for("/"))
+
+
 # keep alive
 if __name__ == "__main__":
     app.run(debug=True) #running your server on development mode, setting debug to True

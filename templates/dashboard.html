@@ -53,8 +53,36 @@ data = {
                     </li>
                 {% endfor %}
             </ul>
-            <input type="text" id="new-class" placeholder="Enter class name">
-            <button onclick="addClass()">Add Class</button>
+            <button id="addClassFormButton" onclick="addClassFormVisible()">Add New Class</button>
+            <form id="addClassForm" method="post" action="/add-class" style="display:none">
+                <h2>Add Class:</h2>
+
+                <label for="new-class">Class Name:</label>
+                <input name="classname" type="text" id="new-class" placeholder="Enter class name" required>
+                <p></p>
+                <h4>Are there any upcoming deadlines for this class?</h4>
+                <div id="deadline-form">                
+                    <label for="deadline-1-name">Title of deadline:</label>
+                    <input type="text" name="deadline-1-name" id="deadline-1-name" required>
+                    <p>Deadline Type:</p>
+                    <input type="radio" id="deadline-1-type-assignment" name="deadline-1-type" value="Assignment" required>
+                    <label for="deadline-1-type-assignment">Assignment</label><br>
+                    <input type="radio" id="deadline-1-type-exam" name="deadline-1-type" value="Exam" required>
+                    <label for="deadline-1-type-exam">Exam</label><br>
+                    <input type="radio" id="deadline-1-type-project" name="deadline-1-type" value="Project" required>
+                    <label for="deadline-1-type-project">Project</label>
+                    <input type="radio" id="deadline-1-type-other" name="deadline-1-type" value="Other" required>
+                    <label for="deadline-1-type-other">Other</label>
+                    
+                    <p></p>
+                    <label for="deadline-1-due-date">Due Date:</label>
+                    <input type="date" name="deadline-1-due-date" id="deadline-1-due-date" required>
+                </div>
+                <button type="button" onclick="addDeadlineFormEntry()">Add another deadline</button>
+
+                <input type="submit">
+            </form>
+            
         </section>
 
           <!-- Task and session management -->
@@ -103,28 +131,56 @@ data = {
         window.onload = function() {
             loadClasses();
         };
-        /*
-        function loadClasses() {
-            let classList = document.getElementById('class-list');
-            classList.innerHTML = '';
-            Object.keys(classData).forEach(className => {
-                let li = document.createElement('li');
-                li.innerHTML = `<span>${className}</span> <button onclick="manageClass('${className}')">Manage</button>`;
-                classList.appendChild(li);
-            });
+        
+
+        function addClassFormVisible() {
+            document.getElementById('addClassForm').style.display = 'block';
+            document.getElementById('addClassFormButton').style.display = 'none';
         }
-            */
 
-        function addClass() {
-            let className = document.getElementById('new-class').value;
-            if (className.trim() === '') return;
+        function addDeadlineFormEntry() {
+            console.log('happening')
 
-            // adding class
-            classData[className] = { tasks: [], sessions: [] };
-            localStorage.setItem('classData', JSON.stringify(classData));
+            num = 2
+            while (true) {
+                console.log("deadline-" + num + "-name")
+                if (document.getElementById("deadline-" + num + "-name") == null) {
+                    break
+                }
+                
+                num ++
+            }
+            console.log('happening2')
+            div = document.getElementById("deadline-form")
 
-            loadClasses(); // reload the class list
-            document.getElementById('new-class').value = '';
+            
+            const elements = [
+                { tag: "p", attributes: {  }, text: "-----------------------" },
+                { tag: "label", attributes: { for: "deadline-" + num + "-name" }, text: "Title of deadline:" },
+                { tag: "input", attributes: { type: "text", name: "deadline-" + num + "-name", id: "deadline-" + num + "-name" } },
+                { tag: "p", text: "Deadline Type:" },
+                { tag: "input", attributes: { type: "radio", id: "deadline-" + num + "-type-assignment", name: "deadline-" + num + "-type", value: "Assignment" } },
+                { tag: "label", attributes: { for: "deadline-" + num + "-type-assignment" }, text: "Assignment" },
+                { tag: "br" },
+                { tag: "input", attributes: { type: "radio", id: "deadline-" + num + "-type-exam", name: "deadline-" + num + "-type", value: "Exam" } },
+                { tag: "label", attributes: { for: "deadline-" + num + "-type-exam" }, text: "Exam" },
+                { tag: "br" },
+                { tag: "input", attributes: { type: "radio", id: "deadline-" + num + "-type-project", name: "deadline-" + num + "-type", value: "Project" } },
+                { tag: "label", attributes: { for: "deadline-" + num + "-type-project" }, text: "Project" },
+                { tag: "br" },
+                { tag: "input", attributes: { type: "radio", id: "deadline-" + num + "-type-other", name: "deadline-" + num + "-type", value: "Other" } },
+                { tag: "label", attributes: { for: "deadline-" + num + "-type-other" }, text: "Other" },
+                { tag: "p" },
+                { tag: "label", attributes: { for: "deadline-" + num + "-due-date" }, text: "Due Date:" },
+                { tag: "input", attributes: { type: "date", name: "deadline-" + num + "-due-date", id: "deadline-" + num + "-due-date" } }
+            ];
+
+            elements.forEach( ({tag, attributes = {}, text = ""}) => {
+                const elem = document.createElement(tag);
+                Object.entries(attributes).forEach(([key, value]) => elem.setAttribute(key, value));
+                if (text) elem.textContent = text;
+                div.appendChild(elem);
+            } )
         }
         
         function deleteClass() {
