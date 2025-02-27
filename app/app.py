@@ -19,19 +19,89 @@ carts = db.carts
 carts.drop()
 if menu_collection.count_documents({}) == 0:
     menu_collection.insert_many([
-        {'item_id': 'baguette', 'name': 'Baguette', 'description': 'A scrumptious baguette that would make France proud.', 'price': 1},
-        {'item_id': 'croissant', 'name': 'Croissant', 'description': 'Decadent and Flakey. Perfect piece of bread.', 'price': 2},
-        {'item_id': 'focaccia', 'name': 'Focaccia', 'description': 'Oven baked Italian flat bread. Very Tasty!.', 'price': 3},
-        {'item_id': 'sourdough', 'name': 'Sourdough', 'description': "Tangy and delicious loaf that you'll love", 'price': 4},
-        {'item_id': 'whole_grain', 'name': 'Whole Grain', 'description': "Tangy and delicious loaf that you'll love", 'price': 5},
-        {'item_id': 'almond_cookie', 'name': 'Almond Cookie', 'description': "Delicious cookie topped with Almonds",'price': 6},
-        {'item_id': 'chocolate_cookie', 'name': 'Chocolate Cookie', 'description': "Rich and flavorful cookie for your chocolate cravings",'price': 7},
-        {'item_id': 'chocolate_chip_cookie', 'name': 'Chocolate Chip Cookie', 'description': "Our take on the classic simple cookie!", 'price': 8},
-        {'item_id': 'chocolate_filled_cookie', 'name': 'Chocolate Filled Cookie', 'description': "Enjoy a crisp cookie and gooey center", 'price': 9},
-        {'item_id': 'gingerbread', 'name': 'Gingerbread', 'description': "Enjoy the seasonal cookie all year round!", 'price': 10},
-        {'item_id': 'matcha_cookie', 'name': 'Matcha Cookie', 'description': "Made with fresh green tea leaves at our bakery!", 'price': 11},
-        {'item_id': 'peanut_utter_cookie', 'name': 'Peanut Butter Cookie', 'description': "Soft and chewy while being sweet and salty", 'price': 12},
-        {'item_id': 'thumbprint_cookies', 'name': 'Thumbprint Cookies', 'description': "Shortbread Cookies with a delicious jam in the middle", 'price': 13},
+        {'item_id': 'baguette', 'name': 'Baguette',
+         'description': 'A scrumptious baguette that would make France proud.', 'price': 1, 'category': 'Bread'},
+        {'item_id': 'croissant', 'name': 'Croissant', 'description': 'Decadent and Flakey. Perfect piece of bread.',
+         'price': 2, 'category': 'Bread'},
+        {'item_id': 'focaccia', 'name': 'Focaccia', 'description': 'Oven baked Italian flat bread. Very Tasty!.',
+         'price': 3, 'category': 'Bread'},
+        {'item_id': 'sourdough', 'name': 'Sourdough', 'description': "Tangy and delicious loaf that you'll love",
+         'price': 4, 'category': 'Bread'},
+        {'item_id': 'whole_grain', 'name': 'Whole Grain', 'description': "Tangy and delicious loaf that you'll love",
+         'price': 5, 'category': 'Bread'},
+        {'item_id': 'almond_cookie', 'name': 'Almond Cookie', 'description': "Delicious cookie topped with Almonds",
+         'price': 6, 'category': 'Cookie'},
+        {'item_id': 'chocolate_cookie', 'name': 'Chocolate Cookie',
+         'description': "Rich and flavorful cookie for your chocolate cravings", 'price': 7, 'category': 'Cookie'},
+        {'item_id': 'chocolate_chip_cookie', 'name': 'Chocolate Chip Cookie',
+         'description': "Our take on the classic simple cookie!", 'price': 8, 'category': 'Cookie'},
+        {'item_id': 'chocolate_filled_cookie', 'name': 'Chocolate Filled Cookie',
+         'description': "Enjoy a crisp cookie and gooey center", 'price': 9, 'category': 'Cookie'},
+        {'item_id': 'gingerbread', 'name': 'Gingerbread', 'description': "Enjoy the seasonal cookie all year round!",
+         'price': 10, 'category': 'Cookie'},
+        {'item_id': 'matcha_cookie', 'name': 'Matcha Cookie',
+         'description': "Made with fresh green tea leaves at our bakery!", 'price': 11, 'category': 'Cookie'},
+        {'item_id': 'peanut_utter_cookie', 'name': 'Peanut Butter Cookie',
+         'description': "Soft and chewy while being sweet and salty", 'price': 12, 'category': 'Cookie'},
+        {'item_id': 'thumbprint_cookies', 'name': 'Thumbprint Cookies',
+         'description': "Shortbread Cookies with a delicious jam in the middle", 'price': 13, 'category': 'Cookie'},
+        {'item_id': 'carrot_cake', 'name': 'Carrot Cake',
+         'description': "A sweet carrot cake with a cream cheese icing", 'price': 14, 'category': 'Cake'},
+        {'item_id': 'cheese_cake', 'name': 'Cheese Cake',
+         'description': "Made with fresh cream cheese and a cookie base", 'price': 15, 'category': 'Cake'},
+        {'item_id': 'chocolate_berry_cake', 'name': 'Chocolate Berry Cake',
+         'description': "Moist Chocolate cake topped with Mixed Berries!", 'price': 16, 'category': 'Cake'},
+        {'item_id': 'chocolate_mousse_cake', 'name': 'Chocolate Mousse Cake',
+         'description': "Enjoy a cake with fluffy chocolate mousse", 'price': 17, 'category': 'Cake'},
+        {'item_id': 'rainbow_cake', 'name': 'Rainbow Cake',
+         'description': "Seven layer cake of colorful and delicious ingredients!", 'price': 18, 'category': 'Cake'},
+        {'item_id': 'red_velvet', 'name': 'Red Velvet',
+         'description': "Cake with a rich red color and cream cheese frosting", 'price': 19, 'category': 'Cake'},
+        {'item_id': 'strawberry_shortcake', 'name': 'Strawberry Shortcake',
+         'description': "Vanilla cake with frosting and fresh strawberries", 'price': 20, 'category': 'Cake'},
+        {'item_id': 'white_cake', 'name': 'White Cake',
+         'description': "Vanilla cake with frosting and fresh strawberries", 'price': 21, 'category': 'Cake'},
+        {'item_id': 'almond_donut', 'name': 'Almond Donut',
+         'description': "Plain donut with chocolate frosting and almonds", 'price': 22, 'category': 'Donut'},
+        {'item_id': 'caramel_donut', 'name': 'Caramel Donut',
+         'description': "Topped with a caramel glaze and a caramel drizzle", 'price': 23, 'category': 'Donut'},
+        {'item_id': 'chocolate_glazed', 'name': 'Chocolate Glazed',
+         'description': "Beautiful rich chocolate glaze with a chocolate drizzle", 'price': 24, 'category': 'Donut'},
+        {'item_id': 'cookies_and_cream', 'name': 'Cookies and Cream',
+         'description': "Chocolate donut with frosting and cookie crumble", 'price': 25, 'category': 'Donut'},
+        {'item_id': 'glazed_donut', 'name': 'Glazed Donut',
+         'description': "The classic delicious glazed donut! Perfect for breakfast", 'price': 26, 'category': 'Donut'},
+        {'item_id': 'pink_sprinkled', 'name': 'Pink Sprinkled',
+         'description': "Plain donut topped entirely in pink sprinkles", 'price': 27, 'category': 'Donut'},
+        {'item_id': 'jam_and_sugar', 'name': 'Jam and Sugar',
+         'description': "Plain donut topped with strawberry jam and sugar", 'price': 28, 'category': 'Donut'},
+        {'item_id': 'apple_pie', 'name': 'Apple Pie', 'description': "Classic apple pie topped with sugar", 'price': 29,
+         'category': 'Pies'},
+        {'item_id': 'apricot_pie', 'name': 'Apricot Pie', 'description': "Made with fresh Apricots and nutmeg",
+         'price': 30, 'category': 'Pies'},
+        {'item_id': 'custard_pie', 'name': 'Custard Pie',
+         'description': "Silky and Sweet Custard pie with a crumb coat", 'price': 31, 'category': 'Pies'},
+        {'item_id': 'key_lime_pie', 'name': 'Key Lime Pie', 'description': "A bright tangy yet sweet pie", 'price': 32,
+         'category': 'Pies'},
+        {'item_id': 'pecan_pie', 'name': 'Pecan Pie', 'description': "A pie made of pecan nuts and uses cane syrup",
+         'price': 33, 'category': 'Pies'},
+        {'item_id': 'pumpkin_pie', 'name': 'Pumpkin Pie',
+         'description': "The perfect fall pie! Made with nutmeg and ginger!", 'price': 34, 'category': 'Pies'},
+        {'item_id': 'cherry_pie', 'name': 'Cherry Pie',
+         'description': "Beautiful pie made with fresh delicious cherries", 'price': 35, 'category': 'Pies'},
+        {'item_id': 'avocado_toast', 'name': 'Avocado Toast',
+         'description': "Toast topped with mashed avocado and an egg", 'price': 36, 'category': 'Sandwiches'},
+        {'item_id': 'blt', 'name': 'BLT', 'description': "Bacon, lettuce, mayo, and tomato on yummy white bread",
+         'price': 37, 'category': 'Sandwiches'},
+        {'item_id': 'breakfast_sandwich', 'name': 'Breakfast Sandwich',
+         'description': "Sausage, egg, cheese, and bacon on an english muffin!", 'price': 38, 'category': 'Sandwiches'},
+        {'item_id': 'grilled_cheese', 'name': 'Grilled Cheese',
+         'description': "Classic cheese sandwich made with american cheese", 'price': 39, 'category': 'Sandwiches'},
+        {'item_id': 'pb_and_j', 'name': 'PB and J',
+         'description': "Delicious combo of Peanut butter and Jelly on multigrain bread!", 'price': 40,
+         'category': 'Sandwiches'},
+        {'item_id': 'salmon_sandwich', 'name': 'Salmon Sandwich',
+         'description': "Beautiful salmon paired with fresh veggies", 'price': 41, 'category': 'Sandwiches'},
     ])
 
 menu_collection.create_index([("name", "text"), ("description", "text")])
@@ -51,17 +121,24 @@ def login():
 def contact():
     return rt('contact.html')
 
-@app.route('/order')
+@app.route('/order', methods=['GET'])
 def order():
+    category = request.args.get('category', '').strip()
     query = request.args.get('query', '').strip()
+
+    filter_query = {}
+    if category:
+        filter_query['category'] = category
+
     if query:
         regex = {"$regex": query, "$options": "i"}
-        menu_items = list(menu_collection.find(
-            {"$or": [{"name": regex}, {"description": regex}]},
-            {"_id": 0}))
-    else:
-        menu_items = list(menu_collection.find({}, {"_id": 0}))
-    return rt('order.html', menu_items=menu_items)
+        filter_query["$or"] = [{"name": regex}, {"description": regex}]
+
+    menu_items = list(menu_collection.find(filter_query, {"_id": 0}))
+    categories = menu_collection.distinct('category')  # Fetch all unique categories
+
+    return rt('order.html', menu_items=menu_items, category=category, categories=categories)
+
 
 @app.route('/item_info/<item_id>')
 def item_info(item_id):
@@ -78,12 +155,13 @@ def initialize_cart():
 @app.route('/add_to_cart/<item_id>')
 def add_to_cart(item_id):
     customer_id = 100 # placeholder value
-
+    category = request.args.get('category')
+    query = request.args.get('query', '')
     if not customer_id:
         return redirect(url_for('login'))
     Cart.add_to_cart(customer_id, item_id)
 
-    return redirect(url_for('order'))
+    return redirect(url_for('order', category=category, query=query))
 
 
 @app.route('/cart')
