@@ -16,6 +16,7 @@ db = client.get_database("Cluster0")
 # Collections
 pins_collection = db.pins
 bathrooms_collection = db.bathrooms
+reviews_collection = db.reviews
 
 @app.route("/")
 def home():
@@ -24,6 +25,42 @@ def home():
 @app.route("/search")
 def search():
     return render_template("search.html")
+
+
+
+@app.route("/bathroom/<bathroomID>.html")
+def bathroom(bathroomID):
+    bathroom = bathrooms_collection.find_one({"_id": ObjectId(bathroomID)})
+    bathroomName=pins_collection.find_one({"_id":bathroom.get("location_id")}).get("name")
+    fullLocation = bathroomName+", Floor "+str(bathroom.get("floor"))
+    description=bathroom.get("type")+" "+bathroom.get("orientation")+" Bathroom"
+    reviews = reviews_collection.find({"bathroom_id": ObjectId(bathroomID)})
+    imageURL=str(bathroom.get("img_url"))
+    if (imageURL=="None" or imageURL==""):
+        imageString="Image Not Found"
+    else:
+        imageString="<img src='"+imageURL+"'>"
+    i=0
+    revSum=0
+    for review in reviews:
+        i+=1
+        revSum+=review["rating"]
+    revSum=revSum/i
+    overallRating=""
+    i=0
+    while (i<revSum):
+        i+=1
+        if i>revSum:
+            overallRating+="<i class='fa-solid fa-star-half-stroke'></i>"
+        else:
+            overallRating+="<i class='fa-solid fa-star'></i>"
+    while (i<5):
+        i+=1
+        overallRating +="<i class='fa-regular fa-star'></i>"
+    reviews = reviews_collection.find({"bathroom_id": ObjectId(bathroomID)})
+    print(reviews)
+    return render_template("bathroom.html",rating=overallRating,bathroomDescription=description, bathroomLocation=fullLocation,toilets=str(bathroom.get("toilets")),bathroomImage=imageString,bathroomReviews=reviews,sinks=str(bathroom.get("sinks")))
+
 
 @app.route("/api/pins")
 def get_pins():
