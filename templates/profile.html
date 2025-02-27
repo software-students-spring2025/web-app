@@ -13,6 +13,7 @@
             <ul>
                 <li><a href="{{ url_for('show_dashboard') }}">Dashboard</a></li>
                 <li><a href="{{ url_for('show_profile') }}">Profile</a></li>
+                <li><a href="{{ url_for('show_study') }}">Study</a></li>
                 <li><a href="{{ url_for('logout') }}">Logout</a></li>
             </ul>
         </nav>
@@ -23,7 +24,7 @@
         <section id="profile-view">
             <div id="profile-picture">
                 <!-- Placeholder for profile picture -->
-                <img src="profile-placeholder.jpg" alt="Profile Picture" id="profile-pic">
+                <img src="{{ url_for('static', filename='images/default_pfp.jpg') }}" alt="Profile Picture" id="profile-pic">
             </div>
             <div id="profile-details">
                 <h2 id="name">Welcome, {{data["user"].name}}</h2>
