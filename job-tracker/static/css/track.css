@@ -98,6 +98,10 @@ th:nth-child(5) {
     background-color: #FFECDE;
 }
 
+th:nth-child(6) {
+    background-color: #FFB0B2;
+}
+
 .app td { /* inputs */
     padding: 10px;
     border-bottom: 1px solid #ddd;
@@ -114,7 +118,12 @@ th:nth-child(5) {
     cursor: pointer;
 }
 
-.magnifying-img {
+.edit-img {
+    width: 14px;
+    height: 14px;
+}
+
+.rubbish-img {
     width: 14px;
     height: 14px;
 }
@@ -140,7 +149,6 @@ th:nth-child(5) {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    border: 1px solid #eaeaea;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -157,23 +165,32 @@ th:nth-child(5) {
     cursor: pointer;
 }
 
+.close-img {
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+
 .popup-content .form-group {
     margin-top: 5px;
     margin-bottom: 5px;
-    margin-right: 27px;
+    margin-left: 4px;
     width: 100%;
-    max-width: 300px;
+    max-width: 350px;
+    border: none;
     text-align: left;
 }
 
 .popup-content .form-group label { /* labels, outside*/
+    margin-top: 5px;
     font-size: 14px;
     color: #333;
     margin-bottom: 2px;
     display: block;
 }
 
-.popup-content .form-group p { /* data, inside */
+.popup-content .form-group input,
+.popup-content .form-group select { /* data (text), inside */
     width: 100%;
     padding: 10px;
     padding-left: 20px;
@@ -182,44 +199,66 @@ th:nth-child(5) {
     color: #333;
 }
 
-.input-pink { /* Colors */
+.input-pink { /* colors */
     background-color: #FEEBEE;
+    border: none;
+    max-width: 315px;
 }
 
 .input-blue {
     background-color: #DEF8FC;
+    border: none;
+    max-width: 315px;
 }
 
 .input-yellow {
     background-color: #FFFAE3;
+    border: none;
 }
 
 .input-green {
     background-color: #EFFDE7;
+    border: none;
+    max-width: 315px;
 }
 
 .input-purple {
     background-color: #EDE4FD;
+    border: none;
 }
 
 .input-pink2 {
     background-color: #FFEBFC;
+    border: none;
 }
 
 .input-orange {
     background-color: #FFECDE;
+    border: none;
+    max-width: 315px;
 }
 
 .input-blue2 {
     background-color: #E4EEFF;
+    border: none;
+    max-width: 315px;
 }
 
-.input-blue2 a {
-    text-decoration: none;
-    color: #007bff;
+.save-button {
+    background-color: #C2E1FF;
+    color: #333;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 15px;
+    width: 100%;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-size: 16px;
     font-weight: bold;
+    margin-top: 50px;
+
 }
 
-.input-blue2 a:hover {
-    text-decoration: underline;
+.save-button:hover {
+    background-color: #b3d4ff;
 }
