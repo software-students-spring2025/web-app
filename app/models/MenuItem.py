@@ -1,4 +1,7 @@
-from pymongo import MongoClient
+from app import db
+
+def get_mongo():
+    return db  
 
 # prevent circular imports
 def get_mongo():

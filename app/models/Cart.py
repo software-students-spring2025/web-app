@@ -1,16 +1,12 @@
-from pymongo import MongoClient
+from app import db
 
-# prevent circular imports
 def get_mongo():
-    client = MongoClient("mongodb://localhost:27017/")
-    return client.my_database
+    return db 
+     
 '''
 doc in progress:
 contains all items, keeps track of total price of items in cart
 Every customer gets only one cart, unique identifier is customerID
-
-TODO: Detach item quantity from menu item, should be a cart property and not tied to 
-specifc items
 
 '''
 
