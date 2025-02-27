@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
     height: 100%;
     font-family: 'Arial', sans-serif;
     background-color: white;
@@ -21,7 +22,7 @@ main {
 /* SEARCH BAR */
 .search-container {
     margin-top: 70px;
-    align-items: center; 
+    align-items: center;
     margin-bottom: 20px;
     width: 100%;
     display: flex;
@@ -29,7 +30,7 @@ main {
     align-items: center;
     position: relative;
 }
- 
+
 .search-container select {
     width: 300px;
     padding: 10px;
@@ -45,15 +46,15 @@ main {
     -moz-appearance: none;
 }
 
-.search-container::after { 
+.search-container::after {
     content: "";
     margin-top: 5px;
     position: relative;
     right: 35px;
     color: #888;
-    width: 13px; 
+    width: 13px;
     height: 13px;
-    background-image: url('/static/images/Dropdown.png'); 
+    background-image: url('/static/images/Dropdown.png');
     background-repeat: no-repeat;
     pointer-events: none;
 }
@@ -64,7 +65,8 @@ main {
     margin-top: 20px;
 }
 
-.app th { /* labels */
+.app th {
+    /* labels */
     font-size: 11px;
     font-weight: normal;
     text-align: left;
@@ -102,14 +104,15 @@ th:nth-child(6) {
     background-color: #FFB0B2;
 }
 
-.app td { /* inputs */
+.app td {
+    /* inputs */
     padding: 10px;
     border-bottom: 1px solid #ddd;
     font-size: 11px;
     gap: 20px;
 }
 
-.app tr:nth-child(even) { 
+.app tr:nth-child(even) {
     background-color: #F0F4F9;
 }
 
@@ -153,8 +156,15 @@ th:nth-child(6) {
     overflow-x: hidden;
 }
 
-.popup-toggle:checked + label + .popup-content {
+.popup-toggle:checked+label+.popup-content {
     display: flex;
+}
+
+.delete-btn {
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
 }
 
 .close-button {
@@ -181,7 +191,8 @@ th:nth-child(6) {
     text-align: left;
 }
 
-.popup-content .form-group label { /* labels, outside*/
+.popup-content .form-group label {
+    /* labels, outside*/
     margin-top: 5px;
     font-size: 14px;
     color: #333;
@@ -190,7 +201,8 @@ th:nth-child(6) {
 }
 
 .popup-content .form-group input,
-.popup-content .form-group select { /* data (text), inside */
+.popup-content .form-group select {
+    /* data (text), inside */
     width: 100%;
     padding: 10px;
     padding-left: 20px;
@@ -199,7 +211,8 @@ th:nth-child(6) {
     color: #333;
 }
 
-.input-pink { /* colors */
+.input-pink {
+    /* colors */
     background-color: #FEEBEE;
     border: none;
     max-width: 315px;
