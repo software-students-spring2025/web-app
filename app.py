@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 import os
-import bcrypt
+# import bcrypt
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -15,6 +15,10 @@ client = MongoClient(MONGO_URI)
 db = client["movie_tracker"]
 movies_collection = db["movies"]
 users_collection = db["users"]
+
+@app.route('/')
+def index():
+    return redirect(url_for('home'))
 
 @app.route('/home')
 def home():
@@ -95,3 +99,6 @@ def edit_movie(movie_id):
         return redirect(url_for('movie_details', movie_id=movie_id))
     
     return render_template('edit.html', movie=movie)
+
+if __name__ == '__main__':
+    app.run(debug=True)
