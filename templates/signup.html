@@ -22,6 +22,7 @@
                 
                 <button type="submit">Sign Up</button>
             </form>
+            <p style="color: red; font-weight: 600;">{{data['error']}}</p>
             <a href="{{ url_for('show_login') }}" class="button">I already have an account</a>
         </section>
         <!-- 
