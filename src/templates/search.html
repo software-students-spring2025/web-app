@@ -5,11 +5,10 @@
 {% block content %} 
     <ul>
         <li>
-            <input type="text" required name="search" placeholder="Search Query">
-            <input type="button" type="submit" value="Search">
-        </li>
-        <li>
-
+            <form action="/search_results" method="get">
+                <input type="text" required name="search" placeholder="Search Query">
+                <input type="button" type="submit" value="Search">
+            </form>
         </li>
     </ul>
 {% endblock %} 
