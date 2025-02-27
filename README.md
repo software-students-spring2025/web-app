@@ -1,24 +1,23 @@
 # Web Application Exercise
 
 ## Team Members
-Shaurya <br>
+Shaurya Srivastava [(Link to Profile)](https://github.com/shauryasr04)<br>
 Ethan Zheng <br>
 Jake Chang <br>
 David Yu[DavidYu00](https://github.com/DavidYu00) <br>
 
 ## Product vision statement
 
-REPLACENAME is a mobile platform that empowers job seekers by helping them network and connecting them to potential employers.
+Jitter is a mobile platform that empowers job seekers by helping them network and connect them to potential employers to seek out better job opportunities.
 
 ## User stories 
 
 * As a job hunter, I want to send applications to open job offerings so that I can be hired.
 * As a job hunter, I want to save my resume to the app so that I can easily reuse it to apply to different positions.
 * As an employer, I want to add job listings so that potential employees can apply to them.
-* 
-* 
-* 
-[Issues](https://github.com/software-students-spring2025/2-web-app-toast/issues)
+* As a job hunter, I want to find and connect with Alumni that work in the same profession as me
+* As a job hunter, I want to connect with professionals that went to the same school as me.
+* [View these Use Cases in an 'Issues' Section](https://github.com/software-students-spring2025/2-web-app-toast/issues)
 
 ## Steps necessary to run the software
 
@@ -26,4 +25,4 @@ See instructions. Delete this line and place instructions to download, configure
 
 ## Task boards
 
-[Projects Page](https://github.com/software-students-spring2025/2-web-app-toast/projects?query=is%3Aopen)
+[View our Backlog](https://github.com/orgs/software-students-spring2025/projects/64)
