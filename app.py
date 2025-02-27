@@ -1,7 +1,13 @@
-from flask import Flask, render_template, request, url_for, redirect 
-import pymongo
+from flask import Flask, render_template, request, url_for, redirect, session
+#import pymongo
 from bson.objectid import ObjectId
 import database
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
+import os
+import certifi
+from dotenv import load_dotenv
+from flask_session import Session
 
 '''
 notes / instructions
@@ -10,41 +16,24 @@ run app.py, then go to 127.0.0.1:5000 in browser
 
 '''
 
+# load environment variables 
+load_dotenv()
+
+# connect MongoDB
+uri = os.getenv("MONGO_URI")
+client = MongoClient(uri, server_api=ServerApi('1'), tlsCAFile=certifi.where())
+Mongo_DBNAME= os.getenv("MONGO_DBNAME")
+myDb= client[Mongo_DBNAME]
 
 # start app
 app = Flask(__name__)
 
-# clear leftover cookie(s) ?? May not be possible or necessary
-# if user terminates this program WITHOUT manually logging out of their account, the cookie will remain in the browser and they will be automatically logged in when the app restarts
-
-# connect MongoDB
-# comment out if you don't have mongo yet, should still be fine 
-client = pymongo.MongoClient('localhost', 27017)
-
-'''
-# this is the MOST simplified working app
-# homepage
-@app.route("/", methods=('GET', 'POST'))
-def dashboard():
-    if request.method == "GET":   
-        return render_template('dashboard.html') # render home page template 
-    return render_template('dashboard.html') # render home page template
-
-# login
-@app.route("/login", methods=('GET', 'POST'))
-def show_login():
-    if request.method == "GET":   
-        return render_template('index.html') # render login page template 
-    elif request.method == "POST":
-        # not real support for posting, just a simple redirect
-        response = redirect(url_for('dashboard'))
-        #response.set_cookie('uid', request.form['uname'])
-        return response
-'''
+# start new user session
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "mongodb"
+Session(app)
 
 
-# below shows basic implementation of "real" workflow - goes to homepage, checks if you're signed in, redirect to login if not
-# will depend on things like 1) what you name form elements 2) what we want to use as a cookie, etc
 
 # homepage / dashboard
 @app.route("/", methods=('GET', 'POST'))
