@@ -25,8 +25,9 @@
     border:none;
     margin-top: 20px;
     border: 1.5px solid black;
-
+    transition: transform 0.35s ease;
 }
+
 
 #loginBars input[type="text"], input[type="password"] {
     margin-bottom: 20px;  
@@ -35,12 +36,13 @@
     width: 250px;      
     max-width: 500px;
     border: 5px;
-    border: 1.5px solid black;
+    border: 2px solid black;
     border-radius: 8px;
 }
 
 #loginBars button:hover {
     background-color: #2d6731;
+    transform: scale(1.1);
 }
 
 
@@ -57,3 +59,4 @@ a {
 a:visited {
     color: rgb(142, 164, 255);
 }
+
