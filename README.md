@@ -9,10 +9,12 @@ Our web application allows professors to efficiently manage student grades by pr
 ## User stories
 
 1) As a professor who has lot of new students, I want to be able to easily add students to the rosters. 
-2) As a professor who wants feedback, I want to be able to quickly see which topics students sturggles on.
+2) As a professor who wants feedback, I want to be able to quickly see which topics students sturggle on.
 3) As a professor who is teaching a lot of classes, I want to be able to efficiently manage all of them.
 4) As a professor who likes to give extra credit, I want to be able to easily change grades. 
-5) As a professor who 
+5) As a professor who wants to see class performance, I want to be able to the class statistics.
+6) As a professor who has a lot of students, I want to be able to quickly search students by name.
+7) As a professor who is always traveling, I want to be able to access grades through my phone.
 
 ## Steps necessary to run the software
 
