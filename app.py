@@ -1,19 +1,26 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_pymongo import PyMongo
 from dotenv import load_dotenv
+from flask_session import Session  # Flask session management
 import os
+from bson import ObjectId  # Fixes ObjectId issue for MongoDB
 
 # Load environment variables from .env
 load_dotenv()
 
 app = Flask(__name__)
 
-# Secret key for session security
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'default-secret-key')
+# Secret key for session security (Ensure it's properly loaded from .env)
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'fallback-secret-key')
 
-# MongoDB Configuration (Using PyMongo Instead of Flask-MongoEngine)
+# Flask session config (for session persistence)
+app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_PERMANENT'] = False
+Session(app)
+
+# MongoDB Configuration
 app.config['MONGO_URI'] = f"mongodb://{os.getenv('MONGO_HOST', 'localhost')}:{os.getenv('MONGO_PORT', '27017')}/{os.getenv('MONGO_DB', 'project2')}"
 
 # Initialize PyMongo
@@ -24,10 +31,10 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
-# User Model (Manual Handling Instead of Flask-MongoEngine)
+# User Model
 class User(UserMixin):
     def __init__(self, username, email, password_hash, _id=None):
-        self.id = str(_id) if _id else None
+        self.id = str(_id) if _id else None  # Ensure id is stored as a string
         self.username = username
         self.email = email
         self.password_hash = password_hash
@@ -38,13 +45,19 @@ class User(UserMixin):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+    def get_id(self):
+        return str(self.id)  # Ensure Flask-Login can retrieve the user ID correctly
+
 # Load user for Flask-Login
 @login_manager.user_loader
 def load_user(user_id):
-    user_data = mongo.db.users.find_one({"_id": user_id})
-    if not user_data:
-        return None
-    return User(user_data['username'], user_data['email'], user_data['password_hash'], user_data['_id'])
+    try:
+        user_data = mongo.db.users.find_one({"_id": ObjectId(user_id)})  # Convert to ObjectId
+        if not user_data:
+            return None
+        return User(user_data['username'], user_data['email'], user_data['password_hash'], user_data['_id'])
+    except:
+        return None  # Handle invalid ObjectId format
 
 # Home Route
 @app.route('/')
@@ -69,11 +82,15 @@ def register():
         # Create new user
         user = User(username, email, None)
         user.set_password(password)
-        mongo.db.users.insert_one({
+        
+        # Insert user and retrieve the _id
+        inserted_user = mongo.db.users.insert_one({
             "username": user.username,
             "email": user.email,
             "password_hash": user.password_hash
         })
+
+        user.id = str(inserted_user.inserted_id)  # Assign the correct _id
         login_user(user)
         return redirect(url_for('dashboard'))
 

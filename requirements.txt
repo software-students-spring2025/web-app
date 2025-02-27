@@ -2,4 +2,6 @@ Flask
 Flask-Login
 Flask-PyMongo
 python-dotenv
-Werkzeug
+werkzeug
+Flask-Session
+bson
