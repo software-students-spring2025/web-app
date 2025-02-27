@@ -44,12 +44,10 @@ def show_dashboard():
         # if we are logged in (session["userid"] is not None) - load the dashboard page
         if 'userid' in session and session['userid'] is not None:
             data = {
-                "deadlines": [
-                    {"name": 'example deadline 1', "date": "March 1"}, 
-                    {"name": 'example deadline 2', "date": "March 2"}
-                ], 
-                "classes": [], 
-                "tasks": []
+                "user": database.get_user_info(myDb, ObjectId(session['userid'])),
+                "deadlines": database.get_deadlines(myDb, ObjectId(session['userid'])), 
+                "classes": database.get_classes(myDb, ObjectId(session['userid'])), 
+                "tasks": database.get_tasks(myDb, ObjectId(session['userid'])) 
             }
             return render_template('dashboard.html', data=data) # render home page template 
         
@@ -116,18 +114,10 @@ def show_signup():
 def show_profile():
     # simply show the profile page
     if request.method == "GET":   
-        #user_data = database.get_user_info(myDb)
         data = {
-            "user": {
-                "userID": "",
-                "name": "John Doe",
-                "age": 25,
-                "username": "John", 
-                "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae urna euismod, blandit felis at, suscipit orci."
-            }
+            "user": database.get_user_info(myDb, ObjectId(session['userid']))
         }
-        
-        return render_template('profile.html', data=data) # render home page template 
+        return render_template('profile.html', data=data) # render profile page template 
     
     # 
     elif request.method == "POST":
