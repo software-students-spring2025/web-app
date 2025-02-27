@@ -40,9 +40,9 @@ Session(app)
 def show_dashboard():
     # show the dashboard
     if request.method == "GET":   
-        print('cookies', request.cookies)
-        # if we are logged in (uid cookie has been set) - load the dashboard page
-        if 'uid' in request.cookies:
+
+        # if we are logged in (session["userid"] is not None) - load the dashboard page
+        if 'userid' in session and session['userid'] is not None:
             data = {
                 "deadlines": [
                     {"name": 'example deadline 1', "date": "March 1"}, 
@@ -52,13 +52,14 @@ def show_dashboard():
                 "tasks": []
             }
             return render_template('dashboard.html', data=data) # render home page template 
+        
         # if we are NOT logged in - redirect to login
         return redirect(url_for('show_login'))
+    
     # form handling
     elif request.method == "POST":
         pass  
 
-    
     return render_template('dashboard.html') # render home page template 
 
 # login
@@ -66,42 +67,49 @@ def show_dashboard():
 def show_login():
     # simply show the blank login page
     if request.method == "GET":   
-        return render_template('signin.html') # render home page template 
+        return render_template('signin.html', data={"error": ""}) # render home page template 
     
     # if information has been submitted to login: 
     elif request.method == "POST":
         uname = request.form['username']
         pwd = request.form['password']
-        ## 
-        ## authenticate the username and password
-        ##
+        
+        # authenticate the username and password
+        uid = database.pwd_auth(myDb, uname, pwd)
 
-        # set the uid cookie as the value of the user id
-        # redirect to the dashboard
-        response = redirect(url_for('show_dashboard'))
-        response.set_cookie('uid', uname)
-        return response
+        # incorrect username/password: reload page
+        if uid is None:
+            return render_template('signin.html', data={"error": "The username or password entered is incorrect."})
+
+        # correct username/password: redirect to the dashboard
+        session["userid"] = str(uid)
+        return redirect(url_for('show_dashboard'))
     
+
 # sign up / new account
 @app.route("/signup", methods=("GET", "POST"))
 def show_signup():
     # simply show the blank signup page
     if request.method == "GET":   
-        return render_template('signup.html') # render home page template 
+        return render_template('signup.html', data={"error": ""}) # render home page template 
     
     # if information has been submitted to signup: 
     elif request.method == "POST":
         uname = request.form['username']
         pwd = request.form['password']
-        ## 
-        ## authenticate the username and password, create new user in mongo
-        ##
+        
+        # try new account creation
+        uid = database.new_account(myDb, uname, pwd)
 
-        # set the uid cookie as the value of the user id
+        # if unsuccessful (user already exists)
+        if uid is None: 
+            return render_template('signup.html', data={"error": "This username is taken"})
+
+        # set session variables
         # redirect to the dashboard
-        response = redirect(url_for('show_dashboard'))
-        response.set_cookie('uid', uname)
-        return response
+        session["userid"] = str(uid)
+        return redirect(url_for('show_dashboard'))
+    
 
 # profile
 @app.route("/profile", methods=("GET", "POST"))
@@ -125,14 +133,15 @@ def show_profile():
     elif request.method == "POST":
         pass
 
+
 # sign out
 @app.route("/logout", methods=["GET"])
 def logout():
-    # DELETE the uid cookie 
+    # edit session variables
     # redirect to the login page
-    response = redirect(url_for('show_login'))
-    response.delete_cookie("uid")
-    return response
+    session["userid"] = None
+    return redirect(url_for('show_login'))
+
 
 # edit profile
 @app.route("/profile-edit", methods=["POST"])
