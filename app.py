@@ -13,6 +13,5 @@ app.secret_key = os.getenv('SECRET_KEY')
 MONGO_URI = os.getenv('MONGO_URI')
 client = MongoClient(MONGO_URI)
 db = client["movie_tracker"]
-users_collection = db["users"]
 movies_collection = db["movies"]
 
