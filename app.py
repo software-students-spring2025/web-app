@@ -14,7 +14,6 @@ from dotenv import load_dotenv, dotenv_values
 
 load_dotenv()  # load environment variables from .env file
 
-
 def create_app():
     """
     Create and configure the Flask application.
@@ -35,12 +34,28 @@ def create_app():
     except Exception as e:
         print(" * MongoDB connection error:", e)
 
+    @app.route("/",methods=["GET","POST"])
+    def home():
+        if request.method == "GET":
+            return render_template("index.html")
+        elif request.method == "POST":
+            print('hi')
+            return redirect("/test")
+
+
+
     @app.route("/")
     def home():
         return render_template("index.html")
+
     return app
 
 app = create_app()
+
+
+@app.route("/test")
+def test():
+    return render_template('test.html')
 
 if __name__ == "__main__":
     FLASK_PORT = os.getenv("FLASK_PORT", "5000")
