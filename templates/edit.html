@@ -1,5 +1,45 @@
+<!-- see if this change works -->
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Edit Movie</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Movie</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('add_movie') }}">Add</a></li>
+                <li><a href="{{ url_for('search_movie') }}">Search</a></li>
+            </ul>
+        </nav>
+
+        <form action="{{ url_for('edit_movie', movie_id=movie['_id']) }}" method="POST">
+            <div>
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" value="" required>
+            </div>
+            <div>
+                <label for="genre">Genre:</label>
+                <input type="text" id="genre" name="genre" value="" required>
+            </div>
+            <div>
+                <label for="release_year">Year:</label>
+                <input type="number" id="release_year" name="release_year" value="" required>
+            </div>
+            <button type="submit">Save</button>
+        </form>
+    </div>
+</body>
+</html>
+
+
+<!-- <!DOCTYPE html> -->
+<!-- <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,4 +73,4 @@
         </form>
     </div>
 </body>
-</html>
+</html> -->
