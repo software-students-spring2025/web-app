@@ -17,6 +17,10 @@ Jitter is a mobile platform that empowers job seekers by helping them network an
 * As an employer, I want to add job listings so that potential employees can apply to them.
 * As a job hunter, I want to find and connect with Alumni that work in the same profession as me
 * As a job hunter, I want to connect with professionals that went to the same school as me.
+* As a job hunter, I want to be able to apply to many jobs at once.
+* As a job hunter, I want to be able to directly contact other professionals. 
+* As a employer I want to be able to track how many applications I've received. 
+* 
 * [View these Use Cases in an 'Issues' Section](https://github.com/software-students-spring2025/2-web-app-toast/issues)
 
 ## Steps necessary to run the software
