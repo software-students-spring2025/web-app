@@ -95,6 +95,7 @@ def home():
     return render_template('index.html')
 
 @app.route('/add_delete', methods=['GET', 'POST'])
+@login_required
 def add_delete():
     if request.method == "POST":
         if request.form['action'] == 'add':
@@ -104,23 +105,28 @@ def add_delete():
             instructions = request.form['instructions']
 
             db.recipes.insert_one({
+                'user_id': current_user.id,
                 'recipe_name': recipe_name,
                 'ingredient_list': ingredient_list,
                 'cooking_supplies': cooking_supplies,
                 'instructions': instructions
+                
             })
 
             return redirect(url_for('add_delete'))
             
         elif request.form['action'] == 'delete':
             recipe_id = request.form['recipe_id']
+
             db.recipes.delete_one({
-                '_id': ObjectId(recipe_id)
+                '_id': ObjectId(recipe_id),
+                'user_id': current_user.id
+                
             })
 
             return redirect(url_for('add_delete'))
 
-    recipes = db.recipes.find()
+    recipes = db.recipes.find({"user_id": current_user.id})
     return render_template('add_delete.html', recipes=recipes)
 
 @app.route('/search', methods=['GET'])
@@ -132,4 +138,4 @@ def edit():
     return render_template('edit.html')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5001, debug=True)
