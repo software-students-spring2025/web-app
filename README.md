@@ -8,7 +8,7 @@ See instructions. Delete this line and place the Product Vision Statement here.
 
 ## User stories
 
-See instructions. Delete this line and place a link to the user stories here.
+[Link to User Stories](https://github.com/software-students-spring2025/2-web-app-real_awesome/issues/1#issue-2885469877)
 
 ## Steps necessary to run the software
 
