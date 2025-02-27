@@ -140,7 +140,6 @@ def delete_user_profile():
     return jsonify({"status": "success", "message": "Account deleted successfully"})
     
 
-
 # Travel Preferences Routes
 @app.route('/api/preferences', methods=['GET'])
 @login_required
@@ -267,11 +266,16 @@ def get_notifications():
 @login_required
 def mark_notification_read(notification_id):
     """Mark a notification as read"""
-    # TODO: Implement marking notification as read
-    # - Validate notification_id
-    # - Update notification in database
-    # - Return success response
-    pass
+    if not ObjectId.is_valid(notification_id): 
+        return jsonify({"status": "error", "message": "Invalid notification ID"}), 400
+    
+    result = db.notifications.update_one(
+        {"_id": ObjectId(notification_id), "user_id": ObjectId(current_user.id)}, 
+        {"$set": {"read": True}}
+    )
+    if result.matched_count == 0: 
+        return jsonify({"status": "error", "message": "Notification not found"}), 404
+    return jsonify({"status": "success", "message": "Notification marked as read"}), 200
 
 
 if __name__ == '__main__':
