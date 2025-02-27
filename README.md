@@ -2,7 +2,7 @@
 
 A little exercise to build a web application following an agile development process. See the [instructions](instructions.md) for more detail.
 
-## Product vision statement
+## Product Vision Statement
 
 A minimalist and intuitive to-do list app designed for simple and quick task management.
 
