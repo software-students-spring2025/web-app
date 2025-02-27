@@ -88,7 +88,7 @@ def delete():
         if show_id:
             try:
                 tv_shows_collection.delete_one({"_id": ObjectId(show_id)})
-                return render_template("success.html", message="Show deleted successfully!")
+                return render_template("success.html", message="Episode deleted successfully!")
             except Exception as e:
                 return render_template("success.html", message=f"Error deleting show: {e}")
 
