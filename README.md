@@ -12,11 +12,17 @@ Jitter is a mobile platform that empowers job seekers by helping them network an
 
 ## User stories 
 
+* As a job hunter, I want to sign in to to the app to save my information.
+* As a job hunter, I want to sign out of the app to keep my information secure.
 * As a job hunter, I want to send applications to open job offerings so that I can be hired.
-* As a job hunter, I want to save my resume to the app so that I can easily reuse it to apply to different positions.
-* As an employer, I want to add job listings so that potential employees can apply to them.
+* As a job hunter, I want to save my resume to the app so that I can reuse it to apply to different positions.
 * As a job hunter, I want to find and connect with Alumni that work in the same profession as me
 * As a job hunter, I want to connect with professionals that went to the same school as me.
+
+* As an employer, I want to sign in to the app to see my offered positions.
+* As an employer, I want to sign out of the app to keep my information secure.
+* As an employer, I want to add job listings so that potential employees can apply to them.
+* As an employer, I want to delete job listings so that I can remove no longer available positions.
 * [View these Use Cases in an 'Issues' Section](https://github.com/software-students-spring2025/2-web-app-toast/issues)
 
 ## Steps necessary to run the software
