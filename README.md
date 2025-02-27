@@ -30,5 +30,5 @@ Gathr simplifies event planning for organizers and guests by providing a platfor
 
 ## Task boards
 
-[Sprint 1 Taskboard](https://github.com/orgs/software-students-spring2025/projects/12)
+[Sprint 1 Taskboard](https://github.com/orgs/software-students-spring2025/projects/12)  
 [Sprint 2 Taskboard](https://github.com/orgs/software-students-spring2025/projects/76)
