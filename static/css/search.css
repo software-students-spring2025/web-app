@@ -1,0 +1,38 @@
+.wrapper{
+    display: flex;
+    justify-content: center;
+    gap: 10px
+}
+
+.heading{
+    text-align: center;
+    padding: 30px;
+}
+
+.search-bar{
+    width: 600px;
+    height: 35px;
+    padding-left: 10px;
+    border-radius: 8px;
+    border: solid 1.5px gray
+}
+
+.search-button{
+    width: 80px;
+    height: 40x;
+    cursor: pointer;
+    border-radius: 8px;
+    border: solid 1.5px gray
+}
+
+.list{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+}
+
+.event{
+    border: solid 1px black;
+    width: 700px;
+}

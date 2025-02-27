@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Event Calendar</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/search.css') }}"/>
+  </head>
+  <body>
+    <div class="container">
+      <main>
+        <h1 class="heading">Search Events</h1>
+
+        <form method="POST">
+            <div class="wrapper">
+                <input type="text" name="searchterm" placeholder="Search by event, location, or category" class="search-bar"/>
+                <input type="submit" value="Search" class="search-button"/>
+            </div>
+        </form>
+
+        <div class="list">
+            <div class="event">
+                <p>This is an example of an event.</p>
+            </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
