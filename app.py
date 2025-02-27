@@ -18,11 +18,11 @@ users_collection = db["users"]
 
 @app.route('/')
 def index():
-    return redirect(url_for('home'))
+    return redirect(url_for('login'))
 
 @app.route('/home')
 def home():
-    return render_template('home.html')
+    return render_template('login.html')
 #login
 @app.route('/login', methods=['GET', 'POST'])
 def login():
