@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Select Category</title>
+</head>
+<body>
+    <a href="{{ url_for('home') }}">Home</a>
+    <h1>Select a Menu Category</h1>
+    <ul>
+        {% for category in categories %}
+        <li>
+            <a href="{{ url_for('order', category=category) }}">{{ category }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
