@@ -1,7 +1,21 @@
 from flask import Flask, render_template
 import os
+import pymongo
+from bson.objectid import ObjectId
+import datetime
+
+connection = pymongo.MongoClient("mongodb+srv://ab10171:LsoezgYKiYREw5Bd@gathr-cluster.ok2vp.mongodb.net/?retryWrites=true&w=majority&appName=gathr-cluster")
+
+db = connection["testdb"]
 
 app = Flask(__name__, template_folder='templates')
+
+doc = {
+    "test": ":3",
+    "lol": "hi"
+}
+
+test = db.testdb.insert_one(doc)
 
 @app.route('/')
 def index():
