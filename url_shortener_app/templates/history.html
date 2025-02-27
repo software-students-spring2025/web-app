@@ -1,0 +1,38 @@
+{% from 'macros.html' import list_url %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/styles/styles.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <h1>History</h1>
+        <input placeholder="Search URLs" id="filter-input"></input>
+        <button id="filter-button" style="width: 100%;">Filter</button>
+        <ul>
+            {{ list_url(urls, url_for('urls.history')) }}
+        </ul>
+        <a href="{{ url_for('urls.dashboard') }}">Back</a>
+        <a href="{{ url_for('auth.logout') }}">Logout</a>
+    </div>
+</body>
+<script>
+    // Get references to the input and button elements
+    const input = document.getElementById('filter-input');
+    const button = document.getElementById('filter-button');
+
+    button.addEventListener('click', () => {
+        const value = input.value;
+        console.log(value);
+        const encodedValue = encodeURIComponent(value);
+        const newUrl = window.location.origin + window.location.pathname + `?filter=${encodedValue}`;
+        window.location.href = newUrl;
+    });
+</script>
+
+</html>

@@ -1,0 +1,21 @@
+{% from 'macros.html' import list_url %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorites</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/styles/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Favorites</h1>
+        <ul>
+            {{ list_url(urls, url_for('urls.favorites')) }}
+        </ul>
+        <a href="{{ url_for('urls.dashboard') }}">Back</a>
+        <a href="{{ url_for('auth.logout') }}">Logout</a>
+    </div>
+</body>
+</html>
