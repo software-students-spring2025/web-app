@@ -89,12 +89,21 @@ def logout():
     logout_user()
     return redirect(url_for("home"))
 
-#home route
-@app.route("/")
+@app.route('/')
 def home():
-    #movies is collection in sample database, remove and switch later - recipes or something
-    doc = db.movies.find({"year":1914})
-    return render_template("index.html", doc=doc)
+    return render_template('index.html')
+
+@app.route('/add_delete', methods=['GET', 'POST'])
+def add_delete():
+    return render_template('add_delete.html')
+
+@app.route('/search', methods=['GET'])
+def search():
+    return render_template('search.html')
+
+@app.route('/edit')
+def edit():
+    return render_template('edit.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

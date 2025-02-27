@@ -5,6 +5,20 @@
 </head>
 <body>
     {% if current_user.is_authenticated %}
+    <!-- Top directory/navigation bar shown only for authenticated users -->
+    <header>
+        <nav class="top-nav">
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('search') }}">Search</a></li>
+                <li><a href="{{ url_for('edit') }}">Edit Recipe</a></li>
+                <li><a href="{{ url_for('add_delete') }}">Add & Delete</a></li>
+            </ul>
+        </nav>
+    </header>
+    {% endif %}
+
+    {% if current_user.is_authenticated %}
         <h2 class="welcome-text">Welcome, {{ current_user.username }}!</h2>
     {% endif %}
     <nav>
@@ -16,7 +30,7 @@
                 <li><a href="{{ url_for('register') }}">Register</a></li>
             {% endif %}
         </ul>
-        <ul> <!--entirely for testing database connection, delete later, replace with whatever we're actually doing/using-->
+        <ul>
             {% for item in doc %}
                 <li>{{ item.title }}</li>
             {% endfor %}
@@ -26,6 +40,5 @@
     <div class="content">
         {% block content %}{% endblock %}
     </div>
-
 </body>
 </html>
