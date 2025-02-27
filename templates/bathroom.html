@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bathroom Overview</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!-- Tailwind CSS CDN for css -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; }
+/*        #map { width: 100%; height: 100vh; }*/
+
+    </style>
+</head>
+<body>
+    
+    <!--TODO: grab data based on id-->
+    <div class="location">{{bathroomLocation}}</div>
+    <!--TODO: INCLUDE LOCATION--><br>
+    <div class="description">{{bathroomDescription}}
+    <br>
+    Toilets: {{toilets}}
+    <br>
+    Sinks: {{sinks}}</div>
+    <br>
+    <div class="reviews">{{bathroomReviews}}</div>
+    <!--TODO: INCLUDE REVIEWS-->
+    
+</body>
+</html>

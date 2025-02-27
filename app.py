@@ -25,6 +25,19 @@ def home():
 def search():
     return render_template("search.html")
 
+
+
+@app.route("/bathroom/<bathroomID>.html")
+def bathroom(bathroomID):
+    print(bathroomID)
+    bathroom = bathrooms_collection.find_one({"_id": ObjectId(bathroomID)})
+    bathroomName=pins_collection.find_one({"_id":bathroom.get("location_id")}).get("name")
+    fullLocation = bathroomName+", Floor "+str(bathroom.get("floor"))
+    description=bathroom.get("type")+" "+bathroom.get("orientation")+" Bathroom"
+    return render_template("bathroom.html",bathroomDescription=description, bathroomLocation=fullLocation,toilets=str(bathroom.get("toilets")),sinks=str(bathroom.get("sinks")))
+
+
+
 @app.route("/api/pins")
 def get_pins():
     # fetch all pins from MongoDB
