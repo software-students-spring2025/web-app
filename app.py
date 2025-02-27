@@ -66,8 +66,6 @@ def bathroom(bathroomID):
 def get_pins():
     # fetch all pins from MongoDB
     pins = list(pins_collection.find({}, {"_id": 0, "name": 1, "lat": 1, "lng": 1}))
-    print("1")
-    print(pins)
     return jsonify(pins)
 
 from bson import ObjectId
