@@ -237,17 +237,19 @@ def create_app():
                 applications = db.Apps.find({
                     "user":
                     ObjectId(session.get("user_id"))
-                }).sort("date", -1)
+                }).sort("date", 1)
             elif choice.lower() == 'ascending':
                 applications = db.Apps.find({
                     "user":
                     ObjectId(session.get("user_id"))
-                }).sort("date", 1)
+                }).sort("date", -1)
 
             return render_template("track.html", applications=applications)
 
         # get request
-        applications = db.Apps.find({"user": ObjectId(session.get("user_id"))})
+        applications = db.Apps.find({
+            "user": ObjectId(session.get("user_id"))
+        }).sort("date", -1)
         return render_template("track.html", applications=applications)
 
     # delete app
