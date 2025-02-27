@@ -6,12 +6,9 @@
     <title>App</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-
 <body>
-    <header class="header-container">
-        <div class="logo">
-            Logo
-        </div>
-    </header>
+    {% block content %}
+        {# #}
+    {% endblock %}
 </body>
 </html>
