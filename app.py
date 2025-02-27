@@ -1,10 +1,14 @@
 from flask import Flask, render_template
+from dotenv import load_dotenv
+import flask_login
 import os
 import pymongo
 from bson.objectid import ObjectId
 import datetime
 
-connection = pymongo.MongoClient("mongodb+srv://ab10171:LsoezgYKiYREw5Bd@gathr-cluster.ok2vp.mongodb.net/?retryWrites=true&w=majority&appName=gathr-cluster")
+load_dotenv()
+
+connection = pymongo.MongoClient(os.getenv("MONGODB_URI"))
 
 db = connection["testdb"]
 
