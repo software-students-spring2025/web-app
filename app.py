@@ -1,77 +1,157 @@
 import os
+import subprocess
 from flask import Flask, render_template, request, redirect, url_for
 import pymongo 
 from bson.objectid import ObjectId
-from dotenv import load_dotenv, dotenv_values
+from dotenv import load_dotenv
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from werkzeug.security import generate_password_hash, check_password_hash
 
-load_dotenv()
+def start_docker_compose():
+    try:
+        subprocess.run(["docker-compose", "up", "-d"], check=True)
+        print(" * Docker containers started successfully!")
+    except subprocess.CalledProcessError as e:
+        print(" * Error starting Docker containers:", e)
+        print(" * Output:", e.output)
+        print(" * Return code:", e.returncode)
 
 def create_app(): 
     app = Flask(__name__)
+    app.secret_key = os.getenv("SECRET_KEY", "default_secret_key")
+    
+    # Load environment variables
+    load_dotenv()
+    
+    # Initialize Flask-Login
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+    login_manager.login_view = 'login'
+    
+    class User(UserMixin):
+        def __init__(self, id, username):
+            self.id = id
+            self.username = username
 
-    config = dotenv_values()
-    app.config.from_mapping(config)
-
-    cxn = pymongo.MongoClient(os.getenv("MONGO_URI"))
-    db = cxn[os.getenv("MONGO_DBNAME")]
-
+    @login_manager.user_loader
+    def load_user(user_id):
+        db = app.config["db"]
+        if db is not None:
+            user_data = db.users.find_one({"_id": ObjectId(user_id)})
+            if user_data:
+                return User(user_id, user_data["username"])
+        return None
+    
+    # Start Docker containers
+    start_docker_compose()
+    
+    # MongoDB connection with error handling
     try:
+        mongo_uri = os.getenv("MONGO_URI")
+        if not mongo_uri:
+            raise ValueError("MONGO_URI not found in environment variables")
+            
+        db_name = os.getenv("MONGO_DBNAME")
+        if not db_name:
+            raise ValueError("MONGO_DBNAME not found in environment variables")
+            
+        cxn = pymongo.MongoClient(mongo_uri)
+        db = cxn[db_name]
         cxn.admin.command("ping")
         print(" *", "Connected to MongoDB!")
+        
     except Exception as e: 
         print(" * MongoDB connection error:", e)
+        db = None
+    
+    # Store db connection in app config
+    app.config["db"] = db
     
     @app.route("/")
+    @login_required
     def home(): 
-        return render_template('homescreen') # Add the correct name for template
+        return render_template('homescreen.html', username=current_user.username)
+
+    @app.route("/login", methods=["GET", "POST"])
+    def login():
+        if request.method == "POST":
+            username = request.form["username"]
+            password = request.form["password"]
+            db = app.config["db"]
+            if db is not None:
+                user_data = db.users.find_one({"username": username})
+                if user_data and check_password_hash(user_data["password"], password):
+                    user = User(id=str(user_data["_id"]), username=username)
+                    login_user(user)
+                    return redirect(url_for('home'))
+                else:
+                    return render_template('login.html', error="Invalid credentials")
+        return render_template('login.html')
+
+    @app.route("/signup", methods=["GET", "POST"])
+    def signup():
+        if request.method == "POST":
+            username = request.form["username"]
+            password = request.form["password"]
+            db = app.config["db"]
+            if db is not None:
+                existing_user = db.users.find_one({"username": username})
+                if existing_user:
+                    return render_template('signup.html', error="User already exists")
+                hashed_password = generate_password_hash(password)
+                db.users.insert_one({"username": username, "password": hashed_password})
+                return redirect(url_for('login'))
+        return render_template('signup.html')
 
     @app.route("/logout")
+    @login_required
     def logout():
-        # There may be some code in regards to Flask Login 
-        return render_template('logoutScreen') # Add the correct name for template
+        logout_user()
+        return redirect(url_for('login'))
 
     @app.route("/goHome")
+    @login_required
     def goHome():
         return redirect(url_for('home'))
 
     @app.route("/showBoth")
+    @login_required
     def showBoth():
         docs = 0 # Add correct Database call (get all docs in the database to display)
         return render_template('showBothScreen' , docs = docs) # Add the correct name for template
 
     @app.route("/create/<dbType>" , methods=["POST"])
+    @login_required
     def create_post(dbType):
-
         # Get the values from the fields 
         # Make a document and import it into the Database
-
         return redirect(url_for('showBoth'))
 
     @app.route("/edit/<post_id>")
+    @login_required
     def edit(post_id): 
-
         docs = 0 # Add correct Database call (Find the document from Database from the post_id)
-
         return render_template('editDocument', docs=docs) # Add the correct name for template
 
     @app.route("/edit/<post_id>/<dbType>" , methods = ["POST"])
+    @login_required
     def edit_post(post_id, dbType):
-        
         # Get the values from the fields 
         # Make a document and import it into the Database
-
         return redirect(url_for('showBoth'))
 
     @app.route("/delete/<post_id>")
+    @login_required
     def delete(post_id):
-
         # Delete the document from the Database
-
         return redirect(url_for('showBoth'))
 
     @app.errorhandler(Exception)
     def handle_error(e): 
+        return render_template ("error.html", error=e)
 
-        return render_template("error.html", error=e) # Add the correct name for template
+    return app
 
+if __name__ == "__main__":
     app = create_app()
+    app.run(debug=True)
