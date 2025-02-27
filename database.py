@@ -184,7 +184,7 @@ def delete_exam(mydb, userID, examID):
         })
     
     else:
-        return print (0)
+        return 0
 
 
 ##
@@ -206,7 +206,7 @@ def delete_study_session(mydb, userID, study_sessionID):
         })
     
     else:
-        return print (0)
+        return 0
 
 
 ##
@@ -228,7 +228,7 @@ def delete_task(mydb, userID, taskID):
         })
     
     else:
-        return print (0)
+        return 0
 
 ##
 ## Function: delete a class
@@ -247,7 +247,7 @@ def delete_class(mydb, userID, classID):
             "class":classID
         })
     else:
-        return print (0)
+        return 0
 
 
 
