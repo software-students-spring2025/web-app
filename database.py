@@ -48,7 +48,7 @@ def pwd_auth(mydb,username, password):
 def new_account(mydb, username, password):
     #print("Hello new account")
     acconttable= mydb["users"]
-    exist = acconttable.find_one({"username": username, "password": password})
+    exist = acconttable.find_one({"username": username})
 
     if exist:
        # print("User found:")
