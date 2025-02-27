@@ -39,9 +39,10 @@ def create_app():
 
     @app.route("/")
     def home():
+        return render_template("base.html")
 
-    @app.route("/create", methods=["POST"])
-    def create_post():
+    #@app.route("/create", methods=["POST"])
+    #def create_post():
 
 
 
