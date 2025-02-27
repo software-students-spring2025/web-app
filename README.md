@@ -16,9 +16,23 @@ A mobile friendly app that helps travelers find compatible travel partners based
 - As a frequent traveler, I want to update my travel preferences whenever they change so that my profile stays accurate.
 - As a traveler, I want to message potential travel partners directly within the app so that I can easily discuss and coordinate travel details.
 - As a traveler, I want to search for specific travel partners based on criteria (like budget or travel style) so that I can quickly find what I need.
-- As a solo traveler, I would like to find other solo travelers that enjoy the same food cuisines as me, so I am able to enjoy new types of food. 
+- As a solo traveler, I would like to find other solo travelers that enjoy the same food cuisines as me, so I am able to enjoy new types of food.
+- As a user, I would like to refresh my feed.
+- As a user, I want to view the inbox of messages on the app.
+- As a traveler, I want to change my email address to update my contact information. 
+- As a user, I want to edit my name. 
+- As a user, I want to edit my bio to reflect my current interests. 
+- As a user, I want to be able to change my budget to reflect my current travel preferences specifically. 
+- As a user, I would like to switch between being in settings and going to my feed of travelers.   
+- As a new user of Travelmatch, I would like to browse through other profiles. 
+- As a traveler on Travelmatch, I would like to create an account.
+- As a user of the app, I would like to delete my account as it no longer serves my desires. 
+- As a traveler, I want to view my own profile so that I am able to see my travel preferences.
+- As a traveler, I want to see the date and time of messages when I send a message so that I know it was delievered.
 - As a traveler, I want to receive notifications when new profiles that match my travel criteria are added so that I never miss an opportunity to connect with a compatible partner.
 - As a traveler, I want to bookmark profiles of potential travel partners so that I can easily compare and revisit them before making a connection.
+- As a user of Travelmatch, I would like to login. 
+- As a user of Travelmatch, I would like to logout. 
 
 https://github.com/software-students-spring2025/2-web-app-diet-coke/issues/
 
