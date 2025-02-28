@@ -155,7 +155,7 @@ def create_app():
         Returns:
             redirect (Response): A redirect response to the home page.
         """
-        db.messages.delete_many({"Created by": Created_by, "Exhibition Title": Exhibition_title})
+        db.exhibits.delete_many({"Created by": Created_by, "Exhibition Title": Exhibition_title})
         return redirect(url_for("home"))
 
 ### Here is where the app gets created: ###
