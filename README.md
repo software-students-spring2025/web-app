@@ -4,7 +4,7 @@ A little exercise to build a web application following an agile development proc
 
 ## Product vision statement
 
-See instructions. Delete this line and place the Product Vision Statement here.
+"Grocery Quest" is a fun and practical web app that helps users improve their grocery budgeting skills through an interactive price guessing game while also discovering, reviewing, and comparing local grocery stores to make smarter shopping decisions."
 
 ## User stories
 
@@ -34,4 +34,4 @@ See instructions. Delete this line and place instructions to download, configure
 
 ## Task boards
 
-See instructions. Delete this line and place a link to the task boards here.
+[Link to Task Board](https://github.com/orgs/software-students-spring2025/projects/80/views/2)
