@@ -80,12 +80,18 @@ def handle_detail(order_id):
 # NewOrder get
 @app.route('/newOrder')
 def order():
-    return 'NewOrder'
+    return flask.render_template('add.html')
 
 # NewOrder Post
 @app.route('/newOrder', methods=['POST'])
-def handle_odrer():
-    return 'NewOrder'
+def handle_order():
+	user_name = flask.request.form.get('user_name')
+	name = flask.request.form.get('name')
+	food = flask.request.form.get('food')
+	address = flask.request.form.get('address')
+	price = flask.request.form.get('price')
+	db.create_order(user_name, name, food, address, price)
+	return flask.redirect('/home')
 
 if __name__ == '__main__':
     consumer = "Hi"
