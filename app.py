@@ -59,12 +59,10 @@ def load_user(user_id):
     except:
         return None  # Handle invalid ObjectId format
 
-# Home Route
+# **Home Route -> Now Redirects to Dashboard First**
 @app.route('/')
 def home():
-    if current_user.is_authenticated:
-        return redirect(url_for('dashboard'))
-    return redirect(url_for('login'))
+    return redirect(url_for('dashboard'))  # Always direct to the dashboard
 
 # Register Route
 @app.route('/register', methods=['GET', 'POST'])
@@ -116,9 +114,10 @@ def login():
 
 # Dashboard Route (Protected)
 @app.route('/dashboard')
-@login_required
 def dashboard():
-    return f'Hello, {current_user.username}! Welcome to your dashboard.'
+    if current_user.is_authenticated:
+        return render_template('dashboard.html', current_user=current_user)
+    return render_template('dashboard.html', current_user=None)  # Allow non-logged-in users
 
 # Logout Route
 @app.route('/logout')
