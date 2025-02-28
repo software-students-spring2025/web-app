@@ -3,13 +3,15 @@
 {% block title %}Product List{% endblock %}
 
 {% block content %}
-<h2>Product List</h2>
-<form action="{{ url_for('search_product') }}" method="post" class="mb-4">
-    <input type="text" name="query" placeholder="Search by product name" class="form-control" required>
-    <button type="submit" class="btn btn-primary mt-2">Search</button>
+<h2 class="text-center mb-4">Product List</h2>
+
+<form action="{{ url_for('search_product') }}" method="post" class="d-flex mb-4">
+    <input type="text" name="query" placeholder="Search by product name" class="form-control me-2" required>
+    <button type="submit" class="btn btn-outline-primary">Search</button>
 </form>
-<table class="table table-striped">
-    <thead>
+
+<table class="table table-hover shadow-sm">
+    <thead class="table-dark">
         <tr>
             <th>Product Name</th>
             <th>Price</th>
@@ -24,8 +26,8 @@
             <td>${{ product['price'] }}</td>
             <td>{{ product['quantity'] }}</td>
             <td>
-                <a href="{{ url_for('edit_product', product_id=product['_id']) }}" class="btn btn-warning">Edit</a>
-                <a href="{{ url_for('delete_product', product_id=product['_id']) }}" class="btn btn-danger">Delete</a>
+                <a href="{{ url_for('edit_product', product_id=product['_id']) }}" class="btn btn-warning btn-sm">Edit</a>
+                <a href="{{ url_for('delete_product', product_id=product['_id']) }}" class="btn btn-danger btn-sm">Delete</a>
             </td>
         </tr>
         {% endfor %}
