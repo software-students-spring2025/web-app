@@ -77,17 +77,6 @@ def load_user(user_id):
         return None  # Handle invalid ObjectId format
 
 # Home Route
-@app.route('/test_connection')
-def test_connection():
-    try:
-        # 强制触发一次真正的服务器握手
-        info = mongo.cx.server_info()
-        return f"Connected successfully! Server info: {info}"
-    except Exception as e:
-        return f"Failed to connect: {e}"
-
-        return f"DB error: {e}"
-
 @app.route('/')
 def home():
     if current_user.is_authenticated:
