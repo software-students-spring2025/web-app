@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from flask_session import Session  # Flask session management
 import os
 from bson import ObjectId  # Fixes ObjectId issue for MongoDB
+import pprint  # Pretty-print for debugging
 
 # Load environment variables from .env
 load_dotenv()
@@ -21,8 +22,13 @@ app.config['SESSION_PERMANENT'] = False
 Session(app)
 
 # MongoDB Configuration
-app.config['MONGO_URI'] = f"mongodb://{os.getenv('MONGO_HOST', 'localhost')}:{os.getenv('MONGO_PORT', '27017')}/{os.getenv('MONGO_DB', 'project2')}"
-
+mongo_uri = f"mongodb://{os.getenv('MONGO_HOST')}:{os.getenv('MONGO_PORT')}/{os.getenv('MONGO_DB')}"
+app.config['MONGO_URI'] = mongo_uri
+# Debug: Print MongoDB connection details
+print(f"MongoDB Connection Details:")
+print(f"DB Name: {os.getenv('MONGO_DB')}")
+print(f"Host: {os.getenv('MONGO_HOST')}")
+print(f"Port: {os.getenv('MONGO_PORT')}")
 # Initialize PyMongo
 mongo = PyMongo(app)
 
