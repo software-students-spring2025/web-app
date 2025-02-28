@@ -130,8 +130,12 @@ def login():
 @app.route('/dashboard')
 def dashboard():
     if current_user.is_authenticated:
-        return render_template('dashboard.html', current_user=current_user)
-    return render_template('dashboard.html', current_user=None)  # Allow non-logged-in users
+        # All posts by all users
+        products = list(mongo.db.products.find())
+        return render_template('dashboard.html', current_user=current_user, products=products)
+    # Allow guest users to view the dashboard
+    return render_template('dashboard.html', current_user=None, products=[])
+
 
 # Logout Route
 @app.route('/logout')
@@ -147,7 +151,8 @@ def logout():
 @login_required
 def profile():
     if request.method == 'POST':
-        # 获取产品表单信息
+        # product info
+        product_name = request.form.get('product_name')
         product_image = request.files.get('product_image')
         description = request.form.get('description')
         price = request.form.get('price')
@@ -158,27 +163,26 @@ def profile():
         image_data = None
         image_type = None
         if product_image and allowed_file(product_image.filename):
-            # 获取图片的 MIME 类型，例如 "image/png"
+            # Get the MIME, such as "image/png"
             image_type = product_image.mimetype  
-            raw_bytes = product_image.read()  # 读取文件内容到内存
+            raw_bytes = product_image.read()  # Read the image file
             image_data = base64.b64encode(raw_bytes).decode('utf-8') 
 
-        # 构造产品文档，并加入当前用户信息
+        # Insert the product into the database
         product = {
-            "username": current_user.username,   # 记录发布该产品的用户名
+            "username": current_user.username,   # The current user's username
+            "product_name": product_name,
             "description": description,
             "price": price,
             "delivery_location": delivery_location,
             "inventory": inventory,
             "tag": tag,
-            "image_data": image_data,   # Base64 编码后的图片
-            "image_type": image_type    # 图片的 MIME 类型，例如 "image/png"
+            "image_data": image_data,   # Base64 encoded image data
+            "image_type": image_type    # MIME
         }
         mongo.db.products.insert_one(product)
         flash("Product posted successfully!", "success")
         return redirect(url_for('profile'))
-    
-    # GET 请求：将当前用户传递给模板
     return render_template('profile.html', user=current_user)
 
 

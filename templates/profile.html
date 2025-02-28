@@ -9,6 +9,10 @@
     <h3>Post a Product</h3>
     <form method="POST" enctype="multipart/form-data">
         <div class="mb-3">
+            <label for="product_name" class="form-label">Product Name</label>
+            <input type="text" class="form-control" name="product_name" id="product_name" required>
+        </div>
+        <div class="mb-3">
             <label for="product_image" class="form-label">Product Image</label>
             <input type="file" class="form-control" name="product_image" id="product_image">
         </div>
