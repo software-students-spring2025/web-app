@@ -68,7 +68,9 @@
             <input type="text" id="address" name="address" value="{{ order.address }}">
         
             <button type="submit" class="save-btn">Save</button>
-            <button type="button" class="delete-btn">Delete</button>
+            <a href ="/detail/{{ order._id }}/delete">
+                <button type="button" class="delete-btn">Delete</button>
+            </a>
         </form>       
     </div>
 </body>

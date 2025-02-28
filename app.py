@@ -11,11 +11,12 @@ db.init_db(app)
 # Index get
 @app.route('/')
 def index():
-    return flask.redirect('/login')
+    return flask.redirect('/home')
 
 # Login get
 @app.route('/login')
 def login():
+    flask.session.clear() # Clear the session and force user to login
     return flask.render_template('login.html')
 
 # Login post if user give username and password
@@ -44,7 +45,8 @@ def handle_register():
     username = flask.request.form.get('username')
     password = flask.request.form.get('password')
 
-    user = db.create_user(username, password)
+    db.create_user(username, password)
+    user = db.login_user(username, password)
 
     if user:
         flask.session['user'] = user.get('username')
@@ -53,11 +55,13 @@ def handle_register():
 
     return flask.render_template('register.html', message="Username Already Exist or Passwork too Short")
 
-# Logout
+# Logout (no actual page)
 @app.route('/logout')
 def logout():
     flask.session.clear()
     return flask.redirect('/login')
+
+
 
 # Homepage get
 @app.route('/home')
@@ -66,19 +70,24 @@ def home():
         return flask.redirect('/login')
     user = flask.session['user']
     print("Current User: " + user)
-    customer = db.find_user_order(user)
-    order_ids = []
-        
-    return flask.render_template('home.html', user=user)
+    orders = db.find_user_order(user)
+    # print(orders)
+    orderNum = len(orders)
+    # print("Total Num"+ str(orderNum))
+    return flask.render_template('home.html', orders=orders, length =orderNum, user=user)
 
-# Homepage Post
-@app.route('/home', methods=['POST'])
-def handle_home():
-    return flask.render_template('home.html')
+# DetailPage get Without Order ID
+@app.route('/detail')
+def detail_no_id():
+    if 'user' not in flask.session:
+        return flask.redirect('/login')
+    return flask.redirect('/home')
 
-# DetailPage get
+# DetailPage get with Order ID
 @app.route('/detail/<order_id>')
 def detail(order_id): 
+    if 'user' not in flask.session:
+        return flask.redirect('/login')
     order = db.get_order(order_id)
     return flask.render_template('detail.html', order=order)
 
@@ -96,21 +105,34 @@ def handle_detail(order_id):
 
     return flask.render_template('detail.html', order=order)
 
+# Delete Order in DetailPage
+@app.route('/detail/<order_id>/delete')
+def delete_order(order_id):
+    if 'user' not in flask.session:
+        return flask.redirect('/login')
+    db.delete_order(order_id)
+    return flask.redirect('/home')
+
 # NewOrder get
 @app.route('/newOrder')
 def order():
-    return flask.render_template('add.html')
+    if 'user' not in flask.session:
+        return flask.redirect('/login')
+    user = flask.session['user']
+    return flask.render_template('add.html', user=user)
 
 # NewOrder Post
 @app.route('/newOrder', methods=['POST'])
-def handle_order():
-	user_name = flask.request.form.get('user_name')
-	name = flask.request.form.get('name')
-	food = flask.request.form.get('food')
-	address = flask.request.form.get('address')
-	price = flask.request.form.get('price')
-	db.create_order(user_name, name, food, address, price)
-	return flask.redirect('/home')
+def handle_order(): 
+    if 'user' not in flask.session:
+        return flask.redirect('/login')
+    user_name = flask.request.form.get('user_name')
+    name = flask.request.form.get('name')
+    food = flask.request.form.get('food')
+    address = flask.request.form.get('address')
+    price = flask.request.form.get('price')
+    db.create_order(user_name, name, food, address, price)
+    return flask.redirect('/home')
 
 if __name__ == '__main__':
     consumer = "Hi"
