@@ -34,28 +34,33 @@ def create_app():
     except Exception as e:
         print(" * MongoDB connection error:", e)
 
-    @app.route("/",methods=["GET","POST"])
-    def home():
-        if request.method == "GET":
-            return render_template("index.html")
-        elif request.method == "POST":
-            print('hi')
-            return redirect("/test")
-
-
-
     @app.route("/")
-    def home():
-        return render_template("index.html")
+    def index():
+        return redirect(url_for("login"))
+
+    #loginpage
+    @app.route("/login", methods=["GET", "POST"])
+    def login():
+        if request.method == "GET":
+            return render_template("login.html")
+        
+        elif request.method == "POST":
+            #add log in logic
+            return render_template("login.html", test="data to send in")
+
+    #registerpage
+    @app.route("/register", methods=["GET", "POST"])
+    def register():
+        if request.method == "GET":
+            return render_template("register.html")
+        
+        elif request.method == "POST":
+            #add log in logic
+            return render_template("register.html", test="data to send in")
 
     return app
 
 app = create_app()
-
-
-@app.route("/test")
-def test():
-    return render_template('test.html')
 
 if __name__ == "__main__":
     FLASK_PORT = os.getenv("FLASK_PORT", "5000")
