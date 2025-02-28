@@ -70,8 +70,8 @@
     <div class="container">
         <h1>TV Show Tracker</h1>
 
-        <form action="{{ url_for('search') }}" method="GET">
-            <input type="text" name="query" placeholder="Search for a show..." required>
+        <form id="search-form" action="/search" method="get">
+            <input type="text" id="query" name="query" placeholder="Search for a show..." required>
             <button type="submit">Search</button>
         </form>
         <h2>Your Episodes</h2>
