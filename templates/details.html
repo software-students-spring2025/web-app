@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Page Title -->
+        <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+        <title>Event Details</title>
+
+        <!-- CSS -->
+        <style>
+            /* Header */
+            header {
+                border-bottom: 1px solid;
+                padding-bottom: 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: #EFF1DB;
+            }
+
+            body {
+                margin: 0;
+            }
+            
+            .details {
+                margin: 10px;
+            }
+
+            .buttons {
+                margin: 10px;
+            }
+
+            .back {
+                margin: 10px;
+                font-size: 30px;
+                padding: 0px;
+                position: absolute;
+                left: 10px;
+                border: none;
+                background: none
+            }
+        </style>
+    </head>
+
+    <!-- Page Body-->
+    <body>
+
+        <!-- Page Header -->
+        <header>
+            <!-- TEMP: placeholder href link -->
+            <button class="back" onclick="location.href='home.html'">&#8592</button>
+            <h1>Event Details</h1>
+        </header>
+
+        <!-- Event Details -->
+        <div class="details">
+            <h2 id="name">Event Name</h2>
+
+            <p id="date">Date: </p>
+            <p id="time">Time: </p>
+            <p id="location">Location: </p>
+            <p id="category">Category: </p>
+            <p id="description">Description: </p>
+
+        </div>
+
+        <!-- Buttons -->
+        <div class="buttons">
+            <!-- Go to edit page-->
+            <!-- TEMP: placeholder href link -->
+            <button onclick="location.href='edit.html'">Edit</button>
+            <!-- Go to delete page-->
+            <!-- TEMP: placeholder href link -->
+            <button onclick="location.href='delete.html'">Delete </button>
+        </div>
+
+        <!-- Javascript -->
+        <script>
+            // Get event details when page loads
+            window.onload = getDetails;
+
+            // Get event details
+            function getDetails() {
+                // TODO: Connect to database to get details
+
+                // TEMP: Hardcode fake details for testing
+                const event = {
+                    name: "Event 1",
+                    date: "2020-01-01",
+                    time: "1:00am",
+                    location: "Loc 1",
+                    category: "Education",
+                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                };
+
+                // Update page information
+                document.getElementById("name").innerHTML = event.name;
+                document.getElementById("date").innerHTML = "<b>Date:</b> " + event.date;
+                document.getElementById("time").innerHTML = "<b>Time:</b> " + event.time;
+                document.getElementById("location").innerHTML = "<b>Location:</b> " + event.location;
+                document.getElementById("category").innerHTML = "<b>Category:</b> " + event.category;
+                document.getElementById("description").innerHTML = "<b>Description:</b><br> " + event.description;
+            }
+        </script>
+    </body>
+</html>
