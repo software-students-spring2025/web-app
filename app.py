@@ -28,12 +28,20 @@ def create_app():
         print(" * MongoDB connection error:", e)
 
     @app.route("/")
-    def hello_world():
-        """
-        testing home route 
-        returns: paragraph text 
-        """
-        return "<p>Hello, World!</p>"
+    def show_home():
+        return "<h1>Dashboard</h1>"
+    
+    @app.route("/add")
+    def show_add():
+        return render_template("addEvent.html")
+    
+    @app.route("/details")
+    def show_details():
+        return render_template("details.html")
+    
+    @app.route("/edit")
+    def show_edit():
+        return render_template("edit.html")
     
     @app.route("/search")
     def show_search():
