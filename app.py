@@ -6,8 +6,7 @@ from dotenv import load_dotenv
 from flask_session import Session  # Flask session management
 import os
 from bson import ObjectId  # Fixes ObjectId issue for MongoDB
-from werkzeug.utils import secure_filename
-
+import base64
 # Load environment variables from .env
 load_dotenv()
 
@@ -22,11 +21,11 @@ app.config['SESSION_PERMANENT'] = False
 Session(app)
 
 # MongoDB Configuration
-atlas_uri = os.getenv('MONGO_URI')  # Check if MONGO_URI is set in .env
+atlas_uri = os.getenv('MONGO_URI') # Check if MONGO_URI is set in .env
 if atlas_uri:
-    # If MONGO_ATLAS_URI is set, use it
-    app.config['MONGO_URI'] = atlas_uri
-    print("Using Atlas URI:", atlas_uri)
+     # If MONGO_ATLAS_URI is set, use it
+     app.config['MONGO_URI'] = atlas_uri
+     print("Using Atlas URI:", atlas_uri)
 else:
     app.config['MONGO_URI'] = f"mongodb://{os.getenv('MONGO_HOST', 'localhost')}:{os.getenv('MONGO_PORT', '27017')}/{os.getenv('MONGO_DB', 'project2')}"
 
@@ -38,7 +37,6 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
-# Picture Upload Configuration
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 app.config['UPLOAD_FOLDER'] = os.path.join('static', 'uploads')
 if not os.path.exists(app.config['UPLOAD_FOLDER']):
@@ -46,7 +44,6 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
 
 # User Model
 class User(UserMixin):
@@ -76,12 +73,10 @@ def load_user(user_id):
     except:
         return None  # Handle invalid ObjectId format
 
-# Home Route
+# **Home Route -> Now Redirects to Dashboard First**
 @app.route('/')
 def home():
-    if current_user.is_authenticated:
-        return redirect(url_for('dashboard'))
-    return redirect(url_for('login'))
+    return redirect(url_for('dashboard'))  # Always direct to the dashboard
 
 # Register Route
 @app.route('/register', methods=['GET', 'POST'])
@@ -133,9 +128,10 @@ def login():
 
 # Dashboard Route (Protected)
 @app.route('/dashboard')
-@login_required
 def dashboard():
-    return render_template('dashboard.html')
+    if current_user.is_authenticated:
+        return render_template('dashboard.html', current_user=current_user)
+    return render_template('dashboard.html', current_user=None)  # Allow non-logged-in users
 
 # Logout Route
 @app.route('/logout')
@@ -145,9 +141,7 @@ def logout():
     flash('You have been logged out.', 'info')
     return redirect(url_for('login'))
 
-
-# Profile Route
-import base64
+#profile route
 
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
