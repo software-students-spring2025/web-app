@@ -12,7 +12,9 @@ load_dotenv()
 app = Flask(__name__)
 
 config = dotenv_values()
-app.config.from_mapping(config)
+app.config["DEBUG"] = os.getenv("DEBUG", "False") == "True"
+
+# app.config.from_mapping(config)
 
 client = pymongo.MongoClient(os.getenv("MONGO_URI"))
 db = client[os.getenv("MONGO_DBNAME")]
@@ -67,7 +69,7 @@ def search():
                 "id": str(show["_id"]),
                 "title": show["title"],
                 "genre": show.get("genre", ""),
-                "season": show.get("season" ""),
+                "season": show.get("season", ""),
                 "episode": show["episode"],
                 "rating": show["rating"],
                 "tags": show.get("tags", []),
