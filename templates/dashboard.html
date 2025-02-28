@@ -48,8 +48,7 @@ data = {
             <ul id="class-list">
                 {% for class in data["classes"] %}
                     <li>
-                        <h3>{{class.name}}</h3> 
-                        <p>Total time studied: {{class.time_studied_hours}}</p> 
+                        <h3>{{class.name}}</h3>  
                         <button onclick="manageClass('class._id')" id="manage-class-{{class.name}}">Manage Class</button> 
                     </li>
                 {% endfor %}
@@ -84,14 +83,10 @@ data = {
 
             <div id="study-sessions">
                 <h3>Study Sessions</h3>
-                <ul id="study-session-list">
-                    
+                <ul id="study-session-time">
+                    <p>Total time studied: {{class.time_studied_hours}}</p>
                 </ul>
-                <input type="text" id="new-session" placeholder="New session">
-                <input type="date" id="session-date">
-                <button onclick="addSession()">Add Session</button>
-                <button onclick="editSession()">Edit Session</button>
-                <button onclick="deleteSession()">Delete Session</button>
+            
                 <button onclick="startStudySession()">Start Study Session</button>
             </div>
 
@@ -189,40 +184,6 @@ data = {
         }
 
         // study sessions
-        function addSession() {
-            let sessionName = document.getElementById('new-session').value;
-            let sessionDate = document.getElementById('session-date').value;
-            let className = document.getElementById('class-name-header').innerText.replace('Manage Tasks and Study Sessions for ', '');
-            
-            if (sessionName.trim() === '' || sessionDate.trim() === '') return;
-
-            // add study sessions
-            let session = `${sessionName} - Date: ${sessionDate}`;
-            classData[className].sessions.push(session);
-            localStorage.setItem('classData', JSON.stringify(classData));
-
-            let li = document.createElement('li');
-            li.innerText = session;
-            document.getElementById('study-session-list').appendChild(li);
-
-            document.getElementById('new-session').value = '';
-            document.getElementById('session-date').value = '';
-        }
-
-        function editSession(className, index) {
-            let newSession = prompt('Edit session:', classData[className].sessions[index]);
-            if (newSession) {
-                classData[className].sessions[index] = newSession;
-                localStorage.setItem('classData', JSON.stringify(classData));
-                loadSessions(className);
-            }
-        }
-
-        function deleteSession(className, index) {
-            classData[className].sessions.splice(index, 1);
-            localStorage.setItem('classData', JSON.stringify(classData));
-            loadSessions(className);
-        }
 
         function startStudySession() {
             window.location.href = "study_session.html";
