@@ -1,3 +1,4 @@
+import json
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 import certifi
 from pymongo import MongoClient
@@ -12,7 +13,8 @@ app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY')
 
 MONGO_URI = os.getenv('MONGO_URI')
-client = MongoClient("mongodb+srv://sms10010:Wittmer2@swe-project2.zdloe.mongodb.net/?retryWrites=true&w=majority&appName=SWE-project2",tlsCAFile=certifi.where())
+client = MongoClient(
+    "mongodb+srv://sms10010:Wittmer2@swe-project2.zdloe.mongodb.net/?retryWrites=true&w=majority&appName=SWE-project2", tlsCAFile=certifi.where())
 db = client["movie_tracker"]
 movies_collection = db["movies"]
 users_collection = db["users"]
@@ -28,13 +30,15 @@ def home():
     if 'username' not in session:
         flash("Please log in first.")
         return redirect(url_for('login'))
-    username = session['username'] 
+    username = session['username']
     user = movies_collection.find_one({"username": username})
     movies = user.get("movies", []) if user else []
 
     return render_template('home.html', movies=movies)
 
 # login
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -53,6 +57,8 @@ def login():
     return render_template('login.html')
 
 # register
+
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -69,10 +75,10 @@ def register():
             })
 
             movies_collection.insert_one({
-                "username": username, 
+                "username": username,
                 "movies": []
             })
-            
+
             flash("Registration successful! Please log in.")
             return redirect(url_for('login'))
     return render_template('register.html')
@@ -80,7 +86,7 @@ def register():
 
 # add movie route - check to see if links correctly Jime
 @app.route("/add", methods=["GET", "POST"])
-def add_movie():
+def add():
     username = session['username']
 
     if request.method == "POST":
@@ -102,7 +108,9 @@ def add_movie():
 
     return render_template("add.html")
 
-#movie details
+# movie details
+
+
 @app.route('/movie_details/<username>/<title>', methods=['GET'])
 def movie_details(username, title):
     if 'username' not in session:
@@ -114,7 +122,8 @@ def movie_details(username, title):
     # If the user exists and has movies
     if user_movies and 'movies' in user_movies:
         # Find the movie by its title in the movies array
-        movie = next((m for m in user_movies['movies'] if m['title'] == title), None)
+        movie = next(
+            (m for m in user_movies['movies'] if m['title'] == title), None)
 
         if movie:
             # Movie found, pass details to the template
@@ -125,7 +134,6 @@ def movie_details(username, title):
     else:
         flash("No movies found for this user!")
         return redirect(url_for('home'))
-
 
 
 # edit movie route -- check to see if links correclty Jime
@@ -147,6 +155,37 @@ def edit_movie(movie_id):
         return redirect(url_for('movie_details', movie_id=movie_id))
 
     return render_template('edit.html', movie=movie)
+
+
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    if 'username' not in session:
+        flash("Please log in first.")
+        return redirect(url_for('login'))
+
+    matching_movies = []
+
+    if request.method == 'POST':
+        username = session['username']
+        search_query = request.form.get('query')
+        user_movies = movies_collection.find_one({"username": username})
+
+        if user_movies:
+            movies = user_movies.get("movies", [])
+            for movie in movies:
+                movie_dict = None
+                if isinstance(movie, str):
+                    try:
+                        movie_dict = json.loads(movie)
+                    except json.JSONDecodeError:
+                        print(f"Error decoding movie: {movie}")
+                elif isinstance(movie, dict):
+                    movie_dict = movie
+
+                if movie_dict and search_query.lower() in movie_dict.get("title", "").lower():
+                    matching_movies.append(movie_dict)
+
+    return render_template('search.html', matching_movies=matching_movies)
 
 
 if __name__ == '__main__':
