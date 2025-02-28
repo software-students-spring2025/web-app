@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Study Tracker</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <header>
@@ -50,36 +50,17 @@ data = {
                     <li>
                         <h3>{{class.name}}</h3> 
                         <p>Total time studied: {{class.time_studied_hours}}</p> 
+                        <button onclick="manageClass('class._id')" id="manage-class-{{class.name}}">Manage Class</button> 
                     </li>
                 {% endfor %}
             </ul>
-            <button id="addClassFormButton" onclick="addClassFormVisible()">Add New Class</button>
+
             <form id="addClassForm" method="post" action="/add-class" style="display:none">
-                <h2>Add Class:</h2>
+                <h2>Add New Class:</h2>
 
                 <label for="new-class">Class Name:</label>
                 <input name="classname" type="text" id="new-class" placeholder="Enter class name" required>
-                <p></p>
-                <h4>Are there any upcoming deadlines for this class?</h4>
-                <div id="deadline-form">                
-                    <label for="deadline-1-name">Title of deadline:</label>
-                    <input type="text" name="deadline-1-name" id="deadline-1-name" required>
-                    <p>Deadline Type:</p>
-                    <input type="radio" id="deadline-1-type-assignment" name="deadline-1-type" value="Assignment" required>
-                    <label for="deadline-1-type-assignment">Assignment</label><br>
-                    <input type="radio" id="deadline-1-type-exam" name="deadline-1-type" value="Exam" required>
-                    <label for="deadline-1-type-exam">Exam</label><br>
-                    <input type="radio" id="deadline-1-type-project" name="deadline-1-type" value="Project" required>
-                    <label for="deadline-1-type-project">Project</label>
-                    <input type="radio" id="deadline-1-type-other" name="deadline-1-type" value="Other" required>
-                    <label for="deadline-1-type-other">Other</label>
-                    
-                    <p></p>
-                    <label for="deadline-1-due-date">Due Date:</label>
-                    <input type="date" name="deadline-1-due-date" id="deadline-1-due-date" required>
-                </div>
-                <button type="button" onclick="addDeadlineFormEntry()">Add another deadline</button>
-
+                
                 <input type="submit">
             </form>
             
@@ -133,56 +114,6 @@ data = {
         };
         
 
-        function addClassFormVisible() {
-            document.getElementById('addClassForm').style.display = 'block';
-            document.getElementById('addClassFormButton').style.display = 'none';
-        }
-
-        function addDeadlineFormEntry() {
-            console.log('happening')
-
-            num = 2
-            while (true) {
-                console.log("deadline-" + num + "-name")
-                if (document.getElementById("deadline-" + num + "-name") == null) {
-                    break
-                }
-                
-                num ++
-            }
-            console.log('happening2')
-            div = document.getElementById("deadline-form")
-
-            
-            const elements = [
-                { tag: "p", attributes: {  }, text: "-----------------------" },
-                { tag: "label", attributes: { for: "deadline-" + num + "-name" }, text: "Title of deadline:" },
-                { tag: "input", attributes: { type: "text", name: "deadline-" + num + "-name", id: "deadline-" + num + "-name" } },
-                { tag: "p", text: "Deadline Type:" },
-                { tag: "input", attributes: { type: "radio", id: "deadline-" + num + "-type-assignment", name: "deadline-" + num + "-type", value: "Assignment" } },
-                { tag: "label", attributes: { for: "deadline-" + num + "-type-assignment" }, text: "Assignment" },
-                { tag: "br" },
-                { tag: "input", attributes: { type: "radio", id: "deadline-" + num + "-type-exam", name: "deadline-" + num + "-type", value: "Exam" } },
-                { tag: "label", attributes: { for: "deadline-" + num + "-type-exam" }, text: "Exam" },
-                { tag: "br" },
-                { tag: "input", attributes: { type: "radio", id: "deadline-" + num + "-type-project", name: "deadline-" + num + "-type", value: "Project" } },
-                { tag: "label", attributes: { for: "deadline-" + num + "-type-project" }, text: "Project" },
-                { tag: "br" },
-                { tag: "input", attributes: { type: "radio", id: "deadline-" + num + "-type-other", name: "deadline-" + num + "-type", value: "Other" } },
-                { tag: "label", attributes: { for: "deadline-" + num + "-type-other" }, text: "Other" },
-                { tag: "p" },
-                { tag: "label", attributes: { for: "deadline-" + num + "-due-date" }, text: "Due Date:" },
-                { tag: "input", attributes: { type: "date", name: "deadline-" + num + "-due-date", id: "deadline-" + num + "-due-date" } }
-            ];
-
-            elements.forEach( ({tag, attributes = {}, text = ""}) => {
-                const elem = document.createElement(tag);
-                Object.entries(attributes).forEach(([key, value]) => elem.setAttribute(key, value));
-                if (text) elem.textContent = text;
-                div.appendChild(elem);
-            } )
-        }
-        
         function deleteClass() {
             let className = document.getElementById('class-name-header').innerText.replace('Manage Tasks and Study Sessions for ', '');
             
@@ -196,14 +127,17 @@ data = {
             backToClasses();
         }
 
-        function manageClass(className) {
+        function manageClass(this_class_id) {
             // hiding the class list and showing the task/session container
             document.getElementById('class-list').style.display = 'none';
             document.getElementById('task-session-container').style.display = 'block';
-            document.getElementById('class-name-header').innerText = `Manage Tasks and Study Sessions for ${className}`;
+            document.getElementById('class-name-header').innerText = "Manage Tasks and Study Sessions for {% for class in data['classes'] if class['_id'] == " + this_class_id + " %}{{class['name']}}{% endfor %}";
 
             // loading the tasks
-            document.getElementById('task-list').innerHTML = '';
+            //document.getElementById('task-list').innerHTML = '';
+            console.log('beep')
+            console.log(document.getElementById('task-list').innerHTML)
+            /*
             classData[className].tasks.forEach(task => {
                 let li = document.createElement('li');
                 li.innerText = task;
@@ -215,7 +149,7 @@ data = {
                 let li = document.createElement('li');
                 li.innerText = session;
                 document.getElementById('study-session-list').appendChild(li);
-            });
+            });*/
         }
 
         function addTask() {
