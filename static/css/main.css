@@ -5,6 +5,8 @@ h1 {
 table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
+	margin: auto;
+	margin-bottom: 50px;
 }
 th, td {
     padding: 10px;
@@ -80,6 +82,14 @@ input[type="password"] {
 .home-page button:hover {
 	background-color: #0056b3;
 }
+
+.home-table {
+	width: 100%;
+	margin: 0 auto;
+	border-collapse: collapse;
+	align-items: center;
+}
+
 
 form {
 	width: 50%;

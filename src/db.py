@@ -51,7 +51,8 @@ def find_user_order(username):
         order_ids = user.get("order")
         # Find the correspond id in the orders databaed and give as a list
         orders = list(mongo.db.orders.find({"_id": {"$in": order_ids}}))
-        return [i["consumer"] for i in orders]
+        # return [i["consumer"] for i in orders]
+        return orders
     except Exception as e:
         print(f"Unexpected error: {e}")
         return []
@@ -94,4 +95,12 @@ def update_order(order_id, updated_data):
     except Exception as e:
         raise Exception(f"Error updating order: {str(e)}")
 
+def delete_order(order_id):
+    try:
+        order_object_id = ObjectId(order_id)
+        result = mongo.db.orders.delete_one({"_id": order_object_id})
+        return result
+
+    except Exception as e:
+        raise Exception(f"Error deleting order: {str(e)}")
 
