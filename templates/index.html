@@ -65,13 +65,17 @@
 
     <ul>
         {% for task in tasks %}
-            <li>
-                <div>
-                    <strong>{{ task.title }}</strong> - {{ task.description }} - <em>{{ task.status }}</em>
-                </div>
-            </li>
-        {% endfor %}
-    </ul>
+        <li class="task-container">
+            <span><strong>{{ task.title }}</strong> - {{ task.description }}</span>
+            <form action="{{ url_for('delete', task_id=task._id) }}" method="POST" style="display:inline;">
+                <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this task?');">
+                    Delete
+                </button>
+            </form>
+        </li>
+    {% endfor %}
+</ul>
+    
 
     <a href="{{ url_for('completed') }}">View Completed Tasks</a>
     <a href="{{ url_for('add') }}" style="background: hsl(356, 100%, 50%); color: white;">Add New Task</a>
