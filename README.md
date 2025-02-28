@@ -27,7 +27,7 @@ Our web-based task manager empowers users to seamlessly add, search, edit, and c
 9. As a user, I want to log out so that my tasks remain secure.
 10.  As a user, I want my task list to be private so that no one else can see or edit it.
 11. As a developer, I want to store my database credentials securely so that my data is not exposed in version control.
-12. As a developer, I want to deploy the app so that users can access it from anywhere.
+12. As a developer, I want to deploy the app so that users can access it from anywhere.  
 [View these User Stories in an 'Issues' Section](https://github.com/software-students-spring2025/2-web-app-fantasteam/issues)
 
 ## Steps necessary to run the software
@@ -35,5 +35,5 @@ Our web-based task manager empowers users to seamlessly add, search, edit, and c
 See instructions. Delete this line and place instructions to download, configure, and run the software here.
 
 ## Task boards
-[Fantasteam - Sprint 1 Task Board](https://github.com/orgs/software-students-spring2025/projects/77)
+[Fantasteam - Sprint 1 Task Board](https://github.com/orgs/software-students-spring2025/projects/77)  
 [Fantasteam - Sprint 2 Task Board](https://github.com/orgs/software-students-spring2025/projects/104)
