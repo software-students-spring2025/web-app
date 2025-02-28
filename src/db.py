@@ -104,3 +104,19 @@ def delete_order(order_id):
     except Exception as e:
         raise Exception(f"Error deleting order: {str(e)}")
 
+def search_orders(username, search_keyword):
+    try:
+        user = mongo.db.users.find_one({"username": username})
+        if not user:
+            print("User not found")
+            return []
+        else:
+            order_ids = user.get("order")
+            orders = list(mongo.db.orders.find(
+                {"_id": {"$in": order_ids}, 
+                 "consumer": {"$regex": search_keyword, 
+                "$options": "i"}}))
+            return orders
+
+    except Exception as e:
+        print(f"Unexpected error: {e}")
