@@ -96,9 +96,13 @@ def delete():
     shows = tv_shows_collection.find()
     return render_template("delete.html", shows=shows)
 
+@app.route("/settings")
+def settings():
+    return render_template("settings.html")
+
 @app.route("/success")
 def success():
-    return "Episode added successfully!"
+    return render_template("success.html", message="Episode added successfully!")
 
 # main driver function
 if __name__ == '__main__':

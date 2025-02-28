@@ -19,6 +19,7 @@
             align-items: center;
             height: 100vh;
             flex-direction: column;
+            overflow: hidden;
         }
 
         .container {
@@ -28,6 +29,10 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 500px;
             text-align: center;
+            max-height: 80vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         input, button {
@@ -51,6 +56,10 @@
         .episode-list {
             text-align: left;
             margin-top: 20px;
+            flex-grow: 1;
+            overflow-y: auto;
+            max-height: 50vh;
+            padding-right: 10px;
         }
 
         .episode-item {
@@ -96,6 +105,9 @@
         <h3>Menu</h3>
         <a href="{{ url_for('add') }}">
             <button>Add New Episode</button>
+        </a>
+        <a href="{{ url_for('settings') }}">
+            <button>Settings</button>
         </a>
         </div>
 
