@@ -52,8 +52,11 @@ class User(flask_login.UserMixin):
         """Create a new user in MongoDB."""
         if db.loginInfo.find_one({"username": username}):
             return False  # Username already exists
-
-        hashed_password = generate_password_hash(password)  # Secure password storage
+        
+        if db.loginInfo.find_one({"email": email}):
+            return False  # Email already exists
+        
+        hashed_password = generate_password_hash(password) 
         db.loginInfo.insert_one({
             "email": email,
             "username": username,
@@ -96,7 +99,7 @@ def login():
         password = request.form["password"]
         user = User.find_by_username(username)
 
-        if user and user.password == password:  
+        if user and check_password_hash(user.password, password):  
             flask_login.login_user(user)
             flash("Login successful!", "success")
             return redirect(url_for("home"))

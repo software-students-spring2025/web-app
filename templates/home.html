@@ -6,7 +6,38 @@
     <link rel="stylesheet" href="../static/styles.css">
     <title>Restaurant Roulette</title>
 </head>
-<body>
-    home page
+<body id="homeScreen">
+    <header>
+        <div id="appName"><a href="/home">RR</a></div>
+        <div id="profile"><a href="/profile">Profile</a></div>
+        <div id="addFriends"><a href="/friends">Friends</a></div>
+        <div id="logOut"> <a href="/logout">Log Out</a></div>
+    </header>
+    <div id="welcome">
+        Welcome, user!
+    </div>
+    <div id="yourRestaurants">
+        <p> ~ Your Restaurants ~ </p>
+        <div class="restaurant">
+            <div class="topHalf">
+                <div class="restName">Restaurant Name!!</div>
+                <div class="restLoc">123 AppleWood st.</div>
+            </div>
+            <div class="bottomHalf">
+                <div class="bottomLeft">
+                    <div class="cuisine">Italian</div>
+                    <div class="favDish">Pasta</div>
+                </div>
+                <div class="bottomRight">
+                    <div class="rating">5/5</div>
+                    <div class="price">$$$</div>
+                </div>
+            </div>
+        </div>
+        <div id="addRestaurant">
+            <a href="/add">Add Restaurant</a>
+        </div>
+    </div>
+
 </body>
 </html>
