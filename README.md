@@ -1,11 +1,8 @@
-# Team Name: La Verdadera Destreza
-
-# Team members:, , , Jialiang Tang
-
-
 # Web Application Exercise
 
 A little exercise to build a web application following an agile development process. See the [instructions](instructions.md) for more detail.
+
+## Team Name: La Verdadera Destreza
 
 ## Team members
 
@@ -16,7 +13,7 @@ A little exercise to build a web application following an agile development proc
 
 ## Product vision statement
 
-**A prototype MongoDB-based online trading platform exclusive for NYU students to buy and sell second-hand items.
+**A prototype MongoDB-based online trading platform exclusive for NYU students to buy and sell second-hand items.**
 
 ## User stories
 
