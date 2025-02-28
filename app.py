@@ -7,6 +7,7 @@ See the README.md file for instructions how to set up and run the app in develop
 
 import os
 import datetime
+import flask_login
 from flask import Flask, render_template, request, redirect, url_for
 import pymongo
 from bson.objectid import ObjectId
