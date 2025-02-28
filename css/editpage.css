@@ -172,3 +172,54 @@ textarea {
 .CloseButton:hover {
     text-decoration: underline;
 }
+
+
+
+
+
+
+/* css for the recipe pop-up content */
+.popup {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Modal content */
+.popup-content {
+    background: white;
+    padding: 20px;
+    position: absolute;  /* Ensures it stays at the top */
+    top: 5%;  /* Adjust based on how high you want it */
+    left: 50%;
+    transform: translate(-50%, 0); /* Center horizontally but not vertically */
+    width: 50%;
+    text-align: center;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Close button */
+.close {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Show the modal when clicking the button */
+:target {
+    display: block;
+}
+
+/* The iframe that loads recipe.html */
+iframe {
+    width: 100%;
+    height: 600px; /* Adjust based on content */
+    border: none;
+}
+
