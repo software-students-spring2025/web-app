@@ -1,12 +1,13 @@
 # mac junk
 .DS_Store
+.env
 
 # visual studio code junk
 .vscode/
 .vscode/settings.json
 
 # emacs backups
-*~
+*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
