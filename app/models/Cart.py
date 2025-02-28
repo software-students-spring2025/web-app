@@ -14,16 +14,12 @@ class Cart:
 
     @staticmethod
     def get_cart(customer_id):
-        # only allow one cart per customer
         cart = get_mongo().carts.find_one({'customer_id': customer_id})
-        if not cart:
-            get_mongo().carts.insert_one({'customer_id': customer_id, 'items': [], 'total_price': 0})
-            cart = get_mongo().carts.find_one({'customer_id': customer_id})
+        if cart:
+            cart['_id'] = str(cart['_id'])
+            cart['items'] = list(cart['items'])
+        return cart if cart else {'customer_id': customer_id, 'items': [], 'total_price': 0}
 
-        # cart should have total price 0 if empty
-        if len(cart.get('items')) == 0:
-            get_mongo().carts.update_one({'customer_id': customer_id}, {'$set': {'total_price' : 0}})
-        return cart
 
     @staticmethod
     def add_to_cart(customer_id, item_id):

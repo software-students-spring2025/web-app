@@ -1,8 +1,9 @@
 from flask import Flask, render_template as rt, session, redirect, url_for, request
 from flask_pymongo import PyMongo
+from flask_session import Session
 app = Flask(__name__)
 app.secret_key = 'duck'
-import os
+import os, uuid
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -11,12 +12,19 @@ app.config["MONGO_URI"] = os.getenv("MONGO_URI", "mongodb://localhost:27017/anat
 # run $export MONGO_URI= "mongodb://localhost:27017/anatidelicious" in terminal
 
 mongo = PyMongo(app)
-db = mongo.db  
+db = mongo.db
+
+app.config["SESSION_TYPE"] = "mongodb"
+app.config["SESSION_PERMANENT"] = True
+app.config["SESSION_USE_SIGNER"] = True
+app.config["SESSION_KEY_PREFIX"] = "session:"
+app.config["SESSION_MONGO"] = mongo.cx
+Session(app)
 
 menu_collection = db.menu_items
-menu_collection.drop() # if we drop this, the cart resets every time, cart information not saved for customer
+# menu_collection.drop() # if we drop this, the cart resets every time, cart information not saved for customer
 carts = db.carts
-carts.drop()
+#carts.drop()
 if menu_collection.count_documents({}) == 0:
     menu_collection.insert_many([
         {'item_id': 'baguette', 'name': 'Baguette', 'description': 'A scrumptious baguette that would make France proud.', 'price': 1, 'category': 'Bread'},
@@ -80,7 +88,6 @@ def contact():
     return rt('contact.html')
 
 @app.route('/order', methods=['GET'])
-@app.route('/order', methods=['GET'])
 def order():
     category = request.args.get('category', '').strip()
     query = request.args.get('query', '').strip()
@@ -94,8 +101,6 @@ def order():
     categories = menu_collection.distinct('category')
     return rt('order.html', menu_items=menu_items, category=category, categories=categories, query=query)
 
-
-
 @app.route('/item_info/<item_id>')
 def item_info(item_id):
     item = menu_collection.find_one({'item_id': item_id})
@@ -105,24 +110,25 @@ def item_info(item_id):
 
 @app.before_request
 def initialize_cart():
+    if 'user_id' not in session:
+        session['user_id'] = str(uuid.uuid4())
     if 'cart' not in session:
         session['cart'] = {}
 
 @app.route('/add_to_cart/<item_id>')
 def add_to_cart(item_id):
-    customer_id = 100 # placeholder value
+    customer_id = session.get('user_id')
     category = request.args.get('category')
     query = request.args.get('query', '')
     if not customer_id:
         return redirect(url_for('login'))
     Cart.add_to_cart(customer_id, item_id)
-
     return redirect(url_for('order', category=category, query=query))
 
 
 @app.route('/cart')
 def cart():
-    customer_id = 100 # placeholder value
+    customer_id = session.get('user_id')
 
     if not customer_id:
         return redirect(url_for('login'))
@@ -133,7 +139,7 @@ def cart():
     total_price = cart.get('total_price', 0)
     total_items = 0
 
-    for item_id in set(cart.get('items')):
+    for item_id in cart.get('items'):
         item = menu_collection.find_one({'item_id': item_id})
         if item:
             item_quantity = Cart.get_item_count(customer_id, item_id)
@@ -147,7 +153,7 @@ def cart():
 
 @app.route('/remove_from_cart/<item_id>')
 def remove_from_cart(item_id):
-    customer_id = 100 # placeholder value
+    customer_id = session.get('user_id')
 
     if not customer_id:
         return redirect(url_for('login'))
@@ -161,7 +167,7 @@ def remove_from_cart(item_id):
 
 @app.route('/checkout')
 def checkout():
-    customer_id = 100 # placeholder value
+    customer_id = session.get('user_id')
 
     if not customer_id:
         return redirect(url_for('login'))
@@ -169,7 +175,7 @@ def checkout():
     cart = Cart.get_cart(customer_id)
     cart_items = []
     total_price = Cart.calculate_raw_total(customer_id)
-    for item_id in set(cart.get('items')):
+    for item_id in cart.get('items'):
         item = menu_collection.find_one({'item_id': item_id})
         if item and Cart.get_item_count(customer_id, item_id) > 0:
             item['quantity'] = Cart.get_item_count(customer_id, item_id)
