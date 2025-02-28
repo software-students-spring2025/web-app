@@ -16,9 +16,13 @@ from bson.objectid import ObjectId
 #uri = os.getenv("MONGO_URI")
 #Mongo_DBNAME= os.getenv("MONGO_DBNAME")
 #lient = MongoClient(uri, server_api=ServerApi('1'), tlsCAFile=certifi.where())
+
 #acess database
 #create DB/Acess
 #myDb= client["DuoProject"]
+
+#myDb["Assigments"].rename("DeadLines")
+
 #List of data Tables
 #myTable= myDb["users"]
 #AssigmentsTable= myDb["Assigments"]
@@ -92,7 +96,7 @@ def get_deadlines(mydb, userID):
    # Data_Base= myDb["users"] 
    # exist= Data_Base.find_one({"_id":userID})
    # use_id= exist["_id"]
-    AsTable= mydb["Assigments"]
+    AsTable= mydb["DeadLines"]
     deadlines = AsTable.find({"user_ID":ObjectId(userID)})
     deadlines_dict= [doc for doc in deadlines]
     return deadlines_dict
@@ -273,3 +277,29 @@ def delete_class(mydb, userID, classID):
 ## 
 def edit_profile(mydb, userID, password, bio, pic, dark_mode):
     return None
+
+
+#Update User
+def edit_study(mydb,userID,studyID,date=None,goals=None,duration_hours=None):
+    usetable= mydb["Studies"]
+    user=  usetable.find_one({"user_id":ObjectId(userID),"_id":ObjectId(studyID)})
+    if not user:
+        print("no user")
+        return None 
+    updates= {}
+    if date is not None:
+        print("date update")
+        updates["date"]= date 
+    if goals is not None:
+        print("print goal update")
+        updates["$push"] = {"goals_completed": goals}
+    if duration_hours is not None:
+        print("time update")
+        updates["duration_hours"] = duration_hours
+    print("update")
+    result = usetable.update_one(
+          {"_id": ObjectId(studyID), "user_id": ObjectId(userID)},  
+            {"$set": updates} if "$push" not in updates else updates 
+     )
+    return None 
+    
