@@ -12,24 +12,6 @@ from dotenv import load_dotenv
 from bson.objectid import ObjectId
 #import datetime
 
-<<<<<<< HEAD
-#load_dotenv()
-#uri = os.getenv("MONGO_URI")
-#Mongo_DBNAME= os.getenv("MONGO_DBNAME")
-#lient = MongoClient(uri, server_api=ServerApi('1'), tlsCAFile=certifi.where())
-
-#acess database
-#create DB/Acess
-#myDb= client["DuoProject"]
-
-#myDb["Assigments"].rename("DeadLines")
-
-#List of data Tables
-#myTable= myDb["users"]
-#AssigmentsTable= myDb["Assigments"]
-=======
-
->>>>>>> refs/remotes/origin/MongoDataBase
 
 ######## USER AUTHENTICATION
 
