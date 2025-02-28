@@ -83,24 +83,31 @@ def register():
 # add movie route - check to see if links correctly Jime
 
 
-@app.route('/add_movie', methods=['GET', 'POST'])
+@app.route("/add", methods=["GET", "POST"])
 def add_movie():
-    if request.method == 'POST':
-        title = request.form['title']
-        genre = request.form['genre']
-        release_year = request.form['release_year']
 
-        movies_collection.insert_one({
-            "title": title,
-            "genre": genre,
-            "release_year": release_year
-        })
+    username = session['username']
 
-        flash('Movie added successfully!', 'success')
-        # Redirect to home instead of dashboard
+    if request.method == "POST":
+        title = request.form.get("title")
+        genre = request.form.get("genre")
+        release_year = request.form.get("release_year")
+
+        if title and genre and release_year:
+            new_movie = {
+                "title": title,
+                "genre": genre,
+                "release_year": release_year
+            }
+
+            movies_collection.update_one(
+                {"username": username},
+                {"$push": {"movies": new_movie}}
+            )
+
         return redirect(url_for('home'))
 
-    return render_template('add.html')
+    return render_template("add.html")
 
 
 # edit movie route -- check to see if links correclty Jime
