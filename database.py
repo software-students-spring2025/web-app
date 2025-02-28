@@ -24,7 +24,6 @@ from bson.objectid import ObjectId
 ## 
 
 def pwd_auth(mydb,username, password):
-    print("Hello World")
     usertable= mydb["users"] 
     exist= usertable.find_one({"username":username,"password":password})
     if exist:
@@ -45,19 +44,17 @@ def pwd_auth(mydb,username, password):
 ## 
 #works 
 def new_account(mydb, username, password):
-    #print("Hello new account")
     acconttable= mydb["users"]
     exist = acconttable.find_one({"username": username})
 
     if exist:
-       # print("User found:")
         return None
     else:
         newuser= {
             "username": username, "password": password
         }
         acconttable.insert_one(newuser)
-        r=  acconttable.find_one({"username": username, "password": password},{"_id":1})
+        r =  acconttable.find_one({"username": username, "password": password},{"_id":1})
        # print(r["_id"])
        # print(result.inserted_id)
     return r["_id"]
@@ -78,10 +75,10 @@ def get_deadlines(mydb, userID):
    # Data_Base= myDb["users"] 
    # exist= Data_Base.find_one({"_id":userID})
    # use_id= exist["_id"]
-    asTable= mydb["Assigments"]
-    deadlines = asTable.find({"user_ID":ObjectId(userID)})
-    deadlines_dict= [doc for doc in deadlines]
-    return deadlines_dict
+    deadline_table = mydb["DeadLines"]
+    my_deadlines = deadline_table.find({"user_ID":ObjectId(userID)})
+    deadlines_list= [doc for doc in my_deadlines]
+    return deadlines_list
     #acess Assigments
 
     #return None
@@ -127,10 +124,15 @@ def get_tasks(mydb, userID):
 ## Usage: get all account info belonging to a specific user
 ## return poy cursor can turn into a list if need be
 def get_user_info(mydb, userID):
-   usetable= mydb["users"]
-   user=  usetable.find({"_id":ObjectId(userID)})
-   user_dict= [doc for doc in user]
-   return  user_dict
+   usetable = mydb["users"]
+   # incorrect implementation - wrong return type, returns a list of "multiple" users
+   #user =  usetable.find({"_id":ObjectId(userID)})
+   #user_dict= [doc for doc in user]
+   #return  user_dict
+
+   user =  usetable.find_one({"_id":ObjectId(userID)})
+   return user
+
 
  
 
