@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Event</title>
+    <style>
+        header {
+            border-bottom: 1px solid;
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 50px;
+        }
+
+        .save {
+            margin-top: 10px;
+        }
+
+        .back {
+            font-size: 30px;
+            padding: 0px;
+            position: absolute;
+            left: 10px;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button class="back" onclick="location.href='home.html'">&#8592;</button>
+        <h1>Add Event</h1>
+    </header>
+
+    <form>
+        <label for="name">Event Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="date">Date:</label>
+        <input type="text" id="date" name="date" required>
+
+        <label for="time">Time:</label>
+        <input type="text" id="time" name="time" required>
+
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" required>
+
+        <label for="category">Category:</label>
+        <input type="text" id="category" name="category" required>
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required></textarea>
+
+        <div class="save">
+            <button type="submit">Save Changes</button>
+        </div>
+    </form>
+</body>
+</html>
