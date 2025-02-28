@@ -3,7 +3,7 @@ from database import get_tasks, add_task
 
 app = Flask(__name__)
 
-# Home route - displays all tasks (Team Member 1)
+# Home route - displays all tasks 
 @app.route('/')
 def home():
     tasks = get_tasks()  # Retrieves all tasks from the database
