@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Friend Profile - RecipeShare</title>
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/userfriends.css">
+    <link rel="stylesheet" href="../../css/userfriends.css">
+    
 </head>
 <body>
+    <button class="back-button">
+        <a href="friends-list.html">Friends</a>
+    </button>
+    
     <header>
-        <a href="friends-list.html" class="back-button">← Friends</a>
         <h1>Friend Profile</h1>
     </header>
     
-    <div class="message-container" style="display: none;">
-        <div class="message info">Example message</div>
-    </div>
     
     <div class="profile-container">
         <div class="profile-header">
@@ -47,43 +47,19 @@
         </div>
         
         <div class="profile-tabs">
-            <a href="friend-profile.html" class="profile-tab active">Recipes</a>
             <a href="friend-profile.html?tab=favorites" class="profile-tab">Favorites</a>
         </div>
         
-        <div class="tab-content active">
-            <div class="recipe-container">
-                <a href="../recipes/recipe-detail.html" class="recipe-card">
-                    <div class="recipe-info">
-                        <h3>Homemade Pasta</h3>
-                        <div class="recipe-meta">
-                            <span class="time">45 mins</span>
-                            <span class="difficulty">Intermediate</span>
-                        </div>
-                    </div>
-                </a>
-                
-                <a href="../recipes/recipe-detail.html" class="recipe-card">
-                    <div class="recipe-info">
-                        <h3>Classic Tiramisu</h3>
-                        <div class="recipe-meta">
-                            <span class="time">60 mins</span>
-                            <span class="difficulty">Intermediate</span>
-                        </div>
-                    </div>
-                </a>
-                
-                <a href="../recipes/recipe-detail.html" class="recipe-card">
-                    <div class="recipe-info">
-                        <h3>Neapolitan Pizza</h3>
-                        <div class="recipe-meta">
-                            <span class="time">90 mins</span>
-                            <span class="difficulty">Advanced</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
+        
     </div>
+
+    <details class="TypeofRecipe">
+        <summary class="ClickableCategory">Recipes</summary>
+        <div class="SpecificRecipes">
+            <button class="RecipeButton">Homemade Pasta</button>
+            <button class="RecipeButton">Classic Tiramisu</button>
+            <button class="RecipeButton">Neapolitan Pizza</button>
+        </div>
+    </details>
 </body>
 </html>
