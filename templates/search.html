@@ -9,18 +9,22 @@
       <main>
         <h1 class="heading">Search Events</h1>
 
-        <form method="POST">
+        <form method="GET">
             <div class="wrapper">
-                <input type="text" name="searchterm" placeholder="Search by event, location, or category" class="search-bar"/>
+                <input type="text" name="searchterm" placeholder="Search by event name, location, category, or date" class="search-bar" value="{{ searchterm }}"/>
                 <input type="submit" value="Search" class="search-button"/>
             </div>
         </form>
 
+        {% if searchterm %}
         <div class="list">
+          {% for event in events %}
             <div class="event">
-                <p>This is an example of an event.</p>
+                <p>{{ event["name"] }}</p>
             </div>
+          {% endfor %}
         </div>
+        {% endif %}
       </main>
     </div>
   </body>
