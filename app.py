@@ -5,6 +5,7 @@ import os
 from dotenv import load_dotenv, dotenv_values
 from pymongo.mongo_client import MongoClient
 from bson.objectid import ObjectId
+import certifi
 
 
 load_dotenv()
@@ -16,7 +17,8 @@ app.config["DEBUG"] = os.getenv("DEBUG", "False") == "True"
 
 # app.config.from_mapping(config)
 
-client = pymongo.MongoClient(os.getenv("MONGO_URI"))
+client = pymongo.MongoClient(os.getenv("MONGO_URI"), tls=True,
+    tlsCAFile=certifi.where())
 db = client[os.getenv("MONGO_DBNAME")]
 tv_shows_collection = db.tv_shows
 
