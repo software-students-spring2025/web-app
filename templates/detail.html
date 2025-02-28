@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            max-width: 500px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .button-group {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .save-btn {
+            background-color: #28a745;
+            color: white;
+        }
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Order Details</h2>
+        <form action="/detail/{{ order._id }}/save" method="POST">
+            <label for="customerName">Customer:</label>
+            <input type="text" id="customerName" name="customerName" value="{{ order.consumer }}">
+        
+            <label for="dishName">Dish Name:</label>
+            <input type="text" id="dishName" name="dishName" value="{{ order.food }}">
+        
+            <label for="price">Price:</label>
+            <input type="number" id="price" name="price" value="{{ order.price }}" step="0.01">
+        
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" value="{{ order.address }}">
+        
+            <button type="submit" class="save-btn">Save</button>
+            <button type="button" class="delete-btn">Delete</button>
+        </form>       
+    </div>
+</body>
+</html>

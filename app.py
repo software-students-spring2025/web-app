@@ -6,6 +6,11 @@ app = flask.Flask(__name__)
 
 db.init_db(app)
 
+# Index get
+@app.route('/')
+def index():
+    return flask.redirect('/login')
+
 # Login get
 @app.route('/login')
 def login():
@@ -53,14 +58,24 @@ def handle_home():
     return flask.render_template('home.html')
 
 # DetailPage get
-@app.route('/detail')
-def detail():
-    return 'Detail'
+@app.route('/detail/<order_id>')
+def detail(order_id): 
+    order = db.get_order(order_id)
+    return flask.render_template('detail.html', order=order)
 
 # DetailPage Post
-@app.route('/detail', methods=['POST'])
-def handle_detail():
-    return 'Detail'
+@app.route('/detail/<order_id>/save', methods=['POST'])
+def handle_detail(order_id):
+    order = db.get_order(order_id)
+    updated_data = {
+        "customer_name": flask.request.form.get("customerName"),
+        "dish_name": flask.request.form.get("dishName"),
+        "price": float(flask.request.form.get("price")),  
+        "address": flask.request.form.get("address")
+    }
+    db.update_order(order_id, updated_data)
+
+    return flask.render_template('detail.html', order=order)
 
 # NewOrder get
 @app.route('/newOrder')
@@ -69,8 +84,19 @@ def order():
 
 # NewOrder Post
 @app.route('/newOrder', methods=['POST'])
-def hanle_odrer():
+def handle_odrer():
     return 'NewOrder'
 
 if __name__ == '__main__':
+    consumer = "Hi"
+    food = "Pizza"
+    address = "123 Main Street",
+    price = 19.99
+    
+    db.create_user("Frank", '123456')
+
+    db.create_order("Frank", consumer, food, address, price)
+    s = db.find_user_order("Frank")
+    print(s)
     app.run(debug=True, port=config.PORT)
+
