@@ -85,11 +85,8 @@ def register():
 
 @app.route("/add", methods=["GET", "POST"])
 def add_movie():
-    # Check if the user is logged in by verifying the session
-    if 'username' not in session:
-        return redirect(url_for('login'))  # Redirect to login if not logged in
 
-    username = session['username']  # Get username from session
+    username = session['username']
 
     if request.method == "POST":
         title = request.form.get("title")
@@ -103,13 +100,11 @@ def add_movie():
                 "release_year": release_year
             }
 
-            # Add the movie to the user's movies array in the database
             movies_collection.update_one(
                 {"username": username},
                 {"$push": {"movies": new_movie}}
             )
 
-        # Redirect back to the home page
         return redirect(url_for('home'))
 
     return render_template("add.html")
