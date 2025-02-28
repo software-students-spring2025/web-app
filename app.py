@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request
-from database import get_tasks, add_task, delete_task
+from flask import Flask, render_template, request, redirect, url_for
+from flask_pymongo import PyMongo
+from database import get_tasks, add_task, delete_task, update_task
 from bson.objectid import ObjectId
 
 app = Flask(__name__)
@@ -20,6 +21,25 @@ def add():
     task = {"title":title,"description":description,"status":status}
     add_task(task)
     return render_template('add.html', task=task)
+
+@app.route('/update/<task_id>', methods=['GET', 'POST'])
+def update(task_id):
+    task = next((t for t in get_tasks() if t["_id"] == task_id), None)
+    if not task:
+        return "Task not found", 404 
+    
+    if request.method == 'POST':
+        title = request.form.get("title")
+        description = request.form.get("description")
+        status = request.form.get("status")
+
+        success = update_task(task_id, title, description, status)
+        if success:
+            print(f"Task {task_id} updated successfully")
+        else:
+            print(f"Failed to update task {task_id}")
+        return redirect(url_for('home'))
+    return render_template('update.html', task=task)
 
 @app.route('/delete/<task_id>',methods=['POST'])
 def delete(task_id):
