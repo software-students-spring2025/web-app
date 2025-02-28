@@ -18,7 +18,9 @@
     </nav>
     <main>
         <ul>
-
+            {% for movie in movies %}
+            <li>{{ movie.title }}</li>
+            {% endfor %}
         </ul>
     </main>
 
