@@ -34,7 +34,6 @@ def create_app():
     except Exception as e:
         print(" * MongoDB connection error:", e)
 
-
     @app.route("/")
     def index():
         return redirect(url_for("login"))
@@ -62,11 +61,6 @@ def create_app():
     return app
 
 app = create_app()
-
-
-@app.route("/test")
-def test():
-    return render_template('test.html')
 
 if __name__ == "__main__":
     FLASK_PORT = os.getenv("FLASK_PORT", "5000")
