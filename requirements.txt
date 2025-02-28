@@ -4,4 +4,3 @@ Flask-PyMongo
 python-dotenv
 werkzeug
 Flask-Session
-bson

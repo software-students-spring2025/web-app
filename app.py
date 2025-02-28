@@ -21,7 +21,13 @@ app.config['SESSION_PERMANENT'] = False
 Session(app)
 
 # MongoDB Configuration
-app.config['MONGO_URI'] = f"mongodb://{os.getenv('MONGO_HOST', 'localhost')}:{os.getenv('MONGO_PORT', '27017')}/{os.getenv('MONGO_DB', 'project2')}"
+atlas_uri = os.getenv('MONGO_URI')  # Check if MONGO_URI is set in .env
+if atlas_uri:
+    # If MONGO_ATLAS_URI is set, use it
+    app.config['MONGO_URI'] = atlas_uri
+    print("Using Atlas URI:", atlas_uri)
+else:
+    app.config['MONGO_URI'] = f"mongodb://{os.getenv('MONGO_HOST', 'localhost')}:{os.getenv('MONGO_PORT', '27017')}/{os.getenv('MONGO_DB', 'project2')}"
 
 # Initialize PyMongo
 mongo = PyMongo(app)
@@ -60,6 +66,17 @@ def load_user(user_id):
         return None  # Handle invalid ObjectId format
 
 # Home Route
+@app.route('/test_connection')
+def test_connection():
+    try:
+        # 强制触发一次真正的服务器握手
+        info = mongo.cx.server_info()
+        return f"Connected successfully! Server info: {info}"
+    except Exception as e:
+        return f"Failed to connect: {e}"
+
+        return f"DB error: {e}"
+
 @app.route('/')
 def home():
     if current_user.is_authenticated:
