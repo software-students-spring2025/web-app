@@ -136,8 +136,8 @@ header{
     padding-left: 0px;
     padding-right: 10px;
 }
-#addFriends, #logOut, #appName{
-    margin-left: 5%;
+#addFriends, #logOut, #profile, #appName{
+    margin-left: 10%;
 
     color: var(--button-text-color);
 
@@ -156,8 +156,7 @@ header{
 }
 
 #yourRestaurants p{
-    margin-top: 30px;
-    margin: 40px;
+    margin: 20px;
 
     font-size: 30px;
     font-weight: 900;
@@ -166,6 +165,7 @@ header{
     background-color: white;
     width: 100%;
     text-align: center;
+    box-shadow: inset 0 0 10px #00000078;
 }
 
 .restaurant{
@@ -224,7 +224,7 @@ header{
 .restName{
     color: var(--text-color2);
     font-size: 24px;
-
+    font-weight: 700;
 
 }
 
@@ -265,5 +265,13 @@ header{
     border-top: black solid;
     border-bottom: black solid;
 }
+
+#welcome{
+    font-size: 16pt;
+    font-weight: 800;
+    color: var(--secondary-color);
+    text-align: center;
+    padding-top: 25px;
+}  
 
 
