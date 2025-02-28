@@ -12,12 +12,11 @@ Price Guessing Game
 - As a user, I want to guess the prices of grocery items so that I can test my knowledge and improve my budgeting skills.
 - As a user, I want to see the actual price of an item after guessing so that I can compare my estimate to the real cost.
 - As a user, I want to track my past guesses and accuracy over time so that I can measure my improvement.
-- As a user, I want to see price trends for common grocery items so that I can understand how prices change over time.
 - As a user, I want to see average price estimates from other users so that I can compare my guesses with the community.
 
 Grocery Store Listings & Reviews
 - As a user, I want to browse a list of grocery stores in my area so that I can find places to shop.
-- As a user, I want to filter stores by price range, product variety, and customer service rating so that I can find the best option for my needs.
+- As a user, I want to filter stores by distance, price range, product variety, and customer service rating so that I can find the best option for my needs.
 - As a user, I want to read reviews from other shoppers so that I can make informed decisions before visiting a store.
 - As a user, I want to submit reviews for stores I’ve visited so that I can share my experiences with others.
 - As a user, I want to upload photos of grocery stores so that others can get a visual idea of the store’s layout and product selection.
