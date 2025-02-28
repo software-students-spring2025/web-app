@@ -16,13 +16,16 @@
            <li><a href="">Search</a></li>
         </ul>
     </nav>
-    <main>
-        <ul>
-            {% for movie in movies %}
-            <li>{{ movie.title }}</li>
-            {% endfor %}
-        </ul>
+    <main class="results-container">
+        {% for movie in movies %}
+            <div class="movie-card">
+                <a href="{{ url_for('movie_details', username=session['username'], title=movie.title) }}">
+                    <h2>{{ movie.title }}</h2>
+                </a>
+            </div>
+        {% endfor %}
     </main>
+    
 
 </body>
 </html>

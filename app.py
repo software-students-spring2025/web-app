@@ -53,8 +53,6 @@ def login():
     return render_template('login.html')
 
 # register
-
-
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -83,7 +81,11 @@ def register():
 # add movie route - check to see if links correctly Jime
 
 
+
+
+
 @app.route("/add", methods=["GET", "POST"])
+
 def add_movie():
 
     username = session['username']
@@ -108,6 +110,31 @@ def add_movie():
         return redirect(url_for('home'))
 
     return render_template("add.html")
+
+#movie details
+@app.route('/movie_details/<username>/<title>', methods=['GET'])
+def movie_details(username, title):
+    if 'username' not in session:
+        return redirect(url_for('login'))  # Ensure the user is logged in
+
+    # Find the user's movie list by username
+    user_movies = movies_collection.find_one({"username": username})
+
+    # If the user exists and has movies
+    if user_movies and 'movies' in user_movies:
+        # Find the movie by its title in the movies array
+        movie = next((m for m in user_movies['movies'] if m['title'] == title), None)
+
+        if movie:
+            # Movie found, pass details to the template
+            return render_template('details.html', movie=movie)
+        else:
+            flash("Movie not found!")
+            return redirect(url_for('home'))
+    else:
+        flash("No movies found for this user!")
+        return redirect(url_for('home'))
+
 
 
 # edit movie route -- check to see if links correclty Jime
