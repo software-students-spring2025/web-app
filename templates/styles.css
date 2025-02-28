@@ -1,0 +1,133 @@
+/* --- Import Playful Font --- */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap');
+
+body {
+    font-family: 'Quicksand', sans-serif;
+    background-color: #fceff7;
+    color: black;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+/* Dashboard/Profile/Logout/Header */
+header {
+    background: linear-gradient(.25turn, lightcyan, palevioletred);
+    color: black;
+    padding: 15px 0;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li{
+    display: inline;
+    margin: 0 10px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: rebeccapurple;
+    font-weight: bold;
+    font-size: 1.1em;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: palevioletred
+}
+
+/* study_session.html */
+.container {
+    max-width: 700px;
+    background: lightcyan;
+    padding: 30px;
+    margin: 30px auto;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.timer-section {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+#countdown {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: palevioletred;
+    transition: color 0.5s;
+}
+
+/* dashboard.html and buttons*/
+#deadlines ul, #classes ul {
+    list-style-type: none;
+    padding: 0;
+    max-width: 700px;
+    background: white;
+    padding: 30px;
+    margin: 30px auto;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#deadlines li, #classes li {
+    max-width: 200px;
+    background: lightcyan;
+    padding: 30px;
+    margin: 30px auto;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#task-session-container {
+    max-width: 700px;
+    display: none;
+    background-color: white;
+    padding: 30px;
+    margin: 30px auto;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#task-list, #study-session-list {
+    list-style-type: circle;
+    padding: 0;
+    max-width: 200px;
+    background: lightcyan;
+    padding: 30px;
+    margin: 30px auto;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+button {
+    padding: 3px 6px;
+    font-size: .8em;
+    border-radius: 5px;
+    border: none;
+    background: rebeccapurple;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: palevioletred;
+}
+
+/* profile.html*/
+
+#profile-view {
+    max-width: 700px;
+    background-color: white;
+    padding: 30px;
+    margin: 30px auto;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
