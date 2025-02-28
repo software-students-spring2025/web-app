@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Search Tasks</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container my-5">
+    <h1 class="mb-4">Search Tasks</h1>
+    
+    <!-- Search Form -->
+    <form action="/search" method="GET" class="mb-4">
+      <div class="input-group">
+        <input 
+          type="text" 
+          class="form-control" 
+          name="query" 
+          placeholder="Enter keyword to search tasks..." 
+          value="{{ request.args.get('query', '') }}">
+        <div class="input-group-append">
+          <button type="submit">Search</button>
+        </div>
+      </div>
+    </form>
+    
+    <!-- Search Results -->
+    <div>
+      {% if tasks %}
+        <ul class="list-group">
+          {% for task in tasks %}
+            <li class="list-group-item">
+              <h5 class="mb-1">{{ task.title }}</h5>
+              <p class="mb-1">{{ task.description }}</p>
+              <small class="text-muted">Status: {{ task.status }}</small>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>No tasks found.</p>
+      {% endif %}
+    </div>
+  </div>
+</body>
+</html>
