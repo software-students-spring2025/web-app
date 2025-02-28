@@ -16,13 +16,17 @@
             {% endif %}
             
             <div class="w-2/3">
-                <p class="text-lg text-gray-600"><strong>Artist:</strong> {{ exhibition.artist.name }}</p>
+                <p class="text-lg text-gray-600"><strong>Artist:</strong> {{ exhibition.artist.artist }}</p>
                 <p class="text-lg text-gray-600"><strong>Location:</strong> {{ exhibition.location }}</p>
                 <p class="text-lg text-gray-600"><strong>Cost:</strong> ${{ exhibition.cost }}</p>
                 <p class="text-lg text-gray-600"><strong>Style:</strong> {{ exhibition.art_style }}</p>
                 <p class="text-lg text-gray-600"><strong>Medium:</strong> {{ exhibition.art_medium }}</p>
                 <p class="text-lg text-gray-600"><strong>Event Type:</strong> {{ exhibition.event_type }}</p>
                 <p class="mt-4">{{ exhibition.description }}</p>
+
+                <div class="text-center">
+                    <a href="/edit/{{ exhibition._id }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500">Edit</a>
+                </div>
             </div>
         </div>
 
