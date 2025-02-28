@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filter & Sort</title>
+    <link rel="stylesheet" href="filterAndSortStyle.css">
+</head>
+<body>
+    <div class="navbar">
+        <button class="back-btn">⬅</button>
+        <h1>BOOKSWAP</h1>
+        <button class="add-btn">➕</button>
+    </div>
+
+    <h2>Filter/Sort</h2>
+
+    <div class="filter-section">
+        <h3>Sort</h3>
+        <label><input type="radio" name="sort" value="new"> New</label>
+        <label><input type="radio" name="sort" value="price-high"> Price (High to Low)</label>
+        <label><input type="radio" name="sort" value="price-low"> Price (Low to High)</label>
+        <label><input type="radio" name="sort" value="year"> Year Published (Old to New)</label>
+    </div>
+
+    <hr>
+
+    <div class="filter-section">
+        <h3>Subjects</h3>
+        <label><input type="checkbox" value="bibles"> Bibles & Christian Living</label>
+        <label><input type="checkbox" value="biography"> Biography</label>
+        <label><input type="checkbox" value="cookbooks"> Cookbooks, Food & Wine</label>
+        <label><input type="checkbox" value="fiction"> General Fiction</label>
+        <label><input type="checkbox" value="historical"> Historical Fiction</label>
+        <label><input type="checkbox" value="history"> History</label>
+    </div>
+
+    <button class="apply-btn">Apply Filters</button>
+</body>
+</html>
