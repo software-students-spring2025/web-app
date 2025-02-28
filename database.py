@@ -12,7 +12,24 @@ from dotenv import load_dotenv
 from bson.objectid import ObjectId
 #import datetime
 
+<<<<<<< HEAD
+#load_dotenv()
+#uri = os.getenv("MONGO_URI")
+#Mongo_DBNAME= os.getenv("MONGO_DBNAME")
+#lient = MongoClient(uri, server_api=ServerApi('1'), tlsCAFile=certifi.where())
 
+#acess database
+#create DB/Acess
+#myDb= client["DuoProject"]
+
+#myDb["Assigments"].rename("DeadLines")
+
+#List of data Tables
+#myTable= myDb["users"]
+#AssigmentsTable= myDb["Assigments"]
+=======
+
+>>>>>>> refs/remotes/origin/MongoDataBase
 
 ######## USER AUTHENTICATION
 
@@ -134,7 +151,155 @@ def get_user_info(mydb, userID):
    user =  usetable.find_one({"_id":ObjectId(userID)})
    return user
 
-   
+
+ 
+
+##### ADD FUNCTIONS
+
+
+# Usage: add a class to the users profile. Front end needs to collect all the parameters that the function requires and call in the format MongoDB shows
+# Return: 0 if there was an error adding the new class or 1 if the process was completed without issues
+def add_class(mydb, userID, name):
+    usertable = mydb["Class"]
+    
+    exist = usertable.find_one({
+        "user_ID" : ObjectId(userID),
+        "name" : name
+    })
+
+    if (exist):
+        print("Class already exists")
+        return (0)
+    
+    else:
+        doc = {
+            "user_ID" : ObjectId(userID),
+            "name" : name,
+            "time_studied_hours" : 0
+        }
+
+        usertable.insert_one(doc) # Creation of the class will assign it a unique ID and if needed can be equated to a variable
+
+        return (1)
+    
+# Usage: adds a deadline for a specific class of a specific type to the users profile. Front end needs to collect all the parameters that the function requires and call in the format MongoDB shows
+# Return: 0 if there was an error adding the new deadline or 1 if the process was completed without issues
+def add_deadlines(mydb, userID, classID, due_date, name, type):
+    usertable = mydb["Deadline"]
+    
+    exist = usertable.find_one({
+        "user_ID" : ObjectId(userID),
+        "class_ID" : ObjectId(classID),
+        "due_date" : due_date, # Note Due Dates have to be in this format: 2025-03-05T05:00:00.000+00:00
+        "name" : name,
+        "type" : type
+    })
+
+    if (exist):
+        print("Deadline already exists")
+        return (0)
+    
+    else:
+        doc = {
+            "user_ID" : ObjectId(userID),
+            "class_ID" : ObjectId(classID),
+            "due_date" : due_date, 
+            "name" : name,
+            "type" : type
+        }
+
+        usertable.insert_one(doc) # Creation of the deadline will assign it a unique ID and if needed can be equated to a variable
+
+        print("Deadline created!")
+        return (1)
+    
+# Usage: adds a exam date for a specific class to the users profile. Front end needs to collect all the parameters that the function requires and call in the format MongoDB shows
+# Return: 0 if there was an error adding the new exam or 1 if the process was completed without issues
+def add_exams(mydb, userID, classID, date, topics):
+    usertable = mydb["Exams"]
+    
+    exist = usertable.find_one({
+        "user_ID" : ObjectId(userID),
+        "class_ID" : ObjectId(classID),
+        "date" : date, # Note date has to be in this format: 2025-03-05T05:00:00.000+00:00
+        "topics" : topics
+    })
+
+    if (exist):
+        print("Exam already exists")
+        return (0)
+    
+    else:
+        doc = {
+            "user_ID" : ObjectId(userID),
+            "class_ID" : ObjectId(classID),
+            "date" : date, # Note date has to be in this format: 2025-03-05T05:00:00.000+00:00
+            "topics" : topics,
+        }
+
+        usertable.insert_one(doc) # Creation of the deadline will assign it a unique ID and if needed can be equated to a variable
+
+        print("Exam created!")
+        return (1)
+
+# Usage: adds a study session for a specific class to the users profile. Front end needs to collect all the parameters that the function requires and call in the format MongoDB shows
+# Return: 0 if there was an error adding the new study session or 1 if the process was completed without issues
+def add_study_session(mydb, userID, classID, date, duration, goals):
+    usertable = mydb["Studies"]
+    
+    exist = usertable.find_one({
+        "user_ID": ObjectId(userID),
+        "class_ID": ObjectId(classID),
+        "date": date,
+        "duration_hours" : duration,
+        "goals_completed": {"$all": goals}  # Ensures all goals exist in the array
+    })
+
+    if (exist):
+        print("Study session already exists")
+        return (0)
+    
+    else:
+        doc = {
+            "user_ID" : ObjectId(userID),
+            "class_ID" : ObjectId(classID),
+            "date" : date, # Note date has to be in this format: 2025-03-05T05:00:00.000+00:00
+            "duration_hours" : duration,
+            "goals_completed" : goals
+        }
+
+        usertable.insert_one(doc) # Creation of the study_session will assign it a unique ID and if needed can be equated to a variable
+
+        print("Study session created!")
+        return (1)
+
+# Usage: adds a task for a specific class to the users profile. Front end needs to collect all the parameters that the function requires and call in the format MongoDB shows
+# Return: 0 if there was an error adding the new task or 1 if the process was completed without issues
+def add_tasks(mydb, userID, name):
+    usertable = mydb["Tasks"]
+    
+    exist = usertable.find_one({
+        "user_ID" : ObjectId(userID),
+        "name" : name
+    })
+
+    if (exist):
+        print("Task already exists!")
+        return (0)
+    
+    else:
+        doc = {
+            "user_ID" : ObjectId(userID),
+            "name" : name,
+        }
+
+        usertable.insert_one(doc) # Creation of the Task will assign it a unique ID and if needed can be equated to a variable
+
+        print("Task created!")
+        return (1)
+
+
+
 
 
 
@@ -145,23 +310,21 @@ def get_user_info(mydb, userID):
 ## Function: delete an assignment
 ## Usage: delete an assignment from the database
 ## 
-def delete_assignment(mydb, userID, assignmentID):
-    usertable = mydb["Assigments"]
+def delete_deadline(mydb, userID, deadlineID):
+    usertable = mydb["Deadline"]
 
     exist = usertable.find_one({
         "user_ID": ObjectId(userID),
-        "_id": ObjectId(assignmentID)
+        "_id": ObjectId(deadlineID)
     })
-
-    print("testing", exist)
 
     if exist:
         result = usertable.delete_one({
             "user_ID": ObjectId(userID),
-            "_id": ObjectId(assignmentID)
+            "_id": ObjectId(deadlineID)
         })
         
-        return result.deleted_count
+        return result
     
     else:
         print("Assignment not found.")
@@ -172,20 +335,23 @@ def delete_assignment(mydb, userID, assignmentID):
 ## Usage: delete an exam from the database
 ## 
 def delete_exam(mydb, userID, examID):
-    usertable= mydb["Exams"]
+    usertable = mydb["Exams"]
 
     exist = usertable.find_one({
-        "username":userID,
-        "exam":examID
+        "user_ID": ObjectId(userID),
+        "_id": ObjectId(examID)
     })
 
     if exist:
-        return usertable.delete_one({
-            "username":userID,
-            "exam":examID
+        result = usertable.delete_one({
+            "user_ID": ObjectId(userID),
+            "_id": ObjectId(examID)
         })
+        
+        return result
     
     else:
+        print("Exam not found.")
         return 0
 
 
@@ -194,20 +360,23 @@ def delete_exam(mydb, userID, examID):
 ## Usage: delete a study session from the database
 ## 
 def delete_study_session(mydb, userID, study_sessionID):
-    usertable= mydb["Studies"]
+    usertable = mydb["Studies"]
 
     exist = usertable.find_one({
-        "username":userID,
-        "study_session":study_sessionID
+        "user_ID": ObjectId(userID),
+        "_id": ObjectId(study_sessionID)
     })
 
     if exist:
-        return usertable.delete_one({
-            "username":userID,
-            "study_session":study_sessionID
+        result = usertable.delete_one({
+            "user_ID": ObjectId(userID),
+            "_id": ObjectId(study_sessionID)
         })
+        
+        return result
     
     else:
+        print("Study session not found.")
         return 0
 
 
@@ -216,20 +385,23 @@ def delete_study_session(mydb, userID, study_sessionID):
 ## Usage: delete a task from the database
 ## 
 def delete_task(mydb, userID, taskID):
-    usertable= mydb["Tasks"]
+    usertable = mydb["Tasks"]
 
     exist = usertable.find_one({
-        "username":userID,
-        "task":taskID
+        "user_ID": ObjectId(userID),
+        "_id": ObjectId(taskID)
     })
 
     if exist:
-        return usertable.delete_one({
-            "username":userID,
-            "task":taskID
+        result = usertable.delete_one({
+            "user_ID": ObjectId(userID),
+            "_id": ObjectId(taskID)
         })
+        
+        return result
     
     else:
+        print("Tasks not found.")
         return 0
 
 ##
@@ -237,18 +409,23 @@ def delete_task(mydb, userID, taskID):
 ## Usage: delete a class from the database
 ## 
 def delete_class(mydb, userID, classID):
-    usertable= mydb["Class"]
+    usertable = mydb["Class"]
+
     exist = usertable.find_one({
-        "username":userID,
-        "class":classID
+        "user_ID": ObjectId(userID),
+        "_id": ObjectId(classID)
     })
 
     if exist:
-        return usertable.delete_one({
-            "username":userID,
-            "class":classID
+        result = usertable.delete_one({
+            "user_ID": ObjectId(userID),
+            "_id": ObjectId(classID)
         })
+        
+        return result
+    
     else:
+        print("Class not found.")
         return 0
 
 
@@ -262,3 +439,29 @@ def delete_class(mydb, userID, classID):
 ## 
 def edit_profile(mydb, userID, password, bio, pic, dark_mode):
     return None
+
+
+#Update User
+def edit_study(mydb,userID,studyID,date=None,goals=None,duration_hours=None):
+    usetable= mydb["Studies"]
+    user=  usetable.find_one({"user_id":ObjectId(userID),"_id":ObjectId(studyID)})
+    if not user:
+        print("no user")
+        return None 
+    updates= {}
+    if date is not None:
+        print("date update")
+        updates["date"]= date 
+    if goals is not None:
+        print("print goal update")
+        updates["$push"] = {"goals_completed": goals}
+    if duration_hours is not None:
+        print("time update")
+        updates["duration_hours"] = duration_hours
+    print("update")
+    result = usetable.update_one(
+          {"_id": ObjectId(studyID), "user_id": ObjectId(userID)},  
+            {"$set": updates} if "$push" not in updates else updates 
+     )
+    return None 
+    

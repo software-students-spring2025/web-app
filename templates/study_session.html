@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Study Session</title>
     <link rel="stylesheet" href="styles.css">
-    <script defer src="script.js"></script>
 </head>
 <body>
     <header>
@@ -27,7 +26,8 @@
             <input type="number" id="study-time" min="1" value="25">
             <button id="start-timer">Start Session</button>
             <button id="pause-timer">Pause Timer</button>
-            <h2 id="countdown">00:00:00</h2>
+            <button id="reset-timer">Reset Timer</button>
+            <h2 id="countdown">00:00</h2>
         </div>
         
         <div class="goals-section">
@@ -37,8 +37,48 @@
             <ul id="goals-list"></ul>
         </div>
     </div>
+    
+    <script>
+        let timer;
+        let timeLeft;
+        let isPaused = false;
+
+        document.getElementById('start-timer').addEventListener('click', function() {
+            let minutes = parseInt(document.getElementById('study-time').value);
+            if (!isPaused) {
+                timeLeft = minutes * 60;
+            }
+            startCountdown();
+        });
+
+        document.getElementById('pause-timer').addEventListener('click', function() {
+            clearInterval(timer);
+            isPaused = true;
+        });
+
+        document.getElementById('reset-timer').addEventListener('click', function() {
+            clearInterval(timer);
+            document.getElementById('countdown').textContent = "00:00";
+            isPaused = false;
+        });
+
+        function startCountdown() {
+            clearInterval(timer);
+            timer = setInterval(function() {
+                let minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+                document.getElementById('countdown').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                if (timeLeft > 0) {
+                    timeLeft--;
+                } else {
+                    clearInterval(timer);
+                    alert("Study session completed!");
+                }
+            }, 1000);
+        }
+    </script>
 </body>
-</html>
 <footer>
-        <p>&copy; 2025 Study Tracker</p>
-    </footer>
+    <p>&copy; 2025 Study Tracker</p>
+</footer>
+</html>
