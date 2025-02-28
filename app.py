@@ -79,15 +79,8 @@ def register():
 
 
 # add movie route - check to see if links correctly Jime
-
-
-
-
-
 @app.route("/add", methods=["GET", "POST"])
-
 def add_movie():
-
     username = session['username']
 
     if request.method == "POST":
@@ -101,12 +94,10 @@ def add_movie():
                 "genre": genre,
                 "release_year": release_year
             }
-
             movies_collection.update_one(
                 {"username": username},
                 {"$push": {"movies": new_movie}}
             )
-
         return redirect(url_for('home'))
 
     return render_template("add.html")
