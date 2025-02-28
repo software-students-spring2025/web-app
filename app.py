@@ -3,6 +3,8 @@ import src.db as db
 import config
 
 app = flask.Flask(__name__)
+app.secret_key = "super secret key"
+cur_user = None
 
 db.init_db(app)
 
@@ -25,6 +27,8 @@ def handle_login():
     user = db.login_user(username, password)
     # Redirect if find match user in the database
     if user:  
+        flask.session['user'] = user.get('username')
+        print("Current User: " + flask.session['user'])
         return flask.redirect('/home')
 
     return flask.render_template('login.html', message="Invalid username or password")
@@ -42,15 +46,30 @@ def handle_register():
 
     user = db.create_user(username, password)
 
-    if user:  
+    if user:
+        flask.session['user'] = user.get('username')
+        print("Current User: " + flask.session['user'])
         return flask.redirect('/home')
 
     return flask.render_template('register.html', message="Username Already Exist or Passwork too Short")
 
+# Logout
+@app.route('/logout')
+def logout():
+    flask.session.clear()
+    return flask.redirect('/login')
+
 # Homepage get
 @app.route('/home')
 def home():
-    return flask.render_template('home.html')
+    if 'user' not in flask.session:
+        return flask.redirect('/login')
+    user = flask.session['user']
+    print("Current User: " + user)
+    customer = db.find_user_order(user)
+    order_ids = []
+        
+    return flask.render_template('home.html', user=user)
 
 # Homepage Post
 @app.route('/home', methods=['POST'])
@@ -93,10 +112,10 @@ if __name__ == '__main__':
     address = "123 Main Street",
     price = 19.99
     
-    db.create_user("Frank", '123456')
+    # db.create_user("Frank", '123456')
 
-    db.create_order("Frank", consumer, food, address, price)
-    s = db.find_user_order("Frank")
-    print(s)
+    # db.create_order("Frank", consumer, food, address, price)
+    # s = db.find_user_order("Frank")
+    # print(s)
     app.run(debug=True, port=config.PORT)
 
