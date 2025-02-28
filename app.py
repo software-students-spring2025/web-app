@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import pymongo
 from dotenv import load_dotenv, dotenv_values
 
@@ -37,7 +37,22 @@ def create_app():
     
     @app.route("/search")
     def show_search():
-        return render_template("search.html")
+        """
+        Route for GET requests to the search page
+        Accepts a search term and displays the results 
+        Returns: render_template (html for search page)
+        """
+        search_term = request.args.get("searchterm", "")
+        print(search_term)
+        events = db.events.find({
+            "$or": [
+                {"name": {"$options": "i", "$regex": search_term}},
+                {"date": {"$regex": search_term}},
+                {"location": {"$options": "i", "$regex": search_term}},
+                {"category": {"$options": "i", "$regex": search_term}}
+            ]
+        })
+        return render_template("search.html", searchterm=search_term, events=events)
     
     @app.errorhandler(Exception)
     def handle_error(e):
