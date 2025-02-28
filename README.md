@@ -4,16 +4,35 @@ A little exercise to build a web application following an agile development proc
 
 ## Product vision statement
 
-See instructions. Delete this line and place the Product Vision Statement here.
+A web application that helps students track their study sessions, manage their time effectively, and analyze their study habits.
 
 ## User stories
 
-See instructions. Delete this line and place a link to the user stories here.
+Link to User Stories: https://github.com/software-students-spring2025/2-web-app-duodice/issues
 
 ## Steps necessary to run the software
 
-See instructions. Delete this line and place instructions to download, configure, and run the software here.
+Install and setup [MongoDB](https://www.mongodb.com/) [Server](https://www.mongodb.com/products/platform/atlas-database) + [Client](https://www.mongodb.com/try/download/shell)
+
+Create a .env and store your MongoDB Connection String in a variable
+
+Run these commands on terminal:
+- python -m venv env
+- source env/bin/activate
+
+Ensure you are loading your env variables into the code file
+
+Test to establish connection with MongoDB and upon successfull connection you are successful
+
+See [requiremnets.txt](requirements.txt) for necessary libraries and installations.
+Ensure all libraries have been installed within your virtual enviornment
 
 ## Task boards
 
-See instructions. Delete this line and place a link to the task boards here.
+- [Sprint 1](https://github.com/orgs/software-students-spring2025/projects/6)
+
+- [Sprint 2](https://github.com/orgs/software-students-spring2025/projects/17)
+
+# Virtual Enviroment  dependeces:  
+python -m pip install "pymongo[srv]"
+pip install --upgrade certifi
