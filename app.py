@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from flask_session import Session  # Flask session management
 import os
 from bson import ObjectId  # Fixes ObjectId issue for MongoDB
+from werkzeug.utils import secure_filename
 
 # Load environment variables from .env
 load_dotenv()
@@ -36,6 +37,16 @@ mongo = PyMongo(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
+
+# Picture Upload Configuration
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+app.config['UPLOAD_FOLDER'] = os.path.join('static', 'uploads')
+if not os.path.exists(app.config['UPLOAD_FOLDER']):
+    os.makedirs(app.config['UPLOAD_FOLDER'])
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 # User Model
 class User(UserMixin):
@@ -135,7 +146,7 @@ def login():
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    return f'Hello, {current_user.username}! Welcome to your dashboard.'
+    return render_template('dashboard.html')
 
 # Logout Route
 @app.route('/logout')
@@ -144,6 +155,43 @@ def logout():
     logout_user()
     flash('You have been logged out.', 'info')
     return redirect(url_for('login'))
+
+
+# Profile Route
+@app.route('/profile', methods=['GET', 'POST'])
+@login_required
+def profile():
+    if request.method == 'POST':
+        # 获取产品表单信息
+        product_image = request.files.get('product_image')
+        description = request.form.get('description')
+        price = request.form.get('price')
+        delivery_location = request.form.get('delivery_location')
+        inventory = request.form.get('inventory')
+        tag = request.form.get('tag')
+
+        image_filename = None
+        if product_image and allowed_file(product_image.filename):
+            filename = secure_filename(product_image.filename)
+            image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            product_image.save(image_path)
+            image_filename = filename
+
+        # 构造产品文档，并加入当前用户 ID（字符串形式）
+        product = {
+            "user_id": current_user.get_id(),
+            "description": description,
+            "price": price,
+            "delivery_location": delivery_location,
+            "inventory": inventory,
+            "tag": tag,
+            "image": image_filename
+        }
+        mongo.db.products.insert_one(product)
+        flash("Product posted successfully!", "success")
+        return redirect(url_for('profile'))
+    # GET 请求：将当前用户传递给模板
+    return render_template('profile.html', user=current_user)
 
 # Run the Flask App
 if __name__ == '__main__':
