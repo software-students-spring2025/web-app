@@ -1,5 +1,6 @@
 import os
 import subprocess
+import datetime 
 from flask import Flask, render_template, request, redirect, url_for
 import pymongo 
 from bson.objectid import ObjectId
@@ -70,7 +71,7 @@ def create_app():
     @app.route("/")
     @login_required
     def home(): 
-        return render_template('homescreen.html', username=current_user.username)
+        return render_template('Home.html', username=current_user.username)
 
     @app.route("/login", methods=["GET", "POST"])
     def login():
@@ -109,18 +110,41 @@ def create_app():
         logout_user()
         return redirect(url_for('login'))
 
-    @app.route("/goHome")
+    @app.route("/workouts")
     @login_required
-    def goHome():
-        return redirect(url_for('home'))
-
+    def workouts():
+        docs = db.messages.find({"dbType": "Workouts"}).sort("created_at", -1)
+        return render_template('Workouts.html', docs=docs)
+    
+    @app.route("/diets")
+    @login_required
+    def diets():
+        docs = db.messages.find({"dbType": "diet"}).sort("created_at", -1)
+        return render_template('Diet.html', docs=docs)
+    
+    @app.route("/settings")
+    @login_required
+    def settings():
+        return render_template("Home.html")
+    
+    @app.route("/addWorkout")
+    @login_required
+    def add_workout():
+        return render_template("addWorkout.html")
+    
+    @app.route("/addDiet")
+    @login_required
+    def add_diet():
+        return render_template("addMeal.html")
+    
+    
     @app.route("/showBoth")
     @login_required
     def showBoth():
         # Add correct Database call (get all docs in the database to display)
         db = app.config['db']
         if db:
-            docs = list(db.documents.find())
+            docs = list(db.messages.find())
         return render_template('showBothScreen' , docs = docs) # Add the correct name for template
 
     @app.route("/create/<dbType>" , methods=["POST"])
@@ -131,22 +155,23 @@ def create_app():
             if dbType == 'Diet': #would it be called diet?
                 data = {
                     "meal_name": request.form.get("meal_name"),
-                    "date_time": request.form.get("datetime"),
                     "calories": request.form.get("calories"),
                     "protein": request.form.get("protein"),
                     "carbohydrates": request.form.get("carbohydrates"),
                     "fat": request.form.get("fat"),
+                    "date": datetime.datetime.utcnow(),
                     "dbType": "diet",
                     "user": current_user.username
                 }
             elif dbType == 'Workouts': #same question as above
                 data = {
-                    "date_time": request.form.get("datetime"),
-                    "workout_type": request.form.get("workout_type"),
+                    "workout_description": request.form.get("Workout"),
+                    "workout_type": request.form.get("WorkoutType"),
+                    "date": datetime.datetime.utcnow(),
                     "dbType": "Workouts",
                     "user": current_user.username
                 }
-            db.documents.insert_one(data)
+            db.messages.insert_one(data)
                 
         # Get the values from the fields 
         # Make a document and import it into the Database
@@ -158,7 +183,7 @@ def create_app():
         # Add correct Database call (Find the document from Database from the post_id)
         db = app.config["db"]
         if db:
-            docs = db.documents.find_one({"_id": ObjectId(post_id)})
+            docs = db.messages.find_one({"_id": ObjectId(post_id)})
         return render_template('editDocument', docs=docs) # Add the correct name for template
 
     @app.route("/edit/<post_id>/<dbType>" , methods = ["POST"])
@@ -186,8 +211,7 @@ def create_app():
                     "dbType": "Workouts",
                     "user": current_user.username
                 }
-            updated_doc = db['Diet'] if dbType == 'diet' else db['Workouts']
-            updated_doc.update_one({"_id": ObjectId(post_id)}, {"$set": updated_data})
+            db.messages.update_one({"_id": ObjectId(post_id)}, {"$set": updated_data})
         return redirect(url_for('showBoth'))
 
     @app.route("/delete/<post_id>")
@@ -196,7 +220,7 @@ def create_app():
         # Delete the document from the Database
         db = app.config["db"]
         if db:
-            db.documents.delete_one({"_id": ObjectId(post_id)})
+            db.messages.delete_one({"_id": ObjectId(post_id)})
         return redirect(url_for('showBoth'))
 
     @app.errorhandler(Exception)

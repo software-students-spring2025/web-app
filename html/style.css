@@ -17,6 +17,7 @@ nav{
 a
 {
     display: inline-block;
+    background-color: white;
     border-style: solid;
     margin: 5px;
     padding: 5px;
@@ -74,4 +75,17 @@ footer{
 .inputArea{
     top: 25%;
     text-align: center;
+}
+
+.logout-btn {
+    color: black;
+    background-color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.heading{
+    color: black; 
 }
