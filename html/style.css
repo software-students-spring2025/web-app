@@ -70,3 +70,8 @@ footer{
 .edit{
     right: 0;
 }
+
+.inputArea{
+    top: 25%;
+    text-align: center;
+}
