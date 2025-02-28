@@ -1,11 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant Roulette</title>
+    <link rel="stylesheet" href="../static/styles.css">
 </head>
-<body>
-    profile
+
+<body id="homeScreen">
+    <header>
+        <div id="appName"><a href="/home">RR</a></div>
+        <div id="profile"><a href="/profile">Profile</a></div>
+        <div id="addFriends"><a href="/friends">Friends</a></div>
+        <div id="logOut"> <a href="/logout">Log Out</a></div>
+    </header>
+    <h1>PROFILE</h1>
+    <div>
+        Welcome, user!
+    </div>
+    <div class="profileCard">
+        <p id="profileNickname"><strong>Nickname:</strong></p>
+        <p id="profileFavoriteCuisine"><strong>Favorite Cuisine:</strong></p>
+        <p id="profileBio"><strong>Bio:</strong></p>
+    </div>
+    <div class="profileYourRestaurants">
+        <h2>Your Restaurants</h2>
+        <div id="yourRestaurants"></div>
+    </div>
 </body>
+
 </html>
