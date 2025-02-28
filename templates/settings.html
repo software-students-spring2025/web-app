@@ -6,20 +6,26 @@
   <title>Settings</title>
   <style>
 
-    body {
-      background-color: #2d2d2d;
+    html, body {
+      background-color: #ffffff;
       font-family: Arial, sans-serif;
       color: #ffffff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
     }
 
     header, footer {
-      background-color: #212121;
       padding: 1em;
       text-align: center;
     }
 
     header h1, footer {
-      color: #C29FEE;
+      color: #000000;
+      
     }
 
     main { 
@@ -27,17 +33,18 @@
       flex-direction: column;
       align-items: center;
       padding: 2em;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
     }
 
     form h2 {
-      color: #C29FEE;
+      color: #3f4b8a;
       margin-top: 0;
+      text-shadow: 1px 1px #ffffff;
     }
 
     label {
       display: block;
       margin-bottom: 0.5em;
+      color: #000000;
     }
 
     input[type="text"], select {
@@ -49,7 +56,7 @@
     }
 
     button[type="submit"] {
-      background-color: #5D2A9C;
+      background-color: #5c6BC0;
       color: #ffffff;
       padding: .5em 1em;
       border: none;
@@ -62,7 +69,7 @@
     }
 
     button[type="submit"]:hover, button[type="submit"]:focus {
-      background-color: #9B59B6;
+      background-color: #3f4b8a;
     }
 
     #logout-form button[type="submit"] {
@@ -70,8 +77,14 @@
     }
 
     #logout-form button[type="submit"]:hover, #logout-form button[type="submit"]:focus {
-      background-color: #FF6666;
+      background-color: #CC0033;
     }
+
+    section {
+      padding: 10px;
+    }
+
+  
   </style>
 </head>
 
