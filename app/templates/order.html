@@ -2,47 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% if category %}{{ category }} Menu{% else %}Select a Category{% endif %}</title>
+    <title>{% if category or query %}{{ category if category else 'Search Results' }} Menu{% else %}Select a Category{% endif %}</title>
 </head>
 <body>
     <a href="{{ url_for('home') }}">Home</a>
     &emsp;
     <a href="{{ url_for('cart') }}">View Cart</a>
-
-    {% if not category %}
+    {% if category or query %}
+        &emsp;
+        <a href="{{ url_for('order') }}">Back to Categories</a>
+        <h1>{{ category if category else 'Search Results' }} Menu</h1>
+        <form method="GET" action="{{ url_for('order') }}">
+            <input type="hidden" name="category" value="{{ category }}">
+            <input type="text" name="query" placeholder="Search menu items..." value="{{ query }}">
+            <button type="submit">Search</button>
+        </form>
+        <p>View our seasonal menu items below:</p>
+        <ul>
+            {% for item in menu_items %}
+            <li>
+                <a href="{{ url_for('item_info', item_id=item.item_id) }}">
+                    <strong>{{ item.name }}</strong>
+                </a>: {{ item.description }}
+                <a href="{{ url_for('add_to_cart', item_id=item.item_id, category=category, query=query) }}">Add to Cart</a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% if query %}
+        <br>
+        <a href="{{ url_for('order', category=category) }}">Clear Search</a>
+        {% endif %}
+    {% else %}
         <h2>Choose a Category:</h2>
         <ul>
             {% for cat in categories %}
             <li><a href="{{ url_for('order', category=cat) }}">{{ cat }}</a></li>
             {% endfor %}
         </ul>
-    {% else %}
-        &emsp;
-        <a href="{{ url_for('order') }}">Back to Categories</a>
-
-        <h1>{{ category }} Menu</h1>
-
-        <form method="GET" action="{{ url_for('order', category=category) }}">
-            <input type="text" name="query" placeholder="Search menu items..." value="{{ request.args.get('query', '') }}">
-            <button type="submit">Search</button>
-        </form>
-
-        <p>View our seasonal menu items below:</p>
-        <ul>
-            {% for item in menu_items %}
-            <li>
-                <a href="{{ url_for('item_info', item_id=item.item_id) }}">
-                <strong>{{ item.name }}</strong>
-                </a>: {{ item.description }}
-                <a href="{{ url_for('add_to_cart', item_id=item.item_id, category=category, query=request.args.get('query', '')) }}">Add to Cart</a>
-            </li>
-            {% endfor %}
-        </ul>
-
-        {% if request.args.get('query') %}
-        <br>
-        <a href="{{ url_for('order', category=category) }}">Clear Search</a>
-        {% endif %}
     {% endif %}
 </body>
 </html>
