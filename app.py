@@ -37,14 +37,14 @@ def register():
         return redirect(url_for("login"))  # Redirect to login after successful registration
     return render_template("register.html")
 
-# Search Page
+# TODO-Search Page
 @app.route("/search", methods=["GET"])
 def search():
     
 
     return render_template("search.html")
 
-# Upload Page
+# TODO-Upload Page
 @app.route("/upload", methods=["GET", "POST"])
 def upload():
 
