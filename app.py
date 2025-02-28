@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from database import get_tasks
+from database import get_tasks, add_task
 
 app = Flask(__name__)
 
@@ -8,6 +8,17 @@ app = Flask(__name__)
 def home():
     tasks = get_tasks()  # Retrieves all tasks from the database
     return render_template('index.html', tasks=tasks)
+
+@app.route('/add',methods=['POST','GET'])
+def add():
+    if request.method == 'GET':
+        return render_template('add.html')
+    title=request.form.get("title")
+    description=request.form.get("description")
+    status="pending"
+    task = {"title":title,"description":description,"status":status}
+    add_task(task)
+    return render_template('add.html', task=task)
 
 # Search route - filters tasks based on a keyword
 @app.route('/search')
