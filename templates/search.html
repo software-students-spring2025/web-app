@@ -30,7 +30,11 @@
                     {% if matching_movies %}
                     <ul>
                         {% for movie in matching_movies %}
-                            <li>{{ movie.title }}</li>
+                        <div class="movie-card">
+                            <a href="{{ url_for('movie_details', username=session['username'], title=movie.title) }}">
+                                <li>{{ movie.title }}</li>
+                            </a>
+                        </div>
                         {% endfor %}
                     </ul>
                 {% else %}
