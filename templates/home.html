@@ -1,10 +1,31 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<div class="home-page">
-		<h2>Home Page</h2>
-		<a href="/newOrder"><button type="button">Add</button></a>
-		<button type="submit">Delete</button>
-		<button type="submit">Search</button>
-	</div>
+<div class = "home-page">
+<h2>Home Page</h2>
+    <div class = "home-welcome">
+        <h3>Hi {{user}}, this is all of your orders!</h3>
+    </div>
+    <div class = "home-table">
+        <table>
+            <tr>
+                <th>Consumer Name</th>
+                <th>Price</th>
+                <th>Link to Detail</th>
+            </tr>
+            {% for order in orders %}
+                <tr>
+                    <td>{{ order.consumer_name }}</td>
+                    <td>{{ order.price }}</td>
+                    <td><a href="/order/{{ order.id }}">Details</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+
+    <a href="/newOrder"><button type="button">Add</button></a>
+    <button type="submit">Search</button>
+    <a href="/logout">Logout</a>
+</div>   
 {% endblock %}
