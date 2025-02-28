@@ -19,6 +19,49 @@
         >
     </div>
 
+    <!-- Filter Bar -->
+    <div class="p-4 flex space-x-3">
+        <button id="filterButton" class="px-4 py-2 rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:ring focus:ring-blue-300 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-400">
+            Filter
+        </button>
+        <button id="clearButton" class="px-4 py-2 rounded-lg text-white bg-gray-600 hover:bg-gray-700 focus:ring focus:ring-gray-300 dark:bg-gray-500 dark:hover:bg-gray-600 dark:focus:ring-gray-400">
+            Clear
+        </button>
+    </div>
+
+    <div id="filterPopup" class="fixed inset-0 bg-black bg-opacity-50 hidden flex justify-center items-center">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-lg shadow-lg w-80">
+            <h2 class="text-lg font-semibold mb-4">Filter Options</h2>
+    
+            <!-- Example Filter Options -->
+            <div class="space-y-2">
+                <label class="block">
+                    <span class="text-gray-700 dark:text-gray-300">Floor Number:</span>
+                    <input type="number" id="floorFilter" class="w-full p-2 border rounded dark:bg-neutral-700 dark:text-white">
+                </label>
+    
+                <label class="block">
+                    <span class="text-gray-700 dark:text-gray-300">Type:</span>
+                    <select id="typeFilter" class="w-full p-2 border rounded dark:bg-neutral-700 dark:text-white">
+                        <option value="">Any</option>
+                        <option value="Communal">Communal</option>
+                        <option value="Private">Private</option>
+                    </select>
+                </label>
+            </div>
+    
+            <!-- Buttons -->
+            <div class="mt-4 flex justify-end space-x-3">
+                <button id="closeFilter" class="px-4 py-2 rounded bg-gray-400 dark:bg-gray-600 hover:bg-gray-500 dark:hover:bg-gray-700 text-white">
+                    Close
+                </button>
+                <button id="applyFilter" class="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white">
+                    Apply
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Results Container -->
     <div id="resultsContainer" class="p-4">
         <ul id="resultsList" class="space-y-3"></ul>
@@ -28,6 +71,40 @@
         document.addEventListener("DOMContentLoaded", async function() {
             const searchInput = document.getElementById("searchInput");
             const resultsList = document.getElementById("resultsList");
+            const filterButton = document.getElementById("filterButton");
+            const filterPopup = document.getElementById("filterPopup");
+            const clearButton = document.getElementById("clearButton");
+
+            const filters = {
+                "floor" : null,
+                "type" : null
+            }
+
+
+            filterButton.addEventListener("click", ()=>{
+                filterPopup.classList.remove("hidden");
+            })
+
+
+            document.getElementById("closeFilter").addEventListener("click", ()=>{
+                filterPopup.classList.add("hidden");
+            })
+
+            document.getElementById("applyFilter").addEventListener("click", ()=>{
+                filters["floor"] = document.getElementById("floorFilter").value || null;
+                filters["type"] = document.getElementById("typeFilter").value || null;
+                console.log(filters);
+                filterPopup.classList.add("hidden");
+                search(searchInput.value);
+            })
+
+            clearButton.addEventListener("click", ()=>{
+                filters["floor"] = null;
+                filters["type"] = null;
+                document.getElementById("floorFilter").value = "";
+                document.getElementById("typeFilter").value = "";
+                search(searchInput.value);
+            })
 
             // filter and display search results function
             async function search(query) {
@@ -35,7 +112,15 @@
                 if (!query.trim()) return;  // don't search empty input
 
                 try {
-                    const response = await fetch(`/api/search?q=${query}`);
+                    
+                    let url = `/api/search?q=${query}`;
+                    if (filters["floor"]) {
+                        url += `&floor=${filters["floor"]}`;
+                    }
+                    if (filters["type"]) {
+                        url += `&type=${filters["type"]}`;
+                    }
+                    const response = await fetch(url);
                     const data = await response.json();
 
                     // check if bathrooms are found

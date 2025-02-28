@@ -89,6 +89,8 @@ def convert_objectid(obj):
 @app.route("/api/search", methods=["GET"])
 def search_api():
     query = request.args.get("q", "").lower()
+    floor_filter = request.args.get("floor")
+    type_filter = request.args.get("type")
 
     # fetch building by name (case-insensitive)
     building = pins_collection.find_one({"name": {"$regex": query, "$options": "i"}})
@@ -96,9 +98,16 @@ def search_api():
     # return empty list of bathrooms if no building found
     if not building:
         return jsonify({"bathrooms": []})
+    
+    bathroom_query = {"location_id": building["_id"]}
 
-    # fetch bathrooms associated w/ found building
-    bathrooms = list(bathrooms_collection.find({"location_id": building["_id"]}))
+    if floor_filter:
+        bathroom_query["floor"] = int(floor_filter)  # Convert to integer
+    if type_filter:
+        bathroom_query["type"] = type_filter  # Match bathroom type
+
+    # Fetch bathrooms that match filters
+    bathrooms = list(bathrooms_collection.find(bathroom_query))
 
     # convert ObjectId fields to string
     building = convert_objectid(building)
