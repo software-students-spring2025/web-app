@@ -5,6 +5,7 @@ import os
 from dotenv import load_dotenv, dotenv_values
 from pymongo.mongo_client import MongoClient
 from bson.objectid import ObjectId
+import certifi
 
 
 load_dotenv()
@@ -14,7 +15,7 @@ app = Flask(__name__)
 config = dotenv_values()
 app.config.from_mapping(config)
 
-client = pymongo.MongoClient(os.getenv("MONGO_URI"))
+client = pymongo.MongoClient(os.getenv("MONGO_URI"), ssl_ca_certs=certifi.where())
 db = client[os.getenv("MONGO_DBNAME")]
 tv_shows_collection = db.tv_shows
 
@@ -95,6 +96,13 @@ def delete():
     # If it's a GET request, display the list of shows
     shows = tv_shows_collection.find()
     return render_template("delete.html", shows=shows)
+
+"""
+@app.route("/login")
+def login():
+    db.credentials. =
+    if 
+"""
 
 @app.route("/success")
 def success():
