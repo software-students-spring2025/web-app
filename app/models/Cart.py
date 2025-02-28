@@ -17,16 +17,16 @@ class Cart:
         cart = get_mongo().carts.find_one({'customer_id': customer_id})
         if cart:
             cart['_id'] = str(cart['_id'])
-            cart['items'] = list(cart['items'])
-        return cart if cart else {'customer_id': customer_id, 'items': [], 'total_price': 0}
+            item_counts = {}
+            for item_id in cart['items']:
+                item_counts[item_id] = item_counts.get(item_id, 0) + 1
+        return cart if cart else {'customer_id': customer_id, 'items': {}, 'total_price': 0}
 
 
     @staticmethod
     def add_to_cart(customer_id, item_id):
         # make sure cart exists
         cart = Cart.get_cart(customer_id)
-        items = cart.get('items')
-
         # add item into cart ONLY if item exists
         item = get_mongo().menu_items.find_one({'item_id': item_id})
         # print("MENU ITEMS LIST: ", list(get_mongo().menu_items.find()))
@@ -46,6 +46,15 @@ class Cart:
             item_price = item.get('price') # add item price to total
             get_mongo().carts.update_one({'customer_id': customer_id}, {'$inc': {'total_price': item_price}})
             get_mongo().carts.update_one({'customer_id': customer_id}, {'$push': {'items': item_id}})
+
+            from flask import session
+            if 'cart' not in session:
+                session['cart'] = {}
+            if item_id in session['cart']:
+                session['cart'][item_id] += 1
+            else:
+                session['cart'][item_id] = 1
+            session.modified = True
 
 
     @staticmethod
@@ -68,6 +77,13 @@ class Cart:
                 get_mongo().carts.update_one({'customer_id': customer_id}, {'$inc': {'total_price': -item_price}})
             
             get_mongo().carts.update_one({'customer_id': customer_id}, {'$set': {'items': items}})
+
+            from flask import session
+            if 'cart' in session and item_id in session['cart']:
+                session['cart'][item_id] -= 1
+                if session['cart'][item_id] <= 0:
+                    del session['cart'][item_id]
+                session.modified = True
 
 
 
