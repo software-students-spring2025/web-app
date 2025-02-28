@@ -117,12 +117,37 @@ def create_app():
     @app.route("/showBoth")
     @login_required
     def showBoth():
-        docs = 0 # Add correct Database call (get all docs in the database to display)
+        # Add correct Database call (get all docs in the database to display)
+        db = app.config['db']
+        if db:
+            docs = list(db.documents.find())
         return render_template('showBothScreen' , docs = docs) # Add the correct name for template
 
     @app.route("/create/<dbType>" , methods=["POST"])
     @login_required
     def create_post(dbType):
+        db = app.config['db']
+        if db:
+            if dbType == 'Diet': #would it be called diet?
+                data = {
+                    "meal_name": request.form.get("meal_name"),
+                    "date_time": request.form.get("datetime"),
+                    "calories": request.form.get("calories"),
+                    "protein": request.form.get("protein"),
+                    "carbohydrates": request.form.get("carbohydrates"),
+                    "fat": request.form.get("fat"),
+                    "dbType": "diet",
+                    "user": current_user.username
+                }
+            elif dbType == 'Workouts': #same question as above
+                data = {
+                    "date_time": request.form.get("datetime"),
+                    "workout_type": request.form.get("workout_type"),
+                    "dbType": "Workouts",
+                    "user": current_user.username
+                }
+            db.documents.insert_one(data)
+                
         # Get the values from the fields 
         # Make a document and import it into the Database
         return redirect(url_for('showBoth'))
@@ -130,7 +155,10 @@ def create_app():
     @app.route("/edit/<post_id>")
     @login_required
     def edit(post_id): 
-        docs = 0 # Add correct Database call (Find the document from Database from the post_id)
+        # Add correct Database call (Find the document from Database from the post_id)
+        db = app.config["db"]
+        if db:
+            docs = db.documents.find_one({"_id": ObjectId(post_id)})
         return render_template('editDocument', docs=docs) # Add the correct name for template
 
     @app.route("/edit/<post_id>/<dbType>" , methods = ["POST"])
@@ -138,12 +166,37 @@ def create_app():
     def edit_post(post_id, dbType):
         # Get the values from the fields 
         # Make a document and import it into the Database
+        db = app.config["db"]
+        if db:
+            if dbType == 'Diet': 
+                updated_data = {
+                    "meal_name": request.form.get("meal_name"),
+                    "date_time": request.form.get("datetime"),
+                    "calories": request.form.get("calories"),
+                    "protein": request.form.get("protein"),
+                    "carbohydrates": request.form.get("carbohydrates"),
+                    "fat": request.form.get("fat"),
+                    "dbType": "diet",
+                    "user": current_user.username
+                }
+            elif dbType == 'Workouts': 
+                updated_data = {
+                    "date_time": request.form.get("datetime"),
+                    "workout_type": request.form.get("workout_type"),
+                    "dbType": "Workouts",
+                    "user": current_user.username
+                }
+            updated_doc = db['Diet'] if dbType == 'diet' else db['Workouts']
+            updated_doc.update_one({"_id": ObjectId(post_id)}, {"$set": updated_data})
         return redirect(url_for('showBoth'))
 
     @app.route("/delete/<post_id>")
     @login_required
     def delete(post_id):
         # Delete the document from the Database
+        db = app.config["db"]
+        if db:
+            db.documents.delete_one({"_id": ObjectId(post_id)})
         return redirect(url_for('showBoth'))
 
     @app.errorhandler(Exception)
