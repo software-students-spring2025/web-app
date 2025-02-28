@@ -6,6 +6,7 @@ from dotenv import load_dotenv, dotenv_values
 from pymongo.mongo_client import MongoClient
 from bson.objectid import ObjectId
 import certifi
+import re
 
 
 load_dotenv()
@@ -65,7 +66,8 @@ def add():
 def search():
     query = request.args.get("query")
     if query:
-        results = tv_shows_collection.find({"title": {"$regex": query, "$options": "i"}})
+        pattern = re.compile(query, re.IGNORECASE)
+        results = tv_shows_collection.find({"title": {"$regex": pattern}})
         shows = [
             {
                 "id": str(show["_id"]),
