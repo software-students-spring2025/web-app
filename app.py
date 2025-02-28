@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
-from database import get_tasks, add_task
+from database import get_tasks, add_task, delete_task
+from bson.objectid import ObjectId
 
 app = Flask(__name__)
 
@@ -20,7 +21,16 @@ def add():
     add_task(task)
     return render_template('add.html', task=task)
 
-# Search route - filters tasks based on a keyword
+@app.route('/delete/<task_id>',methods=['POST'])
+def delete(task_id):
+    success = delete_task(task_id)
+    if success:
+        print(f"Task {task_id} deleted successfully")
+    else: 
+        print(f"Failed to delete task {task_id}.")
+    tasks = get_tasks()  # Retrieves all tasks from the database
+    return render_template('index.html', tasks=tasks)
+
 @app.route('/search')
 def search():
     query = request.args.get('query', '').lower()  # Retrieve the search keyword
