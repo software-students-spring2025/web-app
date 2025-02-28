@@ -96,7 +96,10 @@
                 <b>Tags:</b> {{ show.tags | join(', ') }}<br>
                 <b>Date:</b> {{ show.date }}<br>
                 <b>Comment:</b> "{{ show.comment }}"
-
+                <br />
+                <a href="{{ url_for('edit', post_id=show._id) }}">
+                    <button>Edit</button>
+                </a>
                 <form action="{{ url_for('delete') }}" method="POST" style="margin-top:10px;">
                     <input type="hidden" name="show_id" value="{{ show._id }}">
                     <button type="submit">Delete</button>
