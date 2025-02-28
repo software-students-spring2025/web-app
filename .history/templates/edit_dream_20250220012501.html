@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>edit_dream Page</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="edit-container">
+      <a class="back-link" href="/home"> ← Back</a>
+      <div id="tag-container">
+        {% for tag in tags %}
+        <button class="tag">{{ tag }} <span>&times;</span></button>
+        {% endfor %}
+      </div>
+      <div class="input-container">
+        <input type="text" id="dream-description" placeholder="Description" />
+      </div>
+      <div class="button-container">
+        <button class="edit-button">Edit</button>
+        <button class="edit-button">Delete</button>
+      </div>
+      <div class="bear">
+        <img src="/static/images/homepg_bear.svg" alt="home-bear" />
+      </div>
+    </div>
+  </body>
+</html>

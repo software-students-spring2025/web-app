@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Add Dream</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+    <style>
+      /* Example styles for tag buttons */
+      .tag {
+        background-color: #eee;
+        border: 1px solid #ccc;
+        padding: 5px 10px;
+        margin: 5px;
+        cursor: pointer;
+      }
+      .tag.selected {
+        background-color: #ffd700; /* Changes color when selected */
+        border-color: #ffa500;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="adddream-container">
+      <a class="back-link" href="/home">← Back</a>
+
+      <!-- Notification box for flash messages -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="notification-box">
+            {% for category, message in messages %}
+              <p class="notification {{ category }}">{{ message }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      <div class="bear-header">
+        <img src="/static/images/dream_bear.svg" alt="dream-bear" class="bear-image">
+      </div>
+
+      <form action="/add_dream" method="POST">
+        <div class="date-container">
+          <label class="date-label" for="day">Date</label>
+          <div class="date-inputs">
+            <input type="text" id="day" name="day" placeholder="Day">
+            <input type="text" id="month" name="month" placeholder="Month">
+            <input type="text" id="year" name="year" placeholder="Year">
+          </div>
+        </div>
+
+        <div class="tags-container">
+          <p>Choose Your Tags:</p>
+          <!-- Only these four tag buttons remain -->
+          <button type="button" class="tag">Happy</button>
+          <button type="button" class="tag">Funny</button>
+          <button type="button" class="tag">Sad</button>
+          <button type="button" class="tag">Scared</button>
+        </div>
+        <!-- Hidden field to store selected tags -->
+        <input type="hidden" id="tags" name="tags" value="">
+
+        <div class="description-container">
+          <label for="dream-description">Input Description</label>
+          <textarea id="dream-description" name="dream-description" placeholder="Description..."></textarea>
+        </div>
+
+        <div class="button-container">
+          <button type="submit" class="save-dream-button">Save Your Dream</button>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const tagButtons = document.querySelectorAll(".tag");
+        const hiddenTagsField = document.getElementById("tags");
+        let selectedTags = [];
+
+        tagButtons.forEach(button => {
+          button.addEventListener("click", function() {
+            const tag = this.textContent.trim();
+            if (selectedTags.includes(tag)) {
+              // Remove tag if already selected
+              selectedTags = selectedTags.filter(t => t !== tag);
+              this.classList.remove("selected");
+            } else {
+              // Add tag if not selected
+              selectedTags.push(tag);
+              this.classList.add("selected");
+            }
+            // Update the hidden input with a comma-separated list of selected tags
+            hiddenTagsField.value = selectedTags.join(",");
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
