@@ -1,0 +1,123 @@
+*{
+    margin:0;
+    padding:0;
+    /* border: solid; */
+    font-family: sans-serif;
+}
+
+:root {
+    --primary-color: #c93c53;   /* Main theme color */
+    --secondary-color: #edf2f4; /* Accent color */
+    --background-color: #8d99ae; /* Background color */
+    --text-color1: #1a1b26; /* Default text color */
+    --text-color2: #f5f5f5; /* Default text color */
+    --button-color: #782b34; /* Button background */
+    --button-text-color: #edf2f4; /* Button text */
+}
+
+
+#loginSection, #regSection{
+    display: flex;
+    flex-direction: column;
+    background-color: var(--primary-color);
+
+    width: 50%;
+    height: fit-content;
+
+    padding: 20px;
+    border-radius: 7px;
+    border: solid var(--button-color) 2px;
+
+}
+
+
+#loginScreen, #registerScreen{
+    background-color: var(--background-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+
+}
+
+#loginForm, #regForm{
+    display: flex;
+    flex-direction: column;
+}
+
+h1{
+    text-align: center;
+    color: var(--text-color1);
+    font-weight: 900;
+    align-self: center;
+    margin: 15px;
+
+    font-size: 23px;;
+    width: 150px;
+}
+
+#username, #password{
+    font-weight: 700;
+    color: var(--text-color2);
+    margin-bottom: 5px;;
+}
+
+#loginForm div{
+    display: flex;
+    flex-direction: column;
+}
+
+.box{
+    border: solid 2px var(--button-color);
+    padding: 5px;
+
+    margin-bottom: 10px;
+
+    width: 92%;
+    align-self: center;
+
+
+}
+
+
+#logButton{
+    padding: 5px;
+    width: 100px;
+    color: var(--button-text-color);
+    background-color: var(--button-color);
+
+    border: 2px solid;
+
+    margin-top: 20px;
+
+    align-self: center;
+
+    border-radius: 2px;
+
+}
+
+
+#noAccount{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    margin-top: 20px;
+
+}
+
+#noAccount h5{
+    color: var(--text-color1);
+    margin-bottom: 5px;
+
+}
+ a:link, a:visited{
+    color: var(--text-color2);
+ }
+ a:active{
+    color: var(--text-color1);
+ }
+
+
