@@ -4,6 +4,75 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Settings</title>
+  <style>
+
+    body {
+      background-color: #2d2d2d;
+      font-family: Arial, sans-serif;
+      color: #ffffff;
+    }
+
+    header, footer {
+      background-color: #212121;
+      padding: 1em;
+      text-align: center;
+    }
+
+    header h1, footer {
+      color: #C29FEE;
+    }
+
+    main { 
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2em;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    form h2 {
+      color: #C29FEE;
+      margin-top: 0;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5em;
+    }
+
+    input[type="text"], select {
+      width: 100%;
+      padding: 0.5em;
+      margin-bottom: 1em;
+      border: 1px solid #383838;
+      border-radius: 5px;
+    }
+
+    button[type="submit"] {
+      background-color: #5D2A9C;
+      color: #ffffff;
+      padding: .5em 1em;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+      margin: 0 auto; 
+      display: block;
+      margin-bottom: 0.75em;
+    }
+
+    button[type="submit"]:hover, button[type="submit"]:focus {
+      background-color: #9B59B6;
+    }
+
+    #logout-form button[type="submit"] {
+      background-color: #FF0033;
+    }
+
+    #logout-form button[type="submit"]:hover, #logout-form button[type="submit"]:focus {
+      background-color: #FF6666;
+    }
+  </style>
 </head>
 
 <body>
@@ -20,9 +89,9 @@
       <section>
         <h2>Account Settings</h2>
         <label for="username">Username:</label>
-        <input type="text" id="username" name="username">
+        <input type="text" id="username" name="username" value="FooBarstein" readonly>
         <label for="email">Email:</label>
-        <input type="text" id="email" name="email">
+        <input type="text" id="email" name="email" value="f.barstein@hotmail.com" readonly>
       </section>
 
       <section>
@@ -34,7 +103,7 @@
           <option value="large">Large</option>
         </select>
       </section>
-      <button type="submit">Save Changes</button>
+      <button type="submit" id="save-changes">Save Changes</button>
     </form>
     <form id="logout-form" action="/logout" method="post">
       <button type="submit">Logout</button>
