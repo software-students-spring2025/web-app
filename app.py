@@ -90,7 +90,7 @@ def create_app():
             "Created_by" : created_by,
             "created_at": datetime.datetime.utcnow(),
         }
-        db.exhibits.insert_one(exhibition)
+        db.exhibitions.insert_one(exhibition)
 
         return redirect(url_for("home"))
     
@@ -104,7 +104,7 @@ def create_app():
         Returns:
             rendered template (str): The rendered HTML template.
         """
-        exhibition = db.exhibits.find_one({"_id": ObjectId(post_id)})
+        exhibition = db.exhibitions.find_one({"_id": ObjectId(post_id)})
         return render_template("edit.html", exhibition=exhibition)
 
     @app.route("/edit/<post_id>", methods=["POST"])
@@ -144,7 +144,7 @@ def create_app():
             "Created at": datetime.datetime.utcnow(),
         }
 
-        db.exhibition.update_one({"_id": ObjectId(post_id)}, {"$set": exhibition})
+        db.exhibitions.update_one({"_id": ObjectId(post_id)}, {"$set": exhibition})
 
         return redirect(url_for("home"))
 
@@ -172,8 +172,9 @@ def create_app():
         Returns:
             redirect (Response): A redirect response to the home page.
         """
-        db.exhibits.delete_many({"Created by": Created_by, "Exhibition Title": Exhibition_title})
+        db.exhibitions.delete_many({"Created by": Created_by, "Exhibition Title": Exhibition_title})
         return redirect(url_for("home"))
+    return app
 
 ### Here is where the app gets created: ###
 app = create_app()
