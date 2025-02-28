@@ -44,7 +44,7 @@ def create_app():
         return None
     
     # Start Docker containers
-    start_docker_compose()
+    # start_docker_compose()
     
     # MongoDB connection with error handling
     try:
@@ -70,7 +70,7 @@ def create_app():
     
     @app.route("/")
     @login_required
-    def home(): 
+    def home():
         return render_template('Home.html', username=current_user.username)
 
     @app.route("/login", methods=["GET", "POST"])
@@ -127,12 +127,12 @@ def create_app():
     def settings():
         return render_template("Home.html")
     
-    @app.route("/addWorkout")
+    @app.route("/add_workout")
     @login_required
     def add_workout():
         return render_template("addWorkout.html")
     
-    @app.route("/addDiet")
+    @app.route("/add_diet")
     @login_required
     def add_diet():
         return render_template("addMeal.html")
@@ -163,6 +163,8 @@ def create_app():
                     "dbType": "diet",
                     "user": current_user.username
                 }
+                db.messages.insert_one(data)
+                return redirect(url_for('diets'))
             elif dbType == 'Workouts': #same question as above
                 data = {
                     "workout_description": request.form.get("Workout"),
@@ -171,11 +173,11 @@ def create_app():
                     "dbType": "Workouts",
                     "user": current_user.username
                 }
-            db.messages.insert_one(data)
+                db.messages.insert_one(data)
+                return redirect(url_for('workouts'))
                 
         # Get the values from the fields 
         # Make a document and import it into the Database
-        return redirect(url_for('showBoth'))
 
     @app.route("/edit/<post_id>")
     @login_required
@@ -225,7 +227,7 @@ def create_app():
 
     @app.errorhandler(Exception)
     def handle_error(e): 
-        return render_template ("error.html", error=e)
+        return render_template("error.html", error=e)
 
     return app
 
