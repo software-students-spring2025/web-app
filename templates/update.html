@@ -61,13 +61,13 @@
         button:hover {
             background: #0056b3;
         }
-        .back-btn {
+        .cancel-btn {
             display: block;
             width: 200px;
             text-align: center;
             margin-top: 15px;
             padding: 12px;
-            background: #28a745;
+            background: #d41c1c;
             color: white;
             font-size: 1rem;
             text-decoration: none;
@@ -80,20 +80,24 @@
     </style>
 </head>
 <body>
-    <h1>Add New Task</h1>
-
+    <h1>Update Task</h1>
     <div class="form-container">
-        <form action="{{ url_for('add') }}" method="POST">
-            <label for="title">Task Title:</label>
-            <input type="text" id="title" name="title" placeholder="Enter task title" required>
-
-            <label for="description">Task Description:</label>
-            <input type="text" id="description" name="description" placeholder="Enter task description" required>
-
-            <button type="submit">Add Task</button>
-        </form>
+    <form action="{{ url_for('update', task_id=task['_id']) }}" method="POST">
+        <label for="title">Task Title:</label>
+        <input type="text" name="title" value="{{ task['title'] }}" required>
+        
+        <label for="description">Task Description:</label>
+        <input type="text" name="description" value="{{ task['description'] }}" required>
+        
+        <label for="status">Status:</label>
+        <select name="status">
+            <option value="pending" {% if task['status'] == 'pending' %}selected{% endif %}>Pending</option>
+            <option value="completed" {% if task['status'] == 'completed' %}selected{% endif %}>Completed</option>
+        </select>
+        
+        <button type="submit">Update Task</button>
+    </form>
     </div>
-
-    <a href="{{ url_for('home') }}" class="back-btn">Back to Home</a>
+    <a href="{{ url_for('home') }}" class="cancel-btn">Cancel</a>
 </body>
 </html>
