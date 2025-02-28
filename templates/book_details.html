@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ book.title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="book-details-container">
+        <h1>{{ book.title }}</h1>
+        <h3>Author: {{ book.author }}</h3>
+        <p><strong>Edition:</strong> {{ book.edition }}</p>
+        <p><strong>Year:</strong> {{ book.year }}</p>
+        <p><strong>Condition:</strong> {{ book.condition }}</p>
+        <p><strong>Price:</strong> ${{ book.price }}</p>
+        <p><strong>Format:</strong> {{ book.format }}</p>
+
+        <button class="profile-btn">Seller’s Profile</button>
+
+        <a href="{{ url_for('home') }}" class="back-link">Back to Home</a>
+    </div>
+</body>
+</html>
