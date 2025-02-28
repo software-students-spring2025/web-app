@@ -174,6 +174,7 @@ def create_app():
         """
         db.exhibitions.delete_many({"Created by": Created_by, "Exhibition Title": Exhibition_title})
         return redirect(url_for("home"))
+    return app
 
 ### Here is where the app gets created: ###
 app = create_app()
