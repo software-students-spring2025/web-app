@@ -7,7 +7,7 @@
 .vscode/settings.json
 
 # emacs backups
-*
+*~
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
