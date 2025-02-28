@@ -39,7 +39,6 @@ def create_app():
     ### Add your functions here: ###
     @app.route("/")
     def home():
-        # Fetch upcoming exhibitions (filter out past ones)\
         
         today = date.today()
         today = today.strftime("%Y-%m-%d")
@@ -48,25 +47,15 @@ def create_app():
         print("Exhibitions matching query:", exhibitions)
     
         return render_template("index.html", exhibitions=exhibitions)
-        # exhibitions = [
-        #     {
-        #         "title": "Test Exhibition",
-        #         "dates": {"start": "2025-03-15", "end": "2025-04-30"},
-        #         "location": "ArtSpace Gallery",
-        #         "cost": 10.0,
-        #         "artist": {"name": "Test Artist"},
-        #         "art_style": "Impressionist",
-        #         "art_medium": "Paintings",
-        #         "event_type": "Launch Party",
-        #         "description": "An exhibition for testing.",
-        #         "image_url": "",
-        #     }
-        # ]
-        #return render_template("index.html", exhibitions=exhibitions)
 
-
-
-
+    @app.route("/exhibition/<exhibition_id>")
+    def exhibition_detail(exhibition_id):
+        exhibition = db.exhibitions.find_one({"_id": ObjectId(exhibition_id)})
+        
+        if not exhibition:
+            return "Exhibition not found", 404
+        
+        return render_template("exhibition_detail.html", exhibition=exhibition)
 
     @app.route("/create", methods=["POST"])
     def create_post():
