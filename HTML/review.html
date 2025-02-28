@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Write a Review - Grocery Quest</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Write a Review for {{ store.name }}</h1>
+        <nav>
+            <a href="{{ url_for('store_detail', store_id=store_id) }}">Back to Store</a>
+            <a href="{{ url_for('logout') }}">Log Out</a>
+        </nav>
+    </header>
+
+    <main>
+        <form action="{{ url_for('write_review', store_id=store_id) }}" method="POST">
+            <!-- Price Range Rating (1-5) -->
+            <label for="price_range">Price Range (1-5):</label>
+            <input type="number" id="price_range" name="price_range" min="1" max="5" required>
+
+            <!-- Variety Rating (1-5) -->
+            <label for="variety">Variety (1-5):</label>
+            <input type="number" id="variety" name="variety" min="1" max="5" required>
+
+            <!-- Customer Service Rating (1-5) -->
+            <label for="customer_service">Customer Service (1-5):</label>
+            <input type="number" id="customer_service" name="customer_service" min="1" max="5" required>
+
+            <!-- Written Review -->
+            <label for="review">Your Review:</label>
+            <textarea id="review" name="review" required></textarea>
+
+            <button type="submit">Submit Review</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Grocery Quest</p>
+    </footer>
+</body>
+</html>
+

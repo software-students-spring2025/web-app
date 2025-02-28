@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Review - Grocery Quest</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Edit Your Review</h1>
+        <nav>
+            <a href="{{ url_for('store_detail', store_id=store_id) }}">Back to Store</a>
+            <a href="{{ url_for('logout') }}">Log Out</a>
+        </nav>
+    </header>
+
+    <main>
+        <form action="{{ url_for('edit_review', store_id=store_id, review_id=review.id) }}" method="POST">
+            <label for="review">Your Review:</label>
+            <textarea id="review" name="review" required>{{ review.text }}</textarea>
+
+            <button type="submit">Update Review</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Grocery Quest</p>
+    </footer>
+</body>
+</html>

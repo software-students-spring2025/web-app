@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store Search - Grocery Quest</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Explore Stores</h1>
+    </header>
+
+    <main>
+        <section id="search-section">
+            <input type="text" id="store-search" placeholder="Search for stores..." oninput="searchStores()">
+        </section>
+
+        <!-- Flyer Button to show/hide filter -->
+        <button class="flyer-btn" id="flyer-btn" onclick="toggleFilterForm()">Filter</button>
+
+        <!-- Filter Form (Initially Hidden) -->
+        <div id="filter-form" class="filter-form">
+            <h3>Filter Results</h3>
+            <form action="{{ url_for('store_search') }}" method="GET">
+                <label for="price_range">Price Range:</label>
+                <input type="range" id="price_range" name="price_range" min="0" max="100" step="1">
+
+                <label for="variety">Variety:</label>
+                <input type="range" id="variety" name="variety" min="0" max="10" step="1">
+
+                <label for="customer_service">Customer Service Rating:</label>
+                <input type="range" id="customer_service" name="customer_service" min="0" max="5" step="1">
+
+                <label for="distance">Distance (in miles):</label>
+                <input type="number" id="distance" name="distance" min="0" step="1" placeholder="Distance">
+
+                <button type="submit" class="apply-filters">Apply Filters</button>
+            </form>
+        </div>
+
+
+        <section id="store-list">
+            {% for store in stores %}
+                <div class="store-item">
+                    <a href="{{ url_for('store_detail', store_id=store.id) }}">
+                        <img src="{{ url_for('static', filename=store.image) }}" alt="{{ store.name }}">
+                    </a>
+                    <div class="store-info">
+                        <h3>{{ store.name }}</h3>
+                        <p>{{ store.description }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </section>
+
+        <section id="add-store-button">
+            <a href="{{ url_for('add_store') }}">
+                <button>Add New Store</button>
+            </a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Grocery Quest</p>
+    </footer>
+
+    <script>
+        //basic search functionality (to be enhanced with Flask)
+        function searchStores() {
+            let query = document.getElementById('store-search').value.toLowerCase();
+            let stores = document.querySelectorAll('.store-item');
+            stores.forEach(store => {
+                let storeName = store.querySelector('h3').textContent.toLowerCase();
+                if (storeName.includes(query)) {
+                    store.style.display = '';
+                } else {
+                    store.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

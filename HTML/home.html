@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Grocery Scout</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Welcome to Grocery Scout</h1>
+        <nav>
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('store_search') }}">Explore Stores</a>
+            <a href="{{ url_for('favorite_stores') }}">Favorite Stores</a>
+            <a href="{{ url_for('logout') }}">Log Out</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="food-guessing">
+            <h2>Guess the Price of This Item</h2>
+            <img src="{{ url_for('static', filename='images/food_item.jpg') }}" alt="Food Item Image">
+            <p>How much do you think this item costs?</p>
+
+            <form action="{{ url_for('submit_guess') }}" method="POST">
+                <input type="number" id="guess" name="guess" placeholder="Enter your guess" required>
+                <button type="submit">Submit Guess</button>
+            </form>
+
+            <p id="result"></p> <!-- This will show the result after submission -->
+        </section>
+
+        <section id="explore-stores">
+            <p>Ready to explore grocery stores?</p>
+            <a href="{{ url_for('store_list') }}">
+                <button>Explore Stores</button>
+            </a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Grocery Quest</p>
+    </footer>
+</body>
+</html>
