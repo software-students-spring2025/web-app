@@ -2,7 +2,6 @@
 
 """
 Pinkberries flask-based web application.
-
 """
 
 import os
@@ -10,7 +9,8 @@ import datetime
 from flask import Flask, render_template, request, redirect, url_for
 import pymongo
 from bson.objectid import ObjectId
-from dotenv import load_dotenv, dotenv_values ### You will need to install dotenv from terminal
+from dotenv import load_dotenv, dotenv_values  ### You will need to install dotenv from terminal
+from datetime import date
 
 load_dotenv()  # load environment variables from .env file
 
@@ -19,7 +19,6 @@ def create_app():
     Create and configure the Flask application.
     returns: app: the Flask application object
     """
-
     app = Flask(__name__)
     # load flask config from env variables
     config = dotenv_values()
@@ -35,10 +34,28 @@ def create_app():
         print(" * MongoDB connection error:", e)
 
 
-    ### Add your functions here: ###
 
+
+    ### Add your functions here: ###
     @app.route("/")
     def home():
+        
+        today = date.today()
+        today = today.strftime("%Y-%m-%d")
+
+        exhibitions = list(db.exhibitions.find({"dates.end": {"$gte": today}}))
+        print("Exhibitions matching query:", exhibitions)
+    
+        return render_template("index.html", exhibitions=exhibitions)
+
+    @app.route("/exhibition/<exhibition_id>")
+    def exhibition_detail(exhibition_id):
+        exhibition = db.exhibitions.find_one({"_id": ObjectId(exhibition_id)})
+        
+        if not exhibition:
+            return "Exhibition not found", 404
+        
+        return render_template("exhibition_detail.html", exhibition=exhibition)
 
     @app.route("/create_exhibit", methods=["POST"])
     def create_exhibit():
@@ -159,7 +176,6 @@ def create_app():
         return redirect(url_for("home"))
 
 ### Here is where the app gets created: ###
-
 app = create_app()
 
 if __name__ == "__main__":
