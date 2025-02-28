@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirm Delete{% endblock %}
+
+{% block content %}
+<h2 class="text-center mb-4">Confirm Deletion</h2>
+
+<p class="text-center">Are you sure you want to delete the product <strong>{{ product['item'] }}</strong>?</p>
+<p class="text-center text-muted">This action cannot be undone.</p>
+
+<div class="text-center">
+    <form action="{{ url_for('delete_product', product_id=product['_id']) }}" method="post">
+        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        <a href="{{ url_for('home') }}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}
