@@ -8,7 +8,43 @@
 
         <!-- CSS -->
         <style>
+            /* Header */
+            header {
+                border-bottom: 1px solid;
+                padding-bottom: 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
 
+            body {
+                margin: 0;
+            }
+
+            form {
+                margin: 10px;
+                display: flex;
+                flex-direction: column;
+            }
+
+            textarea {
+                resize: vertical;
+                min-height: 50px;
+            }
+
+            .save {
+                margin: 10px;
+            }
+
+            .back {
+                margin: 10px;
+                font-size: 30px;
+                padding: 0px;
+                position: absolute;
+                left: 10px;
+                border: none;
+                background: none
+            }
         </style>
     </head>
 
@@ -18,11 +54,12 @@
         <header>
             <!-- TEMP: placeholder href link -->
             <button class="back" onclick="location.href='details.html'">&#8592</button>
-            <h1>Event Details</h1>
+            <h1>Edit Event</h1>
         </header>
 
     <!-- Form -->
     <form>
+        <br>
         <label for="name">Event Name:</label>
         <input type="text" id="name" name="name" required>
         <br><br>
@@ -38,15 +75,14 @@
         <label for="category">Category:</label>
         <input type="text" id="category" name="category" required>
         <br><br>
-        <label for="type">Type:</label>
-        <input type="text" id="type" name="type" required>
-        <br><br>
         <label for="description">Description:</label>
-        <input type="text" id="description" name="description" required>
+        <textarea type="text" id="description" name="description" required></textarea>
         <br><br>
-    </form>
+        </form>
 
     <!-- Save Button -->
-    <button type="submit">Save Changes</button>
+    <div class="save">
+        <button type="submit">Save Changes</button>
+    </div>
      </body>
 </html>
