@@ -63,16 +63,15 @@
         <h1>Search Results</h1>
         {% if episodes %}
             <ul>
-                {% for episode in episodes %}
+                {% for show in episodes %}
                     <li>
-                        <strong>{{ episode.title }}</strong><br>
-                        Genre: {{ episode.genre }}<br>
-                        Season: {{ episode.season }}<br>
-                        Episode: {{ episode.episode }}<br>
-                        Rating: {{ episode.rating }}<br>
-                        Tags: {{ episode.tags | join(', ') }}<br>
-                        Date: {{ episode.date}}<br>
-                        Comment: {{ episode.comment }}<br>
+                        <b>Title:</b> {{ show.title }}<br>
+                        <b>Genre:</b> {{ show.genre }}<br>
+                        <b>Episode:</b> {{ show.episode }}<br>
+                        <b>Rating:</b> {{ show.rating }}<br>
+                        <b>Tags:</b> {{ show.tags | join(', ') }}<br>
+                        <b>Date:</b> {{ show.date }}<br>
+                        <b>Comment:</b> "{{ show.comment }}"
                     </li>
                 {% endfor %}
             </ul>
