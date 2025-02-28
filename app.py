@@ -158,6 +158,8 @@ def logout():
 
 
 # Profile Route
+import base64
+
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
@@ -170,28 +172,32 @@ def profile():
         inventory = request.form.get('inventory')
         tag = request.form.get('tag')
 
-        image_filename = None
+        image_data = None
+        image_type = None
         if product_image and allowed_file(product_image.filename):
-            filename = secure_filename(product_image.filename)
-            image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            product_image.save(image_path)
-            image_filename = filename
+            # 获取图片的 MIME 类型，例如 "image/png"
+            image_type = product_image.mimetype  
+            raw_bytes = product_image.read()  # 读取文件内容到内存
+            image_data = base64.b64encode(raw_bytes).decode('utf-8') 
 
-        # 构造产品文档，并加入当前用户 ID（字符串形式）
+        # 构造产品文档，并加入当前用户信息
         product = {
-            "user_id": current_user.get_id(),
+            "username": current_user.username,   # 记录发布该产品的用户名
             "description": description,
             "price": price,
             "delivery_location": delivery_location,
             "inventory": inventory,
             "tag": tag,
-            "image": image_filename
+            "image_data": image_data,   # Base64 编码后的图片
+            "image_type": image_type    # 图片的 MIME 类型，例如 "image/png"
         }
         mongo.db.products.insert_one(product)
         flash("Product posted successfully!", "success")
         return redirect(url_for('profile'))
+    
     # GET 请求：将当前用户传递给模板
     return render_template('profile.html', user=current_user)
+
 
 # Run the Flask App
 if __name__ == '__main__':
