@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 import certifi
 from pymongo import MongoClient
 from bson.objectid import ObjectId
@@ -25,10 +25,16 @@ def index():
 
 @app.route('/home')
 def home():
-    return render_template('home.html')
+    if 'username' not in session:
+        flash("Please log in first.")
+        return redirect(url_for('login'))
+    username = session['username'] 
+    user = movies_collection.find_one({"username": username})
+    movies = user.get("movies", []) if user else []
+
+    return render_template('home.html', movies=movies)
+
 # login
-
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -38,6 +44,7 @@ def login():
 
         # Check if user exists and if the password matches
         if user and user['password'] == password:
+            session['username'] = username
             flash('Login successful!')
             return redirect(url_for('home'))
         else:
