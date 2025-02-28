@@ -62,9 +62,16 @@ def register():
                 "username": username,
                 "password": password,
             })
+
+            movies_collection.insert_one({
+                "username": username, 
+                "movies": []
+            })
+            
             flash("Registration successful! Please log in.")
             return redirect(url_for('login'))
     return render_template('register.html')
+
 
 # add movie route - check to see if links correctly Jime
 
