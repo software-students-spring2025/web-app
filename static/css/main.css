@@ -90,6 +90,31 @@ input[type="password"] {
 	align-items: center;
 }
 
+.home-search {
+	margin: 20px auto;
+	text-align: center;
+	display: flex;
+}
+
+.home-search input {
+	width: 300px;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	margin-right: 10px;
+	height: 50px;
+}
+
+.home-search button {
+	padding: 10px 20px;
+	background-color: #007bff;
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	height: 50px;
+}
+
 
 form {
 	width: 50%;

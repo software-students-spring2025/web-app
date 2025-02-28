@@ -70,7 +70,11 @@ def home():
         return flask.redirect('/login')
     user = flask.session['user']
     print("Current User: " + user)
-    orders = db.find_user_order(user)
+    search_keyword = flask.request.args.get('search', '').strip()
+    if search_keyword:
+        orders = db.search_orders(user, search_keyword)
+    else:
+        orders = db.find_user_order(user)
     # print(orders)
     orderNum = len(orders)
     # print("Total Num"+ str(orderNum))
