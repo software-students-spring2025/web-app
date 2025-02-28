@@ -40,3 +40,16 @@ h2{
     top: -7px;
     height:120px;
 }
+
+.Back {
+    margin-top: 10%;
+    margin-left: 10%;
+    flex-direction: column;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    width: 20vw;
+    height: 5vh;
+    border: solid;
+    font-size: 5vw;
+}
