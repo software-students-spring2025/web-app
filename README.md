@@ -4,11 +4,11 @@ A little exercise to build a web application following an agile development proc
 
 ## Product vision statement
 
-See instructions. Delete this line and place the Product Vision Statement here.
+Our product will give users the ability to keep track of movies they’d like to watch and allow them to add, edit, delete, and search for specific movies on their watchlist.
 
 ## User stories
 
-See instructions. Delete this line and place a link to the user stories here.
+[User Stories](https://github.com/software-students-spring2025/2-web-app-sjsj/issues)
 
 ## Steps necessary to run the software
 
@@ -16,4 +16,4 @@ See instructions. Delete this line and place instructions to download, configure
 
 ## Task boards
 
-See instructions. Delete this line and place a link to the task boards here.
+[SJSJ – Sprint 1](https://github.com/orgs/software-students-spring2025/projects/48/views/1)
