@@ -11,7 +11,7 @@ A little exercise to build a web application following an agile development proc
 
 ## Product vision statement
 
-**A prototype MongoDB-based online trading platform exclusive for NYU students to buy and sell second-hand items.
+**A prototype MongoDB-based online trading platform exclusive for NYU students to buy and sell second-hand items.**
 
 ## User stories
 
