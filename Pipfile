@@ -8,4 +8,7 @@ flask = "*"
 pymongo = "*"
 python-dotenv = "*"
 
-[dev
+[dev-packages]
+
+[requires]
+python_version = "3.9"
