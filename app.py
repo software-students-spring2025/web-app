@@ -5,6 +5,8 @@ import os
 from dotenv import load_dotenv, dotenv_values
 from pymongo.mongo_client import MongoClient
 from bson.objectid import ObjectId
+import certifi
+import re
 
 
 load_dotenv()
@@ -12,9 +14,12 @@ load_dotenv()
 app = Flask(__name__)
 
 config = dotenv_values()
-app.config.from_mapping(config)
+app.config["DEBUG"] = os.getenv("DEBUG", "False") == "True"
 
-client = pymongo.MongoClient(os.getenv("MONGO_URI"))
+# app.config.from_mapping(config)
+
+client = pymongo.MongoClient(os.getenv("MONGO_URI"), tls=True,
+    tlsCAFile=certifi.where())
 db = client[os.getenv("MONGO_DBNAME")]
 tv_shows_collection = db.tv_shows
 
@@ -61,13 +66,14 @@ def add():
 def search():
     query = request.args.get("query")
     if query:
-        results = tv_shows_collection.find({"title": {"$regex": query, "$options": "i"}})
+        pattern = re.compile(query, re.IGNORECASE)
+        results = tv_shows_collection.find({"title": {"$regex": pattern}})
         shows = [
             {
                 "id": str(show["_id"]),
                 "title": show["title"],
                 "genre": show.get("genre", ""),
-                "season": show.get("season" ""),
+                "season": show.get("season", ""),
                 "episode": show["episode"],
                 "rating": show["rating"],
                 "tags": show.get("tags", []),
@@ -75,9 +81,9 @@ def search():
             }
             for show in results
         ]
-        return render_template("home.html", episodes=shows)
+        return render_template("results.html", episodes=shows)
 
-    return render_template("home.html", episodes=[])
+    return render_template("results.html", episodes=[])
 
 @app.route("/delete", methods=["GET", "POST"])
 def delete():

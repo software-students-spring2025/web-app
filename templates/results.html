@@ -1,11 +1,10 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Episodes</title>
-</head>
-<body>
+    <title>Search Results</title>
     <style>
         * {
             margin: 0;
@@ -58,13 +57,28 @@
         }
 
     </style>
-    
+</head>
+<body>
     <div class="container">
-        <h1>Search for Episodes</h1>
-        <form id="search-form" action="/search" method="get">
-            <input type="text" id="query" name="query" placeholder="Search for a show..." required>
-            <button type="submit">Search</button>
-        </form>
-        <div id="search-results">
+        <h1>Search Results</h1>
+        {% if episodes %}
+            <ul>
+                {% for episode in episodes %}
+                    <li>
+                        <strong>{{ episode.title }}</strong><br>
+                        Genre: {{ episode.genre }}<br>
+                        Season: {{ episode.season }}<br>
+                        Episode: {{ episode.episode }}<br>
+                        Rating: {{ episode.rating }}<br>
+                        Tags: {{ episode.tags | join(', ') }}<br>
+                        Date: {{ episode.date}}<br>
+                        Comment: {{ episode.comment }}<br>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No episodes found matching your search criteria.</p>
+        {% endif %}
+    </div>
 </body>
 </html>
