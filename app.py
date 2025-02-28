@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from flask_session import Session  # Flask session management
 import os
 from bson import ObjectId  # Fixes ObjectId issue for MongoDB
-
+import base64
 # Load environment variables from .env
 load_dotenv()
 
@@ -21,7 +21,13 @@ app.config['SESSION_PERMANENT'] = False
 Session(app)
 
 # MongoDB Configuration
-app.config['MONGO_URI'] = f"mongodb://{os.getenv('MONGO_HOST', 'localhost')}:{os.getenv('MONGO_PORT', '27017')}/{os.getenv('MONGO_DB', 'project2')}"
+atlas_uri = os.getenv('MONGO_URI') # Check if MONGO_URI is set in .env
+if atlas_uri:
+     # If MONGO_ATLAS_URI is set, use it
+     app.config['MONGO_URI'] = atlas_uri
+     print("Using Atlas URI:", atlas_uri)
+else:
+    app.config['MONGO_URI'] = f"mongodb://{os.getenv('MONGO_HOST', 'localhost')}:{os.getenv('MONGO_PORT', '27017')}/{os.getenv('MONGO_DB', 'project2')}"
 
 # Initialize PyMongo
 mongo = PyMongo(app)
@@ -30,6 +36,14 @@ mongo = PyMongo(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
+
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+app.config['UPLOAD_FOLDER'] = os.path.join('static', 'uploads')
+if not os.path.exists(app.config['UPLOAD_FOLDER']):
+    os.makedirs(app.config['UPLOAD_FOLDER'])
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # User Model
 class User(UserMixin):
@@ -126,6 +140,47 @@ def logout():
     logout_user()
     flash('You have been logged out.', 'info')
     return redirect(url_for('login'))
+
+#profile route
+
+@app.route('/profile', methods=['GET', 'POST'])
+@login_required
+def profile():
+    if request.method == 'POST':
+        # 获取产品表单信息
+        product_image = request.files.get('product_image')
+        description = request.form.get('description')
+        price = request.form.get('price')
+        delivery_location = request.form.get('delivery_location')
+        inventory = request.form.get('inventory')
+        tag = request.form.get('tag')
+
+        image_data = None
+        image_type = None
+        if product_image and allowed_file(product_image.filename):
+            # 获取图片的 MIME 类型，例如 "image/png"
+            image_type = product_image.mimetype  
+            raw_bytes = product_image.read()  # 读取文件内容到内存
+            image_data = base64.b64encode(raw_bytes).decode('utf-8') 
+
+        # 构造产品文档，并加入当前用户信息
+        product = {
+            "username": current_user.username,   # 记录发布该产品的用户名
+            "description": description,
+            "price": price,
+            "delivery_location": delivery_location,
+            "inventory": inventory,
+            "tag": tag,
+            "image_data": image_data,   # Base64 编码后的图片
+            "image_type": image_type    # 图片的 MIME 类型，例如 "image/png"
+        }
+        mongo.db.products.insert_one(product)
+        flash("Product posted successfully!", "success")
+        return redirect(url_for('profile'))
+    
+    # GET 请求：将当前用户传递给模板
+    return render_template('profile.html', user=current_user)
+
 
 # Run the Flask App
 if __name__ == '__main__':
