@@ -3,6 +3,7 @@
     padding:0;
     /* border: solid; */
     font-family: sans-serif;
+
 }
 
 :root {
@@ -31,7 +32,7 @@
 }
 
 
-#loginScreen, #registerScreen{
+#loginScreen, #registerScreen, #homeScreen{
     background-color: var(--background-color);
     display: flex;
     align-items: center;
@@ -119,5 +120,150 @@ h1{
  a:active{
     color: var(--text-color1);
  }
+
+#homeScreen{
+    display: block;
+    flex-direction: column;
+}
+
+header{
+    background-color: var(--primary-color);
+    display: flex;
+    width: 100%;
+    top: 0;
+    height: 10vh;
+    align-items: center;
+    padding-left: 0px;
+    padding-right: 10px;
+}
+#addFriends, #logOut, #appName{
+    margin-left: 5%;
+
+    color: var(--button-text-color);
+
+    font-weight: 1000;
+
+    font-size: 0.85em;
+}
+
+#yourRestaurants{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-direction: column;
+
+}
+
+#yourRestaurants p{
+    margin-top: 30px;
+    margin: 40px;
+
+    font-size: 30px;
+    font-weight: 900;
+
+    color: var(--primary-color);
+    background-color: white;
+    width: 100%;
+    text-align: center;
+}
+
+.restaurant{
+    height: 200px;
+    background-color: var(--secondary-color);
+    border-radius: 10px;
+    border: 2px solid;
+    width: 70%;
+    transition: transform 0.2s ease-in-out;
+}
+
+.restaurant:hover{
+    transform: translateY(-10px);
+}
+
+#addRestaurant{
+    margin-top: 20px;
+    font-size: 16pt;
+    padding: 10px;
+    background-color: var(--button-color);
+    border-radius: 5px;
+    border: solid;
+    font-weight: 700;
+}
+
+#addRestaurant a{
+    text-decoration: none;
+}
+
+
+.topHalf{
+    height: 40%;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    background: rgb(2,0,33);
+    background: linear-gradient(90deg, rgba(2,0,33,1) 0%, rgba(201,60,83,1) 30%,rgba(201,60,83,1) 70%, rgba(2,0,33,1) 100%);
+    padding-left: 5%;
+    padding-top: 5%;
+    -webkit-box-shadow: 1px 4px 9px 3px rgba(0,0,0,0.22);
+    -moz-box-shadow: 1px 4px 9px 3px rgba(0,0,0,0.22);
+    box-shadow: 1px 4px 9px 3px rgba(0,0,0,0.22);
+
+    border-bottom: var(--background-color) solid 2px;
+    
+
+}
+.bottomHalf{
+    height: 50%;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+    display: flex;
+    padding-top: 5px;
+}
+
+.restName{
+    color: var(--text-color2);
+    font-size: 24px;
+
+
+}
+
+.restLoc{
+    margin-top: 10px;
+    color: var(--secondary-color);
+
+}
+
+.bottomLeft, .bottomRight{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    color: var(--text-color1);
+    font-size: 14pt;
+    align-items: center;
+    justify-content:space-around;
+}
+
+.bottomLeft{
+    border-bottom-left-radius: 10px;
+
+}
+.bottomRight{
+    border-bottom-right-radius: 10px;
+
+}
+
+.cuisine, .favDish, .rating, .price{
+    color: var(--secondary-color);
+    padding-bottom: 5px;
+    padding-top: 5px;
+    
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    background-color: rgba(219, 103, 103, 0.541);
+    border-top: black solid;
+    border-bottom: black solid;
+}
 
 
