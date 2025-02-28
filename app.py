@@ -79,9 +79,9 @@ def search():
             }
             for show in results
         ]
-        return render_template("home.html", episodes=shows)
+        return render_template("results.html", episodes=shows)
 
-    return render_template("home.html", episodes=[])
+    return render_template("results.html", episodes=[])
 
 @app.route("/delete", methods=["GET", "POST"])
 def delete():
