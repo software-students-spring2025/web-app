@@ -13,7 +13,9 @@ def create_app():
     app = Flask(__name__)
 
     #set environment variable
-    app.config["MONGO_URI"] = os.getenv("MONGO_URI")
+    #app.config["MONGO_URI"] = os.getenv("MONGO_URI")
+    app.config["MONGO_URI"] = "mongodb+srv://user:usersecret@csgrind-project2.zuwk2.mongodb.net/"
+
 
     #initialize mongo
     mongo.init_app(app)
