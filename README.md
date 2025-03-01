@@ -26,4 +26,4 @@ See instructions. Delete this line and place instructions to download, configure
 
 ## Task boards
 
-[View our Backlog](https://github.com/orgs/software-students-spring2025/projects/64)
+[View our Backlog]([https://github.com/orgs/software-students-spring2025/projects/64](https://github.com/orgs/software-students-spring2025/projects/65/views/1))
