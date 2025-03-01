@@ -19,26 +19,29 @@
     <div id="yourRestaurants">
         <p> ~ Your Restaurants ~ </p>
             {% for restaurant in restaurants %}
-            <div class="restaurant">
-                <div class="topHalf">
-                    <div class="restName">{{ restaurant.restaurantName }}</div>
-                    <div class="restLoc">{{ restaurant.restaurantLocation }}</div>
-                </div>
-                <div class="bottomHalf">
-                    <div class="bottomLeft">
-                        <div class="cuisine">{{ restaurant.cuisine }}</div>
-                        <div class="favDish">{{ restaurant.favDish }}</div>
+            <a id="restaurantLink" href="/edit/{{_id}}">
+                <div class="restaurant">
+                    <div class="topHalf">
+                        <div class="restName">{{ restaurant.restaurantName }}</div>
+                        <div class="restLoc">{{ restaurant.restaurantLocation }}</div>
                     </div>
-                    <div class="bottomRight">
-                        <div class="rating">{{ restaurant.rating }}/5</div>
-                        <div class="price">{{ restaurant.price }}</div>
+                    <div class="bottomHalf">
+                        <div class="bottomLeft">
+                            <div class="cuisine">{{ restaurant.cuisine }}</div>
+                            <div class="favDish">{{ restaurant.favDish }}</div>
+                        </div>
+                        <div class="bottomRight">
+                            <div class="rating">{{ restaurant.rating }}/5</div>
+                            <div class="price">{{ restaurant.price }}</div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
             {% endfor %}
-        </div>
-        <div id="addRestaurant">
-            <a href="/add">Add Restaurant</a>
+        
+            <div id="addRestaurant">
+                <a href="/add">Add Restaurant</a>
+            </div>
         </div>
     </div>
 
