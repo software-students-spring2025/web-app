@@ -6,7 +6,50 @@
     <link rel="stylesheet" href="../static/styles.css">
     <title>Restaurant Roulette</title>
 </head>
-<body>
-    edit page
+<body id="editScreen">
+    <header>
+        <div id="appName"><a href="/home">RR</a></div>
+        <div id="profile"><a href="/profile">Profile</a></div>
+        <div id="addFriends"><a href="/friends">Friends</a></div>
+        <div id="logOut"> <a href="/logout">Log Out</a></div>
+    </header>
+    <p>
+        Edit your restaurant!
+    </p>
+    <div id="editBox">
+        <form id="editForm" method="POST">
+            <label for="restaurantName">Restaurant Name:</label>
+            <input type="text" name="restaurantName" placeholder="{{restaurantName}}" value="{{restaurantName}}"required>
+        
+            <label for="restaurantLocation">Location:</label>
+            <input type="text" name="restaurantLocation" placeholder="{{restaurantLocation}}" value="{{restaurantLocation}}" required>
+        
+            <label for="cuisine">Cuisine:</label>
+            <input type="text" name="cuisine" placeholder="{{cuisine}}" value="{{cuisine}}" required>
+        
+            <label for="favDish">Favorite Dish:</label>
+            <input type="text" name="favDish"placeholder="{{favDish}}" value="{{favDish}}" >
+        
+            <label for="rating">Rating (1-5):</label>
+            <select name="rating">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        
+            <label for="price">Price Range:</label>
+            <select name="price">
+                <option value="$">$</option>
+                <option value="$$">$$</option>
+                <option value="$$$">$$$</option>
+                <option value="$$$$">$$$$</option>
+            </select>
+        
+            <button type="submit">Edit Restaurant</button>
+        </form>
+    </div>
+    
 </body>
 </html>
