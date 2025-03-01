@@ -112,7 +112,9 @@ def login():
 @app.route("/home")
 @flask_login.login_required
 def home():
-    return render_template("home.html")
+    user = flask_login.current_user.username
+    docs = db.restaurantData.find({'user_id':user})
+    return render_template("home.html", restaurants = docs)
 
 
 @app.route("/logout")
@@ -122,6 +124,17 @@ def logout():
     flash("Logged out successfully", "success")
     return redirect(url_for("login"))
 
+@app.route("/add", methods=["GET","POST"])
+@flask_login.login_required
+def add():
+    if request.method == "POST":
+        doc = {}
+        for item in request.form:
+            doc[item] = request.form[item]
+        doc['user_id'] = flask_login.current_user.username
+        db.restaurantData.insert_one(doc)
+        return redirect("/home")
+    return render_template("add.html")
 
 # Run the app
 if __name__ == "__main__":
