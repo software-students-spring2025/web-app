@@ -70,7 +70,7 @@ If the virtual environment was created with `pipenv`, dependencies in `Pipfile` 
 
 ### Step 5: Create .env file
 
-Create an .env file, like the `env.example` file [here](https://github.com/software-students-spring2025/2-web-app-web-avengers/blob/main/env.example). Leave most of it the same, but replace the right side of the `=` sign with real values to configure `monogdb`:
+Create an .env file, like the `env.example` file [here](https://github.com/software-students-spring2025/2-web-app-web-avengers/blob/main/env.example). Leave most of it the same, but replace the right side of the `=` sign with real values to configure `monogdb` (credentials can be found under team discord channel):
 ```
 MONGO_DBNAME=your_db_name
 MONGO_URI=mongodb+srv://your_db_username:your_db_password@your_db_host_server_name:27017

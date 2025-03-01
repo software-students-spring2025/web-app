@@ -1,14 +1,43 @@
-.container{
-    font-family: Arial;
+* {
+    margin: 0;
+    padding: 0;
 }
 
-body{
-    background-color: white;
+.container{
+    font-family: Arial;
 }
 
 .wrapper{
     display: flex;
     justify-content: center;
+}
+
+header{
+    background-color: lightblue;
+    height: 55px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.name{
+    border: solid 0px black;
+    display: flex;
+    align-items: center;
+    padding-left: 40px;
+    padding-right: 40px;
+    font-size: 16pt;
+    font-weight: bold;
+}
+
+.logout{
+    border: solid 0px black;
+    display: flex;
+    align-items: center;
+    padding-left: 40px;
+    padding-right: 40px;
+    color: black;
+    font-size: 12pt;
+    font-weight: bold;
 }
 
 .heading{

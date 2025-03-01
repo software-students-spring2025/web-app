@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Event Calendar</title>
+    <title>Search Events</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/search.css') }}"/>
   </head>
   <body>
     <div class="container">
       <main>
+        <header>
+          <p class="name">Eventify</p>
+          <a href="{{  url_for('logout') }}" class="logout">Logout</a>
+        </header>
+  
         <h1 class="heading">Search Events</h1>
 
         <form method="GET">
             <div class="wrapper">
-                <input type="text" name="searchterm" placeholder="Search by event name, location, category, or date" class="search-bar" value="{{ searchterm }}"/>
+                <input type="text" name="searchterm" placeholder="Search by event name, description, location, category, or date" class="search-bar" value="{{ searchterm }}"/>
                 <input type="submit" value="Search" class="search-button"/>
             </div>
         </form>

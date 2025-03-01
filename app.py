@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 import pymongo
 from dotenv import load_dotenv, dotenv_values
 
@@ -29,7 +29,34 @@ def create_app():
 
     @app.route("/")
     def show_home():
-        return "<h1>Dashboard</h1>"
+        return render_template("home.html")
+    
+    @app.route("/register", methods=["GET", "POST"])
+    def register():
+        if request.method == "POST":
+            email = request.form["email"]
+            password = request.form["password"]
+
+            doc = db.users.find_one({"email": email})
+            if doc:
+                redirect(url_for("register"))
+            else: 
+                db.users.insert_one({
+                    "email": email,
+                    "password": password
+                })
+
+                return redirect(url_for("login"))
+
+        return render_template("register.html")
+    
+    @app.route("/login", methods=["GET", "POST"])
+    def login():
+        return render_template("login.html")
+    
+    @app.route("/logout")
+    def logout():
+        return redirect(url_for("login"))
     
     @app.route("/add")
     def show_add():
@@ -56,6 +83,7 @@ def create_app():
             "$or": [
                 {"name": {"$options": "i", "$regex": search_term}},
                 {"date": {"$regex": search_term}},
+                {"description": {"$options": "i", "$regex": search_term}},
                 {"location": {"$options": "i", "$regex": search_term}},
                 {"category": {"$options": "i", "$regex": search_term}}
             ]
@@ -64,12 +92,17 @@ def create_app():
     
     @app.errorhandler(Exception)
     def handle_error(e):
+        """
+        Route for GET requests to any errors
+        Returns: render_template (html for error page)
+        """
         return render_template("error.html", error=e)
     
     return app
 
 
 app = create_app()
+app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 
 if __name__ == "__main__":
     FLASK_PORT = os.getenv("FLASK_PORT", "5000")
