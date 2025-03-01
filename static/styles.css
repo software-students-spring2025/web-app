@@ -32,7 +32,7 @@
 }
 
 
-#loginScreen, #registerScreen, #homeScreen{
+#loginScreen, #registerScreen, #homeScreen, #friendsScreen{
     background-color: var(--background-color);
     display: flex;
     align-items: center;
@@ -273,5 +273,91 @@ header{
     text-align: center;
     padding-top: 25px;
 }  
+
+#friendsScreen{
+    display: block;
+    flex-direction: column;
+}
+
+#searchForm{
+    display: flex;
+
+    align-items:center;
+    justify-content: center;
+    flex-direction: column;
+
+}
+
+#search{
+    width: 100%;
+    display: flex;
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+
+    margin-top: 20px;
+
+}
+
+#search p, #AllFriends p{
+    color: var(--text-color1);
+    font-weight: 700;
+    margin-bottom: 10px;
+
+    font-size: 18pt;
+
+    font-weight: 800;
+}
+
+#searchBox{
+    width: 100%;
+    height: 20px;
+    border-radius: 5px;
+
+}
+#searchButton{
+    width: 70%;
+    height: 30px;
+
+    background-color: var(--button-color);
+    color: var(--button-text-color);
+    font-weight:900;
+    border: solid 2px;
+    border-radius: 5px;
+}
+
+#AllFriends{
+    width:100%;
+    margin-top: 40px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.friend{
+    width: 70%;
+    height: 30px;
+    background: rgb(2,0,33);
+    background: linear-gradient(0deg, rgba(2,0,33,1) 0%, rgba(201,60,83,1) 20%, rgba(201,60,83,1) 70%, rgba(2,0,33,1) 100%);
+
+    margin-bottom: 30px;
+    border-radius: 10px;
+    padding: 10px;
+    border: solid 3px var(--text-color1);
+
+    font-weight: 800;
+}
+
+.friendUser{
+    color: var(--text-color2);
+    font-size: 16pt;
+    line-height: 30px;
+}
+
 
 
