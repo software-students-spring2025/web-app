@@ -5,8 +5,10 @@
     <title>{{ item.name }}</title>
 </head>
 <body>
-    <a href="{{ url_for('order') }}">Back to Menu</a>
+    <a href="{{ url_for('order', category=item.category) }}">Back to {{ item.category }}s</a>
     <h1>{{ item.name }}</h1>
     <p>{{ item.description }}</p>
+    <b></b>
+    <a href="{{ url_for('add_to_cart', item_id=item.item_id, category=category, query=query) }}">Add to Cart</a>
 </body>
 </html>

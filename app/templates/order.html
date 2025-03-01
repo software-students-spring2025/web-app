@@ -8,13 +8,23 @@
     <a href="{{ url_for('home') }}">Home</a>
     &emsp;
     <a href="{{ url_for('cart') }}">View Cart</a>
+    &emsp;
+    <a href="{{ url_for('view_orders') }}">View Order History</a>
+
+    &emsp;&emsp;
+
+    <form method="GET" action="{{ url_for('order') }}">
+        <input type="text" name="query" placeholder="Search entire menu..." value="{{ query }}">
+        <button type="submit">Search</button>
+    </form>
+    
     {% if category or query %}
         &emsp;
         <a href="{{ url_for('order') }}">Back to Categories</a>
         <h1>{{ category if category else 'Search Results' }} Menu</h1>
         <form method="GET" action="{{ url_for('order') }}">
             <input type="hidden" name="category" value="{{ category }}">
-            <input type="text" name="query" placeholder="Search menu items..." value="{{ query }}">
+            <input type="text" name="query" placeholder="Search {{ category }}s ..." value="{{ query }}">
             <button type="submit">Search</button>
         </form>
         <p>View our seasonal menu items below:</p>

@@ -25,6 +25,8 @@ menu_collection = db.menu_items
 # menu_collection.drop() # if we drop this, the cart resets every time, cart information not saved for customer
 carts = db.carts
 #carts.drop()
+orders = db.orders
+
 if menu_collection.count_documents({}) == 0:
     menu_collection.insert_many([
         {'item_id': 'baguette', 'name': 'Baguette', 'description': 'A scrumptious baguette that would make France proud.', 'price': 1, 'category': 'Bread'},
@@ -50,11 +52,11 @@ if menu_collection.count_documents({}) == 0:
         {'item_id': 'white_cake', 'name': 'White Cake', 'description': "Vanilla cake with frosting and fresh strawberries", 'price': 21, 'category': 'Cake'},
         {'item_id': 'almond_donut', 'name': 'Almond Donut', 'description': "Plain donut with chocolate frosting and almonds", 'price': 22, 'category': 'Donut'},
         {'item_id': 'caramel_donut', 'name': 'Caramel Donut', 'description': "Topped with a caramel glaze and a caramel drizzle", 'price': 23, 'category': 'Donut'},
-        {'item_id': 'chocolate_glazed', 'name': 'Chocolate Glazed', 'description': "Beautiful rich chocolate glaze with a chocolate drizzle", 'price': 24, 'category': 'Donut'},
-        {'item_id': 'cookies_and_cream', 'name': 'Cookies and Cream',  'description': "Chocolate donut with frosting and cookie crumble", 'price': 25, 'category': 'Donut'},
+        {'item_id': 'chocolate_glazed', 'name': 'Chocolate Glazed Donut', 'description': "Beautiful rich chocolate glaze with a chocolate drizzle", 'price': 24, 'category': 'Donut'},
+        {'item_id': 'cookies_and_cream', 'name': 'Cookies and Cream Donut',  'description': "Chocolate donut with frosting and cookie crumble", 'price': 25, 'category': 'Donut'},
         {'item_id': 'glazed_donut', 'name': 'Glazed Donut', 'description': "The classic delicious glazed donut! Perfect for breakfast", 'price': 26, 'category': 'Donut'},
-        {'item_id': 'pink_sprinkled', 'name': 'Pink Sprinkled', 'description': "Plain donut topped entirely in pink sprinkles", 'price': 27, 'category': 'Donut'},
-        {'item_id': 'jam_and_sugar', 'name': 'Jam and Sugar',  'description': "Plain donut topped with strawberry jam and sugar", 'price': 28, 'category': 'Donut'},
+        {'item_id': 'pink_sprinkled', 'name': 'Pink Sprinkled Donut', 'description': "Plain donut topped entirely in pink sprinkles", 'price': 27, 'category': 'Donut'},
+        {'item_id': 'jam_and_sugar', 'name': 'Jam and Sugar Donut',  'description': "Plain donut topped with strawberry jam and sugar", 'price': 28, 'category': 'Donut'},
         {'item_id': 'apple_pie', 'name': 'Apple Pie', 'description': "Classic apple pie topped with sugar", 'price': 29, 'category': 'Pies'},
         {'item_id': 'apricot_pie', 'name': 'Apricot Pie', 'description': "Made with fresh Apricots and nutmeg", 'price': 30, 'category': 'Pies'},
         {'item_id': 'custard_pie', 'name': 'Custard Pie', 'description': "Silky and Sweet Custard pie with a crumb coat", 'price': 31, 'category': 'Pies'},
@@ -74,6 +76,7 @@ menu_collection.create_index([("name", "text"), ("description", "text")])
 
 from models.Cart import Cart
 from models.MenuItem import MenuItem
+from models.Order import Order
 
 @app.route("/")
 def home():
@@ -87,6 +90,10 @@ def login():
 def contact():
     return rt('contact.html')
 
+'''
+TODO: Change categories so that you can search on the home page and get all results
+that match a certain keyword regardless of category
+'''
 @app.route('/order', methods=['GET'])
 def order():
     category = request.args.get('category', '').strip()
@@ -123,7 +130,9 @@ def add_to_cart(item_id):
     if not customer_id:
         return redirect(url_for('login'))
     Cart.add_to_cart(customer_id, item_id)
-    return redirect(url_for('order', category=category, query=query))
+
+    referer = request.referrer or url_for('order')
+    return redirect(referer)
 
 
 @app.route('/cart')
@@ -139,7 +148,7 @@ def cart():
     total_price = cart.get('total_price', 0)
     total_items = 0
 
-    for item_id in cart.get('items'):
+    for item_id in sorted(list(set(cart.get('items')))):
         item = menu_collection.find_one({'item_id': item_id})
         if item:
             item_quantity = Cart.get_item_count(customer_id, item_id)
@@ -165,7 +174,7 @@ def remove_from_cart(item_id):
     session['cart'] = cart
     return redirect(url_for('cart'))
 
-@app.route('/checkout')
+@app.route('/checkout', methods = ['GET', 'POST'])
 def checkout():
     customer_id = session.get('user_id')
 
@@ -175,13 +184,66 @@ def checkout():
     cart = Cart.get_cart(customer_id)
     cart_items = []
     total_price = Cart.calculate_raw_total(customer_id)
-    for item_id in cart.get('items'):
+    for item_id in sorted(list(set(cart.get('items')))):
         item = menu_collection.find_one({'item_id': item_id})
         if item and Cart.get_item_count(customer_id, item_id) > 0:
             item['quantity'] = Cart.get_item_count(customer_id, item_id)
             item['total'] = Cart.get_item_count(customer_id, item_id) * item.get('price')
             cart_items.append(item)
     return rt('checkout.html', cart_items=cart_items, total_price=total_price)
+
+
+@app.route('/submit_order', methods=['POST'])
+def submit_order():
+    customer_id = session.get('user_id')
+
+    first_name = request.form.get('first_name')
+    last_name = request.form.get('last_name')
+    email = request.form.get('email')
+    delivery_method = request.form.get('delivery_method')
+    shipping_address = request.form.get('shipping_address') if delivery_method == "delivery" else None
+    card_number = request.form.get('card_number')
+    cvv = request.form.get('cvv')
+    zip_code = request.form.get('zip')
+
+    if not card_number.isdigit() or len(card_number) != 16:
+        return "Invalid card number. Card number must be 16 digits.", 400
+
+    if not cvv.isdigit() or len(cvv) != 3:
+        return "Invalid card number. CVV must be 3 digits.", 400
+
+    if not zip_code.isdigit() or len(zip_code) != 5:
+        return "Invalid zip code. Zip code must be 5 digits.", 400
+    
+    print("Is method delivery: ", delivery_method, (delivery_method == 'delivery'))
+    print("Shipping address: ", shipping_address)
+    
+    if delivery_method == "delivery" and not shipping_address:
+        return "Please enter shipping address for delivery", 400
+
+    if shipping_address:
+        Order.submit_order(customer_id, first_name, last_name, email, card_number, cvv, zip_code, delivery_method, shipping_address)
+    else:
+        Order.submit_order(customer_id, first_name, last_name, email, card_number, cvv, zip_code, delivery_method)
+    
+    
+    return redirect(url_for('view_orders'))
+
+@app.route('/view_orders', methods=['GET', 'POST'])
+def view_orders():
+    customer_id = session.get('user_id')
+    orders = Order.view_orders(customer_id)
+
+    return rt('view_orders.html', orders=orders)
+
+
+@app.route('/delete_order/<order_id>')
+def delete_order(order_id):
+    customer_id = session.get('user_id')
+
+    Order.delete_order(order_id, customer_id)
+
+    return redirect(url_for('view_orders'))
 
 if __name__ == "__main__":
     app.run(debug=True)

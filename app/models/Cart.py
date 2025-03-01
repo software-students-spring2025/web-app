@@ -33,7 +33,6 @@ class Cart:
         cart = Cart.get_cart(customer_id)
         # add item into cart ONLY if item exists
         item = get_mongo().menu_items.find_one({'item_id': item_id})
-        # print("MENU ITEMS LIST: ", list(get_mongo().menu_items.find()))
         if item:
             #print("ITEM EXISTS")
 
@@ -119,4 +118,8 @@ class Cart:
         get_mongo().carts.delete_many({'customer_id': customer_id})
         return Cart.get_cart(customer_id)
 
+    @staticmethod
+    def clear_cart(customer_id):
+        get_mongo().carts.delete_many({'customer_id': customer_id})
+        return Cart.get_cart(customer_id)
                 
