@@ -21,7 +21,9 @@ app.config["DEBUG"] = os.getenv("DEBUG", "False") == "True"
 client = pymongo.MongoClient(os.getenv("MONGO_URI"), tls=True,
     tlsCAFile=certifi.where())
 db = client[os.getenv("MONGO_DBNAME")]
+db_2 = client[os.getenv("MONGO_DBNAME_2")]
 tv_shows_collection = db.tv_shows
+all_shows_collection = db_2.all_shows
 
 @app.route("/")
 def home():
@@ -64,26 +66,32 @@ def add():
 
 @app.route("/search", methods=["GET"])
 def search():
-    query = request.args.get("query")
-    if query:
-        pattern = re.compile(query, re.IGNORECASE)
-        results = tv_shows_collection.find({"title": {"$regex": pattern}})
+   all_episodes = db.all_shows.find({}).sort("date", -1)
+   query = request.args.get("query")
+   if query:
+        pattern = re.compile(re.escape(query), re.IGNORECASE)
+        search_criteria = {
+            "$or": [
+                {"title": {"$regex": pattern}},
+                {"genre": {"$regex": pattern}},
+                {"tags": {"$regex": pattern}}
+            ]
+        }
+        results = all_shows_collection.find(search_criteria)
         shows = [
             {
                 "id": str(show["_id"]),
                 "title": show["title"],
                 "genre": show.get("genre", ""),
-                "season": show.get("season", ""),
-                "episode": show["episode"],
+                "seasons": show.get("seasons", ""),
                 "rating": show["rating"],
                 "tags": show.get("tags", []),
-                "comment": show.get("comment", ""),
+                "date": show.get("date", "")
             }
             for show in results
         ]
-        return render_template("results.html", episodes=shows)
-
-    return render_template("results.html", episodes=[])
+        return render_template("results.html", all_episodes=shows)
+   return render_template("results.html", all_episodes=[])
 
 @app.route("/delete", methods=["GET", "POST"])
 def delete():
