@@ -1,10 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Home</title>
+    <link rel="stylesheet" href="../static/header.css">
+    <link rel="stylesheet" href="../static/bookCard.css">
 </head>
+
 <body>
-    <h2>Welcome, {{ username }}</h2>
-    <a href="{{ url_for('logout') }}">Logout</a>
+    <header>
+        <div class="top">
+            <a href="#" class="profile">profile 👤</a>
+            <h1>BookSwap</h1>
+            <a href="#" class="add_book">add a book</a>
+        </div>
+        <div class="search-container">
+            <a href="#" class="icon">🔍</a>
+            <input type="text" placeholder="Search for books..." />
+            <a href="#" class="icon">filter</a>
+        </div>
+    </header>
+    <main>
+        <div class="book-container">
+            <div class="book-card">
+                <div class="book-image"></div>
+                <div class="book-info">
+                    <p class="book-title">{Book Name}</p>
+                    <p class="book-author">{Name of the Author}</p>
+                </div>
+                <div class="book-footer">
+                    <span class="price">{Price}</span>
+                    <span class="details">See details</span>
+                </div>
+            </div>
+            <div class="book-card">
+                <div class="book-image"></div>
+                <div class="book-info">
+                    <p class="book-title">{Book Name}</p>
+                    <p class="book-author">{Name of the Author}</p>
+                </div>
+                <div class="book-footer">
+                    <span class="price">{Price}</span>
+                    <span class="details">See details</span>
+                </div>
+            </div>
+            <div class="book-card">
+                <div class="book-image"></div>
+                <div class="book-info">
+                    <p class="book-title">{Book Name}</p>
+                    <p class="book-author">{Name of the Author}</p>
+                </div>
+                <div class="book-footer">
+                    <span class="price">{Price}</span>
+                    <span class="details">See details</span>
+                </div>
+            </div>
+            <div class="book-card">
+                <div class="book-image"></div>
+                <div class="book-info">
+                    <p class="book-title">{Book Name}</p>
+                    <p class="book-author">{Name of the Author}</p>
+                </div>
+                <div class="book-footer">
+                    <span class="price">{Price}</span>
+                    <span class="details">See details</span>
+                </div>
+            </div>
+        </div>
+    </main>
 </body>
+
 </html>

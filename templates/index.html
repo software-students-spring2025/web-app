@@ -1,44 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📚BookSwap Homepage</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='styles.css') }}"
-    />
+    <title>Home</title>
+    <link rel="stylesheet" href="../static/header.css">
+    <link rel="stylesheet" href="../static/bookCard.css">
 </head>
+
 <body>
-    <div class="container">
-        <header>
-          <h1>📚 BookSwap Homepage</h1>
-        </header>
     <header>
-        <button class="profile-btn">Profile 👤</button>
-        <input type="text" id="search" placeholder="Search books...">
-        <button id="search-btn">🔍</button>
-    </header>
-
-    <div class="filters">
-        <button id="sort">Sort By</button>
-        <button id="filter">Filter</button>
-    </div>
-
-    <div id="book-list">
-        {% for book in books %}
-        <div class="book">
-            <h3><a href="{{ url_for('book_details', book_id=book._id) }}">{{ book.title }}</a></h3>
-            <p><strong>Author:</strong> {{ book.author }}</p>
-            <!-- <p><strong>Edition:</strong> {{ book.edition }}</p>
-            <p><strong>Year:</strong> {{ book.year }}</p>
-            <p><strong>Condition:</strong> {{ book.condition }}</p>
-            <p><strong>Price:</strong> ${{ book.price }}</p>
-            <p><strong>Format:</strong> {{ book.format }}</p> -->
+        <div class="top">
+            <a href="#" class="profile">profile 👤</a>
+            <h1>BookSwap</h1>
+            <a href="#" class="add_book">add a book</a>
         </div>
-    {% endfor %}
-    </div>
-
-    <a href="{{ url_for('add_book') }}" class="add-book-btn">➕</a>
+        <div class="search-container">
+            <a href="#" class="icon">🔍</a>
+            <input type="text" placeholder="Search for books..." />
+            <a href="#" class="icon">filter icon</a>
+        </div>
+    </header>
+    <main>
+        <div class="book-container">
+            <div class="book-card">
+                <div class="book-image"></div>
+                <div class="book-info">
+                    <p class="book-title">{Book Name}</p>
+                    <p class="book-author">{Name of the Author}</p>
+                </div>
+                <div class="book-footer">
+                    <span class="price">{Price}</span>
+                    <span class="details">See details</span>
+                </div>
+            </div>
+            <div class="book-card">
+                <div class="book-image"></div>
+                <div class="book-info">
+                    <p class="book-title">{Book Name}</p>
+                    <p class="book-author">{Name of the Author}</p>
+                </div>
+                <div class="book-footer">
+                    <span class="price">{Price}</span>
+                    <span class="details">See details</span>
+                </div>
+            </div>
+            <div class="book-card">
+                <div class="book-image"></div>
+                <div class="book-info">
+                    <p class="book-title">{Book Name}</p>
+                    <p class="book-author">{Name of the Author}</p>
+                </div>
+                <div class="book-footer">
+                    <span class="price">{Price}</span>
+                    <span class="details">See details</span>
+                </div>
+            </div>
+            <div class="book-card">
+                <div class="book-image"></div>
+                <div class="book-info">
+                    <p class="book-title">{Book Name}</p>
+                    <p class="book-author">{Name of the Author}</p>
+                </div>
+                <div class="book-footer">
+                    <span class="price">{Price}</span>
+                    <span class="details">See details</span>
+                </div>
+            </div>
+        </div>
+    </main>
 </body>
+
 </html>
