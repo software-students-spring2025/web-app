@@ -197,7 +197,8 @@ def add_friend(friend_id):
 def edit(rest_id):
     rest_id = ObjectId(rest_id)
     if request.method=="GET":
-        restaurant = db.restaurantInfo.find_one({'_id':rest_id})
+        restaurant = db.restaurantData.find_one({'_id':rest_id})
+        print(restaurant)
         return render_template("edit.html",restaurant=restaurant)
     if request.method=="POST":
         doc = {item: request.form[item] for item in request.form}
