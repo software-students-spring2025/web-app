@@ -14,24 +14,34 @@
         <div id="logOut"> <a href="/logout">Log Out</a></div>
     </header>
     <div id="welcome">
-        Welcome, {{ current_user.username }}!
+        Welcome, {{ user }}!
     </div>
     <div id="yourRestaurants">
         <p> ~ Your Restaurants ~ </p>
-        <div class="restaurant">
-            <div class="topHalf">
-                <div class="restName">Restaurant Name!!</div>
-                <div class="restLoc">123 AppleWood st.</div>
+        <div id="yourRestaurants">
+            <p> ~ Your Restaurants ~ </p>
+        
+            {% for restaurant in restaurants %}
+            <div class="restaurant">
+                <div class="topHalf">
+                    <div class="restName">{{ restaurant.restaurantName }}</div>
+                    <div class="restLoc">{{ restaurant.restaurantLocation }}</div>
+                </div>
+                <div class="bottomHalf">
+                    <div class="bottomLeft">
+                        <div class="cuisine">{{ restaurant.cuisine }}</div>
+                        <div class="favDish">{{ restaurant.favDish }}</div>
+                    </div>
+                    <div class="bottomRight">
+                        <div class="rating">{{ restaurant.rating }}/5</div>
+                        <div class="price">{{ restaurant.price }}</div>
+                    </div>
+                </div>
             </div>
-            <div class="bottomHalf">
-                <div class="bottomLeft">
-                    <div class="cuisine">Italian</div>
-                    <div class="favDish">Pasta</div>
-                </div>
-                <div class="bottomRight">
-                    <div class="rating">5/5</div>
-                    <div class="price">$$$</div>
-                </div>
+            {% endfor %}
+        
+            <div id="addRestaurant">
+                <a href="/add">Add Restaurant</a>
             </div>
         </div>
         <div id="addRestaurant">
