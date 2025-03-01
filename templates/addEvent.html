@@ -3,52 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add event</title>
+    <title>Add Event</title>
 
-    <style>
-        /* Header */
-        header {
-            border-bottom: 1px solid;
-            padding-bottom: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        body {
-            margin: 0;
-        }
-
-        form {
-            margin: 10px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 50px;
-        }
-
-        .save {
-            margin: 10px;
-        }
-
-        .back {
-            margin: 10px;
-            font-size: 30px;
-            padding: 0px;
-            position: absolute;
-            left: 10px;
-            border: none;
-            background: none
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
     <header>
         <!-- TEMP: placeholder href link -->
-        <button class="back" onclick="location.href='/'">&#8592</button>
+        <button class="back" onclick="location.href='details.html'">&#8592</button>
         <h1>Add Event</h1>
     </header>
 
@@ -57,11 +20,11 @@
         <label for="name">Event Name:</label>
         <input type="text" id="name" name="name" required>
         <br><br>
-        <label for="date">Date (MM/DD/YYYY):</label>
+        <label for="date">Date:</label>
         <input type="text" id="date" name="date" required>
         <br><br>
         <label for="time">Time:</label>
-        <input type="text" id="time" name="time" required>
+        <input type="time" id="time" name="time" required>
         <br><br>
         <label for="location">Location:</label>
         <input type="text" id="location" name="location" required>
@@ -70,13 +33,18 @@
         <input type="text" id="category" name="category" required>
         <br><br>
         <label for="description">Description:</label>
-        <textarea type="text" id="description" name="description" required></textarea>
+        <textarea id="description" name="description" required></textarea>
         <br><br>
     </form>
 
     <div class="save">
         <button type="submit">Save Changes</button>
     </div>
-    
+
+    <!-- Bottom Navigation Bar -->
+    <div class="navbar">
+        <a href="index.html">Home</a>
+    </div>
+
 </body>
 </html>
