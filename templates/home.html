@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Home - Job Tracker</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h2>Welcome, {{ user.email }}</h2>
+    <a href="{{ url_for('logout') }}">Logout</a>
+    <h3>Your Job Applications</h3>
+    {% if applications %}
+      <ul>
+        {% for app in applications %}
+          <li>
+            <strong>{{ app.company }}</strong> - {{ app.job_title }} - {{ app.status }}
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No job applications found. Start by adding one!</p>
+    {% endif %}
+  </div>
+</body>
+</html>
