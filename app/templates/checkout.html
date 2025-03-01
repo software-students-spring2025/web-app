@@ -3,65 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <title>Checkout</title>
+    <link rel="stylesheet" href="../static/checkout.css">
 </head>
 <body>
-    <h1>Checkout</h1>
-    <ul>
+    <!--class for title formatting:-->
+    <a href="{{ url_for('cart') }}">
+        <div class="Back"> 
+            Back
+        </div>
+    </a>
+    <div class="Title">
+        <h1>Checkout</h1>
+    </div>
+    
+    <!--Items in cart-->
+    <div class="Items">
         {% for item in cart_items %}
-        <li>
-            <strong>{{ item.name }} </strong> —
-            Quantity: {{ item.quantity }} |
-            Price: ${{ item.price }} each |
-            Subtotal: ${{ item.total }}
-        </li>
+        <div class="item">
+            <div class="name">
+                {{ item.name }}
+            </div>
+            <div class="amount">
+                x{{ item.quantity }}
+            </div>
+            <div class="subtotal">
+                ${{ item.total }}.00
+            </div>
+        </div>
         {% endfor %}
-    </ul>
-    <h2>Total Price: ${{ total_price }}</h2>
-    <p>
-        <a href="{{ url_for('cart') }}">Back to Cart</a>
-    </p>
 
-    <h2>Enter Your Details</h2>
-    <form action="{{ url_for('submit_order') }}" method="POST">
-        <label for="name">First Name:</label><br>
-        <input type="text" id="first_name" name="first_name" required><br><br>
+        <!--Total:-->
+        <div class="Total"> 
+            Your total is ${{ total_price }}.00
+        </div>
 
-        <label for="name">Last Name:</label><br>
-        <input type="text" id="last_name" name="last_name" required><br><br>
+    </div>
+   
+    <div class="Title">
+        <h2>Enter Your Details</h2>
+    </div>
+    
+    <div class="billing"> 
+        <form action="{{ url_for('submit_order') }}" method="POST">
+            <label for="name">First Name:</label><br>
+            <input style="height:5vh; width:85vw;font-size: 3vh; padding-left: 3vw; background-color: #F8F5E5; color:#B96B50; border: solid #F8F5E5; margin-bottom: 2vh; margin-top:1vh" type="text" id="first_name" name="first_name" required><br><br>
 
-        <label for="email">Email Address:</label><br>
-        <input type="email" id="email" name="email" required><br><br>
+            <label for="name">Last Name:</label><br>
+            <input style="height:5vh; width:85vw;font-size: 3vh; padding-left: 3vw; background-color: #F8F5E5; color:#B96B50; border: solid #F8F5E5; margin-bottom: 2vh; margin-top:1vh" type="text" id="last_name" name="last_name" required><br><br>
 
-        <label for="delivery_method">Delivery or Pickup:</label><br>
-        <select id="delivery_method" name="delivery_method" required>
-            <option value="pickup">Pickup</option>
-            <option value="delivery">Delivery</option>
-        </select><br><br>
+            <label for="email">Email Address:</label><br>
+            <input style="height:5vh; width:85vw;font-size: 3vh; padding-left: 3vw; background-color: #F8F5E5; color:#B96B50; border: solid #F8F5E5; margin-bottom: 2vh; margin-top:1vh" type="email" id="email" name="email" required><br><br>
 
-        <label for="shipping_address">Shipping Address:</label><br>
-        <input type="text" id="shipping_address" name="shipping_address"><br><br>
+            <label for="delivery_method">Delivery or Pickup:</label><br>
+            <select style="height:5vh; width:85vw;font-size: 3vh; padding-left: 3vw; background-color: #F8F5E5; color:#B96B50; border: solid #F8F5E5; margin-bottom: 2vh; margin-top:1vh" id="delivery_method" name="delivery_method" required>
+                <option value="pickup">Pickup</option>
+                <option value="delivery">Delivery</option>
+            </select><br><br>
+
+            <label for="shipping_address">Shipping Address:</label><br>
+            <input style="height:5vh; width:85vw;font-size: 3vh; padding-left: 3vw; background-color: #F8F5E5; color:#B96B50; border: solid #F8F5E5; margin-bottom: 2vh; margin-top:1vh" type="text" id="shipping_address" name="shipping_address"><br><br>
 
 
-        <label for="card_number">Credit Card Number:</label><br>
-        <input type="text" id="card_number" name="card_number" 
-            pattern="\d{16}" 
-            title="Credit card number must be a 16 digit number" 
-            required><br><br>
+            <label for="card_number">Credit Card Number:</label><br>
+            <input style="height:5vh; width:85vw;font-size: 3vh; padding-left: 3vw; background-color: #F8F5E5; color:#B96B50; border: solid #F8F5E5; margin-bottom: 2vh; margin-top:1vh" type="text" id="card_number" name="card_number" 
+                pattern="\d{16}" 
+                title="Credit card number must be a 16 digit number" 
+                required><br><br>
 
-        <label for="cvv">CVV (Security Code):</label><br>
-        <input type="text" id="cvv" name="cvv" 
-            pattern="\d{3}" 
-            title="CVV must be a 3 digit number" 
-            required><br><br>
+            <label for="cvv">CVV (Security Code):</label><br>
+            <input style="height:5vh; width:85vw;font-size: 3vh; padding-left: 3vw; background-color: #F8F5E5; color:#B96B50; border: solid #F8F5E5; margin-bottom: 2vh; margin-top:1vh" type="text" id="cvv" name="cvv" 
+                pattern="\d{3}" 
+                title="CVV must be a 3 digit number" 
+                required><br><br>
 
-        <label for="zip">Zip Code:</label><br>
-        <input type="text" id="zip" name="zip"
-            pattern="\d{5}" 
-            title="Zipcode must be a 5 digit number" 
-            required><br><br>
-
-        <input type="submit" value="Pay and Submit Order">
-    </form>
+            <label for="zip">Zip Code:</label><br>
+            <input style="height:5vh; width:85vw;font-size: 3vh; padding-left: 3vw; background-color: #F8F5E5; color:#B96B50; border: solid #F8F5E5; margin-bottom: 2vh; margin-top:1vh" type="text" id="zip" name="zip"
+                pattern="\d{5}" 
+                title="Zipcode must be a 5 digit number" 
+                required><br><br>
+            
+            <input style="height:8vh; width:85vw;font-size: 3vh; padding-left: 3vw; background-color: #F9DFA0; color:#B96B50; border: solid #B96B50; margin-bottom: 10vh; margin-top:1vh" type="submit" value="Pay and Submit Order">
+        </form>
+    </div>
 
 </body>
 </html>

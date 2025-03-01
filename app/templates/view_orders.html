@@ -3,35 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <title>View Orders</title>
+    <link rel="stylesheet" href="../static/order_history.css">
 </head>
 <body>
-    <h1>Thank You for Your Patronage!</h1>
+    <a href="{{ url_for('home') }}">
+        <div class="Back"> 
+            Back
+        </div>
+    </a>
+    <div class="Title">
+        <h1>Thank You for Your Patronage!</h1>
+    </div>
     <br>
-    <h2>Order History</h2>
-    <ul>
+    <div class="ordertitle">
+        <h2>Order History</h2>
+    </div>
+    
+    <!-- order list-->
+    <div class="orderlist">
         {% for order in orders %}
-        <li style="margin-bottom: 20px;">
-            <strong>{{ order.first_name }}</strong> <strong>{{ order.last_name }}</strong> - {{ order.delivery_method | capitalize }} <br>
-            Address: {{ order.shipping_address }} <br>
-            Last 4 Digits of Card: **** **** **** {{ order.last_four }} <br>
-            <strong>Items: </strong>
-            <ul>
+        <div class="order">
+            <div class="name">
+                <h1> {{ order.delivery_method | capitalize }} for {{ order.first_name | capitalize}} {{ order.last_name | capitalize}} </h1>
+            </div>
+
+            <div class="address">
+               Address for Delivery: {{ order.shipping_address }}
+            </div>
+
+            <div class="card">
+                **** **** **** {{ order.last_four }}
+            </div>
+
+            <div class="items">
                 {% for item in order['items'] %}
-                <li style="margin-bottom: 10px;">
-                    <strong>{{ item.name }} </strong> —
-                    Quantity: {{ item.quantity }} |
-                    Price: ${{ item.price }} each |
-                    Subtotal: ${{ item.total }}
-                </li>
+                <!-- each item has a name + quanitity on one line-->
+                <div class="itemdesc">
+                    <div class="itemname">
+                        {{ item.name }}
+                    </div>
+                    <div class="itemquant">
+                        x{{ item.quantity }}
+                    </div>
+                </div>
+
+                <!-- each item has a price + subtotal on one line-->
+                <div class="itempricing">
+                    <div class="price">
+                        ${{ item.price }}.00 each 
+                    </div>
+                    <div class="subtotal">
+                        ${{ item.total }}.00
+                    </div>
+                </div>
                 {% endfor %}
-            </ul>
-            <strong>Total Price: ${{ order.total_price }}</strong>
-            <br>
-            <br>
-            <a href="{{ url_for('delete_order', order_id=order.order_id) }}">Remove From Order History</a>
-        </li>
+                <!-- total is at the end of the element block-->
+                <div class="end">
+                    <div class="total">
+                        Total Price: ${{ order.total_price }}
+                    </div>
+    
+                    <div class="remove">
+                        <a class="button" href="{{ url_for('delete_order', order_id=order.order_id) }}">Remove</a>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
         {% endfor %}
-    </ul>
-    <a href="{{ url_for('home') }}">Return Home</a>
+    </div>
+
 </body>
 </html>
