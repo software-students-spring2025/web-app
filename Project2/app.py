@@ -44,9 +44,9 @@ def create_app():
     # ========================
     # 🏠 Home Route (List All Posts)
     # ========================
-    @app.route("/")
+    @app.route("/", methods=["GET","POST"])
     def home():
-        """Displays all LFG posts sorted by creation time."""
+        """Displays the home page."""
         try:
             posts = list(db.posts.find({}).sort("created_at", -1))
             return render_template("index.html", posts=posts)
@@ -54,32 +54,7 @@ def create_app():
             logging.error(f"⚠️ Error fetching posts: {e}", exc_info=True)
             return render_template("error.html", error="Could not load posts."), 500
 
-    # ========================
-    # 📝 Create a New Post
-    # ========================
-    @app.route("/create", methods=["POST"])
-    def create_post():
-        """Creates a new LFG post and saves it to the database."""
-        try:
-            # Required fields
-            required_fields = ["game_name", "level", "platform", "role", "description", "availability", "region", "created_by", "contact"]
-
-            # Validate input
-            if not all(field in request.form and request.form[field] for field in required_fields):
-                return jsonify({"error": "Missing required fields"}), 400
-
-            # Store data safely
-            new_post = {
-                **{key: request.form[key] for key in required_fields},
-                "created_at": datetime.datetime.utcnow(),
-            }
-
-            db.posts.insert_one(new_post)
-            return redirect(url_for("home"))
-        except Exception as e:
-            logging.error(f"⚠️ Error creating post: {e}", exc_info=True)
-            return render_template("error.html", error="Could not create post."), 500
-
+    
     # ========================
     # ✏️ Edit an Existing Post
     # ========================
