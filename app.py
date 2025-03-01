@@ -100,7 +100,41 @@ def home():
     # Fetch job applications associated with the current user.
     # For this example, we assume each application document has a "user_id" field.
     applications = list(applications_collection.find({"user_id": current_user.id}))
-    return render_template("home.html", applications=applications, user=current_user)
+    total_apps = len(applications)
+    interview_count = sum(1 for app in applications if app.get("status") == "Interview")
+    offer_count = sum(1 for app in applications if app.get("status") == "Offered")
+
+    return render_template(
+        "home.html",
+        applications=applications,
+        user=current_user,
+        total_apps=total_apps,
+        interview_count=interview_count,
+        offer_count=offer_count
+    )
+@app.route("/add_application", methods=["GET", "POST"])
+@login_required
+def add_application():
+    if request.method == "POST":
+        company = request.form.get("company")
+        job_title = request.form.get("job_title")
+        status = request.form.get("status")
+        application_date = request.form.get("application_date")
+        note = request.form.get("note")
+
+        applications_collection.insert_one({
+            "user_id": current_user.id,
+            "company": company,
+            "job_title": job_title,
+            "status": status,
+            "application_date": application_date,
+            "note": note
+        })
+
+        flash("New application added!", "success")
+        return redirect(url_for("home"))
+
+    return render_template("add_application.html")
 
 # Route for logging out the user
 @app.route("/logout")
