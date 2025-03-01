@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>TASK TRACKER</title>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    </head>
+    <body>
+        <header>
+            <!-- Header includes part of the page that are common to all screens -->
+            <h1>{% block title %} TASK TRACKER APP {% endblock %}</h1>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('show_home') }}">Home</a></li>
+                    <li><a href="{{ url_for('show_edit') }}">Edit</a></li>
+                    <li><a href="{{ url_for('show_post') }}">Post</a></li>
+                    <li><a href="{{ url_for('show_rec_del') }}">Archive/Delete</a></li>
+                    <li><a href="{{ url_for('show_search') }}">Search</a></li>
+                    <li><a href="{{ url_for('show_search_results') }}">Search Results</a></li>
+                </ul>
+            </nav>
+        </header>
+        <div id="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </body>
+</html>

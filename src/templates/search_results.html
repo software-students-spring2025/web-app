@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}SEARCH TASKS{% endblock %}
+
+{% block content %} 
+    <div>
+            <h2>Results for {{search_query}}</h2>
+   
+    {% if tasks %}
+    <table>
+        <tr>
+            <th>Task Name</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>XP</th>
+            <th>Created</th>
+            <th>Due</th>
+        </tr>
+        {% for task in tasks %}
+            <tr>
+                <td>{{ task.name }}</td>
+                <td>{{ task.description }}</td>
+                <td>{{ task.done_status }}</td>
+                <td>{{ task.xp_value }}</td>
+                <td>{{ task.created_date.strftime('%Y-%m-%d') }}</td>
+                <td>{{ task.due_date.strftime('%Y-%m-%d') }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+<!-- Added a way to handle empty search results --> 
+{%else %}
+    <p>No tasks found for "{{search_query}}". Try a different search.</p>
+{%endif%}
+<br>
+<a href="{{ url_for('show_search') }}">Back to Search</a>
+</div>
+{% endblock %} 

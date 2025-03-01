@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}TASK TRACKER{% endblock %}
+
+{% block content %}
+    <div class="centered-content" style="text-align: center; margin: 0 auto;">
+        <h2>Task Tracker</h2>
+        <p id="total-xp"><strong>Total XP:</strong> {{ xp_counter }}</p>
+        <img src="https://preview.redd.it/drinkable-xp-bottle-change-old-xp-bottle-to-have-the-splash-v0-2zlsur7cfqna1.gif?width=320&auto=webp&s=60fde70e71944a9cc341143c50a2806ce695247f" alt="XP">
+        <h2>Tasks</h2>
+        <table>
+            <tr>
+            <th>Task Name</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>XP</th>
+            <th>Created</th>
+            <th>Due</th>
+            {% for task in tasks %}
+            <tr class="task">
+            <td>{{ task.name }}</td>
+            <td>{{ task.description }}</td>
+            <td>{{ task.done_status }}</td>
+            <td class="xp">{{ task.xp_value }}</td>
+            <td>{{ task.created_date.strftime('%Y-%m-%d') }}</td>
+            <td>{{ task.due_date.strftime('%Y-%m-%d') }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <script defer src="{{ url_for('static', filename='js/home.js') }}"></script>
+{% endblock %}

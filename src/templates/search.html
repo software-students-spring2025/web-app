@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %}SEARCH TASKS{% endblock %}
+
+{% block content %} 
+    
+        <div>
+            <h2>Search Tasks</h2>
+            <form action="{{ url_for('show_search_results') }}" method="get">
+                <input type="text" required name="search" placeholder="Search Query">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+{% endblock %} 
