@@ -24,7 +24,7 @@ Delete Functionality
 
 Use Docker Compose to boot up both the mongodb database and the flask-app web app with one command:
 
-**docker compose up --force-recreate --build**
+**docker-compose up --build**
 
 View the app in your browser:
 
