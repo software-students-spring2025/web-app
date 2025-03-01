@@ -41,6 +41,7 @@
     <div id="AllFriends">
         <p>Current Friends</p>
         {% if friends %} {% for friend in friends %}
+
         <a href="profile/{{friend.id}}">
             <div class="friend">
                 <div class="friendUser">{{ friend.username }}</div>
