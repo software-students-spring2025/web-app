@@ -7,24 +7,12 @@ from pymongo.errors import DuplicateKeyError, OperationFailure
 from bson.objectid import ObjectId
 from bson.errors import InvalidId
 from dotenv import load_dotenv
-import os
-
-def get_db():
-    mydb = getattr(g, "_database", None)
-
-    if mydb is None:
-
-        mydb = g._database = PyMongo(current_app).db
-       
-    return mydb
-
-#mydb = LocalProxy(get_db)
-
-#users = db.user
+from .dbconnect import get_db
 
 def insert_data():
     print("in insert data")
     if request.method == 'POST':
+        db = get_db()
         print("request method post")
         name = request.form['name']
         email = request.form['email']
@@ -35,7 +23,7 @@ def insert_data():
         reg_user['email'] = email
         reg_user['password'] = password
 
-        users = db.user
+        users = db['user']
         if users.find_one({"email":email}) == None:
             users.insert_one(reg_user)
             return True
