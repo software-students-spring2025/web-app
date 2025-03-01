@@ -2,6 +2,7 @@ import os
 from flask import Flask, render_template, request, redirect, url_for
 import pymongo
 from dotenv import load_dotenv, dotenv_values
+from datetime import datetime
 
 # load environment variables from .env file
 load_dotenv()
@@ -78,17 +79,21 @@ def create_app():
         Returns: render_template (html for search page)
         """
         search_term = request.args.get("searchterm", "")
-        print(search_term)
-        events = db.events.find({
+
+        events = list(db.events.find({
             "$or": [
-                {"name": {"$options": "i", "$regex": search_term}},
-                {"date": {"$regex": search_term}},
-                {"description": {"$options": "i", "$regex": search_term}},
-                {"location": {"$options": "i", "$regex": search_term}},
-                {"category": {"$options": "i", "$regex": search_term}}
+                {"name": {"$regex": search_term, "$options": "i"}},
+                {"date": {"$regex": search_term, "$options": "i"}},
+                {"description": {"$regex": search_term, "$options": "i"}},
+                {"location": {"$regex": search_term, "$options": "i"}},
+                {"category": {"$regex": search_term, "$options": "i"}}
             ]
-        })
-        return render_template("search.html", searchterm=search_term, events=events)
+        }))
+
+        sorted_events = sorted(events, key=lambda obj: datetime.strptime(obj["date"], "%m/%d/%Y"))
+        print(sorted_events)
+
+        return render_template("search.html", searchterm=search_term, events=sorted_events)
     
     @app.errorhandler(Exception)
     def handle_error(e):

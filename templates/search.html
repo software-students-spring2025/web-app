@@ -22,14 +22,23 @@
         </form>
 
         {% if searchterm %}
-        <div class="list">
-          {% for event in events %}
-            <div class="event">
-                <p>{{ event["name"] }}</p>
+        <div class="flex">
+          <div class="event-container" id="events">
+            {% for event in events %}
+            <div class="event-card">
+              <div class="event-strip {{ event['category'] | lower }}"></div>
+              <div class="event-content">
+                <div class="event-title">{{ event["name"] }}</div>
+                <div class="event-info">📅 {{ event["date"] }}</div>
+                <div class="event-info">⏰ {{ event["time"] }}</div>
+                <div class="event-info">📍 {{ event["location"] }}</div>
+              </div>
             </div>
-          {% endfor %}
+            {% endfor %}
+          </div>
+          {% endif %}
         </div>
-        {% endif %}
+  
       </main>
     </div>
   </body>

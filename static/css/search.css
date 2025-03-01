@@ -4,7 +4,7 @@
 }
 
 .container{
-    font-family: Arial;
+    font-family: Arial, sans-serif;
 }
 
 .wrapper{
@@ -13,8 +13,8 @@
 }
 
 header{
-    background-color: lightblue;
-    height: 55px;
+    background-color: #bbe7fe;
+    height: 50px;
     display: flex;
     justify-content: space-between;
 }
@@ -42,7 +42,7 @@ header{
 
 .heading{
     text-align: center;
-    padding: 30px;
+    padding: 40px;
 }
 
 .search-bar{
@@ -66,21 +66,59 @@ header{
     border-bottom-right-radius: 8px;
     border: solid 1.5px gray;
     border-left: none;
-    background-color: white;
+    background-color: lightgray;
 }
 
 .search-button:hover{
-    background-color: #FFD4DB;
+    background-color: #bbe7fe;
 }
 
-.list{
+.flex{
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 30px;
+    padding: 20px;
 }
 
-.event{
-    border: solid 1px black;
-    width: 700px;
+.event-container {
+    width: 100%;
+    max-width: 700px;
+}
+
+.event-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin: 10px 0;
+    overflow: hidden;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.event-card:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.event-strip {
+    height: 10px;
+    width: 100%;
+}
+
+.education { background: #bbe7fe; }
+.networking { background: #d3b5e5; }
+.extracurricular { background: #ffd4db; }
+.other { background: #eff1db; }
+
+.event-content {
+    padding: 15px;
+}
+
+.event-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.event-info {
+    font-size: 14px;
+    color: #555;
 }
