@@ -11,10 +11,8 @@ Our web application is a dedicated Lost and Found platform for NYU, enabling use
 - As an NYU student who lost my laptop in the library, I want to search for my lost item by name so that I can see if someone has reported it.
 - As an NYU student who misplaced my student ID on campus, I want to filter search results by category so that I can quickly find relevant lost items
 - As an NYU student who found an item but isn’t sure if it has already been reported, I want to search the lost and found database so that I don’t create duplicate entries.
-
 - As an NYU student who found a lost water bottle in the gym, I want to add the item to the lost and found list so that the owner can locate it.
 - As an NYU admin managing lost items, I want to add detailed descriptions and images when registering a lost item so that users can better identify their belongings.
-
 - As an NYU student who reported my lost backpack but provided incorrect details, I want to edit my lost item entry so that I can update it with the correct description.
 - As an NYU admin handling lost items, I want to modify item descriptions to correct errors or add more details so that users have accurate information when searching.
 Delete Functionality
