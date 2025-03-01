@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Brief View</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>The MSJE Forum</h2>
+        {% for item in data %}
+        <div class="post">
+            <h3>{{ item["title"] }}</h3>
+            <p><strong>By:</strong> {{ item["user"] }}</p>
+            <p>{{ " ".join(item["content"].split()[:20]) }}...</p> <!-- Show first 20 words of "content"-->
+            <a href="{{ url_for('post_detail', post_id=item['id']) }}" class="read-more">Read More</a>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
