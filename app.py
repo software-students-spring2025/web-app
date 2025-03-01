@@ -204,7 +204,7 @@ def create_app():
         # Display confirmation page for GET requests
         return render_template('delete.html', doc=doc)
     
-    # Error handling - Using a simplified approach until error.html is ready
+    # Error handling - Using the error.html template
     @app.errorhandler(Exception)
     def handle_error(e):
         """
@@ -213,8 +213,14 @@ def create_app():
             e (Exception): The exception object
         """
         app.logger.error(f"An error occurred: {e}")
-        # Return a simple error message since error.html is not ready
-        return f"An error occurred: {str(e)}. Please try again later.", 500
+        
+        # Get error code or default to 500
+        error_code = getattr(e, 'code', 500)
+        
+        # Return rendered error template with appropriate error details
+        return render_template('error.html', 
+                            error_code=error_code,
+                            error_message=str(e)), error_code
     
     return app
 
