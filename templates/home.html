@@ -18,6 +18,16 @@
     <div id="welcome">
         Welcome, {{ user }}!
     </div>
+
+    <div id="shuffleScreen" data-vis="{{winner}}">
+
+        <a href="/shuffle"><div id="shuffleButton">I'm Hungry!</div></a>
+
+        <div id="shuffleResults">
+            You should go to: {{ winner }}
+        </div>
+    </div>
+
     <div id="yourRestaurants">
         <p> ~ Your Restaurants ~ </p>
             {% for restaurant in restaurants %}
@@ -53,6 +63,15 @@
         </div>
     </div>
     </div>
+<script>
+    let visi = document.getElementById('shuffleScreen');
+    let visible = visi.dataset.vis =! null;
+    let results = document.getElementById('shuffleResults')
+
+    if (visible){
+        results.style.display = "block";
+    }
+</script>
 
 </body>
 

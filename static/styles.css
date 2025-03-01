@@ -224,6 +224,9 @@ header{
     
 
 }
+#shuffleResults{
+    display: none;
+}
 .bottomHalf{
     height: 40%;
     border-bottom-left-radius: 10px;
