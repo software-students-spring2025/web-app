@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Event Calendar</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/search.css') }}"/>
+  </head>
+  <body>
+    <div class="container">
+      <main>
+        <h1 class="heading">Search Events</h1>
+
+        <form method="GET">
+            <div class="wrapper">
+                <input type="text" name="searchterm" placeholder="Search by event name, location, category, or date" class="search-bar" value="{{ searchterm }}"/>
+                <input type="submit" value="Search" class="search-button"/>
+            </div>
+        </form>
+
+        {% if searchterm %}
+        <div class="list">
+          {% for event in events %}
+            <div class="event">
+                <p>{{ event["name"] }}</p>
+            </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </main>
+    </div>
+  </body>
+</html>
