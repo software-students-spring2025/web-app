@@ -8,6 +8,7 @@ from bson.objectid import ObjectId
 from flask import Flask, render_template, request, redirect, url_for, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv, dotenv_values
+from flask_login import login_required, current_user
 
 load_dotenv()  # Load environment variables
 
@@ -30,10 +31,11 @@ login_manager.login_view = "login"
 # User model for authentication
 class User(flask_login.UserMixin):
     def __init__(self, user_data):
-        self.id = str(user_data["_id"])  # Ensure ID is a string for Flask-Login compatibility
+        self.id = str(user_data["_id"]) 
         self.email = user_data["email"]
         self.username = user_data["username"]
         self.password = user_data["password"]
+        self.friends = user_data.get("friends", [])
 
     @staticmethod
     def find_by_username(username):
@@ -60,9 +62,38 @@ class User(flask_login.UserMixin):
         db.loginInfo.insert_one({
             "email": email,
             "username": username,
-            "password": hashed_password
+            "password": hashed_password,
+            "friends": [],
         })
         return True
+    
+    def get_friends(self):
+        """Retrieve the user's friends as User objects."""
+        friend_ids = [ObjectId(fid) for fid in self.friends]
+        friends_data = db.loginInfo.find({"_id": {"$in": friend_ids}})
+        return [User(friend) for friend in friends_data]
+
+    def add_friend(self, friend_id):
+        """Add a friend using ObjectId reference."""
+        friend_id = ObjectId(friend_id)
+        if friend_id not in self.friends:
+            db.loginInfo.update_one(
+                {"_id": ObjectId(self.id)},
+                {"$push": {"friends": friend_id}}
+            )
+            return True
+        return False
+
+    def remove_friend(self, friend_id):
+        """Remove a friend using ObjectId reference."""
+        friend_id = ObjectId(friend_id)
+        if friend_id in self.friends:
+            db.loginInfo.update_one(
+                {"_id": ObjectId(self.id)},
+                {"$pull": {"friends": friend_id}}
+            )
+            return True
+        return False
 
 
 # Flask-Login user loader
@@ -124,6 +155,7 @@ def logout():
     flash("Logged out successfully", "success")
     return redirect(url_for("login"))
 
+
 @app.route("/add", methods=["GET","POST"])
 @flask_login.login_required
 def add():
@@ -135,6 +167,36 @@ def add():
         db.restaurantData.insert_one(doc)
         return redirect("/home")
     return render_template("add.html")
+
+@app.route("/friends", methods=["GET", "POST"])
+@login_required
+def friends():
+    user = User.find_by_id(current_user.id) 
+    friends_list = user.get_friends()
+    search_query = request.args.get("searchUser", "").strip()
+    search_results = []
+    if search_query:
+        search_results = db.loginInfo.find(
+            {"username": {"$regex": search_query, "$options": "i"}}  # Case-insensitive search
+        )
+        search_results = [User(user) for user in search_results if str(user["_id"]) != current_user.id]  # Exclude self
+
+    return render_template("friends.html", friends=friends_list, search_results=search_results)
+
+@app.route("/add_friend/<friend_id>", methods=["POST"])
+@login_required
+def add_friend(friend_id):
+    user = User.find_by_id(current_user.id)
+    if user.add_friend(friend_id):
+        flash("Friend added successfully!", "success")
+    else:
+        flash("This user is already your friend.", "info")
+    return redirect(url_for("friends"))
+
+@app.route("/profile")
+@flask_login.login_required
+def profile():
+    return render_template("profile.html",  user=current_user)
 
 # Run the app
 if __name__ == "__main__":

@@ -21,17 +21,36 @@
         </form>
     </div>
 
+    <div id="searchResults">
+        {% if search_results %}
+            <p>Search Results:</p>
+            {% for user in search_results %}
+            <div class="friend">
+                <div class="friendUser">{{ user.username }}</div>
+                <form action="{{ url_for('add_friend', friend_id=user.id) }}" method="POST">
+                    <button type="submit">Add Friend</button>
+                </form>
+            </div>
+            {% endfor %}
+        {% elif request.args.get("searchUser") %}
+            <p>No users found.</p>
+        {% endif %}
+    </div>
+
     <div id="AllFriends">
         <p>Current Friends</p>
-        <div class="friend">
-            <div class="friendUser">JonathanDoe</div>
-        </div>
-        <div class="friend">
-            <div class="friendUser">JanethanDoe</div>
-        </div>
-        <div class="friend">
-            <div class="friendUser">JohnnythanDoe</div>
-        </div>
+        {% if friends %}
+            {% for friend in friends %}
+            <div class="friend">
+                <div class="friendUser">{{ friend.username }}</div>
+                <form action="{{ url_for('remove_friend', friend_id=friend.id) }}" method="POST">
+                    <button type="submit">Remove</button>
+                </form>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>You have no friends yet.</p>
+        {% endif %}
     </div>
     
 </body>
