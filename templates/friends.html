@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/styles.css">
     <title>Restaurant Roulette</title>
 </head>
+
 <body id="friendsScreen">
     <header>
         <div id="appName"><a href="/home">RR</a></div>
@@ -13,7 +15,7 @@
         <div id="addFriends"><a href="/friends">Friends</a></div>
         <div id="logOut"> <a href="/logout">Log Out</a></div>
     </header>
-    <div id="search"> 
+    <div id="search">
         <p>Search For a Friend!</p>
         <form id="searchForm" action="friends" method="GET">
             <input class="box" id="searchBox" name="searchUser">
@@ -23,35 +25,30 @@
 
     <div id="searchResults">
         {% if search_results %}
-            <p>Search Results:</p>
-            {% for user in search_results %}
-            <div class="friend">
-                <div class="friendUser">{{ user.username }}</div>
-                <form action="{{ url_for('add_friend', friend_id=user.id) }}" method="POST">
-                    <button type="submit">Add Friend</button>
-                </form>
-            </div>
-            {% endfor %}
-        {% elif request.args.get("searchUser") %}
-            <p>No users found.</p>
+        <p>Search Results:</p>
+        {% for user in search_results %}
+        <div class="friend">
+            <div class="friendUser">{{ user.username }}</div>
+            <form action="{{ url_for('add_friend', friend_id=user.id) }}" method="POST">
+                <button type="submit">Add Friend</button>
+            </form>
+        </div>
+        {% endfor %} {% elif request.args.get("searchUser") %}
+        <p>No users found.</p>
         {% endif %}
     </div>
 
     <div id="AllFriends">
         <p>Current Friends</p>
-        {% if friends %}
-            {% for friend in friends %}
-            <div class="friend">
-                <div class="friendUser">{{ friend.username }}</div>
-                <form action="{{ url_for('remove_friend', friend_id=friend.id) }}" method="POST">
-                    <button type="submit">Remove</button>
-                </form>
-            </div>
-            {% endfor %}
-        {% else %}
-            <p>You have no friends yet.</p>
+        {% if friends %} {% for friend in friends %}
+        <div class="friend">
+            <div class="friendUser">{{ friend.username }}</div>
+        </div>
+        {% endfor %} {% else %}
+        <p>You have no friends yet.</p>
         {% endif %}
     </div>
-    
+
 </body>
+
 </html>
