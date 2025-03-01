@@ -3,12 +3,12 @@
 {% block title %}SEARCH TASKS{% endblock %}
 
 {% block content %} 
-    <ul>
-        <li>
-            <form action="/search_results" method="get">
+    
+        <div>
+            <h2>Search Tasks</h2>
+            <form action="{{ url_for('show_search_results') }}" method="get">
                 <input type="text" required name="search" placeholder="Search Query">
-                <input type="button" type="submit" value="Search">
+                <button type="submit">Search</button>
             </form>
-        </li>
-    </ul>
+        </div>
 {% endblock %} 

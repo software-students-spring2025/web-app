@@ -4,8 +4,9 @@
 
 {% block content %} 
     <div>
-            Results for {{search_query}}
-    </div>
+            <h2>Results for {{search_query}}</h2>
+   
+    {% if tasks %}
     <table>
         <tr>
             <th>Task Name</th>
@@ -26,4 +27,11 @@
             </tr>
         {% endfor %}
     </table>
+<!-- Added a way to handle empty search results --> 
+{%else %}
+    <p>No tasks found for "{{search_query}}". Try a different search.</p>
+{%endif%}
+<br>
+<a href="{{ url_for('show_search') }}">Back to Search</a>
+</div>
 {% endblock %} 
