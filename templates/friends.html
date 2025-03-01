@@ -3,9 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/styles.css">
     <title>Restaurant Roulette</title>
 </head>
-<body>
-    friends
+<body id="friendsScreen">
+    <header>
+        <div id="appName"><a href="/home">RR</a></div>
+        <div id="profile"><a href="/profile">Profile</a></div>
+        <div id="addFriends"><a href="/friends">Friends</a></div>
+        <div id="logOut"> <a href="/logout">Log Out</a></div>
+    </header>
+    <div id="search"> 
+        <p>Search For a Friend!</p>
+        <form id="searchForm" action="friends" method="GET">
+            <input class="box" id="searchBox" name="searchUser">
+            <button id="searchButton">Search</button>
+        </form>
+    </div>
+
+    <div id="AllFriends">
+        <p>Current Friends</p>
+        <div class="friend">
+            <div class="friendUser">JonathanDoe</div>
+        </div>
+        <div class="friend">
+            <div class="friendUser">JanethanDoe</div>
+        </div>
+        <div class="friend">
+            <div class="friendUser">JohnnythanDoe</div>
+        </div>
+    </div>
+    
 </body>
 </html>
