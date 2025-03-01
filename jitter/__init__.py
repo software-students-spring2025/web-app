@@ -1,6 +1,6 @@
 from bson.objectid import ObjectId
 import datetime
-from flask import Flask, render_template, request, redirect, abort, url_for, make_response
+from flask import Flask, render_template, request, redirect, abort, url_for, make_response, g
 from dotenv import load_dotenv
 import flask_login
 import os
@@ -16,9 +16,12 @@ def create_app():
     MONGO_URI = os.getenv('MONGO_URI')
 
     print(MONGO_URI)
-    # make a connection to the database server
+
+    #make a connection to the database server
     connection = pymongo.MongoClient(MONGO_URI)
     db = connection["Jitter"]
+    users = db.user
+    #g._database = db
 
     # blueprint for auth routes in our app
     app.register_blueprint(auth_blueprint)

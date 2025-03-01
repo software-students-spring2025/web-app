@@ -1,5 +1,7 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, redirect, url_for, request
 #from . import db
+from werkzeug.security import generate_password_hash, check_password_hash
+from .userdb import insert_data
 
 auth = Blueprint('auth', __name__)
 
@@ -11,7 +13,13 @@ def login():
 def signup():
     return render_template('signup.html')
 
+@auth.route('/signup', methods=['POST'])
+def signup_post():
+    print("in signup post")
+    insert_data()
+    return redirect(url_for('auth.login'))
+
+
 @auth.route('/logout')
 def logout():
     return 'Logout'
-
