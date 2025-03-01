@@ -33,7 +33,7 @@ Use Docker Compose to boot up both the mongodb database and the flask-app web ap
 
 View the app in your browser:
 
-open a web browser and go to http://localhost:5001 (or change 5001 to whatever port number you used for the flask-app.)
+Open a web browser and go to http://localhost:5001 (or change 5001 to whatever port number you used for the flask-app.)
 
 Note that you edit any of the files in the project, you will have to stop and then restart the containers, as indicated above.
 
