@@ -24,9 +24,9 @@
                     {% for product in user_products %}
                     <tr>
                         <td>
-                            {% if product.image_path %}
+                            {% if product.image_data %}
                             <img src="data:{{ product.image_type }};base64,{{ product.image_data }}" alt="Product Image"
-                            style="max-width: 100px;">
+                            style="max-width: 250px;" >
                             {% else %}
                                 No Image
                             {% endif %}

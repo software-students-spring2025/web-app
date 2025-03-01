@@ -139,7 +139,7 @@ def dashboard():
 
     return render_template('dashboard.html', current_user=current_user, products=products)
 
-    return render_template('dashboard.html', current_user=None, products=[])
+    # return render_template('dashboard.html', current_user=None, products=[])
 
 
 # Logout Route
@@ -148,7 +148,7 @@ def dashboard():
 def logout():
     logout_user()
     flash('You have been logged out.', 'info')
-    return redirect(url_for('login'))
+    return redirect(url_for('dashboard')) # Since unauthorized users can view products now, redirect to dashboard
 
 #profile route
 @app.route('/profile', methods=['GET', 'POST'])
@@ -259,6 +259,30 @@ def product_detail(product_id):
             return redirect(url_for("product_detail", product_id=product_id))
 
     return render_template("product_detail.html", product=product, comments=comments)
+
+@app.route("/search")
+def search_product():
+    search_query = request.args.get('q', '')
+    
+    if search_query:
+        # Search for products with matching tags (case-insensitive)
+        # Using regex to make the search more flexible
+        products = list(mongo.db.products.find({"tag": {"$regex": search_query, "$options": "i"}}))
+        
+        # Convert ObjectId to string for each product
+        for product in products:
+            product["_id"] = str(product["_id"])
+            product["comments"] = list(mongo.db.comments.find({"product_id": product["_id"]}))
+        
+        return render_template('dashboard.html', 
+                              current_user=current_user, 
+                              products=products, 
+                              search_query=search_query)
+    else:
+        # If no search query, redirect to dashboard
+        return redirect(url_for('dashboard'))
+    
+
 # Run the Flask App
 if __name__ == '__main__':
     app.run(debug=True)

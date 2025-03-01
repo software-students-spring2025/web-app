@@ -13,6 +13,21 @@
 
     <hr>
 
+    <!-- Search Bar -->
+    <form action="{{ url_for('search_product') }}" method="GET" class="form-inline">
+        <div class="input-group w-100">
+            <input type="text" name="q" class="form-control" placeholder="Search for your product (Case Insensitive)" 
+                    value="{{ search_query if search_query is defined else '' }}">
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </form>
+    {% if search_query is defined %}
+    <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary">Clear Search</a>
+    <span class="ml-2">Search results for: <strong>{{ search_query }}</strong></span>
+    {% endif %}
+
     <h3>Posted Products</h3>
     {% if products %}
     <table class="table table-bordered">
