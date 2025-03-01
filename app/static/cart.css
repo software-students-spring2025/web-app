@@ -1,0 +1,89 @@
+.Back {
+    margin-top: 10%;
+    margin-left: 10%;
+    flex-direction: column;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    width: 20vw;
+    height: 5vh;
+    border: solid;
+    font-size: 5vw;
+}
+
+a {
+    text-decoration: none;
+}
+
+.Title {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 5vw;
+    margin-top: 5%;
+    padding: 6vw;
+    flex-direction: column;
+}
+
+.ItemList {
+    display: flex;
+    margin-left: 2vw;
+    margin-right: 2vw;
+    
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.description{
+    margin: 2vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid;
+    padding: 6vw;
+}
+
+.menuTitle {
+    font-size: 3vw;
+}
+
+.amount {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 10vw;
+    width: 45vw;
+    height: 10vh;
+    flex-direction: column;
+}
+
+.price {
+    margin-top: 18vw;
+    font-size: 6vw;
+}
+
+.total {
+    text-align: center;
+    font-size: 7vw;
+    margin-bottom: 3vw;
+}
+
+.remove {
+    border: solid;
+    width: 18vw;
+    height: 3vh;
+    text-align: center;
+    font-size: 5vw;
+    margin-top: 2vh;
+    
+}
+
+.checkout {
+    text-align: center;
+    font-size: 4vw;
+    border: solid;
+    margin: 4vw;
+}
