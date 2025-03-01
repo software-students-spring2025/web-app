@@ -110,9 +110,47 @@ def delete():
     shows = tv_shows_collection.find()
     return render_template("delete.html", shows=shows)
 
+@app.route("/edit/<post_id>", methods=["GET", "POST"])
+def edit(post_id):
+    """
+    Route to edit an existing episode.
+    """
+    show = tv_shows_collection.find_one({"_id": ObjectId(post_id)})
+
+    if request.method == "POST":
+        title = request.form.get("title")
+        genre = request.form.get("genre")
+        season = request.form.get("season")
+        episode_num = request.form.get("episode")
+        rating = request.form.get("rating")
+        tags = request.form.get("tags").split(",")
+        comment = request.form.get("comment")
+
+        episode = f"S{season}E{episode_num}" if season and episode_num else ""
+
+        updated_episode = {
+            "title": title,
+            "genre": genre,
+            "episode": episode,
+            "rating": int(rating or 0),
+            "tags": [tag.strip() for tag in tags],
+            "date": datetime.datetime.utcnow(),  # Keep track of when the edit happened
+            "comment": comment,
+        }
+
+        tv_shows_collection.update_one({"_id": ObjectId(post_id)}, {"$set": updated_episode})
+
+        return redirect(url_for("success"))
+
+    return render_template("edit_show.html", show=show)
+
+@app.route("/settings")
+def settings():
+    return render_template("settings.html")
+
 @app.route("/success")
 def success():
-    return "Episode added successfully!"
+    return render_template("success.html", message="Episode added successfully!")
 
 # main driver function
 if __name__ == '__main__':
