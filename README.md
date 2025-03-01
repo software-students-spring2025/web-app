@@ -75,7 +75,7 @@ Before starting, ensure you have the following installed:
 If port 5001 is already in use (common on macOS), you can modify app.py to use a different port (e.g., 5002) in the app.run() call
 
 2. **Access the application**
-Open your web browser and navigate to: http://localhost:5001
+Open your web browser and navigate to: [http://localhost:5001](http://127.0.0.1:5001/)
 
 
 ## Task boards
