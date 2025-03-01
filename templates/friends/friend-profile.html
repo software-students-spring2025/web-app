@@ -44,22 +44,64 @@
                 <input type="hidden" name="user_id" value="1">
                 <button type="submit" class="follow-button following">Following</button>
             </form>
-        </div>
-        
-        <div class="profile-tabs">
-            <a href="friend-profile.html?tab=favorites" class="profile-tab">Favorites</a>
+
+            <div class="follow-container">
+                <button class="followers">Followers:</button>
+                <button class="following-btn">Following:</button>
+            </div>
+            
         </div>
         
         
     </div>
 
-    <details class="TypeofRecipe">
-        <summary class="ClickableCategory">Recipes</summary>
-        <div class="SpecificRecipes">
-            <button class="RecipeButton">Homemade Pasta</button>
-            <button class="RecipeButton">Classic Tiramisu</button>
-            <button class="RecipeButton">Neapolitan Pizza</button>
+
+    <div class="profile-tabs">
+        <a href="#" class="profile-tab active" id="my-recipes-tab">My Recipes</a>
+    </div>
+    <!-- My Recipes Section -->
+    <div class="tab-content" id="my-recipes-content">
+        <div class="recipe-container">
+            <div class="recipe-card">
+                <div class="recipe-info">
+                    <button class="RecipeButton">
+                        <h3><a href="#hazelnuticecream">Hazelnut Ice Cream</a></h3>
+                    </button>
+        
+                    <div id="hazelnuticecream" class="popup">
+                        <div class="popup-content">
+                            <a href="#" class="close">&times;</a>
+                            <h2>Hazelnut Ice Cream</h2>
+                            <iframe src="friendsrecipe.html"></iframe>
+                        </div>
+                    </div>
+                    <div class="recipe-meta">
+                        <span class="time">60 mins</span>
+                        <span class="difficulty">Intermediate</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recipe-card">
+                <div class="recipe-info">
+                    <button class="RecipeButton">
+                        <h3><a href="#hazelnuticecream">Hazelnut Ice Cream</a></h3>
+                    </button>
+        
+                    <div id="hazelnuticecream" class="popup">
+                        <div class="popup-content">
+                            <a href="#" class="close">&times;</a>
+                            <h2>Hazelnut Ice Cream</h2>
+                            <iframe src="friendsrecipe.html"></iframe>
+                        </div>
+                    </div>
+                    <div class="recipe-meta">
+                        <span class="time">30 mins</span>
+                        <span class="difficulty">Easy</span>
+                    </div>
+                </div>
+            </div>
         </div>
-    </details>
+    </div>
 </body>
 </html>
