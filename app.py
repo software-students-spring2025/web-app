@@ -97,5 +97,13 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
+@app.route('/create_group', methods=['GET', 'POST'])
+def create_group():
+    return render_template("create_group.html")
+
+@app.route('/groups')
+def groups():
+    return render_template("groups.html")
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=os.environ.get('PORT', 5001), debug=False)
