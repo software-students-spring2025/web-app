@@ -34,6 +34,8 @@ class Cart:
         # add item into cart ONLY if item exists
         item = get_mongo().menu_items.find_one({'item_id': item_id})
         if item:
+            #print("ITEM EXISTS")
+
             item_price = item.get('price') # add item price to total
             get_mongo().carts.update_one({'customer_id': customer_id}, {'$inc': {'total_price': item_price}})
             get_mongo().carts.update_one({'customer_id': customer_id}, {'$push': {'items': item_id}})
@@ -110,6 +112,11 @@ class Cart:
         if not cart:
             return
         return cart.get('items').count(item_id)
+
+    @staticmethod
+    def clear_cart(customer_id, item_id):
+        get_mongo().carts.delete_many({'customer_id': customer_id})
+        return Cart.get_cart(customer_id)
 
     @staticmethod
     def clear_cart(customer_id):
