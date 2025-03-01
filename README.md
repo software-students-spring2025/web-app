@@ -8,7 +8,7 @@ Our product is study platform that allows students to search, create, edit, and 
 
 ## User stories
 
-[Link to user stories] (https://github.com/software-students-spring2025/2-web-app-medium-well/issues) 
+[Link to user stories](https://github.com/software-students-spring2025/2-web-app-medium-well/issues) 
 
 ## Steps necessary to run the software
 
@@ -16,4 +16,4 @@ See instructions. Delete this line and place instructions to download, configure
 
 ## Task boards
 
-[Link to task board] (https://github.com/orgs/software-students-spring2025/projects/115)
+[Link to task board](https://github.com/orgs/software-students-spring2025/projects/115)
