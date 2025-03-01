@@ -371,7 +371,7 @@ header{
     line-height: 30px;
 }
 
-#addForm{
+#addForm, #editForm{
    display: flex;
    flex-direction: column; 
 }
