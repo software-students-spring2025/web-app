@@ -6,6 +6,48 @@
     <p><strong>Username:</strong> {{ user.username }}</p>
     <p><strong>Email:</strong> {{ user.email }}</p>
     <hr>
+    <h3>Your Posted Products</h3>
+    {% if user_products %}
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Product Image</th>
+                        <th>Product Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Inventory</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in user_products %}
+                    <tr>
+                        <td>
+                            {% if product.image_path %}
+                            <img src="data:{{ product.image_type }};base64,{{ product.image_data }}" alt="Product Image"
+                            style="max-width: 100px;">
+                            {% else %}
+                                No Image
+                            {% endif %}
+                        </td>
+                        <td>{{ product.product_name }}</td>
+                        <td>{{ product.description }}</td>
+                        <td>${{ product.price }}</td>
+                        <td>{{ product.inventory }}</td>
+                        <td>
+                            <a href="{{ url_for('edit_product', product_id=product._id) }}" class="btn btn-sm btn-warning">Edit</a>
+                            <a href="{{ url_for('delete_product', product_id=product._id) }}" class="btn btn-sm btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p>You haven't posted any products yet.</p>
+    {% endif %}
+
     <h3>Post a Product</h3>
     <form method="POST" enctype="multipart/form-data">
         <div class="mb-3">
