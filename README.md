@@ -23,10 +23,13 @@ Delete Functionality
 ## Steps necessary to run the software
 
 ### Option 1
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/software-students-spring2025/2-web-app-s2gb.git
+   cd 2-web-app-s2gb
+   docker-compose up --build
 
-Use Docker Compose to boot up both the mongodb database and the flask-app web app with one command:
-
-**docker-compose up --build**
+Use Docker Compose to boot up both the mongodb database and the flask-app web app with one command.
 
 View the app in your browser:
 
@@ -69,10 +72,10 @@ Before starting, ensure you have the following installed:
 1. **Start the Flask application**
    ```bash
    python app.py
-If port 5000 is already in use (common on macOS), you can modify app.py to use a different port (e.g., 5001) in the app.run() call
+If port 5001 is already in use (common on macOS), you can modify app.py to use a different port (e.g., 5002) in the app.run() call
 
 2. **Access the application**
-Open your web browser and navigate to: http://localhost:5000
+Open your web browser and navigate to: http://localhost:5001
 
 
 ## Task boards
