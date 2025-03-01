@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Welcome to the Dashboard</h2>
+    {% if current_user.is_authenticated %}
+        <p>Logged in as: {{ current_user.username }}</p>
+    {% else %}
+        <p>You are browsing as a guest. <a href="{{ url_for('login') }}">Log in</a> to see product details.</p>
+    {% endif %}
+
+    <hr>
+
+    <!-- Search Bar -->
+    <form action="{{ url_for('search_product') }}" method="GET" class="form-inline">
+        <div class="input-group w-100">
+            <input type="text" name="q" class="form-control" placeholder="Search for your product (Case Insensitive)" 
+                    value="{{ search_query if search_query is defined else '' }}">
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </form>
+    {% if search_query is defined %}
+    <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary">Clear Search</a>
+    <span class="ml-2">Search results for: <strong>{{ search_query }}</strong></span>
+    {% endif %}
+
+    <h3>Posted Products</h3>
+    {% if products %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Product Dealer</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Delivery Location</th>
+                <th>Inventory</th>
+                <th>Tag</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>
+                    {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('product_detail', product_id=product._id) }}">{{ product.product_name }}</a>
+                    {% else %}
+                        <a href="{{ url_for('login') }}" onclick="alert('Please log in to view product details!');">{{ product.product_name }}</a>
+                    {% endif %}
+                </td>
+                <td>{{ product.username }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.delivery_location }}</td>
+                <td>{{ product.inventory }}</td>
+                <td>{{ product.tag }}</td>
+                <td>
+                    {% if product.image_data %}
+                        <img src="data:{{ product.image_type }};base64,{{ product.image_data }}" alt="Product Image"
+                            style="max-width: 100px;">
+                    {% else %}
+                        No image
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No products have been posted yet.</p>
+    {% endif %}
+</div>
+{% endblock %}
