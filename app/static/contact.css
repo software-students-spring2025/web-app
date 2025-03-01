@@ -1,3 +1,7 @@
+body {
+    background-color: #F7EDD3;
+}
+
 .Back {
     margin-top: 10%;
     margin-left: 10%;
@@ -9,6 +13,9 @@
     height: 5vh;
     border: solid;
     font-size: 5vw;
+    background-color: #F9DFA0;
+    color: #C88246;
+    border: solid #B96B50;
 }
 
 a {
@@ -24,6 +31,7 @@ a {
     margin-top: 5%;
     padding: 10vw;
     flex-direction: column;
+    color: #B96B50;
 }
 
 .Type {
@@ -71,6 +79,9 @@ a {
     width: 30vw;
     height: 5vh;
     font-size: 5vw;
+    background-color: #F9DFA0;
+    color: #C88246;
+    border: solid #B96B50;
 }
 
 .firstlabel {
@@ -79,4 +90,5 @@ a {
     width: 55vw;
     height: 3vh;
     font-size: 5vw;
+    color: #B96B50;
 }

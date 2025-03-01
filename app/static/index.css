@@ -1,9 +1,14 @@
+body {
+    background-color: #F7EDD3;
+}
+
 .Title {
     display: flex;
     text-align: center;
     justify-content: center;
     align-items: center;
     font-size: 5vw;
+    color: #B96B50;
 }
 
 .Location {
@@ -12,6 +17,7 @@
     justify-content: center;
     align-items: center;
     font-size: 2vw;
+    color: #C88246;
 }
 
 .Middle {
@@ -50,6 +56,9 @@
     justify-content: center;
     font-size: 2vw;
     border: solid;
+    background-color: #F9DFA0;
+    color: #C88246;
+    border: solid #B96B50;
 }
 .Login {
     margin-top: 5%;
@@ -59,6 +68,9 @@
     justify-content: center;
     font-size: 2vw;
     border: solid;
+    background-color: #F9DFA0;
+    color: #C88246;
+    border: solid #B96B50;
 }
 .Contact {
     margin-top: 5%;
@@ -68,6 +80,9 @@
     justify-content: center;
     font-size: 2vw;
     border: solid;
+    background-color: #F9DFA0;
+    color: #C88246;
+    border: solid #B96B50;
 }
 
 a {
