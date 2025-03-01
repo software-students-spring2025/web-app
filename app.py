@@ -168,6 +168,11 @@ def add():
         return redirect("/home")
     return render_template("add.html")
 
+
+####################################################################################
+################################## FRIEND SECTION ##################################
+####################################################################################
+
 @app.route("/friends", methods=["GET", "POST"])
 @login_required
 def friends():
@@ -193,19 +198,18 @@ def add_friend(friend_id):
         flash("This user is already your friend.", "info")
     return redirect(url_for("friends"))
 
-@app.route("/edit/<rest_id>",methods=["GET","POST"])
-def edit(rest_id):
-    rest_id = ObjectId(rest_id)
-    if request.method=="GET":
-        restaurant = db.restaurantInfo.find_one({'_id':rest_id})
-        return render_template("edit.html",restaurant=restaurant)
-    if request.method=="POST":
-        doc = {item: request.form[item] for item in request.form}
-        doc['user_id'] = flask_login.current_user.username
-        db.restaurantData.update_one({'_id':rest_id},{"$set":doc})
-        return redirect("/home")
-        
+@app.route("/remove_friend/<friend_id>", methods=["POST"])
+@login_required
+def remove_friend(friend_id):
+    user = User.find_by_id(current_user.id)
+    if user.remove_friend(friend_id):
+        flash("Friend removed successfully!", "success")
+    return redirect(url_for("friends"))
 
+#@app.route("edit")
+####################################################################################
+################################# PROFILE SECTION ##################################
+####################################################################################
 @app.route("/profile")
 @flask_login.login_required
 def profile():
