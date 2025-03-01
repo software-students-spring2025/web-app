@@ -5,7 +5,8 @@ from dotenv import load_dotenv
 import flask_login
 import os
 import pymongo
-from flask_sqlalchemy import SQLAlchemy
+from .auth import auth as auth_blueprint
+from .main import main as main_blueprint
 
 def create_app():
     app = Flask(__name__)
@@ -19,23 +20,10 @@ def create_app():
     connection = pymongo.MongoClient(MONGO_URI)
     db = connection["Jitter"]
 
-    doc = {
-    "name": "Foo Barstein",
-    "email": "fb1258@nyu.edu",
-    "message": "We loved with a love that was more than love.\n -Edgar Allen Poe",
-    "created_at": datetime.datetime.utcnow() # the date time now
-    }
+    # blueprint for auth routes in our app
+    app.register_blueprint(auth_blueprint)
 
-    mongoid = db.collection_name.insert_one(doc)
+    # blueprint for non-auth parts of app
+    app.register_blueprint(main_blueprint)    
 
     return app
-'''
-    # blueprint for auth routes in our app
-    from .auth import auth as auth_blueprint
-    app.register_blueprint(auth_blueprint)
-'''
-    # blueprint for non-auth parts of app
-    from .main import main as main_blueprint
-    app.register_blueprint(main_blueprint)
-'''
-
