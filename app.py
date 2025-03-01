@@ -145,7 +145,7 @@ def login():
 def home():
     user = flask_login.current_user.username
     docs = db.restaurantData.find({'user_id':user})
-    return render_template("home.html", restaurants = docs)
+    return render_template("home.html", user = user, restaurants = docs)
 
 
 @app.route("/logout")
@@ -192,6 +192,8 @@ def add_friend(friend_id):
     else:
         flash("This user is already your friend.", "info")
     return redirect(url_for("friends"))
+
+#@app.route("edit")
 
 @app.route("/profile")
 @flask_login.login_required
