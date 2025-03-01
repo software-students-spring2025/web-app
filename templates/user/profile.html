@@ -4,60 +4,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Profile - RecipeShare</title>
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/userfriends.css">
+    <link rel="stylesheet" href="../../css/myprofile.css">
 </head>
 <body>
     <header>
-        
         <a href="../index.html" class="back-button">← Home</a>
-
         <h1>My Profile</h1>
-        <a href="edit-profile.html" class="edit-button">Edit</a>
+        <a href="edit-profile.html" class="edit-profile-button">Edit Profile</a>
     </header>
-    
-    <div class="message-container" style="display: none;">
-        <div class="message info">Example message</div>
-    </div>
     
     <div class="profile-container">
         <div class="profile-header">
-            <div class="profile-image">
-            </div>
+            <div class="profile-image"></div>
             <h2 class="profile-name">Username</h2>
             <p class="profile-bio">Food enthusiast who loves experimenting with new flavors.</p>
+            
+            
+            <p class="followers">Followers:</p>
+            <p class="following">Following:</p>
+
+
         </div>
-        
+    
         <div class="profile-tabs">
-            <a href="profile.html" class="profile-tab active">My Recipes</a>
-            <a href="profile.html?tab=favorites" class="profile-tab">Favorites</a>
+            <a href="#" class="profile-tab active" id="my-recipes-tab">My Recipes</a>
         </div>
-        
-        <div class="tab-content active">
+    
+        <!-- My Recipes Section -->
+        <div class="tab-content" id="my-recipes-content">
             <div class="recipe-container">
-                <a href="../recipes/recipe-detail.html" class="recipe-card">
+                <div class="recipe-card">
                     <div class="recipe-info">
-                        <h3>Chocolate Cake</h3>
+                        <button class="RecipeButton">
+                            <h3><a href="#hazelnuticecream">Hazelnut Ice Cream</a></h3>
+                        </button>
+            
+                        <div id="hazelnuticecream" class="popup">
+                            <div class="popup-content">
+                                <a href="#" class="close">&times;</a>
+                                <h2>Hazelnut Ice Cream</h2>
+                                <iframe src="../recipe.html"></iframe>
+                            </div>
+                        </div>
+
                         <div class="recipe-meta">
                             <span class="time">60 mins</span>
                             <span class="difficulty">Intermediate</span>
                         </div>
                     </div>
-                </a>
-                
-                <a href="../recipes/recipe-detail.html" class="recipe-card">
+                </div>
+    
+                <div class="recipe-card">
                     <div class="recipe-info">
-                        <h3>Grilled Salmon</h3>
+                        <button class="RecipeButton">
+                            <h3><a href="#hazelnuticecream">Grilled Salmon</a></h3>
+                        </button>
+
+                        <div id="hazelnuticecream" class="popup">
+                            <div class="popup-content">
+                                <a href="#" class="close">&times;</a>
+                                <h2>Hazelnut Ice Cream</h2>
+                                <iframe src="../recipe.html"></iframe>
+                            </div>
+                        </div>
+
                         <div class="recipe-meta">
                             <span class="time">30 mins</span>
                             <span class="difficulty">Easy</span>
                         </div>
                     </div>
-                </a>
-                
-                <a href="../recipes/create-recipe.html" class="floating-action-button">+</a>
+                </div>
             </div>
         </div>
     </div>
+    
 </body>
 </html>
