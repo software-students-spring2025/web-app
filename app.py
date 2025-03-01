@@ -168,6 +168,11 @@ def add():
         return redirect("/home")
     return render_template("add.html")
 
+
+####################################################################################
+################################## FRIEND SECTION ##################################
+####################################################################################
+
 @app.route("/friends", methods=["GET", "POST"])
 @login_required
 def friends():
@@ -206,7 +211,18 @@ def edit(rest_id):
         db.restaurantData.update_one({'_id':rest_id},{"$set":doc})
         return redirect("/home")
         
+@app.route("/remove_friend/<friend_id>", methods=["POST"])
+@login_required
+def remove_friend(friend_id):
+    user = User.find_by_id(current_user.id)
+    if user.remove_friend(friend_id):
+        flash("Friend removed successfully!", "success")
+    return redirect(url_for("friends"))
 
+#@app.route("edit")
+####################################################################################
+################################# PROFILE SECTION ##################################
+####################################################################################
 @app.route("/profile")
 @flask_login.login_required
 def profile():

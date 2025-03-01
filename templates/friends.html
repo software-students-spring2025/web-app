@@ -42,7 +42,10 @@
         <p>Current Friends</p>
         {% if friends %} {% for friend in friends %}
         <div class="friend">
-            <div class="friendUser">{{ friend.username }}</div>
+            <div class="friendUser">{{ friend.username }}</div>    
+            <form action="{{ url_for('remove_friend', friend_id=friend.id) }}" method="POST">
+                <button type="submit">Remove Friend</button>
+            </form>               
         </div>
         {% endfor %} {% else %}
         <p>You have no friends yet.</p>
