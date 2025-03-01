@@ -14,6 +14,7 @@
             <div class="navbar-nav">
                 {% if current_user.is_authenticated %}
                     <a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+                    <a class="nav-link" href="{{ url_for('profile') }}">Profile</a> <!-- Added Profile button -->
                     <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
                 {% else %}
                     <a class="nav-link" href="{{ url_for('login') }}">Login</a>
