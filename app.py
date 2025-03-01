@@ -112,9 +112,9 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form['username']
+        username = request.form['login_input']
         password = request.form['password']
-        user_data = mongo.db.users.find_one({"username": username})
+        user_data = mongo.db.users.find_one({"$or": [{"username": username}, {"email": username}]})
 
         if user_data:
             user = User(user_data['username'], user_data['email'], user_data['password_hash'], user_data['_id'])
@@ -146,10 +146,15 @@ def logout():
     return redirect(url_for('login'))
 
 #profile route
-
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
+    
+    if "products" not in mongo.db.list_collection_names():
+        user_products = []  # No collection exists yet
+    else:
+        user_products = list(mongo.db.products.find({"username": current_user.username}))
+
     if request.method == 'POST':
         # product info
         product_name = request.form.get('product_name')
@@ -183,8 +188,46 @@ def profile():
         mongo.db.products.insert_one(product)
         flash("Product posted successfully!", "success")
         return redirect(url_for('profile'))
-    return render_template('profile.html', user=current_user)
+    return render_template('profile.html', user=current_user, user_products = user_products)
 
+
+@app.route("/edit_product/<product_id>", methods=["GET", "POST"])
+@login_required
+def edit_product(product_id):
+    # Find the product by ID and ensure it belongs to the logged-in user
+    product = mongo.db.products.find_one({"_id": ObjectId(product_id), "username": current_user.username})
+
+    if not product:
+        flash("Unauthorized or product not found.", "danger")
+        return redirect(url_for("profile"))
+
+    if request.method == "POST":
+        updated_data = {
+            "product_name": request.form["product_name"],
+            "description": request.form["description"],
+            "price": float(request.form["price"]),
+            "inventory": int(request.form["inventory"]),
+            "tag": request.form["tag"]
+        }
+        mongo.db.products.update_one({"_id": ObjectId(product_id)}, {"$set": updated_data})
+        flash("Product updated successfully!", "success")
+        return redirect(url_for("profile"))
+
+    return render_template("edit_product.html", product=product)
+
+@app.route("/delete_product/<product_id>")
+@login_required
+def delete_product(product_id):
+    # Find the product by ID and ensure it belongs to the logged-in user
+    product = mongo.db.products.find_one({"_id": ObjectId(product_id), "username": current_user.username})
+
+    if product:
+        mongo.db.products.delete_one({"_id": ObjectId(product_id)})
+        flash("Product deleted successfully!", "success")
+    else:
+        flash("Unauthorized or product not found.", "danger")
+
+    return redirect(url_for("profile"))
 
 # Run the Flask App
 if __name__ == '__main__':
