@@ -129,16 +129,15 @@ def login():
 # Dashboard Route (Protected)
 @app.route('/dashboard')
 def dashboard():
-    if current_user.is_authenticated:
-        # Fetch all products
-        products = list(mongo.db.products.find())
+    # Fetch all products
+    products = list(mongo.db.products.find())
 
-        # Fetch comments for each product and attach them
-        for product in products:
-            product["_id"] = str(product["_id"])  # Convert ObjectId to string for Jinja compatibility
-            product["comments"] = list(mongo.db.comments.find({"product_id": product["_id"]}))
+    # Fetch comments for each product and attach them
+    for product in products:
+        product["_id"] = str(product["_id"])  # Convert ObjectId to string for Jinja compatibility
+        product["comments"] = list(mongo.db.comments.find({"product_id": product["_id"]}))
 
-        return render_template('dashboard.html', current_user=current_user, products=products)
+    return render_template('dashboard.html', current_user=current_user, products=products)
 
     return render_template('dashboard.html', current_user=None, products=[])
 
@@ -234,28 +233,32 @@ def delete_product(product_id):
         flash("Unauthorized or product not found.", "danger")
 
     return redirect(url_for("profile"))
+
 @app.route("/product/<product_id>", methods=["GET", "POST"])
+@login_required  # Restrict access to logged-in users
 def product_detail(product_id):
     product = mongo.db.products.find_one({"_id": ObjectId(product_id)})
-    
+
     if not product:
         flash("Product not found.", "danger")
         return redirect(url_for("dashboard"))
-    
+
+    # Fetch comments for this product
+    comments = list(mongo.db.comments.find({"product_id": product_id}))
+
     if request.method == "POST":
         comment_text = request.form.get("comment")
         if comment_text:
             comment = {
-                "username": current_user.username if current_user.is_authenticated else "Guest",
+                "username": current_user.username,
                 "comment": comment_text,
                 "product_id": product_id
             }
             mongo.db.comments.insert_one(comment)
             flash("Comment added successfully!", "success")
-    
-    comments = list(mongo.db.comments.find({"product_id": product_id}))
-    return render_template("product_detail.html", product=product, comments=comments)
+            return redirect(url_for("product_detail", product_id=product_id))
 
+    return render_template("product_detail.html", product=product, comments=comments)
 # Run the Flask App
 if __name__ == '__main__':
     app.run(debug=True)
