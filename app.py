@@ -223,10 +223,15 @@ def remove_friend(friend_id):
 ####################################################################################
 ################################# PROFILE SECTION ##################################
 ####################################################################################
-@app.route("/profile")
-@flask_login.login_required
-def profile():
-    return render_template("profile.html",  user=current_user)
+
+@app.route("/profile/<friend_id>", methods=["GET"])
+def profile(friend_id):
+    if request.method=="GET":
+        friend_id = ObjectId(friend_id)
+        username = db.loginInfo.find_one({"_id":friend_id})['username']
+        restaurants = db.restaurantData.find({"user_id":username})
+        return render_template("profile.html",friendName=username,restaurants=restaurants)
+
 
 # Run the app
 if __name__ == "__main__":
