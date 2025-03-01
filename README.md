@@ -22,16 +22,62 @@ Delete Functionality
 
 ## Steps necessary to run the software
 
-Use Docker Compose to boot up both the mongodb database and the flask-app web app with one command:
+### Option 1
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/software-students-spring2025/2-web-app-s2gb.git
+   cd 2-web-app-s2gb
+   docker-compose up --build
 
-**docker-compose up --build**
+Use Docker Compose to boot up both the mongodb database and the flask-app web app with one command.
 
 View the app in your browser:
 
-open a web browser and go to http://localhost:5001 (or change 5001 to whatever port number you used for the flask-app.)
+Open a web browser and go to http://localhost:5001 (or change 5001 to whatever port number you used for the flask-app.)
 
 Note that you edit any of the files in the project, you will have to stop and then restart the containers, as indicated above.
 
+### Option 2
+
+#### Prerequisites
+
+Before starting, ensure you have the following installed:
+- Python 3.9 or higher
+- MongoDB
+- Git
+
+#### Setup Steps
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/software-students-spring2025/2-web-app-s2gb.git
+   cd 2-web-app-s2gb
+2. **Set up a virtual environment (recommended)**
+   ```bash
+   python -m venv venv
+   # On macOS/Linux:
+   source venv/bin/activate
+   # On Windows:
+   # venv\Scripts\activate
+4. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+6. **Ensure MongoDB is running**
+   On macOS (if installed via Homebrew):
+   ```bash
+   brew services start mongodb-community
+
+#### Running the Application
+
+1. **Start the Flask application**
+   ```bash
+   python app.py
+If port 5001 is already in use (common on macOS), you can modify app.py to use a different port (e.g., 5002) in the app.run() call
+
+2. **Access the application**
+Open your web browser and navigate to: http://localhost:5001
+
+
 ## Task boards
 
-See instructions. Delete this line and place a link to the task boards here.
+Sprint 1:  [Sprint 1 Task Board](https://github.com/orgs/software-students-spring2025/projects/110/views/1?layout=board)
