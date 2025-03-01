@@ -228,8 +228,8 @@ def create_app():
 app = create_app()
 
 if __name__ == '__main__':
-    # Get port from environment variables (default to 5000)
-    FLASK_PORT = os.getenv("FLASK_PORT", "5000")
+    # Get port from environment variables (default to 5001)
+    FLASK_PORT = os.getenv("FLASK_PORT", "5001")
     FLASK_ENV = os.getenv("FLASK_ENV", "development")
     print(f"FLASK_ENV: {FLASK_ENV}, FLASK_PORT: {FLASK_PORT}")
     
