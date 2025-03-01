@@ -10,7 +10,7 @@
     <div id="loginSection">
         <h1>Login</h1>
 
-        <form id="loginForm" action="login" method="POST">
+        <form id="loginForm" action="{{ url_for('login') }}" method="POST">
             <div>
                 <div id="username">Username:</div>
                 <input class="box" type="text" name="username" value="" required>
