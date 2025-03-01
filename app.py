@@ -4,6 +4,11 @@ app = Flask(__name__)
 
 # Simulating a database (replace with MongoDB later)
 users = {}
+courses = [
+    {"id": 1, "code": "CS101", "name": "Introduction to Computer Science", "instructor": "Dr. Smith"},
+    {"id": 2, "code": "MATH201", "name": "Calculus I", "instructor": "Dr. Johnson"},
+    {"id": 3, "code": "ENG102", "name": "English Composition", "instructor": "Prof. Williams"}
+]
 
 # Login Page
 @app.route("/", methods=["GET", "POST"])
@@ -50,6 +55,27 @@ def upload():
 
     
     return render_template("upload.html")
+
+# Courses Page
+@app.route("/courses")
+def courses_page():
+    return render_template("courses.html", courses=courses)
+
+# Create Course Page
+@app.route("/courses/create", methods=["GET", "POST"])
+def create_course():
+    if request.method == "POST":
+        # TODO: Implement course creation logic
+        return redirect(url_for("courses_page"))
+    return render_template("create_course.html")
+
+# Course Detail Page
+@app.route("/courses/<int:course_id>")
+def course_detail(course_id):
+    course = next((c for c in courses if c["id"] == course_id), None)
+    if course is None:
+        return "Course not found", 404
+    return render_template("course_detail.html", course=course)
 
 if __name__ == "__main__":
     app.run(debug=True)
