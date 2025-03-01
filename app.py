@@ -15,7 +15,7 @@ def create_app():
     Create and configure the Flask application
     Returns: Flask application object
     """
-    app = Flask(__name__, template_folder='screens and styles', static_folder='screens and styles')
+    app = Flask(__name__, template_folder='templates', static_folder='templates')
     
     # Connect to MongoDB
     # Use environment variable MONGO_URI if set, otherwise use default
@@ -43,7 +43,7 @@ def create_app():
         Route for the home page
         Returns: rendered template
         """
-        if collection:
+        if collection is not None:
             items = list(collection.find())
         else:
             items = []
@@ -60,7 +60,7 @@ def create_app():
         Handles GET requests to display form and POST requests to add new items
         """
         if request.method == 'POST':
-            if not collection:
+            if collection is None:
                 # Return a simple error message since error.html is not ready
                 return "Database connection is unavailable. Please try again later.", 503
                 
@@ -96,7 +96,7 @@ def create_app():
         """
         query = request.args.get('query', '')
         
-        if not collection:
+        if collection is None:
             # Return a simple error message since error.html is not ready
             return "Database connection is unavailable. Please try again later.", 503
             
@@ -118,7 +118,7 @@ def create_app():
         Parameters:
             item_id (str): The ID of the item
         """
-        if not collection:
+        if collection is None:
             # Return a simple error message since error.html is not ready
             return "Database connection is unavailable. Please try again later.", 503
             
@@ -139,7 +139,7 @@ def create_app():
         Parameters:
             item_id (str): The ID of the item
         """
-        if not collection:
+        if collection is None:
             # Return a simple error message since error.html is not ready
             return "Database connection is unavailable. Please try again later.", 503
             
@@ -183,7 +183,7 @@ def create_app():
         Parameters:
             item_id (str): The ID of the item
         """
-        if not collection:
+        if collection is None:
             # Return a simple error message since error.html is not ready
             return "Database connection is unavailable. Please try again later.", 503
             
