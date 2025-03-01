@@ -33,16 +33,23 @@ def insert_data():
 
 def check_user():
     if request.method == 'POST':
+        print("in check_user")
+        db = get_db()
+        users = db['user']
         email = request.form['email']
-        password = request.form['pass']
+        password = request.form['password']
 
-        user = {
+        login_user = {
             "email": email,
             "password": password
         }
 
-        user_data = users.find_one(user)
+        print(email)
+        print(password)
+        user_data = users.find_one(login_user)
         if user_data == None:
+            print("user not found")
             return False, ""
         else:
+            print("user found")
             return True, user_data["name"]
