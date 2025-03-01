@@ -13,8 +13,8 @@ Jitter is a mobile platform that empowers users to find the best restaurants/cof
 ## User stories 
 * As a user, I want to view a list of restaurants and coffee shops so that I can browse available options and decide where to visit.
 * As a user, I want to read reviews left by other customers so that I can make an informed decision before visiting a coffee shop.
-* i
-* i
+* As a user, I want to be able to post reviews and rate restaurants/shops I have been to for personal and social uses.
+* As a user, I want to save resturants that I either enjoyed going to or want to go to in the future.
 * i
 * i
 
