@@ -26,7 +26,13 @@
                     <div class="topHalf">
                         <div class="restName">{{ restaurant.restaurantName }}</div>
                         <div class="restLoc">{{ restaurant.restaurantLocation }}</div>
+                        <a href="/delete/{{restaurant._id}}">
+                            <div id="delete">
+                                Delete Restaurant
+                            </div>
+                        </a>
                     </div>
+                    
                     <div class="bottomHalf">
                         <div class="bottomLeft">
                             <div class="cuisine">{{ restaurant.cuisine }}</div>
