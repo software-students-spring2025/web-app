@@ -57,16 +57,23 @@
         <h1>Log In</h1>
 
         <form action="{{ url_for('login') }}" method="POST">
-            <label for="genre">username</label>
-            <input type="text" name="isername" required>
+            <label for="username">username</label>
+            <input type="text" name="username" required>
             <br />
 
-            <label for="season">password</label>
-            <input type="text" name="password" min="1" required>	
+            <label for="password">password</label>
+            <input type="text" name="password" required>	
             <br />
 
-            <button type="submit">Log In</button>
+            <button type="submit" action="{{ url_for('login') }}" method="POST">Log In</button>
         </form>
+
+        <br/>
+
+        <div>
+            <p>Need to sign up?</p>
+            <a type="button" href="{{ url_for('signup') }}" method="POST">Sign Up</a>
+        </div>
     </div>
 </body>
 </html>

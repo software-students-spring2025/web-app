@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 import pymongo
 from pymongo import MongoClient
 import os
@@ -6,23 +6,126 @@ from dotenv import load_dotenv, dotenv_values
 from pymongo.mongo_client import MongoClient
 from bson.objectid import ObjectId
 import certifi
-
+import flask_login
+import flask
+import hashlib
 
 load_dotenv()
 
 app = Flask(__name__)
+app.config['SESSION_PROTECTION'] = "strong"
+app.secret_key = "user_creds_k3ys"
 
+#login 
+login_manager = flask_login.LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login"
+
+#app configs
 config = dotenv_values()
 app.config.from_mapping(config)
 
+#mongodb client
 client = pymongo.MongoClient(os.getenv("MONGO_URI"), ssl_ca_certs=certifi.where())
 db = client[os.getenv("MONGO_DBNAME")]
 tv_shows_collection = db.tv_shows
+users = db.user_creds
 
-@app.route("/")
+class User(flask_login.UserMixin):
+    def __init__(self, user_doc):
+        self.id = str(user_doc["_id"])
+        self.username = user_doc["username"]
+        self.password = user_doc["password"]
+        #self.password = hashlib.sha256(user_doc["password"]).hexdigest()
+
+
+    @staticmethod
+    def is_authenticated():
+        return True
+
+    @staticmethod
+    def is_active():
+        return True
+
+    @staticmethod
+    def is_anonymous():
+        return False
+
+    def get_id(self):
+        return self.id
+
+
+@login_manager.user_loader
+def user_loader(username):
+    record = users.find_one({"username": username})
+    if not record:
+        return
+    
+    return User(record)
+
+
+@login_manager.request_loader
+def request_loader(request):
+    username = request.form.get('username')
+
+    if not username:
+        return
+    
+    user_doc = users.find_one({"username": username})
+
+    if not user_doc: #user doesn't exist
+        return None
+
+    return User(user_doc)
+
+@app.route("/home")
 def home():
+    if "user" in session:
+        return render_template("home.html", username=session["user"])
     episodes = db.tv_shows.find({}).sort("date", -1)
     return render_template("home.html", episodes=episodes)
+
+@app.route("/", methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        entered_pw = request.form.get('password')
+
+        if not username or not entered_pw:
+            flash("Username and password are required", "danger")
+            return redirect(url_for("login"))
+    
+        user_doc = users.find_one({"username": username})
+        #password = users.find({"username": username})
+
+        if user_doc and (entered_pw == user_doc["password"]): #correct credentials
+            user = User(user_doc)
+            #user.username = username
+            flask_login.login_user(user)
+            session["user"] = user.id
+            return redirect(url_for("home"))
+        else:
+            flash("Invalid username or password", "danger")
+            return render_template("login.html")
+        
+    return render_template("login.html")
+
+@app.route("/signup", methods=['POST', 'GET'])
+def signup():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+
+        existing_user = users.find_one({"username": username})
+        if existing_user:
+            flash("Username already exists", "danger")
+            return redirect(url_for("signup")) #, "Username already exists", "danger"
+
+        #hashed_pw = hashlib.sha256(password).hexdigest()
+        new_doc = db.users.insert_one({"username": username, "password": password})
+        user_id = str(new_doc.inserted_id)
+        return redirect(url_for("login")) #, message="Sign up successful! You can now log in."
+    return render_template("signup.html")
 
 #add entry page
 @app.route("/add", methods=["GET", "POST"])
