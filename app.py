@@ -2,7 +2,7 @@
 
 import os
 import datetime
-import flask_login
+from flask import Flask, render_template, request, redirect, url_for
 import pymongo
 from bson.objectid import ObjectId
 from flask import Flask, render_template, request, redirect, url_for, flash
@@ -17,9 +17,8 @@ app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "default_secret_key")
 config = dotenv_values()
 app.config.from_mapping(config)
 
-# Initialize MongoDB connection
-client = pymongo.MongoClient(os.getenv("MONGO_URI"))
-db = client[os.getenv("MONGO_DBNAME")]
+    cxn = pymongo.MongoClient(os.getenv("MONGO_URI"))
+    db = cxn[os.getenv("MONGO_DBNAME")]
 
 # Initialize Flask-Login
 login_manager = flask_login.LoginManager()
@@ -71,59 +70,34 @@ def load_user(user_id):
     return User.find_by_id(user_id)
 
 
-@app.route("/")
-def index():
-    return redirect(url_for("register"))
+    @app.route("/")
+    def index():
+        return redirect(url_for("login"))
 
+    #loginpage
+    @app.route("/login", methods=["GET", "POST"])
+    def login():
+        if request.method == "GET":
+            return render_template("login.html")
+        
+        elif request.method == "POST":
+            #add log in logic
+            return render_template("login.html", test="data to send in")
 
-@app.route("/register", methods=["GET", "POST"])
-def register():
-    if request.method == "POST":
-        email = request.form["email"]
-        username = request.form["username"]
-        password = request.form["password"]
+    #registerpage
+    @app.route("/register", methods=["GET", "POST"])
+    def register():
+        if request.method == "GET":
+            return render_template("register.html")
+        
+        elif request.method == "POST":
+            #add log in logic
+            return render_template("register.html", test="data to send in")
 
-        if User.create_user(email, username, password):
-            flash("Registration successful! Please log in.", "success")
-            return redirect(url_for("login"))
-        else:
-            flash("Username already exists. Please try again.", "danger")
+    return app
 
-    return render_template("register.html")
+app = create_app()
 
-
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
-        user = User.find_by_username(username)
-
-        if user and check_password_hash(user.password, password):  
-            flask_login.login_user(user)
-            flash("Login successful!", "success")
-            return redirect(url_for("home"))
-
-        flash("Invalid credentials", "danger")
-
-    return render_template("login.html")
-
-
-@app.route("/home")
-@flask_login.login_required
-def home():
-    return render_template("home.html")
-
-
-@app.route("/logout")
-@flask_login.login_required
-def logout():
-    flask_login.logout_user()
-    flash("Logged out successfully", "success")
-    return redirect(url_for("login"))
-
-
-# Run the app
 if __name__ == "__main__":
     FLASK_PORT = os.getenv("FLASK_PORT", "5000")
     FLASK_ENV = os.getenv("FLASK_ENV")
