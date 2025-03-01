@@ -19,7 +19,7 @@
         Welcome, {{ user }}!
     </div>
 
-    <div id="shuffleScreen" data-vis="{{winner}}">
+    <div id="shuffleScreen" data-visi="{{winner}}">
 
         <a href="/shuffle"><div id="shuffleButton">I'm Hungry!</div></a>
 
@@ -63,15 +63,20 @@
         </div>
     </div>
     </div>
-<script>
-    let visi = document.getElementById('shuffleScreen');
-    let visible = visi.dataset.vis =! null;
-    let results = document.getElementById('shuffleResults')
-
-    if (visible){
-        results.style.display = "block";
-    }
-</script>
+    <script>
+        let shuffleScreen = document.getElementById('shuffleScreen');
+        let results = document.getElementById('shuffleResults');
+        let winnerExists = shuffleScreen.dataset.visi.trim() !== "";
+    
+        // console.log("Winner:", shuffleScreen.dataset.visi);
+        // console.log("Should Show Result?", winnerExists);
+    
+        if (winnerExists) {
+            results.style.display = "block"; 
+        } else {
+            results.style.display = "none"; 
+        }
+    </script>
 
 </body>
 
