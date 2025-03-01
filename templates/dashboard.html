@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% if current_user.is_authenticated %}
+    <h2>Welcome, {{ current_user.username }}!</h2>
+    <p>This is your dashboard.</p>
+    <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+    <a href="{{ url_for('profile') }}" class="btn btn-primary">Profile</a>
+
+    <hr>
+    
+    <h3>Posted Products</h3>
+    {% if products %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Product dealer</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Delivery Location</th>
+                <th>Inventory</th>
+                <th>Tag</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.product_name }}</td>
+                <td>{{ product.username }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.delivery_location }}</td>
+                <td>{{ product.inventory }}</td>
+                <td>{{ product.tag }}</td>
+                <td>
+                    {% if product.image_data %}
+                    <img src="data:{{ product.image_type }};base64,{{ product.image_data }}" alt="Product Image"
+                        style="max-width: 100px;">
+                    {% else %}
+                    No image
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No products have been posted yet.</p>
+    {% endif %}
+
+    {% else %}
+    <h2>Welcome to the Dashboard</h2>
+    <p>You are not logged in. Please <a href="{{ url_for('login') }}">log in</a> to access personalized features.</p>
+    {% endif %}
+</div>
+{% endblock %}
