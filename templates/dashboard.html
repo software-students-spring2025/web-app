@@ -18,19 +18,22 @@
         <thead>
             <tr>
                 <th>Product Name</th>
-                <th>Product dealer</th>
+                <th>Product Dealer</th>
                 <th>Description</th>
                 <th>Price</th>
                 <th>Delivery Location</th>
                 <th>Inventory</th>
                 <th>Tag</th>
                 <th>Image</th>
+                <th>Comments</th>
             </tr>
         </thead>
         <tbody>
             {% for product in products %}
             <tr>
-                <td>{{ product.product_name }}</td>
+                <td>
+                    <a href="{{ url_for('product_detail', product_id=product._id) }}">{{ product.product_name }}</a>
+                </td>
                 <td>{{ product.username }}</td>
                 <td>{{ product.description }}</td>
                 <td>{{ product.price }}</td>
@@ -43,6 +46,17 @@
                         style="max-width: 100px;">
                     {% else %}
                     No image
+                    {% endif %}
+                </td>
+                <td>
+                    {% if product.comments %}
+                        <ul class="list-unstyled">
+                            {% for comment in product.comments %}
+                                <li><strong>{{ comment.username }}:</strong> {{ comment.comment }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        No comments yet.
                     {% endif %}
                 </td>
             </tr>
