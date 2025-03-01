@@ -22,7 +22,16 @@ Delete Functionality
 
 ## Steps necessary to run the software
 
-See instructions. Delete this line and place instructions to download, configure, and run the software here.
+Use Docker Compose to boot up both the mongodb database and the flask-app web app with one command:
+
+docker compose up --force-recreate --build ... add -d to run in detached/background mode.
+and then docker compose down in a separate terminal window to stop the containers when done.
+If you see an error message that a particular port is already in use, select a different port for either the flask-app or mongodb service, as necessary. To do so, edit the first port number for that service in the docker-compose.yml file and try again. E.g., change the flask-app's port to 10000:5000 if you want the flask app to run on port 10000 on your computer. If changing the flask-app port in this way, you must also update the FLASK_PORT setting in the docker-compose.yml file to match.
+
+View the app in your browser:
+
+open a web browser and go to http://localhost:5001 (or change 5001 to whatever port number you used for the flask-app.)
+Note that you edit any of the files in the project, you will have to stop and then restart the containers, as indicated above.
 
 ## Task boards
 
