@@ -19,7 +19,7 @@
     <div id="yourRestaurants">
         <p> ~ Your Restaurants ~ </p>
             {% for restaurant in restaurants %}
-            <a id="restaurantLink" href="/edit/{{_id}}">
+            <a id="restaurantLink" href="/edit/{{restaurant._id}}">
                 <div class="restaurant">
                     <div class="topHalf">
                         <div class="restName">{{ restaurant.restaurantName }}</div>
