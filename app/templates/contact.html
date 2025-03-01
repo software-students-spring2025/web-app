@@ -1,13 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Contact</title>
-</head>
-<body>
-    <a href="{{ url_for('home') }}">Home</a>
-    <h1>Contact Page</h1>
-    Our Phone Number is...
-    <br>
-</body>
-</html>
+    <html>
+        <head>
+            <title>
+                Anatidelicious
+            </title>
+            <link rel="stylesheet" href="../static/contact.css">
+        </head>
+
+        <body>
+            <a href="{{ url_for('home') }}">
+                <div class="Back"> 
+                    Back
+                </div>
+            </a>
+
+            <div class="Title">
+                <h1>We want to hear from you!</h1>
+            </div>
+            <div class="firstlabel">
+                <label for="lname">Write your message here: </label><br>
+            </div>
+            <div class="Input">
+                <textarea type="text" id="text" name="text_name" class="MyText"> </textarea>
+                
+                <textarea type="text" id="text" name="text_name" class="Email"> Enter your email: </textarea>
+                <input type="submit" value="Submit" class="Submit">
+            </div>
+            
+        </body>
+    </html>
