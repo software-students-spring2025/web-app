@@ -1,0 +1,114 @@
+/* Global Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: white;
+    color: #333;
+    margin-bottom: 100px;
+}
+
+/* Header */
+header {
+    background-color: #BBE7FE;
+    color: #5e376d;
+    text-align: center;
+    padding: 15px 0;
+    /*border-bottom: 3px solid #BBE7FE;*/
+    position: relative;
+}
+
+/* Back Button */
+.back {
+    font-size: 30px;
+    position: absolute;
+    left: 10px;
+    border: none;
+    background: none;
+    color: #5e376d;
+    cursor: pointer;
+}
+
+.back:hover {
+    color: #ddd;
+}
+
+/* Forms */
+form {
+    width: 90%;
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 15px;
+    background:  #f6e6e8;
+    box-shadow: 0px 2px 10px #5e376d;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: bold;
+    margin-top: 10px;
+    color: #5e376d; 
+}
+
+input, textarea, select {
+    padding: 10px;
+    margin-top: 5px;
+    border-color: #5e376d;
+    color: #5e376d;
+    background-color: #f6e6e8;
+    /*border: 1px solid #bbe7fe;*/
+}
+
+textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+/* Save Button */
+.save {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.save button {
+    padding: 12px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #BBE7FE;
+    color: #5e376d;
+    border: none;
+    border-radius: 5px;
+}
+
+.save button:hover {
+    background-color: #5e376d;
+    color: white;
+}
+
+/* Bottom Navigation Bar */
+.navbar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #BBE7FE;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 10px 20px;
+    display: inline-block;
+    border-radius: 5px;
+    background-color: #5e376d;
+}
+
+.navbar a:hover {
+    background-color: #0056b3;
+}
