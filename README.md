@@ -4,7 +4,7 @@ A little exercise to build a web application following an agile development proc
 
 ## Product vision statement
 
-Our product is study platform that allows students to search, create, edit, and practice questions through quizzes and flashcards to enhance learning and retention.
+Our product is a study platform that allows students to search, create, edit, and practice questions through quizzes and flashcards to enhance learning and retention.
 
 ## User stories
 
