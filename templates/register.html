@@ -4,26 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
 <body>
-    <h1>Register for Course Content Helper</h1>
+    <div class="container">
+        <h1>Register for Course Content Helper</h1>
 
-    <form action="/register" method="POST">
-        <!-- Name -->
-        <label for="name">Full Name:</label>
-        <input type="text" id="name" name="name" required>
+        <form action="/register" method="POST">
+            <!-- Name -->
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required>
 
-        <!-- Email -->
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
+            <!-- Email -->
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
 
-        <!-- Password -->
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
+            <!-- Password -->
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
 
-        <button type="submit">Register</button>
-    </form>
+            <button type="submit">Register</button>
+        </form>
 
-    <p>Already have an account? <a href="/login">Login here</a></p>
+        <p style="text-align: center; margin-top: 20px;">
+            Already have an account? <a href="/login">Login here</a>
+        </p>
+    </div>
 </body>
 </html>
