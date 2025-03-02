@@ -162,7 +162,7 @@
                     <h3>{{ restaurant.name }}</h3>
                     <p><strong>${{ restaurant.price or '0' }}</strong></p>
                     <p><em>{{ restaurant.cuisine or 'Cuisine not specified' }}</em></p>
-                    <p>{{ restaurant.description or 'Body text.' }}</p>
+                    <p>{{ restaurant.description or '' }}</p>
                 </div>
                 {% endfor %}
             {% else %}
