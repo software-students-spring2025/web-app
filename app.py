@@ -4,6 +4,7 @@ import pymongo
 from bson.objectid import ObjectId
 from dotenv import load_dotenv, dotenv_values
 from datetime import datetime
+import flask_login
 
 # load environment variables from .env file
 load_dotenv()
@@ -28,6 +29,34 @@ def create_app():
         print(" * Pinged your deployment. You successfully connected to MongoDB!")
     except Exception as e:
         print(" * MongoDB connection error:", e)
+
+    # flask-login setup
+    login_manager = flask_login.LoginManager()
+    login_manager.login_view = "login"
+    login_manager.init_app(app)
+
+    # user class
+    class User(flask_login.UserMixin):
+        # initialize user
+        def __init__(self, user):
+            self.id = str(user["_id"])
+            self.email = user["email"]
+
+    @login_manager.user_loader
+    def user_loader(email):
+        user = db.users.find_one({"_id": ObjectId(email)})
+        if user:
+            return User(user)
+        return None
+    
+    @login_manager.request_loader
+    def request_loader(request):
+        email = request.form.get("email")
+        if email:
+            user = db.users.find_one({"email": email})
+            if user:
+                return User(user)
+        return None
 
     @app.route("/")
     def show_home():
@@ -55,11 +84,13 @@ def create_app():
     @app.route("/login", methods=["GET", "POST"])
     def login():
         if request.method == "POST":
-            email = request.form["email"]
-            password = request.form["password"]
+            email = request.form.get("email")
+            password = request.form.get("password")
 
             user = db.users.find_one({"email": email})
             if user and user.get("password") == password:
+                user_obj = User(user)
+                flask_login.login_user(user_obj)
                 return redirect(url_for("show_home"))
             else:
                 error = "Incorrect email or password"
@@ -69,6 +100,7 @@ def create_app():
     
     @app.route("/logout")
     def logout():
+        flask_login.logout_user()
         return redirect(url_for("login"))
     
     @app.route("/add", methods=["GET", "POST"])
