@@ -12,13 +12,13 @@ db = connection["Forum"]
 
 # with data from database
 @app.route("/")
-def index2():
+def index():
     posts = db.posts.find()
     return render_template("index.html", data=posts)
 
 # with database
 @app.route("/post/<int:post_id>")
-def post_detail2(post_id):
+def post_detail(post_id):
     # Find the post by ID
     post = db.posts.find_one({"_id": ObjectId(post_id)})
     if post:
@@ -32,7 +32,7 @@ if __name__ == "__main__":
 
 
 @app.route("/create_post", methods = ['GET','POST'])
-def create_post2():
+def create_post():
 
     user = None
     title = None
