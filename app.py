@@ -54,7 +54,18 @@ def create_app():
     
     @app.route("/login", methods=["GET", "POST"])
     def login():
-        return render_template("login.html")
+        if request.method == "POST":
+            email = request.form["email"]
+            password = request.form["password"]
+
+            user = db.users.find_one({"email": email})
+            if user and user.get("password") == password:
+                return redirect(url_for("show_home"))
+            else:
+                error = "Incorrect email or password"
+                return render_template("login.html", error = error)
+        else:
+            return render_template("login.html")
     
     @app.route("/logout")
     def logout():
