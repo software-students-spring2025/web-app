@@ -218,7 +218,17 @@ def remove_friend(friend_id):
     if user.remove_friend(friend_id):
         flash("Friend removed successfully!", "success")
     return redirect(url_for("friends"))
-
+import random
+@app.route("/roulette")
+def roulette():
+    user = flask_login.current_user.username
+    docs = db.restaurantData.find({'user_id':user})
+    ids = [doc['_id'] for doc in docs] 
+    if not ids:
+        return redirect("/home")
+    id = random.choice(ids)
+    winner = db.restaurantData.find_one({'_id':id})
+    return render_template('roulette.html', restaurant = winner)
 #@app.route("edit")
 ####################################################################################
 ################################# PROFILE SECTION ##################################
