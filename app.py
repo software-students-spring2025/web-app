@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 import pymongo
 from pymongo import MongoClient
 import os
@@ -6,29 +6,143 @@ from dotenv import load_dotenv, dotenv_values
 from pymongo.mongo_client import MongoClient
 from bson.objectid import ObjectId
 import certifi
+from flask_login import current_user, login_required
+import flask_login
+import flask
+#import hashlib
+import certifi
 import re
+import datetime
 
 
 load_dotenv()
 
 app = Flask(__name__)
+app.config['SESSION_PROTECTION'] = "strong"
+app.secret_key = "user_creds_k3ys"
 
+#login 
+login_manager = flask_login.LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login"
+
+#app configs
 config = dotenv_values()
 app.config["DEBUG"] = os.getenv("DEBUG", "False") == "True"
 
 # app.config.from_mapping(config)
 
-client = pymongo.MongoClient(os.getenv("MONGO_URI"), tls=True,
+#mongodb client
+client = pymongo.MongoClient(os.getenv("MONGO_URI"), ssl_ca_certs=certifi.where(), tls=True,
     tlsCAFile=certifi.where())
 db = client[os.getenv("MONGO_DBNAME")]
 db_2 = client[os.getenv("MONGO_DBNAME_2")]
 tv_shows_collection = db.tv_shows
 all_shows_collection = db_2.all_shows
+users = db.users
 
-@app.route("/")
+class User(flask_login.UserMixin):
+    def __init__(self, user_doc):
+        self.id = str(user_doc["_id"])
+        self.username = user_doc["username"]
+        self.password = user_doc["password"]
+        #self.password = hashlib.sha256(user_doc["password"]).hexdigest()
+
+    @staticmethod
+    def is_authenticated():
+        return True
+
+    @staticmethod
+    def is_active():
+        return True
+
+    @staticmethod
+    def is_anonymous():
+        return False
+
+    def get_id(self):
+        return self.id
+
+
+@login_manager.user_loader
+def user_loader(user_id):
+    user_doc = users.find_one({"_id": ObjectId(user_id)})
+    if not user_doc:
+        return
+    
+    return User(user_doc)
+
+
+@login_manager.request_loader
+def request_loader(request):
+    username = request.form.get('username')
+
+    if not username:
+        return
+    
+    user_doc = users.find_one({"username": username})
+
+    if not user_doc: #user doesn't exist
+        return None
+
+    return User(user_doc)
+
+@app.route("/home")
+@login_required
 def home():
-    episodes = db.tv_shows.find({}).sort("date", -1)
-    return render_template("home.html", episodes=episodes)
+    '''if "user" in session:
+        return render_template("home.html", username=session["user"])'''
+    
+    if not current_user.is_authenticated:
+        flash("Please log in to view your episodes.", "danger")
+        return redirect(url_for("login"))
+    
+    user_episodes = db[current_user.id]
+    ep_collection = user_episodes.find({}).sort("date", -1)
+    #episodes = db.tv_shows.find({}).sort("date", -1)
+    return render_template("home.html", username=current_user.id, episodes=ep_collection)
+
+@app.route("/", methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        entered_pw = request.form.get('password')
+
+        if not username or not entered_pw:
+            flash("Username and password are required", "danger")
+            return redirect(url_for("login"))
+    
+        user_doc = users.find_one({"username": username})
+        #password = users.find({"username": username})
+
+        if user_doc and (entered_pw == user_doc["password"]): #correct credentials
+            user = User(user_doc)
+            #user.username = username
+            flask_login.login_user(user)
+            session["user"] = user.id
+            return redirect(url_for("home"))
+        else:
+            flash("Invalid username or password", "danger")
+            return render_template("login.html")
+        
+    return render_template("login.html")
+
+@app.route("/signup", methods=['POST', 'GET'])
+def signup():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+
+        existing_user = users.find_one({"username": username})
+        if existing_user:
+            flash("Username already exists", "danger")
+            return redirect(url_for("signup")) #, "Username already exists", "danger"
+
+        #hashed_pw = hashlib.sha256(password).hexdigest()
+        new_doc = db.users.insert_one({"username": username, "password": password})
+        user_id = str(new_doc.inserted_id)
+        return redirect(url_for("login")) #, message="Sign up successful! You can now log in."
+    return render_template("signup.html")
 
 #add entry page
 @app.route("/add", methods=["GET", "POST"])
@@ -57,7 +171,11 @@ def add():
             "comment": comment,
         }
 
+        user_id = current_user.id
+        user_collection = db[user_id]
+
         #insert data into user collection (may need to change, possibly inefficient for large num of users)
+        user_collection.insert_one(new_episode)
         db.tv_shows.insert_one(new_episode)
         return redirect(url_for("success"))
 
@@ -66,6 +184,7 @@ def add():
 
 @app.route("/search", methods=["GET"])
 def search():
+   user_episodes = db[current_user.id]
    all_episodes = db.all_shows.find({}).sort("date", -1)
    query = request.args.get("query")
    if query:
@@ -77,7 +196,8 @@ def search():
                 {"tags": {"$regex": pattern}}
             ]
         }
-        results = all_shows_collection.find(search_criteria)
+        results = user_episodes.find(search_criteria)
+        #results = all_shows_collection.find(search_criteria)
         shows = [
             {
                 "id": str(show["_id"]),
@@ -101,13 +221,13 @@ def delete():
         
         if show_id:
             try:
-                tv_shows_collection.delete_one({"_id": ObjectId(show_id)})
+                db[current_user.id].delete_one({"_id": ObjectId(show_id)})
                 return render_template("success.html", message="Episode deleted successfully!")
             except Exception as e:
                 return render_template("success.html", message=f"Error deleting show: {e}")
 
     # If it's a GET request, display the list of shows
-    shows = tv_shows_collection.find()
+    shows = db[current_user.id].find()
     return render_template("delete.html", shows=shows)
 
 @app.route("/edit/<post_id>", methods=["GET", "POST"])
@@ -115,7 +235,7 @@ def edit(post_id):
     """
     Route to edit an existing episode.
     """
-    show = tv_shows_collection.find_one({"_id": ObjectId(post_id)})
+    show = db[current_user.id].find_one({"_id": ObjectId(post_id)})
 
     if request.method == "POST":
         title = request.form.get("title")
@@ -138,7 +258,7 @@ def edit(post_id):
             "comment": comment,
         }
 
-        tv_shows_collection.update_one({"_id": ObjectId(post_id)}, {"$set": updated_episode})
+        db[current_user.id].update_one({"_id": ObjectId(post_id)}, {"$set": updated_episode})
 
         return redirect(url_for("success"))
 
@@ -151,6 +271,11 @@ def settings():
 @app.route("/success")
 def success():
     return render_template("success.html", message="Episode added successfully!")
+
+@app.route('/logout')
+def logout():
+    flask_login.logout_user()
+    return render_template("logout.html")
 
 # main driver function
 if __name__ == '__main__':

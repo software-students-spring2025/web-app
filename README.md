@@ -9,6 +9,7 @@ See instructions. Delete this line and place the Product Vision Statement here.
 ## User stories
 
 [Team JPEG - Sprint 1](https://github.com/orgs/software-students-spring2025/projects/31/views/1)
+[Team JPEG - Sprint 2](https://github.com/orgs/software-students-spring2025/projects/119/views/2)
 
 ## Steps necessary to run the software
 
