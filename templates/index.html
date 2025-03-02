@@ -14,9 +14,14 @@
             <h3>{{ item["title"] }}</h3>
             <p><strong>By:</strong> {{ item["user"] }}</p>
             <p>{{ " ".join(item["content"].split()[:20]) }}...</p> <!-- Show first 20 words of "content"-->
-            <a href="{{ url_for('post_detail', post_id=item['id']) }}" class="read-more">Read More</a>
+            <a href="{{ url_for('post_detail', post_id=item.id)}}" class="read-more">Read More</a>
         </div>
         {% endfor %}
+
+        <!--Work on formatting--> 
+        <a href="{{ url_for('create_post') }}" class="create-post-button">
+            Create Post
+        </a>
     </div>
 </body>
 </html>
