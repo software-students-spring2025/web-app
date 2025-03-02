@@ -1,9 +1,6 @@
-from flask import Flask, render_template
-import pymongo
-from database import db
-from bson.objectid import ObjectId
+from flask import Flask, redirect, render_template, url_for
 
-app = Flask(__name__)
+mock_app = Flask(__name__)
 
 # Updated mock data with structured sections
 mock_data = [
@@ -31,18 +28,12 @@ mock_data = [
 ]
 
 # test with mock data
-@app.route("/mock")
+@mock_app.route("/")
 def index():
     return render_template("index.html", data=mock_data)
 
-# with data from database
-@app.route("/")
-def index2():
-    posts = db.posts.find()
-    return render_template("index.html", data=posts)
-
 # for testing
-@app.route("/post/mock/<int:post_id>")
+@mock_app.route("/post/<int:post_id>")
 def post_detail(post_id):
     # Find the post by ID
     post = next((item for item in mock_data if item["id"] == post_id), None)
@@ -51,20 +42,27 @@ def post_detail(post_id):
     else:
         return "<h1>Post Not Found</h1>", 404
     
-# with database
-@app.route("/post/<int:post_id>")
-def post_detail2(post_id):
-    # Find the post by ID
-    post = db.posts.find_one({"_id": ObjectId(post_id)})
-    if post:
-        return render_template("post.html", post=post)
-    else:
-        return "<h1>Post Not Found</h1>", 404
-
 if __name__ == "__main__":
-    app.run(debug=True)
-
+    mock_app.run(debug=True)
 
 # after run python database_mock.py in terminal, goto http://127.0.0.1:5000/ in browser
 # this is just a mock backend to test if html works
 # the routing can be used to the actual back end code (I believe) or you can make your own
+
+@mock_app.route("/create_post", methods = ['GET','POST'])
+def create_post():
+
+    new_post = {
+        "user": "john",
+        "title": "my post",
+        "content": "this is the content of my new post",
+        "comment": [] # new post will have no comments
+    }
+
+    mock_data.append(new_post) # add post to mock_data
+
+    redirect(url_for(index)) # this can change
+   
+    return render_template("create_post.html") # this actually shows the form to user i think
+
+
