@@ -5,10 +5,13 @@ import pymongo
 from bson.objectid import ObjectId
 import datetime
 
-load_dotenv()
+load_dotenv(override=True)
+
 CONNECTION_STRING = os.environ.get("CONNECTION_STRING")
+print(CONNECTION_STRING)
 assert CONNECTION_STRING
 DATABASE_NAME = os.environ.get("DATABASE_NAME")
+print(DATABASE_NAME)
 assert DATABASE_NAME
 
 connection = pymongo.MongoClient(CONNECTION_STRING)
@@ -24,9 +27,8 @@ app = Flask(__name__)
 #Currently just prints "Home" to show app working, needs to acces task collection of DB and display tasks on template (HTML)
 @app.route('/')
 def show_home():
-    response = make_response("Home", 200)
-    response.mimetype = "text/plain"
-    return response
+    tasks = tasks_collection.find({})
+    return render_template('index.html', tasks=tasks)
 
 @app.route('/add', methods=['POST'])
 def add_task():
@@ -63,6 +65,7 @@ def edit_task(task_id):
     new_name = request.form.get('new_name')
     new_description = request.form.get('new_description')
     new_due = request.form.get('new_due')
+    print(request.form)
     
     #structure i found to only update fields that the user chooses to edit, not all at once
     update_fields = {}
@@ -73,7 +76,7 @@ def edit_task(task_id):
         update_fields["description"] = new_description
     if new_due:
         update_fields["due_date"] = new_due
-    
+    print(update_fields)
     if update_fields:
         tasks_collection.update_one({"_id": ObjectId(task_id)}, {"$set": update_fields})
     
