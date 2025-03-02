@@ -1,12 +1,7 @@
-import pymongo
-from bson.objectid import ObjectId
-import datetime
-
-from dotenv import load_dotenv
+from flask import url_for, redirect
 import os
 
 from flask import Flask
-from flask import render_template
 from routes.questions_routes import questions_bp  # Import the questions Blueprint
 from routes.quiz_routes import quiz_bp
 from routes.flashcard_routes import flashcard_bp
@@ -21,7 +16,7 @@ app.register_blueprint(flashcard_bp, url_prefix='/flashcard')
 
 @app.route('/')
 def home():
-    return render_template("questions.html")
+    return redirect(url_for("questions.show_question"))
 
 if __name__ == '__main__':
     app.run(debug=True)
