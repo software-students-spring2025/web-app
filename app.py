@@ -6,7 +6,7 @@ from dotenv import load_dotenv, dotenv_values
 from pymongo.mongo_client import MongoClient
 from bson.objectid import ObjectId
 import certifi
-from flask_login import current_user
+from flask_login import current_user, login_required
 import flask_login
 import flask
 #import hashlib
@@ -88,12 +88,19 @@ def request_loader(request):
     return User(user_doc)
 
 @app.route("/home")
+@login_required
 def home():
-    if "user" in session:
-        return render_template("home.html", username=session["user"])
-    episodes = db[f"{current_user.id}"].find({}).sort("date", -1)
+    '''if "user" in session:
+        return render_template("home.html", username=session["user"])'''
+    
+    if not current_user.is_authenticated:
+        flash("Please log in to view your episodes.", "danger")
+        return redirect(url_for("login"))
+    
+    user_episodes = db[current_user.id]
+    ep_collection = user_episodes.find({}).sort("date", -1)
     #episodes = db.tv_shows.find({}).sort("date", -1)
-    return render_template("home.html", episodes=episodes)
+    return render_template("home.html", username=current_user.id, episodes=ep_collection)
 
 @app.route("/", methods=['GET', 'POST'])
 def login():
@@ -214,13 +221,13 @@ def delete():
         
         if show_id:
             try:
-                tv_shows_collection.delete_one({"_id": ObjectId(show_id)})
+                db[current_user.id].delete_one({"_id": ObjectId(show_id)})
                 return render_template("success.html", message="Episode deleted successfully!")
             except Exception as e:
                 return render_template("success.html", message=f"Error deleting show: {e}")
 
     # If it's a GET request, display the list of shows
-    shows = tv_shows_collection.find()
+    shows = db[current_user.id].find()
     return render_template("delete.html", shows=shows)
 
 @app.route("/edit/<post_id>", methods=["GET", "POST"])
@@ -228,7 +235,7 @@ def edit(post_id):
     """
     Route to edit an existing episode.
     """
-    show = tv_shows_collection.find_one({"_id": ObjectId(post_id)})
+    show = db[current_user.id].find_one({"_id": ObjectId(post_id)})
 
     if request.method == "POST":
         title = request.form.get("title")
@@ -251,7 +258,7 @@ def edit(post_id):
             "comment": comment,
         }
 
-        tv_shows_collection.update_one({"_id": ObjectId(post_id)}, {"$set": updated_episode})
+        db[current_user.id].update_one({"_id": ObjectId(post_id)}, {"$set": updated_episode})
 
         return redirect(url_for("success"))
 
@@ -268,7 +275,7 @@ def success():
 @app.route('/logout')
 def logout():
     flask_login.logout_user()
-    return 'Logged out'
+    return render_template("logout.html")
 
 # main driver function
 if __name__ == '__main__':
