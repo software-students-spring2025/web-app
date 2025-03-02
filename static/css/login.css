@@ -94,12 +94,12 @@ input[type=submit]:hover{
     justify-content: center;
 }
 
-.login{
+.register{
     text-align: center;
     padding-top: 60px;
     color: black;
 }
 
-.login:visited{
+.register:visited{
     color: #7baed1;
 }
