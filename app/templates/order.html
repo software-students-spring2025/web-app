@@ -6,46 +6,64 @@
     <title>{% if category or query %}{{ category if category else 'Search Results' }} Menu{% else %}Select a Category{% endif %}</title>
 </head>
 <body>
-    <div class = "nav">
-        <a class = "Back" href="{{ url_for('home') }}">
-            <p>Home</p>
-        </a>
-        &emsp;
-        <a class = "cart" href="{{ url_for('cart') }}">
-            <img id ="cartImg" src = "../static/cart_icon.png"/>
-        </a>
-        &emsp;
-    </div>
 
     &emsp;&emsp;
-
 
     
     {% if category or query %}
         &emsp;
-        <a href="{{ url_for('order') }}">Back to Categories</a>
+        <div class = "nav">
+            <a class = "Back" href="{{ url_for('order') }}">
+                <p>Back</p>
+            </a>
+            &emsp;
+            <a class = "cart" href="{{ url_for('cart') }}">
+                <img id ="cartImg" src = "../static/cart_icon.png"/>
+            </a>
+            &emsp;
+        </div>
         <h1>{{ category if category else 'Search Results' }} Menu</h1>
         <form method="GET" action="{{ url_for('order') }}">
             <input type="hidden" name="category" value="{{ category }}">
             <input type="text" name="query" placeholder="Search {{ category }}s ..." value="{{ query }}">
             <button type="submit">Search</button>
         </form>
-        <p>View our seasonal menu items below:</p>
-        <ul>
+    
+        <div id = "menu">
             {% for item in menu_items %}
-            <li>
                 <a href="{{ url_for('item_info', item_id=item.item_id) }}">
-                    <strong>{{ item.name }}</strong>
-                </a>: {{ item.description }}
-                <a href="{{ url_for('add_to_cart', item_id=item.item_id, category=category, query=query) }}">Add to Cart</a>
-            </li>
+                    <div class = "categoryB">
+                        <img src = "../static/images/menuItems/{{item.item_id}}.jpg">
+                        <div class = "itemInfo">
+                            <p class = "iDescription">{{ item.name }}:{{ item.description }}</p>
+                            <div class = "moreInfo">
+                                <p class = "price">${{ item.price }}.00</p>
+                                <p class = "calories">200 calories</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <div class = "addCart">
+                    <a href="{{ url_for('add_to_cart', item_id=item.item_id, category=category, query=query) }}">
+                        <p>Add to Cart</p>
+                    </a>  
             {% endfor %}
-        </ul>
+        </div>
         {% if query %}
         <br>
         <a href="{{ url_for('order', category=category) }}">Clear Search</a>
         {% endif %}
     {% else %}
+        <div class = "nav">
+            <a class = "Back" href="{{ url_for('home') }}">
+                <p>Home</p>
+            </a>
+            &emsp;
+            <a class = "cart" href="{{ url_for('cart') }}">
+                <img id ="cartImg" src = "../static/cart_icon.png"/>
+            </a>
+            &emsp;
+        </div>
         <h2>Choose a Category:</h2>
         <div id = "menu">
             <form class = "search" method="GET" action="{{ url_for('order') }}">
