@@ -56,3 +56,28 @@ h1 {
     margin: 10px;
     width: 250px;
 }
+
+/* Review Button in Sidebar */
+.review-button {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.review-box {
+    background: #d3b3d8;
+    color: black;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    transform: rotate(-90deg);
+    white-space: nowrap;
+    margin-top: 100px;
+}
+
+.review-box:hover {
+    background: #c095ca;
+}
