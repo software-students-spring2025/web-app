@@ -24,6 +24,12 @@
 <body>
     {% include 'navbar.html' %}
 
+    {% if is_admin %}
+        <p>Administrator Account</p>
+    {% endif %}
+
+    <a href="{{ url_for('logout') }}"><button>Logout</button></a>
+
     <div id="map"></div>
 
     <script>

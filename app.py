@@ -1,27 +1,113 @@
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, redirect, url_for, flash, session
 from pymongo import MongoClient
 import os
 from dotenv import load_dotenv
 from bson import ObjectId
+from flask_bcrypt import Bcrypt
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+
 
 # load environment variables
 load_dotenv()
 
 app = Flask(__name__)
 
+# secret key generation
+secret_key = os.urandom(12)
+app.config["SECRET_KEY"] = secret_key
+
 # MongoDB connection
 MONGO_URI = os.getenv("MONGO_URI")
 client = MongoClient(MONGO_URI)
 db = client.get_database("Cluster0")
 
+bcrypt=Bcrypt(app)
+login_manager = LoginManager(app)
+login_manager.login_view = "login"
+
+
 # Collections
 pins_collection = db.pins
 bathrooms_collection = db.bathrooms
 reviews_collection = db.reviews
+users_collection = db.users
+
+class User(UserMixin):
+    def __init__(self, user_id, email, is_admin):
+        self.id = str(user_id)  # Ensure it is a string
+        self.email = email
+        self.is_admin = is_admin
+
+@login_manager.user_loader
+def load_user(user_id):
+    user = users_collection.find_one({"_id": ObjectId(user_id)})  # Convert back to ObjectId
+    if user:
+        return User(user_id=str(user["_id"]), email=user["email"], is_admin=user["is_admin"])
+    return None
+
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for("home"))  # Redirect if already logged in
+
+    if request.method == "POST":
+        email = request.form["email"]
+        password = request.form["password"]
+        user = users_collection.find_one({"email": email})
+
+        if user and bcrypt.check_password_hash(user["password"], password):
+            user_obj = User(user_id=str(user["_id"]), email=user["email"], is_admin=user["is_admin"])
+            login_user(user_obj, remember=True)  # Ensure session persists
+
+            session["user_id"] = str(user["_id"])  # Store user in session
+            return redirect(url_for("home"))
+        else:
+            flash("Invalid email or password", "danger")
+
+    return render_template("login.html")
+
+
+@app.route("/debug") # for debugging user accounts
+def debug():
+    if current_user.is_authenticated:
+        return f"Logged in as: {current_user.email}, Admin: {current_user.is_admin}"
+    return "Not logged in"
+
+
+@app.route("/signup", methods=["POST"])
+def signup():
+    email = request.form["email"]
+    password = request.form["password"]
+    is_admin = "admin_privileges" in request.form  # Checkbox in form
+
+    if not email.endswith("@nyu.edu"):
+        flash("You must use an NYU email to register!", "danger")
+        return redirect(url_for("login"))
+
+    if users_collection.find_one({"email": email}):
+        flash("Email already exists!", "danger")
+        return redirect(url_for("login"))
+
+    hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
+    users_collection.insert_one({"email": email, "password": hashed_password, "is_admin": is_admin})
+    
+    flash("Account created! You can now log in.", "success")
+    return redirect(url_for("login"))
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    session.clear()
+    return redirect(url_for("login"))
+
 
 @app.route("/")
+@login_required
 def home():
-    return render_template("index.html")
+    return render_template("home.html", is_admin=current_user.is_admin)
 
 @app.route("/search")
 def search():
