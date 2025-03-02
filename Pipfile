@@ -11,4 +11,8 @@ python-dotenv = "*"
 [dev-packages]
 
 [requires]
+<<<<<<< HEAD
 python_version = "3.13"
+=======
+python_version = "3.9"
+>>>>>>> b7b0ca9232a87dd5d2a3e5d98c9c0196f5b3cf95

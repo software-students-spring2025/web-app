@@ -146,3 +146,7 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/.env
+<<<<<<< HEAD
+=======
+.env
+>>>>>>> b7b0ca9232a87dd5d2a3e5d98c9c0196f5b3cf95
