@@ -12,7 +12,7 @@ app = Flask(__name__)
 # MongoDB connection
 MONGO_URI = os.getenv("MONGO_URI")
 client = MongoClient(MONGO_URI)
-db = client.get_database("Cluster0")
+db = client.get_database("NYU")
 
 # Collections
 pins_collection = db.pins
@@ -91,6 +91,7 @@ def search_api():
     query = request.args.get("q", "").lower()
     floor_filter = request.args.get("floor")
     type_filter = request.args.get("type")
+    orientation_filter = request.args.get("orientation")
 
     # fetch building by name (case-insensitive)
     building = pins_collection.find_one({"name": {"$regex": query, "$options": "i"}})
@@ -105,6 +106,8 @@ def search_api():
         bathroom_query["floor"] = int(floor_filter)  # Convert to integer
     if type_filter:
         bathroom_query["type"] = type_filter  # Match bathroom type
+    if orientation_filter:
+        bathroom_query["orientation"] = orientation_filter
 
     # Fetch bathrooms that match filters
     bathrooms = list(bathrooms_collection.find(bathroom_query))
