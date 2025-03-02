@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Question</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <h1>Add a New Question</h1>
+    <form action="{{ url_for('questions.add_question') }}" method="POST">
+        <label for="question">Question:</label>
+        <input type="text" id="question" name="question" required>
+        <br>
+        
+        <label for="answer">Answer:</label>
+        <input type="text" id="answer" name="answer" required>
+        <br>
+
+        <label for="hint">Hint (Optional):</label>
+        <input type="text" id="hint" name="hint">
+        <br>
+
+        <label for="difficulty">Difficulty Level:</label>
+        <select id="difficulty" name="difficulty">
+            <option value="Easy">Easy</option>
+            <option value="Medium">Medium</option>
+            <option value="Hard">Hard</option>
+        </select>
+        <br>
+
+        <button type="submit">Submit</button>
+    <form action="{{ url_for('questions.add_question') }}" method="POST" onsubmit="showSuccessMessage()">
+    <script>
+        function showSuccessMessage() {
+            alert("✅ Question successfully added!");
+        }
+    </script>
+</body>
+</html>
