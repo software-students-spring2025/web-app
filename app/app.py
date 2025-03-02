@@ -40,7 +40,7 @@ if menu_collection.count_documents({}) == 0:
         {'item_id': 'chocolate_filled_cookie', 'name': 'Chocolate Filled Cookie', 'description': "Enjoy a crisp cookie and gooey center", 'price': 9, 'category': 'Cookie'},
         {'item_id': 'gingerbread', 'name': 'Gingerbread', 'description': "Enjoy the seasonal cookie all year round!", 'price': 10, 'category': 'Cookie'},
         {'item_id': 'matcha_cookie', 'name': 'Matcha Cookie', 'description': "Made with fresh green tea leaves at our bakery!", 'price': 11, 'category': 'Cookie'},
-        {'item_id': 'peanut_utter_cookie', 'name': 'Peanut Butter Cookie', 'description': "Soft and chewy while being sweet and salty", 'price': 12, 'category': 'Cookie'},
+        {'item_id': 'peanut_butter_cookie', 'name': 'Peanut Butter Cookie', 'description': "Soft and chewy while being sweet and salty", 'price': 12, 'category': 'Cookie'},
         {'item_id': 'thumbprint_cookies', 'name': 'Thumbprint Cookies', 'description': "Shortbread Cookies with a delicious jam in the middle", 'price': 13, 'category': 'Cookie'},
         {'item_id': 'carrot_cake', 'name': 'Carrot Cake', 'description': "A sweet carrot cake with a cream cheese icing", 'price': 14, 'category': 'Cake'},
         {'item_id': 'cheese_cake', 'name': 'Cheese Cake',  'description': "Made with fresh cream cheese and a cookie base", 'price': 15, 'category': 'Cake'},
