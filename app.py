@@ -5,10 +5,13 @@ import pymongo
 from bson.objectid import ObjectId
 import datetime
 
-load_dotenv()
+load_dotenv(override=True)
+
 CONNECTION_STRING = os.environ.get("CONNECTION_STRING")
+print(CONNECTION_STRING)
 assert CONNECTION_STRING
 DATABASE_NAME = os.environ.get("DATABASE_NAME")
+print(DATABASE_NAME)
 assert DATABASE_NAME
 
 connection = pymongo.MongoClient(CONNECTION_STRING)
@@ -24,9 +27,8 @@ app = Flask(__name__)
 #Currently just prints "Home" to show app working, needs to acces task collection of DB and display tasks on template (HTML)
 @app.route('/')
 def show_home():
-    response = make_response("Home", 200)
-    response.mimetype = "text/plain"
-    return response
+    tasks = tasks_collection.find({})
+    return render_template('index.html', tasks=tasks)
 
 @app.route('/add', methods=['POST'])
 def add_task():
