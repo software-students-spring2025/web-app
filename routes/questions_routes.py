@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from pymongo import MongoClient
+from bson.objectid import ObjectId
 import os
 from dotenv import load_dotenv
 
@@ -49,3 +50,25 @@ def add_question():
 def show_question():
     questions_to_show = questions_collection.find({})
     return render_template('questions.html', questions = questions_to_show)
+
+@questions_bp.route('/delete', methods = ['GET', 'POST'])
+def delete():
+    questions_to_show = questions_collection.find({})
+    if request.method == 'POST':
+        to_delete = request.form.getlist('selected')
+        print("to_delete",to_delete)
+        if len(to_delete) == 0:
+            flash("Please select something to delete!", "error")
+            return redirect(url_for('questions.delete'))
+        delete_count = 0
+
+        for question_id in to_delete:
+            delete_result = questions_collection.delete_one({"_id":  ObjectId(question_id)})
+            if delete_result.deleted_count == 1:
+                flash("Successfully deleted!", "success")
+            else:
+                flash("Unable to delete: Object no longer exist!", "error")
+                
+        return redirect(url_for('questions.delete'))
+
+    return render_template('question_delete.html', questions = questions_to_show)
