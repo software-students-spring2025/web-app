@@ -21,7 +21,7 @@ connection = pymongo.MongoClient(
 )
 db = connection["Jitter"]
 restaurants_collection = db["restaurants"]
-
+reviews_collection = db["reviews"] 
 
 # ✅ Home Route - Render the homepage
 @app.route("/")
@@ -29,8 +29,11 @@ def index():
     restaurants = list(
         restaurants_collection.find({}, {"_id": 0})
     )  # Fetch restaurants from MongoDB
+    recent_reviews = list(
+        reviews_collection.find().sort("created_at", -1).limit(5)
+    )
     return render_template(
-        "index.html", restaurants=restaurants
+        "index.html", restaurants=restaurants, recent_reviews=recent_reviews
     )  # FIX: render_template now works!
 
 
