@@ -16,11 +16,12 @@ th, td {
 body {
 	background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
 	font-family: 'Arial', sans-serif;
-	margin: 0;
+	margin: auto;
+	text-align: center;
 	padding: 20px;
 }
 
-.container {
+/* .container {
 	background-color: #fff;
 	border-radius: 12px;
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -35,7 +36,7 @@ body {
 	text-align: center;
 	margin-bottom: 20px;
 	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-}
+} */
 
 .content {
 	font-size: 1.2em;
@@ -44,7 +45,8 @@ body {
 }
 
 input[type="text"],
-input[type="password"] {
+input[type="password"],
+input[type="number"] {
 	width: 100%;
 	padding: 10px;
 	margin-bottom: 10px;
@@ -90,6 +92,13 @@ input[type="password"] {
 	align-items: center;
 }
 
+.home-table th,
+.home-table td {
+	padding: 10px;
+	border: 2px solid #ccc;
+	background-color: #fff;
+}
+
 .home-add a button {
 	margin: 20px auto;
 	text-align: center;
@@ -99,34 +108,46 @@ input[type="password"] {
 	margin: 20px auto;
 	text-align: center;
 	display: flex;
-	width: 90%;
+	width: 70%;
 	justify-content: space-evenly;
+	align-items: center;
+	flex-direction: column;
 }
 
 .home-search input {
-	width: 300px;
+	width: 100%;
 	padding: 10px;
 	border: 1px solid #ccc;
 	border-radius: 4px;
-	margin-right: 10px;
 	height: 50px;
 }
 
 .home-search button {
-	padding: 10px 20px;
+	padding: 10px;
 	background-color: #007bff;
 	color: #fff;
 	border: none;
 	border-radius: 4px;
 	cursor: pointer;
 	height: 50px;
-	width: 45%;
+	width: 100%;
 	text-align: center;
+}
+
+.detail-page {
+	text-align: center;
+	margin: 40px auto;
+	
+}
+
+.detail-page a button {
+	text-decoration: none;
 }
 
 
 form {
 	width: 90%;
+	text-align: left;
 	margin: 20px auto;
 	padding: 20px;
 	border: 1px solid #ccc;
@@ -162,8 +183,35 @@ form button {
 	border-radius: 4px;
 	cursor: pointer;
 	transition: background-color 0.3s;
+	width: 40%;
+	font-size: 12px;
 }
 
 form button:hover {
 	background-color: #0056b3;
+}
+
+.delete-btn{
+	width: 40%;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    font-size: 20px;
+    text-align: center;
+    cursor: pointer;
+	text-decoration: none;
+}
+.home-btn {
+	width: 40%;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    font-size: 20px;
+    text-align: center;
+    cursor: pointer;
+	text-decoration: none;
 }
