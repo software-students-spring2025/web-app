@@ -8,7 +8,6 @@ from dotenv import load_dotenv
 app = Flask(__name__)
 
 # make a connection to the database server
-# do we leave it like this or hardcode it for our own?
 
 load_dotenv()
 mongo_uri = os.getenv("MONGO_URI")
@@ -19,7 +18,7 @@ db = connection["Forum"]
 # with data from database
 @app.route("/")
 def index():
-    posts = db["posts"].find() # need to make this iterable
+    posts = db["posts"].find() 
     
     return render_template("index.html", data=posts)
 
@@ -63,7 +62,7 @@ def create_post():
             # check error code?
             return "<h1>Failed to add post</h1>", 404
     
-    return render_template("create_post.html") # this actually shows the form to user i think
+    return render_template("create_post.html") 
 
 @app.route("/post/<string:post_id>/comment", methods = ['POST'])
 def add_comment(post_id):
