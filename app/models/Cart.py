@@ -114,7 +114,7 @@ class Cart:
         return cart.get('items').count(item_id)
 
     @staticmethod
-    def clear_cart(customer_id, item_id):
+    def clear_cart(customer_id):
         get_mongo().carts.delete_many({'customer_id': customer_id})
         return Cart.get_cart(customer_id)
 
