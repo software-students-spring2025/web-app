@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Collection - Interview</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h2>My Collection</h2>
+    {% if collections %}
+      <table>
+        <thead>
+          <tr>
+            <th>Question Name</th>
+            <th>Industry</th>
+            <th>Type of Role</th>
+            <th>Difficulty</th>
+            <th>Collected Time</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for col in collections %}
+          <tr>
+            <td>
+              <a href="{{ url_for('collection_question', collection_id=col['_id']) }}">
+                {{ col['question_name'] }}
+              </a>
+            </td>
+            <td>{{ col['industry'] }}</td>
+            <td>{{ col['role'] }}</td>
+            <td>{{ col['difficulty'] }}</td>
+            <td>{{ col['collected_time'] }}</td>
+            <td>
+              <a href="{{ url_for('delete_collection', collection_id=col['_id']) }}" onclick="return confirm('Are you sure you want to delete this question?');">Delete</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No questions in your collection.</p>
+    {% endif %}
+    <br>
+    <a href="{{ url_for('interview') }}">Back to Interview</a>
+  </div>
+</body>
+</html>

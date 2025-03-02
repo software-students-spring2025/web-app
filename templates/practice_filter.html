@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Practice Filter - Interview</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h2>Practice Filter</h2>
+    <form action="{{ url_for('practice_filter') }}" method="POST">
+      <label for="industry">Industry:</label>
+      <input type="text" id="industry" name="industry" placeholder="Search industry">
+      
+      <label for="role">Type of Role:</label>
+      <input type="text" id="role" name="role" placeholder="Search role">
+      
+      <label for="interview_type">Interview Type:</label>
+      <select id="interview_type" name="interview_type">
+        <option value="Technical">Technical</option>
+        <option value="Behavior">Behavior</option>
+        <option value="Mixed">Mixed</option>
+        <option value="Case">Case</option>
+      </select>
+      
+      <label for="difficulty">Difficulty:</label>
+      <select id="difficulty" name="difficulty">
+        <option value="Easy">Easy</option>
+        <option value="Medium">Medium</option>
+        <option value="Hard">Hard</option>
+        <option value="Random">Random</option>
+      </select>
+      
+      <button type="submit">Finish</button>
+    </form>
+    <br>
+    <a href="{{ url_for('interview') }}">Back to Interview</a>
+  </div>
+</body>
+</html>
