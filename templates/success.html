@@ -1,15 +1,15 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Successfully Submitted!</title>
+    <title>Success</title>
+    <meta http-equiv="refresh" content="2;url={{ url_for('home') }}">
     <script>
         setTimeout(function() {
             window.location.href = "{{ url_for('home') }}";
         }, 2000); // Redirect in 2 seconds
     </script>
-
     <style>
         * {
             margin: 0;
@@ -24,6 +24,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            flex-direction: column;
         }
 
         .container {
@@ -35,12 +36,16 @@
             text-align: center;
         }
 
-        input, select, textarea {
-            padding: 10px;
-            width: 80%;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+        h1 {
+            color: #4CAF50;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        a {
+            text-decoration: none;
         }
 
         button {
@@ -50,6 +55,7 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            margin-top: 10px;
         }
 
         button:hover {
@@ -57,13 +63,14 @@
         }
     </style>
 </head>
-
 <body>
-    <div>
-        <p>Episode review submitted successfully!</p>
-        <button action="{{ url_for('home') }}">Return to Home</button>
+    <div class="container">
+        <h1>Success!</h1>
+        <p>{{ message }}</p>
+        <p>Redirecting to home in 2 seconds...</p>
+        <a href="{{ url_for('home') }}">
+            <button>Go to Home</button>
+        </a>
     </div>
-
-    <button>
 </body>
 </html>

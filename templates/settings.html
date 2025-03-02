@@ -4,6 +4,88 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Settings</title>
+  <style>
+
+    html, body {
+      background-color: #ffffff;
+      font-family: Arial, sans-serif;
+      color: #ffffff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    header, footer {
+      padding: 1em;
+      text-align: center;
+    }
+
+    header h1, footer {
+      color: #000000;
+      
+    }
+
+    main { 
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2em;
+    }
+
+    form h2 {
+      color: #3f4b8a;
+      margin-top: 0;
+      text-shadow: 1px 1px #ffffff;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5em;
+      color: #000000;
+    }
+
+    input[type="text"], select {
+      width: 100%;
+      padding: 0.5em;
+      margin-bottom: 1em;
+      border: 1px solid #383838;
+      border-radius: 5px;
+    }
+
+    button[type="submit"] {
+      background-color: #5c6BC0;
+      color: #ffffff;
+      padding: .5em 1em;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+      margin: 0 auto; 
+      display: block;
+      margin-bottom: 0.75em;
+    }
+
+    button[type="submit"]:hover, button[type="submit"]:focus {
+      background-color: #3f4b8a;
+    }
+
+    #logout-form button[type="submit"] {
+      background-color: #FF0033;
+    }
+
+    #logout-form button[type="submit"]:hover, #logout-form button[type="submit"]:focus {
+      background-color: #CC0033;
+    }
+
+    section {
+      padding: 10px;
+    }
+
+  
+  </style>
 </head>
 
 <body>
@@ -20,9 +102,9 @@
       <section>
         <h2>Account Settings</h2>
         <label for="username">Username:</label>
-        <input type="text" id="username" name="username">
+        <input type="text" id="username" name="username" value="FooBarstein" readonly>
         <label for="email">Email:</label>
-        <input type="text" id="email" name="email">
+        <input type="text" id="email" name="email" value="f.barstein@hotmail.com" readonly>
       </section>
 
       <section>
@@ -34,14 +116,17 @@
           <option value="large">Large</option>
         </select>
       </section>
-      <button type="submit">Save Changes</button>
+      <button type="submit" id="save-changes">Save Changes</button>
     </form>
     <form id="logout-form" action="/logout" method="post">
       <button type="submit">Logout</button>
     </form>
+    <a href="{{ url_for('home') }}">
+      <button>Back to Home</button>
+    </a>
   </main>
   <footer>
-    <!-- Fill with any relevant copyright information (if there is any) -->
+    <!-- Please allow pull req -->
   </footer>
 </body>
 
