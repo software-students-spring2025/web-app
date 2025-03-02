@@ -50,16 +50,33 @@ def delete_task(task_id):
     tasks_collection.delete_one({"_id": ObjectId(task_id)})
     return redirect(url_for('show_home'))
 
-#Just add code to set completed from False to True, it could delete it after or something else visually up to you
+#Code Added to change False to True,
+#Possible TODO: Delete it after completed or something else visually up to you
 @app.route('/complete/<task_id>')
 def complete_task(task_id):
-    #///////////
+    tasks_collection.update_one({"_id": ObjectId(task_id)}, {"$set": {"completed": True}})
     return redirect(url_for('show_home'))
 
 #forms that will allow user to edit the name, description and due date.
 @app.route('/edit/<task_id>', methods=['POST'])
 def edit_task(task_id):
-    #///////////
+    new_name = request.form.get('new_name')
+    new_description = request.form.get('new_description')
+    new_due = request.form.get('new_due')
+    
+    #structure i found to only update fields that the user chooses to edit, not all at once
+    update_fields = {}
+    
+    if new_name:
+        update_fields["name"] = new_name
+    if new_description:
+        update_fields["description"] = new_description
+    if new_due:
+        update_fields["due_date"] = new_due
+    
+    if update_fields:
+        tasks_collection.update_one({"_id": ObjectId(task_id)}, {"$set": update_fields})
+    
     return redirect(url_for('show_home'))
     
 if __name__ == '__main__':
