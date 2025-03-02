@@ -8,19 +8,14 @@ from bson.objectid import ObjectId
 from bson.errors import InvalidId
 from dotenv import load_dotenv
 import os
+from werkzeug.security import generate_password_hash, check_password_hash
 
 def get_db():
     mydb = getattr(g, "_database", None)
 
     if mydb is None:
-
         mydb = g._database = PyMongo(current_app).db
-       
     return mydb
-
-#mydb = LocalProxy(get_db)
-
-#users = db.user
 
 def insert_data():
     print("in insert data")
@@ -30,31 +25,38 @@ def insert_data():
         email = request.form['email']
         password = request.form['password']
 
-        reg_user = {}
-        reg_user['name'] = name
-        reg_user['email'] = email
-        reg_user['password'] = password
+        hashed_password = generate_password_hash(password)  # Hash password
 
+        reg_user = {
+            "name": name,
+            "email": email,
+            "password": hashed_password  # Store hashed password
+        }
+
+        db = get_db()
         users = db.user
-        if users.find_one({"email":email}) == None:
+
+        if users.find_one({"email": email}) is None:
             users.insert_one(reg_user)
             return True
         else:
             return False
 
-
 def check_user():
     if request.method == 'POST':
         email = request.form['email']
-        password = request.form['pass']
+        password = request.form['password']
 
-        user = {
-            "email": email,
-            "password": password
-        }
+        db = get_db()
+        users = db.user
 
-        user_data = users.find_one(user)
-        if user_data == None:
+        user_data = users.find_one({"email": email})
+
+        if user_data is None:
             return False, ""
         else:
-            return True, user_data["name"]
+            # Check hashed password
+            if check_password_hash(user_data["password"], password):
+                return True, user_data["name"]
+            else:
+                return False, ""

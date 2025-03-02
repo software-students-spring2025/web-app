@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ restaurant.name }} - Reviews</title>
+    <style>
+        .reviews-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 20px;
+            justify-content: center;
+        }
+        
+        .review-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            width: 300px;
+            text-align: center;
+        }
+        
+        .review-card h3 {
+            margin: 5px 0;
+            font-size: 18px;
+        }
+        
+        .review-card p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        
+        .review-date {
+            font-size: 12px;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+    <h1>Reviews for {{ restaurant.name }}</h1>
+
+    <div class="reviews-container">
+        {% if reviews %}
+            {% for review in reviews %}
+                <div class="review-card">
+                    <h3>{{ review.user }}</h3>
+                    <p>⭐ {{ review.rating }}/5</p>
+                    <p>{{ review.comment }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No reviews yet. Be the first to review!</p>
+        {% endif %}
+    </div>
+
+    <div class="add-review">
+        <a href="jitter/templates/new_review.html">➕ Add Review</a>
+    </div>
+
+    <a href="/">⬅ Back to Restaurants</a>
+</body>
+</html>
