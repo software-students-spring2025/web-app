@@ -50,7 +50,7 @@
             <div class="review-card">
                 <h3>{{ review.user or 'Anonymous' }}</h3>
                 <p>
-                    {% for _ in range(review.rating) %}⭐{% endfor %}
+                    {% for _ in range(review.rating|int) %}⭐{% endfor %}
                     {{ review.rating }}/5
                 </p>
                 <p>{{ review.comment or review.review_text }}</p>
