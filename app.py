@@ -168,6 +168,36 @@ def add():
         return redirect("/home")
     return render_template("add.html")
 
+@app.route("/edit/<rest_id>",methods=["GET","POST"])
+def edit(rest_id):
+    rest_id = ObjectId(rest_id)
+    if request.method=="GET":
+        restaurant = db.restaurantData.find_one({'_id':rest_id})
+        print(restaurant)
+        return render_template("edit.html",restaurant=restaurant)
+    if request.method=="POST":
+        doc = {item: request.form[item] for item in request.form}
+        doc['user_id'] = flask_login.current_user.username
+        db.restaurantData.update_one({'_id':rest_id},{"$set":doc})
+        return redirect("/home")
+
+@app.route("/delete/<rest_id>")
+def delete(rest_id):
+    rest_id = ObjectId(rest_id)
+    db.restaurantData.delete_one({'_id':rest_id})
+    return redirect("/home")
+
+@app.route("/roulette")
+def roulette():
+    user = flask_login.current_user.username
+    docs = db.restaurantData.find({'user_id':user})
+    ids = [doc['_id'] for doc in docs] 
+    if not ids:
+        return redirect("/home")
+    id = random.choice(ids)
+    winner = db.restaurantData.find_one({'_id':id})
+    return render_template('roulette.html', restaurant = winner)
+
 
 ####################################################################################
 ################################## FRIEND SECTION ##################################
@@ -197,20 +227,7 @@ def add_friend(friend_id):
     else:
         flash("This user is already your friend.", "info")
     return redirect(url_for("friends"))
-
-@app.route("/edit/<rest_id>",methods=["GET","POST"])
-def edit(rest_id):
-    rest_id = ObjectId(rest_id)
-    if request.method=="GET":
-        restaurant = db.restaurantData.find_one({'_id':rest_id})
-        print(restaurant)
-        return render_template("edit.html",restaurant=restaurant)
-    if request.method=="POST":
-        doc = {item: request.form[item] for item in request.form}
-        doc['user_id'] = flask_login.current_user.username
-        db.restaurantData.update_one({'_id':rest_id},{"$set":doc})
-        return redirect("/home")
-        
+   
 @app.route("/remove_friend/<friend_id>", methods=["POST"])
 @login_required
 def remove_friend(friend_id):
@@ -219,17 +236,6 @@ def remove_friend(friend_id):
         flash("Friend removed successfully!", "success")
     return redirect(url_for("friends"))
 import random
-@app.route("/roulette")
-def roulette():
-    user = flask_login.current_user.username
-    docs = db.restaurantData.find({'user_id':user})
-    ids = [doc['_id'] for doc in docs] 
-    if not ids:
-        return redirect("/home")
-    id = random.choice(ids)
-    winner = db.restaurantData.find_one({'_id':id})
-    return render_template('roulette.html', restaurant = winner)
-#@app.route("edit")
 ####################################################################################
 ################################# PROFILE SECTION ##################################
 ####################################################################################
