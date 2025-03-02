@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% extends "base.html" %}
+
+<div class="main-content">
+    <h1>Add Restaurant Review</h1>
+    <div class="box">
+        {# Form that submits data to /add-review using POST method #}
+        <form method="POST" action="/add-review">
+            {# Restaurant Name input field #}
+            <div class="field">
+                <label>Restaurant Name:</label>
+                {# 'required' attribute ensures field must be filled out before submission #}
+                {# 'name' attribute defines the key that will be used in request.form #}
+                <input type="text" name="restaurant_name" placeholder="Enter restaurant name" required>
+            </div>
+            
+            {# Rating dropdown selection #}
+            <div class="field">
+                <label>Rating:</label>
+                {# This dropdown creates a select with options from 1-5 stars #}
+                <select name="rating" required>
+                    {# The 'value' attribute is what gets sent in the form data #}
+                    <option value="5">5 Stars - Excellent</option>
+                    <option value="4">4 Stars - Very Good</option>
+                    <option value="3">3 Stars - Good</option>
+                    <option value="2">2 Stars - Fair</option>
+                    <option value="1">1 Star - Poor</option>
+                </select>
+            </div>
+            
+            {# Review text area for longer comments #}
+            <div class="field">
+                <label>Your Review:</label>
+                <textarea name="review_text" placeholder="Share your experience..." required></textarea>
+            </div>
+            
+            {# Submit button to send the form data #}
+            <button type="submit">Submit Review</button>
+        </form>
+    </div>
+    
+    {# Navigation link back to the home page #}
+    <div>
+        <a href="/">Back to Home</a>
+    </div>
+</div>
+{% endblock %}

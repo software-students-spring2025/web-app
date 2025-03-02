@@ -1,4 +1,4 @@
-#!/Users/jakechang/2-web-app-toast/jitter_venv/bin/python3
+#!/Users/jakechang/2-web-app-toast/it/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
