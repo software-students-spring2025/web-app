@@ -2,10 +2,7 @@
 """
 Pinkberries flask-based web application.
 """
-<<<<<<< HEAD
 import certifi # resolve connection error for mongoDB
-=======
->>>>>>> b7b0ca9232a87dd5d2a3e5d98c9c0196f5b3cf95
 import os
 import datetime
 import datetime
@@ -91,7 +88,6 @@ def create_app():
             description = request.form["fdescription"]
             image_url = request.form["fimage_url"]
             created_by = request.form["created_by"]
-<<<<<<< HEAD
 
             exhibition = {
                 "title": title,
@@ -259,136 +255,7 @@ def create_app():
     @login_required
     def gallery_owner_page():
         return f"Welcome, {current_user.username}! This is the Gallery Owner Dashboard."
-=======
->>>>>>> b7b0ca9232a87dd5d2a3e5d98c9c0196f5b3cf95
 
-            exhibition = {
-                "title": title,
-                "dates": {
-                    "start": start,
-                    "end": end
-                },
-                "location": location,
-                "cost": cost,
-                "artist": {
-                    "artist": artist,
-                    "profile_url": artist_url
-                },
-                "art_style": art_style,
-                "art_medium": art_medium,
-                "event_type": event_type,
-                "description": description,
-                "image_url": image_url,
-                "created_by": created_by,
-                "created_at": datetime.datetime.utcnow(),
-            }
-            
-            # Insert into MongoDB
-            db.exhibitions.insert_one(exhibition)
-            # Redirect to the home page
-            return redirect(url_for("home"))
-        # If the method is GET, render the create exhibition form
-        return render_template("create_exhibit.html")
-    
-    @app.route("/edit/<post_id>")
-    def edit(post_id):
-        """
-        Route for GET requests to the edit page.
-        Displays a form users can fill out to edit an existing record.
-        Args:
-            post_id (str): The ID of the post to edit.
-        Returns:
-            rendered template (str): The rendered HTML template.
-        """
-        exhibition = db.exhibitions.find_one({"_id": ObjectId(post_id)})
-        return render_template("edit.html", exhibition=exhibition)
-    
-    @app.route("/edit/<exhibition_id>", methods=["POST"])
-    def edit_post(exhibition_id):
-        """
-        Route for POST requests to the edit page.
-        Accepts the form submission data for the specified exhibit and updates the exhibit in the database.
-        """
-        # Get the existing exhibition from the database
-        exhibition = db.exhibitions.find_one({"_id": ObjectId(exhibition_id)})
-        if not exhibition:
-            return "Exhibition not found", 404
-
-<<<<<<< HEAD
-=======
-        # Initialize an empty dictionary to store updated fields
-        updated_exhibition = {}
-
-        # Get form data, only update if not empty
-        title = request.form.get("ftitle")
-        if title:
-            updated_exhibition["title"] = title
-        start = request.form.get("start_date")
-        end = request.form.get("end_date")
-        if start or end:
-            updated_exhibition["dates"] = {
-                "start": start if start else exhibition["dates"]["start"],
-                "end": end if end else exhibition["dates"]["end"]
-            }
-        location = request.form.get("flocation")
-        if location:
-            updated_exhibition["location"] = location
-        cost = request.form.get("fcost")
-        if cost:
-            updated_exhibition["cost"] = cost
-        artist = request.form.get("fartist")
-        artist_url = request.form.get("farturl")
-        if artist or artist_url:
-            updated_exhibition["artist"] = {
-                "artist": artist if artist else exhibition["artist"]["artist"],
-                "profile_url": artist_url if artist_url else exhibition["artist"]["profile_url"]
-            }
-        art_style = request.form.get("fart_style")
-        if art_style:
-            updated_exhibition["art_style"] = art_style
-        art_medium = request.form.get("fart_medium")
-        if art_medium:
-            updated_exhibition["art_medium"] = art_medium
-        event_type = request.form.get("fevent_type")
-        if event_type:
-            updated_exhibition["event_type"] = event_type
-        description = request.form.get("fdescription")
-        if description:
-            updated_exhibition["description"] = description
-        image_url = request.form.get("fimage_url")
-        if image_url:
-            updated_exhibition["image_url"] = image_url
-        created_by = request.form.get("created_by")
-        if created_by:
-            updated_exhibition["created_by"] = created_by
-
-        # Always update the created_at field to the current timestamp when editing
-        updated_exhibition["created_at"] = datetime.datetime.utcnow()
-
-        # Only update the fields that were provided by the user
-        if updated_exhibition:
-            db.exhibitions.update_one({"_id": ObjectId(exhibition_id)}, {"$set": updated_exhibition})
-
-        # Redirect to the exhibition detail page after the update
-        return redirect(url_for("exhibition_detail", exhibition_id=exhibition_id))
-
-    @app.route("/delete/<exhibition_id>", methods=["POST"])
-    def delete(exhibition_id):
-        try:
-            object_id = ObjectId(exhibition_id)
-            result = db.exhibitions.delete_one({"_id": object_id})
-            
-            if result.deleted_count == 0:
-                flash('Exhibition not found or already deleted.', 'error')
-                return redirect(url_for('home'))
-
-            flash('Exhibition successfully deleted.', 'success')
-            return redirect(url_for("home"))
-
-        except Exception as e:
-            flash(f"An error occurred while deleting the exhibition: {str(e)}", 'error')
-            return redirect(url_for("home"))
->>>>>>> b7b0ca9232a87dd5d2a3e5d98c9c0196f5b3cf95
     return app
 
 ### Here is where the app gets created: ###
