@@ -1,5 +1,6 @@
 '''
 from flask import Blueprint, render_template
+<<<<<<< HEAD
 from flask import request, jsonify
 from flask import Flask
 from flask_pymongo import PyMongo
@@ -7,6 +8,8 @@ fmport os
 from dotenv import load_dotenv
 
 #from . import db
+=======
+>>>>>>> 3e564f9eb60c1e0775d7946144205d9e9c8ca681
 
 main = Blueprint('main', __name__)
 

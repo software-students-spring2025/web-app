@@ -1,32 +1,20 @@
-from bson.objectid import ObjectId
-import datetime
 from flask import Flask, render_template, request, redirect, abort, url_for, make_response, g
 from dotenv import load_dotenv
-import flask_login
-import os
-import pymongo
 from .auth import auth as auth_blueprint
 from .main import main as main_blueprint
+from .dbconnect import get_db
 
 def create_app():
     app = Flask(__name__)
+    db = get_db()
 
-    load_dotenv()
-    MONGO_DBNAME = os.getenv('MONGO_DBNAME')
-    MONGO_URI = os.getenv('MONGO_URI')
-
-    print(MONGO_URI)
-
-    #make a connection to the database server
-    connection = pymongo.MongoClient(MONGO_URI)
-    db = connection["Jitter"]
-    users = db.user
-    #g._database = db
-
-    # blueprint for auth routes in our app
     app.register_blueprint(auth_blueprint)
 
+<<<<<<< HEAD
     # blueprint for non-auth parts of app
     app.register_blueprint(main_blueprint)
+=======
+    app.register_blueprint(main_blueprint)    
+>>>>>>> 3e564f9eb60c1e0775d7946144205d9e9c8ca681
 
     return app
