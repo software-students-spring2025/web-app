@@ -70,14 +70,12 @@
 
         <!-- Event Details -->
         <div class="details">
-            <h2 id="name">Event Name</h2>
-
-            <p id="date">Date: </p>
-            <p id="time">Time: </p>
-            <p id="location">Location: </p>
-            <p id="category">Category: </p>
-            <p id="description">Description: </p>
-
+            <h2 id="name">{{ event["name"] }}</h2>
+            <p id="date"><b>Date:</b> {{ event["date"] }}</p>
+            <p id="time"><b>Time:</b> {{ event["time"] }}</p>
+            <p id="location"><b>Location:</b> {{ event["location"] }}</p>
+            <p id="category"><b>Category:</b> {{ event["category"] }}</p>
+            <p id="description"><b>Description:</b><br> {{ event["description"] }}</p>
         </div>
 
         <!-- Buttons -->
@@ -85,47 +83,18 @@
             <!-- Go to edit page-->
             <!-- TEMP: placeholder href link -->
             <a href="{{ url_for('edit_event', event_id=event['_id']) }}">
-                <button type="button" style="background-color: blue; color: white;">Edit</button>
+                <button type="button" style="background-color: rgb(244, 216, 216); color: black;">Edit</button>
             </a>     
             <!-- Go to delete page-->
             <!-- TEMP: placeholder href link -->
-            <form action="{{ url_for('delete_event', event_id=event['_id']) }}">
-                <button type="submit" style="background-color: rgb(244, 216, 216); color: white;">Delete</button>
-            </form>
+            <a href="{{ url_for('delete_event', event_id=event['_id']) }}">
+                <button type="submit" style="background-color: rgb(244, 216, 216); color: black;">Delete</button>
+            </a>
         </div>
 
         <!-- Bottom Navigation Bar -->
         <div class="navbar">
             <a href="{{  url_for('show_home') }}">Home</a>
         </div>
-
-        <!-- Javascript -->
-        <script>
-            // Get event details when page loads
-            window.onload = getDetails;
-
-            // Get event details
-            function getDetails() {
-                // TODO: Connect to database to get details
-
-                // TEMP: Hardcode fake details for testing
-                const event = {
-                    name: "Event 1",
-                    date: "2020-01-01",
-                    time: "1:00am",
-                    location: "Loc 1",
-                    category: "Education",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-                };
-
-                // Update page information
-                document.getElementById("name").innerHTML = event.name;
-                document.getElementById("date").innerHTML = "<b>Date:</b> " + event.date;
-                document.getElementById("time").innerHTML = "<b>Time:</b> " + event.time;
-                document.getElementById("location").innerHTML = "<b>Location:</b> " + event.location;
-                document.getElementById("category").innerHTML = "<b>Category:</b> " + event.category;
-                document.getElementById("description").innerHTML = "<b>Description:</b><br> " + event.description;
-            }
-        </script>
     </body>
 </html>
