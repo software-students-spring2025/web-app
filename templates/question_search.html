@@ -17,8 +17,12 @@
         <input type="text" id="answer" name="answer" >
         <br>
 
-        <label for="hint">Hint (Optional):</label>
+        <label for="hint">Hint:</label>
         <input type="text" id="hint" name="hint">
+        <br>
+
+        <label for="genre">Genre:</label>
+        <input type="text" id="genre" name="genre">
         <br>
 
         <label for="difficulty">Difficulty Level:</label>
@@ -38,8 +42,9 @@
           <th>Question</th>
           <th>Answer</th>
           <th>Hint</th>
+          <th>Genre</th>
           <th>Difficulty</th>
-          <!-- <th>Genre</th> -->
+
         </tr>
       </thead>
       <tbody>
@@ -48,8 +53,8 @@
             <td>{{ question.question }}</td>
             <td>{{ question.answer }}</td>
             <td>{{ question.hint }}</td>
+            <td>{{ question.genre }}</td>
             <td>{{ question.difficulty }}</td>
-            <!-- <td>{{ question.genre }}</td> -->
           </tr>
         {% endfor %}
       </tbody>

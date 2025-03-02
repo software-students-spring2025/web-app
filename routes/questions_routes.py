@@ -27,6 +27,7 @@ def add_question():
         answer_text = request.form.get('answer')
         hint_text = request.form.get('hint')
         difficulty_level = request.form.get('difficulty')
+        genre_text = request.form.get('genre')
 
         if not question_text or not answer_text:
             return redirect(url_for('questions.add_question'))
@@ -36,7 +37,8 @@ def add_question():
             "question": question_text,
             "answer": answer_text,
             "hint": hint_text,
-            "difficulty": difficulty_level
+            "difficulty": difficulty_level,
+            "genre" : genre_text
         }
         questions_collection.insert_one(question)
 
@@ -86,13 +88,15 @@ def search():
         answer_text = request.form.get('answer')
         hint_text = request.form.get('hint')
         difficulty_level = request.form.get('difficulty')
-        
+        genre = request.form.get('genre')
+
         questions_to_show = questions_collection.find({
             '$and':[
                 { "question"     : { "$regex" : question_text    , "$options": "i" }},
                 { "answer"       : { "$regex" : answer_text      , "$options": "i" }},
                 { "hint"         : { "$regex" : hint_text        , "$options": "i" }},
                 { "difficulty"   : { "$regex" : difficulty_level , "$options": "i" }},
+                { "genre"        : { "$regex" : genre            , "$options": "i" }},
             ]
         })
     return render_template('question_search.html', questions = questions_to_show)
