@@ -2,7 +2,7 @@
 .table-container {
     width: 80%;
     margin: 20px auto;
-    font-family: Arial, sans-serif;
+    font-family: Helvetica, sans-serif;
 }
 
 .table-container table {
@@ -22,7 +22,7 @@
 }
 
 .table-container th {
-    background-color: #007bff;
+    background-color: #d2b79f;
     color: white;
     text-transform: uppercase;
 }
@@ -53,3 +53,42 @@
 
 .alert.success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
 .alert.error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+
+body {
+    font-family: Helvetica, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #d2b79f;
+    padding: 15px;
+    text-align: left;
+}
+
+header h1 {
+    display: inline;
+    margin: 0;
+}
+
+header a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+nav {
+    float: right;
+}
+
+.nav-link {
+    margin-left: 20px;
+    padding: 8px 15px;
+    background-color: #555;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+}
