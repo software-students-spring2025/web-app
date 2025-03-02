@@ -10,12 +10,10 @@
         <style>
             /* Header */
             header {
-                border-bottom: 1px solid;
-                padding-bottom: 10px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                background: #EFF1DB;
+                padding: 40px;
             }
 
             body {
@@ -23,15 +21,28 @@
             }
             
             .details {
-                margin: 10px;
+                margin-left: 40px;
+            }
+
+            h2, p{
+                padding: 10px;
             }
 
             .buttons {
-                margin: 10px;
+                margin-left: 40px;
+                padding: 10px;
+            }
+
+            button{
+                width: 90px;
+                height: 30px;
+                border-radius: 8px;
+                border-color: darkgray;
+                margin-right: 15px;
             }
 
             .back {
-                margin: 10px;
+                margin-left: 10px;
                 font-size: 30px;
                 padding: 0px;
                 position: absolute;
@@ -44,6 +55,11 @@
 
     <!-- Page Body-->
     <body>
+        <!-- Top Navigation Bar -->
+        <div class="top-nav">
+            <a href="{{ url_for('show_home') }}" class="name">Eventify</a>
+            <a href="{{  url_for('logout') }}" class="logout">Logout</a>
+        </div>
 
         <!-- Page Header -->
         <header>
@@ -76,7 +92,7 @@
 
         <!-- Bottom Navigation Bar -->
         <div class="navbar">
-            <a href="index.html">Home</a>
+            <a href="{{  url_for('show_home') }}">Home</a>
         </div>
 
         <!-- Javascript -->

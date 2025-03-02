@@ -5,27 +5,29 @@
         <!-- Page Title -->
         <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
         <title>Edit Event</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
 
         <!-- CSS -->
         <style>
             /* Header */
             header {
-                border-bottom: 1px solid;
-                padding-bottom: 10px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                padding: 40px;
             }
 
             body {
                 margin: 0;
             }
 
+            /*
             form {
                 margin: 10px;
                 display: flex;
                 flex-direction: column;
-            }
+
+            }*/
 
             textarea {
                 resize: vertical;
@@ -37,7 +39,6 @@
             }
 
             .back {
-                margin: 10px;
                 font-size: 30px;
                 padding: 0px;
                 position: absolute;
@@ -50,6 +51,10 @@
 
      <!-- Page Body-->
      <body>
+        <div class="top-nav">
+            <a href="{{ url_for('show_home') }}" class="name">Eventify</a>
+            <a href="{{  url_for('logout') }}" class="logout">Logout</a>
+        </div>
         
         <header>
             <!-- TEMP: placeholder href link -->

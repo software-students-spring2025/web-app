@@ -1,6 +1,34 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+    font-family: Arial, sans-serif;
+}
+
+header{
+    background-color: #bbe7fe;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.name{
+    border: solid 0px black;
+    display: flex;
+    align-items: center;
+    padding-left: 40px;
+    padding-right: 40px;
+    font-size: 16pt;
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+}
+
 .heading{
     text-align: center;
-    padding: 30px;
+    padding: 40px;
 }
 
 .form{
@@ -43,4 +71,9 @@ input[type=submit]{
     cursor: pointer;
     border-radius: 8px;
     border: solid 1.5px gray;
+    background-color: #bbe7fe;
+}
+
+input[type=submit]:hover{
+    background-color: lightgray;
 }

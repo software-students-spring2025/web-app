@@ -3,12 +3,13 @@
   <head>
     <title>Search Events</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/search.css') }}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <body>
     <div class="container">
       <main>
         <header>
-          <p class="name">Eventify</p>
+          <a href="{{ url_for('show_home') }}" class="name">Eventify</a>
           <a href="{{  url_for('logout') }}" class="logout">Logout</a>
         </header>
   
@@ -17,7 +18,7 @@
         <form method="GET">
             <div class="wrapper">
                 <input type="text" name="searchterm" placeholder="Search by event name, description, location, category, or date" class="search-bar" value="{{ searchterm }}"/>
-                <input type="submit" value="Search" class="search-button"/>
+                <button type="submit" class="search-button">Search</button>
             </div>
         </form>
 
