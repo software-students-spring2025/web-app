@@ -17,7 +17,13 @@ def register():
 
 @app.route("/homepage")
 def homepage():
+    if request.method == "POST":
+        return redirect(url_for('gyms'))
     return render_template("homepage.html")
+
+@app.route("/gyms")
+def gyms():
+    return render_template("gyms.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
