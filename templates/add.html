@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/styles.css">
     <title>Restaurant Roulette</title>
 </head>
+
 <body id="addScreen">
     <header>
-        <div id="appName"><a href="/home">RR</a></div>
+        <div id="appName"><a href="/home">Home</a></div>
         <div id="profile"><a href="/roulette">Roulette</a></div>
         <div id="addFriends"><a href="/friends">Friends</a></div>
         <div id="logOut"> <a href="/logout">Log Out</a></div>
@@ -20,16 +22,16 @@
         <form id="addForm" action="/add" method="POST">
             <label for="restaurantName">Restaurant Name:</label>
             <input type="text" name="restaurantName" required>
-        
+
             <label for="restaurantLocation">Location:</label>
             <input type="text" name="restaurantLocation" required>
-        
+
             <label for="cuisine">Cuisine:</label>
             <input type="text" name="cuisine" required>
-        
+
             <label for="favDish">Favorite Dish:</label>
             <input type="text" name="favDish">
-        
+
             <label for="rating">Rating (1-5):</label>
             <select name="rating">
                 <option value="1">1</option>
@@ -38,7 +40,7 @@
                 <option value="4">4</option>
                 <option value="5">5</option>
             </select>
-        
+
             <label for="price">Price Range:</label>
             <select name="price">
                 <option value="$">$</option>
@@ -46,12 +48,13 @@
                 <option value="$$$">$$$</option>
                 <option value="$$$$">$$$$</option>
             </select>
-        
+
             <button type="submit">Add Restaurant</button>
         </form>
 
     </div>
-    
-    
+
+
 </body>
+
 </html>

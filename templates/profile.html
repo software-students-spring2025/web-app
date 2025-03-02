@@ -10,32 +10,33 @@
 
 <body id="homeScreen">
     <header>
-        <div id="appName"><a href="/home">RR</a></div>
+        <div id="appName"><a href="/home">Home</a></div>
         <div id="profile"><a href="/roulette">Roulette</a></div>
         <div id="addFriends"><a href="/friends">Friends</a></div>
         <div id="logOut"> <a href="/logout">Log Out</a></div>
     </header>
     <div class="profileCard">
-        <p> {{friendName}}'s Restaurants<p>
+        <p> {{friendName}}'s Restaurants
+        <p>
         <div id="yourRestaurants">
             {% for restaurant in restaurants %}
-                <div class="restaurant">
-                    <div class="topHalf">
-                        <div class="restName">{{ restaurant.restaurantName }}</div>
-                        <div class="restLoc">{{ restaurant.restaurantLocation }}</div>
+            <div class="restaurant">
+                <div class="topHalf">
+                    <div class="restName">{{ restaurant.restaurantName }}</div>
+                    <div class="restLoc">{{ restaurant.restaurantLocation }}</div>
+                </div>
+
+                <div class="bottomHalf">
+                    <div class="bottomLeft">
+                        <div class="cuisine">{{ restaurant.cuisine }}</div>
+                        <div class="favDish">{{ restaurant.favDish }}</div>
                     </div>
-                    
-                    <div class="bottomHalf">
-                        <div class="bottomLeft">
-                            <div class="cuisine">{{ restaurant.cuisine }}</div>
-                            <div class="favDish">{{ restaurant.favDish }}</div>
-                        </div>
-                        <div class="bottomRight">
-                            <div class="rating">{{ restaurant.rating }}/5</div>
-                            <div class="price">{{ restaurant.price }}</div>
-                        </div>
+                    <div class="bottomRight">
+                        <div class="rating">{{ restaurant.rating }}/5</div>
+                        <div class="price">{{ restaurant.price }}</div>
                     </div>
                 </div>
+            </div>
             {% endfor %}
         </div>
     </div>
