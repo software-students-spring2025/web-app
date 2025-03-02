@@ -225,4 +225,46 @@ def create_app():
             self.username = username
     
     @login_manager.user_loader
-    def load_user(o
+    def load_user(owner_id):
+        owner_data = db.gallery_owners.find_one({"_id": ObjectId(owner_id)})
+        if owner_data:
+            return GalleryOwner(owner_data["_id"], owner_data["username"])
+        else:
+            return None
+
+    @app.route("/login", methods=["GET", "POST"])
+    def login():
+        if request.method == "POST":
+            username = request.form["username"]
+            password = request.form["password"]
+            owner_data = db.gallery_owners.find_one({"username": username})
+
+            if owner_data and owner_data["password"] == password:
+                owner = GalleryOwner(owner_data["_id"], owner_data["username"])
+                login_user(owner)  # Start session for the gallery owner
+                flash("Login successful!", "success")
+                return redirect(url_for("gallery_owner_page"))  # TEAMMATE NEED TO EDIT THIS!! THIS IS TEMPORRY
+            else:
+                flash("Gallery not found in database!", "error")
+
+        return render_template("login.html")
+
+    # TEAMMATE NEED TO EDIT THIS!! THIS IS TEMPORRY
+    ###############################
+    @app.route("/gallery_owner") 
+    @login_required
+    def gallery_owner_page():
+        return f"Welcome, {current_user.username}! This is the Gallery Owner Dashboard."
+
+
+    return app
+
+### Here is where the app gets created: ###
+app = create_app()
+
+if __name__ == "__main__":
+    FLASK_PORT = os.getenv("FLASK_PORT", "5000")
+    FLASK_ENV = os.getenv("FLASK_ENV")
+    print(f"FLASK_ENV: {FLASK_ENV}, FLASK_PORT: {FLASK_PORT}")
+
+    app.run(port=FLASK_PORT)
