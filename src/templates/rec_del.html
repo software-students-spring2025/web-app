@@ -4,7 +4,7 @@
 
 {% block content %} 
     <div>
-            Recently Deleted Tasks
+           <h2> Recently Deleted Tasks </h2>
     </div>
     <table>
         <tr>
@@ -14,6 +14,9 @@
             <th>XP</th>
             <th>Created</th>
             <th>Due</th>
+            <th>Date Deleted</th>
+
+
         </tr>
         {% for task in tasks %}
             <tr>
@@ -23,6 +26,7 @@
                 <td>{{ task.xp_value }}</td>
                 <td>{{ task.created_date.strftime('%Y-%m-%d') }}</td>
                 <td>{{ task.due_date.strftime('%Y-%m-%d') }}</td>
+                <td>{{ task.deleted_at.strftime('%Y-%m-%d') }}</td>
             </tr>
         {% endfor %}
     </table>

@@ -3,6 +3,8 @@ import os
 import config
 import pymongo
 import datetime
+import threading
+import time
 import functools
 import operator
 from bson.objectid import ObjectId
@@ -99,14 +101,55 @@ def show_post():
 
 @app.route('/rec_del')
 def show_rec_del(): 
-    return render_template('rec_del.html')
+    """Displays recently deleted tasks."""
+    try:
+        from db import connection, db  
+
+        if "deleted_tasks" in connection[db.name].list_collection_names():
+            deleted_tasks = list(db["deleted_tasks"].find())
+        else:
+            deleted_tasks = []
+
+        return render_template('rec_del.html', tasks=deleted_tasks)
+
+    except Exception as e:
+        return f"Error retrieving deleted tasks: {str(e)}", 500
+
+@app.route('/delete_task/<task_id>', methods=['POST'])
+def delete_task(task_id):
+    try:
+        from db import connection, db  
+
+        task = db.tasks.find_one({"_id": ObjectId(task_id)})
+
+        if task:
+            task["deleted_at"] = datetime.datetime.now()
+            
+            connection[db.name]["deleted_tasks"].insert_one(task)  
+            
+            db.tasks.delete_one({"_id": ObjectId(task_id)})
+
+        return redirect(url_for('show_home'))
+    
+    except Exception as e:
+        return f"Error deleting task: {str(e)}", 500
+
+def cleanup_old_deleted_tasks():
+    while True:
+        threshold_date = datetime.datetime.now() - datetime.timedelta(days=30)
+        db.deleted_tasks.delete_many({"deleted_at": {"$lt": threshold_date}})
+        time.sleep(86400)  # Run once a day
+
+#start cleanup thread
+cleanup_thread = threading.Thread(target=cleanup_old_deleted_tasks, daemon=True)
+cleanup_thread.start()
+
 
 @app.route('/search')
 def show_search(): 
     
     return render_template('search.html')
 
-#added search results
 @app.route('/search_results')
 def show_search_results(): 
     query = request.args.get("search", "").strip()
