@@ -62,13 +62,39 @@ def show_rec_del():
 
 @app.route('/search')
 def show_search(): 
+    
     return render_template('search.html')
 
+#added search results
 @app.route('/search_results')
 def show_search_results(): 
-    return render_template('search_results.html')
+    query = request.args.get("search", "").strip()
+    if query:
+        search_filter = {
+            "$or": [
+                {"name": {"$regex": f".*{query}.*", "$options": "i"}},
+                {"description": {"$regex": f".*{query}.*", "$options": "i"}}
+            ]
+        }
+        tasks = list(db.tasks.find(search_filter))
+    else:
+        tasks = []
+    return render_template('search_results.html', tasks=tasks, search_query=query)
 
-
+#for debugging purposes only
+''' 
+@app.route('/test_db')
+def test_db():
+    try:
+        print(f"Using database: {db.name}")  # Debugging
+        test_task = db.tasks.find_one()
+        if test_task:
+            return f"Connected to MongoDB! Found a task: {test_task}"
+        else:
+            return "Connected to MongoDB, but no tasks found."
+    except Exception as e:
+        return f"Error connecting to MongoDB: {str(e)}"
+'''
 if __name__ == '__main__':
     PORT = os.getenv('PORT')
     app.run(port=(PORT or 3000))
