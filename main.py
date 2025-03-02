@@ -1,5 +1,3 @@
-from app import app
-
 import pymongo
 from bson.objectid import ObjectId
 import datetime
