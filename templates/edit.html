@@ -58,12 +58,14 @@
         
         <header>
             <!-- TEMP: placeholder href link -->
-            <button class="back" onclick="location.href='/'">&#8592</button>
+            <a href="{{ url_for('show_home') }}">
+                <button class="back">&#8592;</button>
+            </a>
             <h1>Edit Event</h1>
         </header>
 
     <!-- Form -->
-    <form>
+    <form action="{{ url_for('edit_event', event_id=event['_id']) }}" method="POST">
         <br>
         <label for="name">Event Name:</label>
         <input type="text" id="name" name="name" required>

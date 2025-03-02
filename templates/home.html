@@ -21,6 +21,10 @@
             max-width: 600px;
             padding: 20px;
         }
+        a{
+            text-decoration: none;
+            color: black;
+        }
         .event-card {
             background: white;
             border-radius: 10px;
@@ -98,6 +102,7 @@
             color: black;
             font-size: 12pt;
             font-weight: bold;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -108,97 +113,26 @@
         <a href="{{  url_for('logout') }}" class="logout">Logout</a>
     </header>
 
-    <div class="event-container" id="events"></div>
+    <!-- Event Container -->
+    <div class="event-container">
+        {% for event in events %}
+        <a href="{{ url_for('show_details', event_id=event['_id']) }}">
+            <div class="event-card">
+              <div class="event-strip {{ event['category'] | lower }}"></div>
+              <div class="event-content">
+                <div class="event-title">{{ event["name"] }}</div>
+                <div class="event-info">📅 {{ event["date"] }}</div>
+                <div class="event-info">⏰ {{ event["time"] }}</div>
+                <div class="event-info">📍 {{ event["location"] }}</div>
+              </div>
+            </div>
+          </a>
+        {% endfor %}
+    </div>
 
     <!-- Floating Add Event Button -->
-    <button class="add-button" onclick="location.href='add'">+</button>
-
-    <script>
-        const events = [
-            {
-                title: "SWE project due",
-                date: "Tuesday, March 4 at 2:00PM EST",
-                location: "remote",
-                host: "professor",
-                category: "education"
-            },
-            {
-                title: "SWE project demo",
-                date: "TODAY",
-                location: "remote",
-                host: "tutor",
-                category: "education"
-            },
-            {
-                title: "something",
-                date: "sometime",
-                location: "remote",
-                host: "someone",
-                category: "extracurricular"
-            },
-            {
-                title: "something",
-                date: "sometime",
-                location: "remote",
-                host: "someone",
-                category: "other"
-            },
-            {
-                title: "something",
-                date: "sometime",
-                location: "remote",
-                host: "someone",
-                category: "networking"
-            },
-            {
-                title: "something",
-                date: "sometime",
-                location: "remote",
-                host: "someone",
-                category: "other"
-            },
-            {
-                title: "something",
-                date: "sometime",
-                location: "remote",
-                host: "someone",
-                category: "extracurricular"
-            },
-            {
-                title: "something",
-                date: "sometime",
-                location: "remote",
-                host: "someone",
-                category: "education"
-            }
-        ];
-
-        function renderEvents() {
-            const eventContainer = document.getElementById("events");
-            eventContainer.innerHTML = "";
-            events.forEach((event, index) => {
-                let eventCard = document.createElement("div");
-                eventCard.classList.add("event-card");
-                eventCard.innerHTML = `
-                    <div class="event-strip ${event.category}"></div>
-                    <div class="event-content">
-                        <div class="event-title">${event.title}</div>
-                        <div class="event-info">📅 ${event.date}</div>
-                        <div class="event-info">📍 ${event.location}</div>
-                        <div class="event-info">👥 ${event.host}</div>
-                    </div>
-                `;
-                eventCard.addEventListener("click", () => goToEventPage(index));
-                eventContainer.appendChild(eventCard);
-            });
-        }
-
-        function goToEventPage(index) {
-            localStorage.setItem("selectedEvent", JSON.stringify(events[index]));
-            window.location.href = "details";
-        }
-
-        renderEvents();
-    </script>
+    <a href="{{ url_for('add_event') }}">
+        <button class="add-button">+</button>
+    </a>
 </body>
 </html>
