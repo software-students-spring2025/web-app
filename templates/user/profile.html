@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - RecipeShare</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/myprofile.css') }}">
+</head>
+<body>
+    <header>
+        <a href="{{ url_for('index') }}" class="back-button">← Home</a>
+        <h1>My Profile</h1>
+        <a href="{{ url_for('edit_profile') }}" class="edit-profile-button">Edit Profile</a>
+    </header>
+    
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-image"></div>
+            <h2 class="profile-name">Username</h2>
+            <p class="profile-bio">Food enthusiast who loves experimenting with new flavors.</p>
+            
+            
+            <p class="followers">Followers:</p>
+            <p class="following">Following:</p>
+        </div>
+    
+        <div class="profile-tabs">
+            <a href="#" class="profile-tab active" id="my-recipes-tab">My Recipes</a>
+        </div>
+    
+        <!-- My Recipes Section -->
+        <div class="tab-content" id="my-recipes-content">
+            <div class="recipe-container">
+                <div class="recipe-card">
+                    <div class="recipe-info">
+                        <button class="RecipeButton">
+                            <h3><a href="{{ url_for('recipe', recipe_id='hazelnuticecream') }}">Hazelnut Ice Cream</a></h3>
+                        </button>
+            
+                        <div id="hazelnuticecream" class="popup">
+                            <div class="popup-content">
+                                <a href="#" class="close">&times;</a>
+                                <h2>Hazelnut Ice Cream</h2>
+                                <iframe src="{{ url_for('recipe') }}"></iframe>
+                            </div>
+                        </div>
+                        <div class="recipe-meta">
+                            <span class="time">60 mins</span>
+                            <span class="difficulty">Intermediate</span>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="recipe-card">
+                    <div class="recipe-info">
+                        <button class="RecipeButton">
+                            <h3><a href="{{ url_for('recipe', recipe_id='grilledsalmon') }}">Grilled Salmon</a></h3>
+                        </button>
+                        <div id="grilledsalmon" class="popup">
+                            <div class="popup-content">
+                                <a href="#" class="close">&times;</a>
+                                <h2>Grilled Salmon</h2>
+                                <iframe src="{{ url_for('recipe') }}"></iframe>
+                            </div>
+                        </div>
+                        <div class="recipe-meta">
+                            <span class="time">30 mins</span>
+                            <span class="difficulty">Easy</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

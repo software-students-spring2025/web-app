@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friends - RecipeShare</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/friends.css') }}">
+</head>
+<body>
+    <div class="container">
+        <button class="HomeButton">
+            <a href="{{ url_for('index') }}">Home</a>
+        </button>
+        <header>
+            <h1>Friends</h1>
+        </header>
+        
+        <div class="message-container" style="display: none;">
+            <div class="message info">Example message</div>
+        </div>
+        
+        <div class="search-container">
+            <form action="{{ url_for('friends_list') }}" method="GET">
+                <input type="text" id="friend-search" name="q" placeholder="Search friends..." class="search-input">
+                <button type="submit" class="search-button">Search</button>
+            </form>
+        </div>
+        
+        <div class="friends-container">
+            <div class="friend-card">
+                <div class="friend-info">
+                    <h3>Alex Johnson</h3>
+                    <p>12 recipes</p>
+                    <span class="cuisine-tag">Italian</span>
+                </div>
+                <a href="{{ url_for('friend_profile', friend_id='1') }}" class="view-button">View</a>
+            </div>
+            
+            <div class="friend-card">
+                <div class="friend-info">
+                    <h3>Jamie Smith</h3>
+                    <p>8 recipes</p>
+                    <span class="cuisine-tag">Mexican</span>
+                </div>
+                <a href="{{ url_for('friend_profile', friend_id='2') }}" class="view-button">View</a>
+            </div>
+            
+            <div class="friend-card">
+                <div class="friend-info">
+                    <h3>Taylor Wilson</h3>
+                    <p>15 recipes</p>
+                    <span class="cuisine-tag">Indian</span>
+                </div>
+                <a href="{{ url_for('friend_profile', friend_id='3') }}" class="view-button">View</a>
+            </div>
+        </div>
+        
+        <div class="add-friend-container">
+            <h2>Add Friends</h2>
+            <div class="search-container">
+                <form action="{{ url_for('friends_list') }}" method="GET">
+                    <input type="text" name="q" placeholder="Search by username or email" class="search-input">
+                    <button type="submit" class="search-button">Search</button>
+                </form>
+            </div>
+            
+            <div class="suggestion-container">
+                <h3>Suggested Friends</h3>
+                
+                <div class="friend-suggestion">
+                    <div class="friend-info">
+                        <h3>Casey Morgan</h3>
+                        <p>4 recipes</p>
+                    </div>
+                    <button type="submit" class="add-button">Add</button>
+                </div>
+                
+                <div class="friend-suggestion">
+                    <div class="friend-info">
+                        <h3>Riley Parker</h3>
+                        <p>9 recipes</p>
+                    </div>
+                    <button type="submit" class="add-button">Add</button>
+                </div>
+            </div>
+        </div>
+    </div> 
+</body>
+</html>
