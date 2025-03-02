@@ -103,7 +103,7 @@ def add_review():
         restaurant_name = request.form.get("restaurant_name")
         rating = int(request.form.get("rating"))
         review_text = request.form.get("review_text")
-        cuisine = request.form.get("cuisine")  # Get the cuisine from the form
+        cuisine = request.form.get("cuisine")  # Get cuisine from form
         
         # Basic validation
         if not restaurant_name:
@@ -117,34 +117,38 @@ def add_review():
             "restaurant_name": restaurant_name,
             "rating": rating,
             "review_text": review_text,
-            "cuisine": cuisine,  # Add cuisine to the review
             "created_at": datetime.datetime.now()
         }
         
-        # Insert the review into reviews collection
+        # Add cuisine only to new reviews
+        if cuisine:
+            new_review["cuisine"] = cuisine
+        
+        # Insert the review
         reviews_collection.insert_one(new_review)
         
-        # Check if the restaurant exists and update or create it
+        # Check if the restaurant exists
         existing_restaurant = restaurants_collection.find_one({"name": restaurant_name})
         
         if existing_restaurant:
-            # If the restaurant exists, update it
+            # Update the existing restaurant with the new review
             restaurants_collection.update_one(
                 {"name": restaurant_name},
-                {
-                    "$push": {"reviews": new_review},
-                    "$set": {"cuisine": cuisine}  # Update cuisine if it's a new review
-                }
+                {"$push": {"reviews": new_review}}
             )
         else:
-            # If the restaurant doesn't exist, create a new entry
+            # Create a new restaurant
             new_restaurant = {
                 "name": restaurant_name,
                 "rating": float(rating),
-                "cuisine": cuisine,  # Add cuisine to the restaurant
                 "reviews": [new_review],
                 "created_at": datetime.datetime.now()
             }
+            
+            # Only add cuisine to new restaurants if provided
+            if cuisine:
+                new_restaurant["cuisine"] = cuisine
+                
             restaurants_collection.insert_one(new_restaurant)
         
         return redirect(url_for("index"))
