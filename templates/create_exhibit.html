@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Create New Exhibition{% endblock %}
+
+{% block content %}
+<h1 class="text-3xl font-bold mb-6 text-pink-700">Create New Exhibition</h1>
+<form action="{{ url_for('create_exhibit') }}" method="POST" class="space-y-4">
+    <div>
+        <label for="ftitle" class="block text-sm font-medium text-pink-700">Exhibition Title</label>
+        <input type="text" name="ftitle" id="ftitle" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" />
+    </div>
+    <div>
+        <label for="start_date" class="block text-sm font-medium text-pink-700">Start Date</label>
+        <input type="date" name="start_date" id="start_date" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" />
+    </div>
+    <div>
+        <label for="end_date" class="block text-sm font-medium text-pink-700">End Date</label>
+        <input type="date" name="end_date" id="end_date" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" />
+    </div>    
+    <div>
+        <label for="flocation" class="block text-sm font-medium text-pink-700">Location</label>
+        <input type="text" name="flocation" id="flocation" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" />
+    </div>
+    <div>
+        <label for="fcost" class="block text-sm font-medium text-pink-700">Cost</label>
+        <input type="text" name="fcost" id="fcost" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" />
+    </div>
+    <div>
+        <label for="fartist" class="block text-sm font-medium text-pink-700">Artist</label>
+        <input type="text" name="fartist" id="fartist" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" />
+    </div>
+    <div>
+        <label for="farturl" class="block text-sm font-medium text-pink-700">Artist Profile URL</label>
+        <input type="text" name="farturl" id="farturl" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" />
+    </div>
+    <div>
+        <label for="fart_style" class="block text-sm font-medium text-pink-700">Art Style</label>
+        <input type="text" name="fart_style" id="fart_style" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" />
+    </div>
+    <div>
+        <label for="fart_medium" class="block text-sm font-medium text-pink-700">Art Medium</label>
+        <input type="text" name="fart_medium" id="fart_medium" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" />
+    </div>
+    <div>
+        <label for="fevent_type" class="block text-sm font-medium text-pink-700">Event Type</label>
+        <input type="text" name="fevent_type" id="fevent_type" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" />
+    </div>
+    <div>
+        <label for="fdescription" class="block text-sm font-medium text-pink-700">Description</label>
+        <textarea name="fdescription" id="fdescription" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"></textarea>
+    </div>
+    <div>
+        <label for="fimage_url" class="block text-sm font-medium text-pink-700">Image URL</label>
+        <input type="text" name="fimage_url" id="fimage_url" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" />
+    </div>
+    <div>
+        <label for="created_by" class="block text-sm font-medium text-pink-700">Created By</label>
+        <input type="text" name="created_by" id="created_by" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" />
+    </div>
+    <div>
+        <button type="submit" class="bg-pink-700 text-white py-2 px-4 rounded-md hover:bg-pink-600">Create Exhibition</button>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Pinkberries Exhibitions{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-pink-100 p-4">
+
+    <!-- Navbar -->
+    <nav class="bg-pink-700 text-white p-4 rounded-md shadow-md mb-6">
+        <div class="max-w-screen-lg mx-auto flex justify-between items-center">
+            <a href="/" class="text-2xl font-semibold">Pinkberries</a>
+            <div class="space-x-4">
+                <a href="/login" class="hover:bg-pink-500 px-3 py-2 rounded-md">Login</a>
+                <a href="/search" class="hover:bg-pink-500 px-3 py-2 rounded-md">Search</a>
+                <a href="/create_exhibit" class="bg-pink-500 hover:bg-pink-400 px-4 py-2 rounded-md text-white">Create Exhibition</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main content area -->
+    <main class="max-w-screen-lg mx-auto">
+        {% block content %}{% endblock %}
+    </main>
+    <footer class="text-pink-700 py-8 mt-12">
+        <div class="max-w-screen-lg mx-auto text-center">
+            <p class="text-sm">
+                Source code
+                <a href="https://github.com/software-students-spring2025/2-web-app-pinkberries" target="_blank" class="text-pink-300 hover:text-pink-500">
+                    available on Github</a>.
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
