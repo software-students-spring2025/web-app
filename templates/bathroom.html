@@ -30,19 +30,19 @@
 <body>
     {% include 'navbar.html' %}
     <!--TODO: grab data based on id-->
-    <div class="location">{{bathroomLocation}}</div>
+    <div class="text-xl font-semibold">{{bathroomLocation}}</div>
     {{rating|safe}}
     <div class="image">{{bathroomImage}}</div>
     <!--TODO: INCLUDE LOCATION--><br>
-    <div class="description">{{bathroomDescription}}
+    <div class="description">{{bathroom.type}} {{bathroom.orientation}} Bathroom
     <br>
-    Toilets: {{toilets}}
+    Toilets: {{bathroom.toilets}}
     <br>
-    Sinks: {{sinks}}</div>
+    Sinks: {{bathroom.sinks}}</div>
     <br>
-    <div class="reviews">
+    <div class="mt-4 space-y-3">
         {%for review in bathroomReviews%}
-            <div id="stars"></div>
+            <div id="stars" class="p-4 bg-white rounded-lg shadow-md dark:bg-neutral-800"></div>
             {{(review.date|string).split(" ")[0]}} {{(review.date|string).split(" ")[1].split(".")[0]}}<br>     {{review.comment}}
             <script>
                 j = {{review.rating}};

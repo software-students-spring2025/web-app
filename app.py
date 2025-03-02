@@ -32,14 +32,13 @@ def bathroom(bathroomID):
     bathroom = bathrooms_collection.find_one({"_id": ObjectId(bathroomID)})
     bathroomName=pins_collection.find_one({"_id":bathroom.get("location_id")}).get("name")
     fullLocation = bathroomName+", Floor "+str(bathroom.get("floor"))
-    description=bathroom.get("type")+" "+bathroom.get("orientation")+" Bathroom"
     reviews = reviews_collection.find({"bathroom_id": ObjectId(bathroomID)})
     imageURL=str(bathroom.get("img_url"))
     
     if (imageURL=="None" or imageURL==""):
         imageString="Image Not Found"
     else:
-        imageString="<img src='"+imageURL+"'>"
+        imageString="<img alt='Bathroom Image' src='"+imageURL+"'>"
     
     i=0
     revSum=0
@@ -63,7 +62,7 @@ def bathroom(bathroomID):
     reviews = reviews_collection.find({"bathroom_id": ObjectId(bathroomID)})
     print(reviews)
     
-    return render_template("bathroom.html",rating=overallRating,bathroomDescription=description, bathroomLocation=fullLocation,toilets=str(bathroom.get("toilets")),bathroomImage=imageString,bathroomReviews=reviews,sinks=str(bathroom.get("sinks")))
+    return render_template("bathroom.html",bathroom=bathroom;rating=overallRating, bathroomLocation=fullLocation,bathroomImage=imageString,bathroomReviews=reviews)
 
 @app.route('/api/pins')
 def get_pins():
