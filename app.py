@@ -91,7 +91,6 @@ def create_app():
         }))
 
         sorted_events = sorted(events, key=lambda obj: datetime.strptime(obj["date"], "%m/%d/%Y"))
-        print(sorted_events)
 
         return render_template("search.html", searchterm=search_term, events=sorted_events)
     
