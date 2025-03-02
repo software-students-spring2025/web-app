@@ -130,16 +130,16 @@
     <!-- Sidebar Navigation -->
 <div class="sidebar">
     <a href="/profile" title="Profile">
-        <img src="/static/white-user.png" alt="User Profile" width="30" height="30">
+        <img src="/static/white-user.png" alt="User Profile" width="35" height="35">
     </a>
     <a href="/" title="Home">
-        <img src="/static/home-icon.png" alt="Home" width="30" height="30">
+        <img src="/static/home-icon.png" alt="Home" width="35" height="35">
     </a>
-    <a href="/recent-reviews" title="Reviews">
-        <img src="/static/star-white.png" alt="Recent Reviews" width="30" height="30">
+    <a href="/recent-reviews" class="review-link" title="Recent Reviews">
+        <div class="sidebar-box">Recent Reviews</div>
     </a>
-    <a href="/add-review" class="review-button" title="Leave a Review">
-        <div class="review-box">Leave a Review</div>
+    <a href="/add-review" class="review-link" title="Leave a Review">
+        <div class="sidebar-box">Leave a Review</div>
     </a>
 </div>
 
@@ -171,7 +171,7 @@
                 <p>No restaurants found.</p>
             {% endif %}
         </div>
-        <div class="recent-reviews">
+        {% comment %} <div class="recent-reviews">
             <h2>Recent Reviews</h2>
             {% if recent_reviews %}
                 {% for review in recent_reviews %}
@@ -187,15 +187,15 @@
             {% else %}
                 <p>No reviews yet. Be the first to review!</p>
             {% endif %}
-        </div>
+        </div> {% endcomment %}
         <!-- View Reviews and Add New -->
-        <p>view Shop reviews above.</p>
+        {% comment %} <p>view Shop reviews above.</p>
 
         <div class="add-review">
             <a href="/add-review">
                 <i class="fas fa-plus-square plus-icon"></i> or make your own.
             </a>
-        </div>
+        </div> {% endcomment %}
     </div>
 </body>
 
