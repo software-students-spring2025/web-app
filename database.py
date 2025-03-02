@@ -19,11 +19,12 @@ db = connection["Forum"]
 # with data from database
 @app.route("/")
 def index():
-    posts = list(db["posts"].find()) # need to make this iterable
+    posts = db["posts"].find() # need to make this iterable
+    
     return render_template("index.html", data=posts)
 
 # with database
-@app.route("/post/<int:post_id>")
+@app.route("/post/<string:post_id>")
 def post_detail(post_id):
     # Find the post by ID
     post = db["posts"].find_one({"_id": ObjectId(post_id)})
