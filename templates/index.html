@@ -14,31 +14,39 @@
         <header>
           <h1>📚 BookSwap Homepage</h1>
         </header>
-    <header>
-        <button class="profile-btn">Profile 👤</button>
-        <input type="text" id="search" placeholder="Search books...">
-        <button id="search-btn">🔍</button>
-    </header>
 
-    <div class="filters">
-        <button id="sort">Sort By</button>
-        <button id="filter">Filter</button>
-    </div>
+        <header class="navbar">
+            <button class="profile-btn">Profile 👤</button>
 
-    <div id="book-list">
-        {% for book in books %}
-        <div class="book">
-            <h3><a href="{{ url_for('book_details', book_id=book._id) }}">{{ book.title }}</a></h3>
-            <p><strong>Author:</strong> {{ book.author }}</p>
-            <!-- <p><strong>Edition:</strong> {{ book.edition }}</p>
-            <p><strong>Year:</strong> {{ book.year }}</p>
-            <p><strong>Condition:</strong> {{ book.condition }}</p>
-            <p><strong>Price:</strong> ${{ book.price }}</p>
-            <p><strong>Format:</strong> {{ book.format }}</p> -->
+            <a href="{{ url_for('home') }}" class="home-btn">🏠</a>
+            <form action="{{ url_for('search_books') }}" method="GET" class="search-form">
+                <input type="text" id="search" name="query" placeholder="Search books...">
+                <button type="submit" class="search-btn">🔍</button>
+            </form>
+        </header>
+
+        <div class="filters">
+            <a href="{{ url_for('filter_sort') }}"><button>Sort By/Filter</button></a>
+            <!-- <button id="filter">Filter</button> -->
         </div>
-    {% endfor %}
-    </div>
 
+        <div id="book-list">
+            {% if books %}
+                {% for book in books %}
+                <div class="book">
+                    <h3><a href="{{ url_for('book_details', book_id=book._id) }}">{{ book.title }}</a></h3>
+                    <p><strong>Author:</strong> {{ book.author }}</p>
+                    <p><strong>Price:</strong> ${{ book.price }}</p>
+                    <p><strong>Edition:</strong> {{ book.edition }}</p>
+                    <p><strong>Year:</strong> {{ book.year }}</p>
+                    <p><strong>Condition:</strong> {{ book.condition }}</p>
+                    <p><strong>Format:</strong> {{ book.format }}</p>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>No books match your filter criteria.</p>
+            {% endif %}
+        </div>
     <a href="{{ url_for('add_book') }}" class="add-book-btn">➕</a>
 </body>
 </html>
