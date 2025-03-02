@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Rental Surfer</title>
+    <link
+      rel="stylesheet"
+      href="/static/css/style.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div>
+          <img id="top-right-logo-image" src="/static/images/logo.png" alt="logo" width="300" height="300"/>
+        </div>
+        <div id="header-middle">
+          <nav>
+            <!--only admin can see -->
+            <a href="{{ url_for('house.create_house_page')}}">Create</a>
+          </nav>
+          <nav>
+            <!--only admin can see -->
+            <a href="{{ url_for('user_management.admin_dashboard')}}">Admin Dashboard</a>
+          </nav>
+        </div>
+        <div id="top-right-avatar-container">
+          <a href="{{ url_for('user_management.get_user',user_id='67b8d6f05da61bc65fceb190')}}">
+          <img id="user-avatar-image" src="/static/images/user-avatar.png" alt="user avatar" width="200" height="200"/>
+          <span id = "top-right-username">Username</span>
+          </a>
+        </div>
+        
+        <!-- <nav>
+          <a href="{{ url_for('home')}}">Home</a>
+        </nav> -->
+      </header>
+      <main>{% block container %} {% endblock %}</main>
+      <footer>
+        <p>
+          &copy; 2025. All rights reserved team Web Surfer. 
+          <br>
+          Source code available at
+          <a
+            href="https://github.com/software-students-spring2025/2-web-app-web-surfer.git"
+            >available on Github</a
+          >.
+        </p>
+
+      </footer>
+    </div>
+  </body>
+</html>
