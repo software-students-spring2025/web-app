@@ -68,16 +68,22 @@
         <div class="buttons">
             <!-- Go to edit page-->
             <!-- TEMP: placeholder href link -->
-            <button onclick="location.href='edit.html'">Edit</button>
+            <a href="{{ url_for('edit_event', event_id=event['_id']) }}">
+                <button type="button" style="background-color: blue; color: white;">Edit</button>
+            </a>            
             <!-- Go to delete page-->
             <!-- TEMP: placeholder href link -->
-            <button onclick="location.href='delete.html'">Delete </button>
+            <form action="{{ url_for('delete_event', event_id=event['_id']) }}" method="POST">
+                <button type="submit" style="background-color: rgb(244, 216, 216); color: white;">Delete</button>
+            </form>
+                
         </div>
 
         <!-- Bottom Navigation Bar -->
         <div class="navbar">
-            <a href="index.html">Home</a>
+            <a href="{{ url_for('show_home') }}">Home</a>
         </div>
+        
 
         <!-- Javascript -->
         <script>

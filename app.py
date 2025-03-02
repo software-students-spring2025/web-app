@@ -30,47 +30,54 @@ def create_app():
 
     @app.route("/")
     def show_home():
-        return render_template("home.html")
+        return render_template("home.html") 
+
     
-    @app.route("/register", methods=["GET", "POST"])
-    def register():
+    @app.route("/add", methods=["GET", "POST"])
+    def add_event():
         if request.method == "POST":
-            email = request.form["email"]
-            password = request.form["password"]
+            event = {
+                "name": request.form["name"],
+                "date": request.form["date"],
+                "time": request.form["time"],
+                "location": request.form["location"],
+                "category": request.form["category"],
+                "description": request.form["description"],
+            }
+            db.events.insert_one(event)  
+            return redirect(url_for("show_home"))  
+        return render_template("addEvent.html")  
 
-            doc = db.users.find_one({"email": email})
-            if doc:
-                redirect(url_for("register"))
-            else: 
-                db.users.insert_one({
-                    "email": email,
-                    "password": password
-                })
 
-                return redirect(url_for("login"))
+    
+    @app.route("/edit/<event_id>", methods=["GET", "POST"])
+    def edit_event(event_id):
+        event = db.events.find_one({"_id": pymongo.ObjectId(event_id)})
 
-        return render_template("register.html")
-    
-    @app.route("/login", methods=["GET", "POST"])
-    def login():
-        return render_template("login.html")
-    
-    @app.route("/logout")
-    def logout():
-        return redirect(url_for("login"))
-    
-    @app.route("/add")
-    def show_add():
-        return render_template("addEvent.html")
-    
-    @app.route("/details")
-    def show_details():
-        return render_template("details.html")
-    
-    @app.route("/edit")
-    def show_edit():
-        return render_template("edit.html")
-    
+        if request.method == "POST":
+            updated_event = {
+                "name": request.form["name"],
+                "date": request.form["date"],
+                "time": request.form["time"],
+                "location": request.form["location"],
+                "category": request.form["category"],
+                "description": request.form["description"],
+            }
+            db.events.update_one({"_id": pymongo.ObjectId(event_id)}, {"$set": updated_event})
+            return redirect(url_for("show_home"))
+
+        return render_template("edit.html", event=event)
+
+    @app.route("/details/<event_id>")
+    def show_details(event_id):
+        event = db.events.find_one({"_id": pymongo.ObjectId(event_id)})
+        
+        if event is None:
+            return "Event not found", 404  # Handle missing event
+
+        return render_template("details.html", event=event)
+
+
     @app.route("/search")
     def show_search():
         """
