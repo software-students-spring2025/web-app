@@ -12,6 +12,7 @@ jinja2 = "*"
 blinker = "*"
 click = "*"
 markupsafe = "*"
+flask-login = "*"
 
 [dev-packages]
 
