@@ -71,7 +71,7 @@
     <div class="event-container" id="events"></div>
 
     <!-- Floating Add Event Button -->
-    <button class="add-button" onclick="location.href='addEvent.html'">+</button>
+    <button class="add-button" onclick="location.href='add'">+</button>
 
     <script>
         const events = [
@@ -155,7 +155,7 @@
 
         function goToEventPage(index) {
             localStorage.setItem("selectedEvent", JSON.stringify(events[index]));
-            window.location.href = "details.html";
+            window.location.href = "details";
         }
 
         renderEvents();

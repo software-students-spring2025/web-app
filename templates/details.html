@@ -5,7 +5,7 @@
         <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
         <title>Event Details</title>
 
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
         <!-- CSS -->
         <style>
             /* Header */
@@ -48,7 +48,7 @@
         <!-- Page Header -->
         <header>
             <!-- TEMP: placeholder href link -->
-            <button class="back" onclick="location.href='home.html'">&#8592</button>
+            <button class="back" onclick="location.href='/'">&#8592</button>
             <h1>Event Details</h1>
         </header>
 

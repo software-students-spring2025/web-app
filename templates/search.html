@@ -1,30 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Event Calendar</title>
+    <title>Search Events</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/search.css') }}"/>
   </head>
   <body>
     <div class="container">
       <main>
+        <header>
+          <p class="name">Eventify</p>
+          <a href="{{  url_for('logout') }}" class="logout">Logout</a>
+        </header>
+  
         <h1 class="heading">Search Events</h1>
 
         <form method="GET">
             <div class="wrapper">
-                <input type="text" name="searchterm" placeholder="Search by event name, location, category, or date" class="search-bar" value="{{ searchterm }}"/>
+                <input type="text" name="searchterm" placeholder="Search by event name, description, location, category, or date" class="search-bar" value="{{ searchterm }}"/>
                 <input type="submit" value="Search" class="search-button"/>
             </div>
         </form>
 
         {% if searchterm %}
-        <div class="list">
-          {% for event in events %}
-            <div class="event">
-                <p>{{ event["name"] }}</p>
+        <div class="flex">
+          <div class="event-container" id="events">
+            {% for event in events %}
+            <div class="event-card">
+              <div class="event-strip {{ event['category'] | lower }}"></div>
+              <div class="event-content">
+                <div class="event-title">{{ event["name"] }}</div>
+                <div class="event-info">📅 {{ event["date"] }}</div>
+                <div class="event-info">⏰ {{ event["time"] }}</div>
+                <div class="event-info">📍 {{ event["location"] }}</div>
+              </div>
             </div>
-          {% endfor %}
+            {% endfor %}
+          </div>
+          {% endif %}
         </div>
-        {% endif %}
+  
       </main>
     </div>
   </body>

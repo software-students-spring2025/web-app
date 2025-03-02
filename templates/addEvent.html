@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Event</title>
 
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
 </head>
 <body>
 
     <header>
-        <button class="back" onclick="location.href='details.html'">&#8592</button>
+        <!-- TEMP: placeholder href link -->
+        <button class="back" onclick="location.href='/'">&#8592</button>
         <h1>Add Event</h1>
     </header>
 
@@ -19,8 +20,8 @@
         <label for="name">Event Name:</label>
         <input type="text" id="name" name="name" required>
         <br><br>
-        <label for="date">Date:</label>
-        <input type="date" id="date" name="date" required>
+        <label for="date">Date (MM/DD/YYYY):</label>
+        <input type="text" id="date" name="date" required>
         <br><br>
         <label for="time">Time:</label>
         <input type="time" id="time" name="time" required>
