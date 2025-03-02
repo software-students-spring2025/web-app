@@ -83,7 +83,53 @@ def search():
 def profile():
     return render_template("profile.html")  # FIX: render_template works now!
 
-
+@app.route("/add-review", methods=["POST"])
+def add_review():
+    if request.method == "POST":
+        # Extract data from the form submission
+        restaurant_name = request.form.get("restaurant_name")  # Get restaurant name from form
+        rating = int(request.form.get("rating"))               # Get rating and convert to integer
+        review_text = request.form.get("review_text")          # Get the text of the review
+        
+        # Basic validation to ensure we have required data
+        if not restaurant_name:
+            return "Please provide a restaurant name", 400  # Return 400 Bad Request if no restaurant name
+        
+        if rating < 1 or rating > 5:
+            return "Rating must be between 1 and 5", 400    # Ensure rating is between 1-5
+            
+        # Create a dictionary to represent the new review document for MongoDB
+        new_review = {
+            "restaurant_name": restaurant_name,  # Store restaurant name
+            "rating": rating,                    # Store the numerical rating
+            "review_text": review_text,          # Store the review content
+            "created_at": datetime.datetime.now()         # Add a timestamp for when review was created
+        }
+        
+        # Insert the review into reviews collection
+        reviews_collection.insert_one(new_review)
+        
+        # Check if the restaurant exists and update or create it
+        existing_restaurant = restaurants_collection.find_one({"name": restaurant_name})
+        
+        if existing_restaurant:
+            # If the restaurant exists, update it to add this review to its reviews list
+            restaurants_collection.update_one(
+                {"name": restaurant_name},
+                {"$push": {"reviews": new_review}}
+            )
+        else:
+            # If the restaurant doesn't exist, create a new entry
+            new_restaurant = {
+                "name": restaurant_name,
+                "rating": float(rating),
+                "reviews": [new_review],
+                "created_at": datetime.datetime.now()
+            }
+            restaurants_collection.insert_one(new_restaurant)
+        
+        # After successful insertion, redirect user back to home page
+        return redirect(url_for("index"))
 # ✅ Start Flask Application
 if __name__ == "__main__":
     app.run(debug=True)

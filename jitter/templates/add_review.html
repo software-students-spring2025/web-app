@@ -1,47 +1,108 @@
-{% extends "base.html" %}
-{% extends "base.html" %}
-
-<div class="main-content">
-    <h1>Add Restaurant Review</h1>
-    <div class="box">
-        {# Form that submits data to /add-review using POST method #}
-        <form method="POST" action="/add-review">
-            {# Restaurant Name input field #}
-            <div class="field">
-                <label>Restaurant Name:</label>
-                {# 'required' attribute ensures field must be filled out before submission #}
-                {# 'name' attribute defines the key that will be used in request.form #}
-                <input type="text" name="restaurant_name" placeholder="Enter restaurant name" required>
-            </div>
-            
-            {# Rating dropdown selection #}
-            <div class="field">
-                <label>Rating:</label>
-                {# This dropdown creates a select with options from 1-5 stars #}
-                <select name="rating" required>
-                    {# The 'value' attribute is what gets sent in the form data #}
-                    <option value="5">5 Stars - Excellent</option>
-                    <option value="4">4 Stars - Very Good</option>
-                    <option value="3">3 Stars - Good</option>
-                    <option value="2">2 Stars - Fair</option>
-                    <option value="1">1 Star - Poor</option>
-                </select>
-            </div>
-            
-            {# Review text area for longer comments #}
-            <div class="field">
-                <label>Your Review:</label>
-                <textarea name="review_text" placeholder="Share your experience..." required></textarea>
-            </div>
-            
-            {# Submit button to send the form data #}
-            <button type="submit">Submit Review</button>
-        </form>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jitter - Add Review</title>
+    <style>
+        body {
+            background-color: #f8f8f8;
+            font-family: Arial, sans-serif;
+        }
+        
+        .main-content {
+            margin: 20px auto;
+            max-width: 600px;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .field {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        button {
+            background: #d3b3d8;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            color: black;
+        }
+        
+        a {
+            color: #666;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <h1>Add Restaurant Review</h1>
+        <div class="box">
+            <form method="POST" action="/add-review">
+                <div class="field">
+                    <label>Restaurant Name:</label>
+                    <input type="text" name="restaurant_name" placeholder="Enter restaurant name" required>
+                </div>
+                
+                <div class="field">
+                    <label>Rating:</label>
+                    <select name="rating" required>
+                        <option value="5">5 Stars - Excellent</option>
+                        <option value="4">4 Stars - Very Good</option>
+                        <option value="3">3 Stars - Good</option>
+                        <option value="2">2 Stars - Fair</option>
+                        <option value="1">1 Star - Poor</option>
+                    </select>
+                </div>
+                
+                <div class="field">
+                    <label>Your Review:</label>
+                    <textarea name="review_text" placeholder="Share your experience..." required></textarea>
+                </div>
+                
+                <button type="submit">Submit Review</button>
+            </form>
+        </div>
+        
+        <div>
+            <a href="/">Back to Home</a>
+        </div>
     </div>
-    
-    {# Navigation link back to the home page #}
-    <div>
-        <a href="/">Back to Home</a>
-    </div>
-</div>
-{% endblock %}
+</body>
+</html>
