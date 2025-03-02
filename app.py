@@ -29,7 +29,7 @@ def create_app():
     except Exception as e:
         print(" * MongoDB connection error:", e)
 
-    @@app.route('/')
+    @app.route('/')
     def show_home():
         events = list(db.events.find({}))
         events.sort(key=lambda event: datetime.strptime(event["date"], "%m/%d/%Y"))
