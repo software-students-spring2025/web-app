@@ -56,6 +56,23 @@
             font-size: 14px;
             color: #555;
         }
+        .search-button {
+        position: fixed;
+        bottom: 90px; 
+        right: 20px;
+        background-color: #2196F3;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        font-size: 30px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
         .add-button {
             position: fixed;
             bottom: 20px;
@@ -72,7 +89,7 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
+            }
         /* Top Navigation Bar Styling */
         header{
             background-color: #bbe7fe;
@@ -104,18 +121,7 @@
             font-weight: bold;
             text-decoration: none;
         }
-        .search {
-        border: solid 0px rgb(227, 241, 186);
-        display: flex;
-        align-items: center;
-        font-size: 12pt;
-        font-weight: bold;
-        text-decoration: none;
-        color: rgb(34, 106, 68);
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-}
+  
 
     </style>
 </head>
@@ -123,7 +129,6 @@
     <!-- Top Navigation Bar -->
     <header>
         <a href="{{ url_for('show_home') }}" class="name">Eventify</a>
-        <a href="{{ url_for('show_search') }}" class="search">Search</a>
         <a href="{{ url_for('logout') }}" class="logout">Logout</a>
     </header>
     
@@ -145,7 +150,10 @@
         {% endfor %}
     </div>
 
-    <!-- Floating Add Event Button -->
+    <!-- Floating Search and Add Event Button -->
+    <a href="{{ url_for('show_search') }}">
+        <button class="search-button">🔍</button>
+    </a>
     <a href="{{ url_for('add_event') }}">
         <button class="add-button">+</button>
     </a>
