@@ -83,6 +83,11 @@ def search():
 def profile():
     return render_template("profile.html")  # FIX: render_template works now!
 
+@app.route("/add-review", methods=["GET"])
+def add_review_form():
+    # Simply render the add_review.html template when users visit the page
+    return render_template("add_review.html")
+
 @app.route("/add-review", methods=["POST"])
 def add_review():
     if request.method == "POST":
