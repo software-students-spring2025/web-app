@@ -42,9 +42,33 @@ def show_home():
 
 #added in routes to other pages
 
-@app.route('/edit')
+@app.route('/edit', methods=['GET','POST'])
 def show_edit(): 
-    return render_template('edit.html')
+    #form to edit 
+    if request.method == 'POST':
+        task_id = request.form.get("task_id")
+
+        db.tasks.update_one(
+            {"_id": ObjectId(task_id)},
+            {"$set": {
+                "name": request.form.get("name"),
+                "description": request.form.get("done_status") == "true",
+                "xp_value": int(request.form.get("xp_value")),
+                "due_date": datetime.datetime.strptime(request.form.get("due_date"), "%Y-%m-%d")
+            }}
+        )
+        #goes home for edit
+        return redirect(url_for('show_home'))
+    
+    else:
+        task_id = request.args.get("task_id")
+        tasks = list(db.tasks.find())
+        selected_task = None
+
+        if task_id:
+            selected_task = db.tasks.find_one({"_id": ObjectId(task_id)})
+        
+        return render_template('edit.html', tasks=tasks,selected_task=selected_task)
 
 @app.route('/new_post', methods = ['POST'])
 def create_new_post(): 
