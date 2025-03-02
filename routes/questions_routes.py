@@ -51,6 +51,7 @@ def show_question():
 
 @questions_bp.route('/delete', methods = ['GET', 'POST'])
 def delete():
+    """Delete a question using checkbox"""
     questions_to_show = questions_collection.find({})
     if request.method == 'POST':
         to_delete = request.form.getlist('selected')
@@ -58,7 +59,6 @@ def delete():
         if len(to_delete) == 0:
             flash("Please select something to delete!", "error")
             return redirect(url_for('questions.delete'))
-        delete_count = 0
 
         for question_id in to_delete:
             delete_result = questions_collection.delete_one({"_id":  ObjectId(question_id)})
@@ -70,3 +70,29 @@ def delete():
         return redirect(url_for('questions.delete'))
 
     return render_template('question_delete.html', questions = questions_to_show)
+
+@questions_bp.route('/search', methods = ['GET', 'POST'])
+def search():
+    """ 
+    Searching through questions.
+    Using an "and" logic to search through the database.
+    Using "regex" to search inside a string -- no strict match needed.
+    Change to "^...$" if strict match is needed.
+    Case-insensitive.
+    """
+    questions_to_show = questions_collection.find({})
+    if request.method == 'POST':
+        question_text = request.form.get('question')
+        answer_text = request.form.get('answer')
+        hint_text = request.form.get('hint')
+        difficulty_level = request.form.get('difficulty')
+        
+        questions_to_show = questions_collection.find({
+            '$and':[
+                { "question"     : { "$regex" : question_text    , "$options": "i" }},
+                { "answer"       : { "$regex" : answer_text      , "$options": "i" }},
+                { "hint"         : { "$regex" : hint_text        , "$options": "i" }},
+                { "difficulty"   : { "$regex" : difficulty_level , "$options": "i" }},
+            ]
+        })
+    return render_template('question_search.html', questions = questions_to_show)

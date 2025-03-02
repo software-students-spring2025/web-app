@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Questions</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <h1 style="text-align: center;">Search For Questions</h1>
+    <form action="{{ url_for('questions.search') }}" method="POST">
+        <label for="question">Question:</label>
+        <input type="text" id="question" name="question" >
+        <br>
+        
+        <label for="answer">Answer:</label>
+        <input type="text" id="answer" name="answer" >
+        <br>
+
+        <label for="hint">Hint (Optional):</label>
+        <input type="text" id="hint" name="hint">
+        <br>
+
+        <label for="difficulty">Difficulty Level:</label>
+        <select id="difficulty" name="difficulty">
+            <option value=""></option>
+            <option value="Easy">Easy</option>
+            <option value="Medium">Medium</option>
+            <option value="Hard">Hard</option>
+        </select>
+        <br>
+
+        <button type="submit">Search</button>
+    </form>
+    <table id="data" class="table-container">
+      <thead>
+        <tr>
+          <th>Question</th>
+          <th>Answer</th>
+          <th>Hint</th>
+          <th>Difficulty</th>
+          <!-- <th>Genre</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        {% for question in questions %}
+          <tr>
+            <td>{{ question.question }}</td>
+            <td>{{ question.answer }}</td>
+            <td>{{ question.hint }}</td>
+            <td>{{ question.difficulty }}</td>
+            <!-- <td>{{ question.genre }}</td> -->
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+</body>
+</html>
