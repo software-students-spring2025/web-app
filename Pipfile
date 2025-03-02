@@ -10,8 +10,6 @@ jinja2 = "*"
 blinker = "*"
 click = "*"
 markupsafe = "*"
-flask = "*"
-pymongo = "*"
 
 [dev-packages]
 
