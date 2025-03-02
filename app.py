@@ -90,6 +90,9 @@ def create_app():
     def edit_event(event_id):
         event = db.events.find_one({"_id": ObjectId(event_id)})
 
+        if not event:
+            return "Event not found", 404  # Handle missing event
+        
         if request.method == "POST":
             updated_event = {
                 "name": request.form["name"],
