@@ -2,7 +2,7 @@
 
 {% block content %}
 	<h1>Add New Order</h1>
-	<form method="POST" action="/newOrder">
+	<form method="POST" action="/newOrder", class="add-form">
 		<div>
 			<label for="user_name">Merchant Name:</label>
 			<input type="text" id="user_name" name="user_name" value = "{{user}}" readonly>
