@@ -1,4 +1,5 @@
-from flask import Flask, redirect, render_template, url_for
+from flask import Flask, redirect, render_template, url_for,request
+from bson.objectid import ObjectId
 
 mock_app = Flask(__name__)
 
@@ -42,8 +43,6 @@ def post_detail(post_id):
     else:
         return "<h1>Post Not Found</h1>", 404
     
-if __name__ == "__main__":
-    mock_app.run(debug=True)
 
 # after run python database_mock.py in terminal, goto http://127.0.0.1:5000/ in browser
 # this is just a mock backend to test if html works
@@ -52,17 +51,29 @@ if __name__ == "__main__":
 @mock_app.route("/create_post", methods = ['GET','POST'])
 def create_post():
 
-    new_post = {
-        "user": "john",
-        "title": "my post",
-        "content": "this is the content of my new post",
-        "comment": [] # new post will have no comments
-    }
+    if request.method == "POST":
+        # get data from user/form
+        user = request.form.get("user")
+        title = request.form.get("title")
+        content = request.form.get("content")
 
-    mock_data.append(new_post) # add post to mock_data
+        print(f"User: {user}, Title: {title}, Content: {content}")
 
-    redirect(url_for(index)) # this can change
-   
+        new_post = {
+            "id": 4, # need to add this just for mock data
+            "user": user,
+            "title": title,
+            "content": content,
+            "comment": []  # new post has no comments initially
+        }
+
+        mock_data.append(new_post) # add post to mock_data
+        return redirect(url_for('index')) # this can change
+
+    # for if the request is get
     return render_template("create_post.html") # this actually shows the form to user i think
 
 
+
+if __name__ == "__main__":
+    mock_app.run(debug=True)
