@@ -78,11 +78,14 @@ def search():
     if not restaurant:
         return "Restaurant not found", 404
 
-    # Extract reviews list (or empty list if none exist)
-    reviews = restaurant.get("reviews", [])
+    # Get all reviews for this restaurant
+    reviews = list(reviews_collection.find({"restaurant_name": restaurant["name"]}).sort("created_at", -1))
+    
+    # If the restaurant doesn't have its own reviews array, include the ones we just fetched
+    if "reviews" not in restaurant or not restaurant["reviews"]:
+        restaurant["reviews"] = reviews
 
     return render_template("reviews.html", restaurant=restaurant, reviews=reviews)
-
 # ✅ Profile Page
 @app.route("/profile")
 def profile():
@@ -145,6 +148,16 @@ def add_review():
             restaurants_collection.insert_one(new_restaurant)
         
         return redirect(url_for("index"))
+    
+@app.route("/recent-reviews")
+def recent_reviews():
+    # Fetch the most recent reviews from your database
+    recent_reviews = list(
+        reviews_collection.find().sort("created_at", -1).limit(10)
+    )
+    
+    return render_template("recent_reviews.html", reviews=recent_reviews)
+
 # ✅ Start Flask Application
 if __name__ == "__main__":
     app.run(debug=True)

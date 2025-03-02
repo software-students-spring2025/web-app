@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jitter - Recent Reviews</title>
+    <style>
+        body {
+            background-color: #f8f8f8;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 60px;
+            background: #1a1a1a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 24px;
+        }
+
+        .sidebar a:hover {
+            background: #333;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 80px;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Review Cards */
+        .review-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .review-card {
+            background: white;
+            width: 80%;
+            max-width: 600px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .review-date {
+            color: #777;
+            font-size: 0.9em;
+        }
+
+        .review-rating {
+            margin: 10px 0;
+            font-size: 1.2em;
+        }
+
+        .review-text {
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <a href="/profile">
+            <img src="/static/white-user.png" alt="User Profile">
+        </a>
+        <a href="/">
+            <img src="/static/white-user.png" alt="Home">
+        </a>
+        <a href="/recent-reviews">
+            <img src="/static/star-white.png" alt="Recent Reviews">
+        </a>
+        <a href="/add-review">
+            <img src="/static/plus-white.svg" alt="Add New">
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <h1>Recent Reviews</h1>
+
+        <div class="review-list">
+            {% if reviews %}
+                {% for review in reviews %}
+                    <div class="review-card">
+                        <div class="review-header">
+                            <h2>{{ review.restaurant_name }}</h2>
+                            <span class="review-date">{{ review.created_at.strftime('%B %d, %Y') }}</span>
+                        </div>
+                        
+                        <div class="review-rating">
+                            Rating: {{ review.rating }}/5
+                            {% for _ in range(review.rating|int) %}⭐{% endfor %}
+                        </div>
+                        
+                        {% if review.cuisine %}
+                        <div class="review-cuisine">
+                            Cuisine: {{ review.cuisine }}
+                        </div>
+                        {% endif %}
+                        
+                        <div class="review-text">
+                            {{ review.review_text or review.comment }}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No reviews yet. Be the first to add a review!</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
