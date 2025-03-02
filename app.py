@@ -2,10 +2,12 @@
 """
 Pinkberries flask-based web application.
 """
+import certifi # resolve connection error for mongoDB
 import os
 import datetime
 import datetime
 from flask import Flask, render_template, request, redirect, url_for
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user, UserMixin
 import pymongo
 from bson.objectid import ObjectId
 from dotenv import load_dotenv, dotenv_values  ### You will need to install dotenv from terminal
@@ -26,7 +28,7 @@ def create_app():
     config = dotenv_values()
     app.config.from_mapping(config)
 
-    cxn = pymongo.MongoClient(os.getenv("MONGO_URI"))
+    cxn = pymongo.MongoClient(os.getenv("MONGO_URI"), tlsCAFile=certifi.where()) # resolve connection error for mongoDB
     db = cxn[os.getenv("MONGO_DBNAME")]
 
     try:
@@ -211,14 +213,16 @@ def create_app():
         except Exception as e:
             flash(f"An error occurred while deleting the exhibition: {str(e)}", 'error')
             return redirect(url_for("home"))
-    return app
 
-### Here is where the app gets created: ###
-app = create_app()
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+    login_manager.login_view = "login"
 
-if __name__ == "__main__":
-    FLASK_PORT = os.getenv("FLASK_PORT", "5000")
-    FLASK_ENV = os.getenv("FLASK_ENV")
-    print(f"FLASK_ENV: {FLASK_ENV}, FLASK_PORT: {FLASK_PORT}")
-
-    app.run(port=FLASK_PORT)
+    @app.route("/login")
+    class GalleryOwner(UserMixin):
+        def __init__(self, owner_id, username):
+            self.id = str(owner_id)
+            self.username = username
+    
+    @login_manager.user_loader
+    def load_user(o
