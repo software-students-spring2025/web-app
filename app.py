@@ -58,9 +58,12 @@ def create_app():
                 return User(user)
         return None
 
-    @app.route("/")
+@app.route("/")
     def show_home():
-        return render_template("home.html")
+        events = list(db.events.find({}))
+        events.sort(key=lambda event: datetime.strptime(event["date"], "%m/%d/%Y"))
+
+        return render_template('home.html', events=events)
     
     @app.route("/register", methods=["GET", "POST"])
     def register():
