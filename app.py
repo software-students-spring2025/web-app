@@ -58,7 +58,7 @@ def create_app():
                 return User(user)
         return None
 
-    @app.route('/')
+@app.route("/")
     def show_home():
         events = list(db.events.find({}))
         events.sort(key=lambda event: datetime.strptime(event["date"], "%m/%d/%Y"))
