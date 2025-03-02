@@ -61,8 +61,6 @@ def logout():
     flask.session.clear()
     return flask.redirect('/login')
 
-
-
 # Homepage get
 @app.route('/home')
 def home():
@@ -96,21 +94,23 @@ def detail(order_id):
     return flask.render_template('detail.html', order=order)
 
 # DetailPage Post
-@app.route('/detail/<order_id>/save', methods=['POST'])
+@app.route('/detail/<order_id>', methods=['POST'])
 def handle_detail(order_id):
     order = db.get_order(order_id)
     updated_data = {
-        "customer_name": flask.request.form.get("customerName"),
-        "dish_name": flask.request.form.get("dishName"),
+        "consumer": flask.request.form.get("customerName"),
+        "food": flask.request.form.get("dishName"),
+        "address": flask.request.form.get("address"),
         "price": float(flask.request.form.get("price")),  
-        "address": flask.request.form.get("address")
     }
-    db.update_order(order_id, updated_data)
+    result = db.update_order(order_id, updated_data)
+    if result: 
+        return flask.redirect(flask.url_for('home'))
 
     return flask.render_template('detail.html', order=order)
 
 # Delete Order in DetailPage
-@app.route('/detail/<order_id>/delete')
+@app.route('/detail/<order_id>')
 def delete_order(order_id):
     if 'user' not in flask.session:
         return flask.redirect('/login')
@@ -139,17 +139,6 @@ def handle_order():
     return flask.redirect('/home')
 
 if __name__ == '__main__':
-    consumer = "Hi"
-    food = "Pizza"
-    address = "123 Main Street",
-    price = 19.99
-    
-    # db.create_user("Frank", '123456')
-
-    # db.create_order("Frank", consumer, food, address, price)
-    # s = db.find_user_order("Frank")
-    # print(s)
-
     app.run(host="0.0.0.0", port=3000) # run this line can see it on phone or computer
     # app.run(debug=True, port=config.PORT, ) # run this line can see it on computer
 

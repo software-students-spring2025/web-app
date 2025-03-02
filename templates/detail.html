@@ -54,7 +54,7 @@
 <body>
     <div class="container">
         <h2>Order Details</h2>
-        <form action="/detail/{{ order._id }}/save" method="POST">
+        <form action="/detail/{{ order._id }}" method="POST">
             <label for="customerName">Customer:</label>
             <input type="text" id="customerName" name="customerName" value="{{ order.consumer }}">
         
