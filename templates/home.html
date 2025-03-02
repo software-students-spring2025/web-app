@@ -25,6 +25,9 @@
             overflow: hidden;
             cursor: pointer;
             transition: 0.3s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
         .event-card:hover {
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -68,97 +71,26 @@
     </style>
 </head>
 <body>
-    <div class="event-container" id="events"></div>
+
+    <!-- Event Container -->
+    <div class="event-container">
+        {% for event in events %}
+        <a href="{{ url_for('show_details', event_id=event['_id']) }}" class="event-card">
+            <div class="event-strip {{ event['category'] }}"></div>
+            <div class="event-content">
+                <div class="event-title">{{ event['name'] }}</div>
+                <div class="event-info">📅 {{ event['date'] }}</div>
+                <div class="event-info">📍 {{ event['location'] }}</div>
+                <div class="event-info">👥 {{ event['host'] }}</div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
 
     <!-- Floating Add Event Button -->
-    <button class="add-button" onclick="location.href='add'">+</button>
-
-    <script>
-        const events = [
-            {
-                title: "SWE project due",
-                date: "Tuesday, March 4 at 2:00PM EST",
-                location: "remote",
-                host: "professor",
-                category: "education"
-            },
-            {
-                title: "SWE project demo",
-                date: "TODAY",
-                location: "remote",
-                host: "tutor",
-                category: "education"
-            },
-            {
-                title: "something",
-                date: "sometime",
-                location: "remote",
-                host: "someone",
-                category: "extracurricular"
-            },
-            {
-                title: "something",
-                date: "sometime",
-                location: "remote",
-                host: "someone",
-                category: "other"
-            },
-            {
-                title: "something",
-                date: "sometime",
-                location: "remote",
-                host: "someone",
-                category: "networking"
-            },
-            {
-                title: "something",
-                date: "sometime",
-                location: "remote",
-                host: "someone",
-                category: "other"
-            },
-            {
-                title: "something",
-                date: "sometime",
-                location: "remote",
-                host: "someone",
-                category: "extracurricular"
-            },
-            {
-                title: "something",
-                date: "sometime",
-                location: "remote",
-                host: "someone",
-                category: "education"
-            }
-        ];
-
-        function renderEvents() {
-            const eventContainer = document.getElementById("events");
-            eventContainer.innerHTML = "";
-            events.forEach((event, index) => {
-                let eventCard = document.createElement("div");
-                eventCard.classList.add("event-card");
-                eventCard.innerHTML = `
-                    <div class="event-strip ${event.category}"></div>
-                    <div class="event-content">
-                        <div class="event-title">${event.title}</div>
-                        <div class="event-info">📅 ${event.date}</div>
-                        <div class="event-info">📍 ${event.location}</div>
-                        <div class="event-info">👥 ${event.host}</div>
-                    </div>
-                `;
-                eventCard.addEventListener("click", () => goToEventPage(index));
-                eventContainer.appendChild(eventCard);
-            });
-        }
-
-        function goToEventPage(index) {
-            localStorage.setItem("selectedEvent", JSON.stringify(events[index]));
-            window.location.href = "details";
-        }
-
-        renderEvents();
-    </script>
+    <a href="{{ url_for('add_event') }}">
+        <button class="add-button">+</button>
+    </a>
+    
 </body>
 </html>
