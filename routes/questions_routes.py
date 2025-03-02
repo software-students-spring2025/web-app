@@ -19,7 +19,7 @@ if not MONGO_URI:
 # Create Blueprint
 questions_bp = Blueprint('questions', __name__)
 
-@questions_bp.route('/add_question', methods=['GET', 'POST'])
+@questions_bp.route('/add', methods=['GET', 'POST'])
 def add_question():
     if request.method == 'POST':
         question_text = request.form.get('question')
@@ -44,3 +44,8 @@ def add_question():
         return redirect(url_for('questions.add_question'))
 
     return render_template('add_question.html')
+
+@questions_bp.route('/show', methods = ['GET'])
+def show_question():
+    questions_to_show = questions_collection.find({})
+    return render_template('questions.html', questions = questions_to_show)
