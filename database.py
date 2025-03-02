@@ -1,32 +1,32 @@
 import pymongo
+import os
 from flask import Flask, redirect, render_template, request, url_for
 from bson.objectid import ObjectId
 from dotenv import load_dotenv
-import os
+
 
 app = Flask(__name__)
 
 # make a connection to the database server
 # do we leave it like this or hardcode it for our own?
 
-# i think something is wrong here (not working for me)
 load_dotenv()
 mongo_uri = os.getenv("MONGO_URI")
 
-connection = pymongo.MongoClient(mongo_uri) 
-db = connection["Forum"] 
+connection = pymongo.MongoClient(mongo_uri)
+db = connection["Forum"]
 
 # with data from database
 @app.route("/")
 def index():
-    posts = db.posts.find()
+    posts = list(db["posts"].find()) # need to make this iterable
     return render_template("index.html", data=posts)
 
 # with database
 @app.route("/post/<int:post_id>")
 def post_detail(post_id):
     # Find the post by ID
-    post = db.posts.find_one({"_id": ObjectId(post_id)})
+    post = db["posts"].find_one({"_id": ObjectId(post_id)})
     if post:
         return render_template("post.html", post=post)
     else:
@@ -53,7 +53,7 @@ def create_post():
             "comment": [] # new post will have no comments
         }
 
-        result = db.posts.insert_one(new_post) # add post to database
+        result = db["posts"].insert_one(new_post) # add post to database
 
         if result.inserted_id:
             # after making a post, where should user go?
