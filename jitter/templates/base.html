@@ -11,38 +11,50 @@
             background-color: #f8f8f8;
         }
 
-        /* Sidebar */
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 60px;
-            background: #1a1a1a;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 20px;
-        }
+        /* Sidebar Styling */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 120px; /* Increased width */
+    background: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 30px;
+    z-index: 1000;
+}
 
-        .sidebar a {
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 20px 0;
-            font-size: 24px;
-        }
+.sidebar-icon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+    width: 100%;
+}
 
-        .sidebar a:hover {
-            background: #333;
-        }
+.sidebar-link {
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
 
-        /* Main Content */
-        .main-content {
-            margin-left: 80px;
-            text-align: center;
-            padding: 20px;
-        }
+.sidebar-text {
+    color: white;
+    transform: rotate(-90deg);
+    white-space: nowrap;
+    font-size: 16px; /* Larger text */
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+/* Adjust main content to accommodate larger sidebar */
+.main-content {
+    margin-left: 140px; /* Increased margin */
+    padding: 20px;
+}
 
         /* Search Bar */
 .search-bar {
