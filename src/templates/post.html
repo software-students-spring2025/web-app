@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}SEARCH TASKS{% endblock %}
+
+{% block content %} 
+    
+        <div>
+            <h2>Create Task</h2>
+            <form action="{{ url_for('create_new_post') }}" method="post">
+                <input type="text" required name="name" placeholder="Name">
+                <input type="text" required name="description" placeholder="Description">
+                <input type="text" required name="xp" placeholder="XP Value">
+                <input type="text" required name="year" placeholder="Year (XXXX)">
+                <input type="text" required name="month" placeholder="Month (XX)">
+                <input type="text" required name="day" placeholder="Day (XX)">
+                <label for="completed">Completed?</label>
+                <input type="checkbox" id="completed" name="completed"/>
+                <button type="submit">Create</button>
+            </form>
+        </div>
+{% endblock %} 

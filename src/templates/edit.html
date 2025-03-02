@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block title %}EDIT TASKS{% endblock %}
+
+{% block content %}
+<h2>Edit Tasks</h2>
+
+{% if selected_task %}
+<h3>Edit Task</h3>
+<form action="{{ url_for('show_edit') }}" method="post">
+    <input type="hidden" name="task_id" value="{{ selected_task._id }}">
+    
+    <label>Name: <input type="text" name="name" value="{{ selected_task.name }}"></label><br>
+    <label>Description: <input type="text" name="description" value="{{ selected_task.description }}"></label><br>
+    <label>Status:
+        <select name="done_status">
+            <option value="false" {% if not selected_task.done_status %}selected{% endif %}>Not Done</option>
+            <option value="true" {% if selected_task.done_status %}selected{% endif %}>Done</option>
+        </select>
+    </label><br>
+    <label>XP: <input type="number" name="xp_value" value="{{ selected_task.xp_value }}"></label><br>
+    <label>Due Date: <input type="date" name="due_date" value="{{ selected_task.due_date.strftime('%Y-%m-%d') }}"></label><br>
+    <button type="submit">Update & Return Home</button>
+</form>
+{% endif %}
+
+<h3>Tasks</h3>
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Action</th>
+    </tr>
+    {% for task in tasks %}
+    <tr>
+        <td>{{ task.name }}</td>
+        <td>{{ task.description }}</td>
+        <td>
+            <a href="{{ url_for('show_edit', task_id=task._id) }}">Edit</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

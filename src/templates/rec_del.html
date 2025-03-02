@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}RECENTLY DELETED TASKS{% endblock %}
+
+{% block content %} 
+    <div>
+           <h2> Recently Deleted Tasks </h2>
+    </div>
+    <table>
+        <tr>
+            <th>Task Name</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>XP</th>
+            <th>Created</th>
+            <th>Due</th>
+            <th>Date Deleted</th>
+
+
+        </tr>
+        {% for task in tasks %}
+            <tr>
+                <td>{{ task.name }}</td>
+                <td>{{ task.description }}</td>
+                <td>{{ task.done_status }}</td>
+                <td>{{ task.xp_value }}</td>
+                <td>{{ task.created_date.strftime('%Y-%m-%d') }}</td>
+                <td>{{ task.due_date.strftime('%Y-%m-%d') }}</td>
+                <td>{{ task.deleted_at.strftime('%Y-%m-%d') }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %} 
