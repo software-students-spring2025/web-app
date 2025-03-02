@@ -1,4 +1,6 @@
 from flask import Flask, render_template
+import pymongo
+from database import db
 
 app = Flask(__name__)
 
@@ -26,10 +28,16 @@ mock_data = [
         "comment": ["Interesting read.", "Fascinating!", "Looking forward to more updates."]
     }
 ]
-
+# test with mock up data
 @app.route("/")
 def index():
     return render_template("index.html", data=mock_data)
+
+# with data from database
+@app.route("/")
+def index2():
+    posts = db.posts.find()
+    return render_template("index.html", data=posts)
 
 @app.route("/post/<int:post_id>")
 def post_detail(post_id):
