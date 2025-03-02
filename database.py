@@ -65,7 +65,19 @@ def create_post():
     
     return render_template("create_post.html") # this actually shows the form to user i think
 
+@app.route("/post/<string:post_id>/comment", methods = ['POST'])
+def add_comment(post_id):
+    new_comment = { # idk if this should be form -- is this gonna be added to post detail page?
+        "user": request.form.get("user"),
+        "comment": request.form.get("content")
+    }
 
+    db["posts"].update_one(
+        {"_id": ObjectId(post_id)},
+        {"$push": {"comment": new_comment}}
+    )
+
+    return redirect(url_for('post_detail', post_id=post_id))
 
 if __name__ == "__main__":
     app.run(debug=True)
