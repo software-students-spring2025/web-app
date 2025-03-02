@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+            <title>
+                Anatidelicious
+            </title>
+            <link rel="stylesheet" href="../static/index.css">
+        </head>
+
+        <body>
+            <div class ="icon">
+                <a href="{{ url_for('cart') }}">
+                    <img class="cart" src="{{url_for('static', filename='cart_icon.png')}}"> 
+                </a>
+            </div>
+
+            <div class ="Title">
+                <h1>Welcome to Anatidelicious!</h1>
+            </div>
+
+            <div class ="Location">
+                <h1>> Located in NYC</h1>
+            </div>
+
+            <div class="Middle">
+                <img class="Bakery image" src="../static/images/breads/bakery.jpg" >
+            </div>
+
+            <!-- bottom buttons for home page-->
+            <div class="Choice">
+
+                <!-- Menu: (NOTE: Tadelin Pls put ur reference link to the menu page here)-->
+                <a href="{{ url_for('order') }}">
+                    <div class="Menu">
+                        <h1>See the Menu!</h1>
+                    </div>
+                </a>
+
+                <!-- Contact-->
+                <a href="{{ url_for('contact') }}">
+                    <div class="Contact">
+                        <h1>Need Help?</h1>
+                    </div>
+                </a> 
+            </div>
+            
+            
+        </body>
+    </html>

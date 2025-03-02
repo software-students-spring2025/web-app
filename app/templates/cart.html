@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+            <title>
+                Anatidelicious
+            </title>
+            <link rel="stylesheet" href="../static/cart.css">
+            
+        </head>
+
+        <body>
+            <a href="{{ url_for('order') }}">
+                <div class="Back"> 
+                    Back
+                </div>
+            </a>
+
+            <div class="Title">
+                <h1>Your Cart</h1>
+                
+            </div>
+            <div class="total">
+                You have {{ total_items }} items in your cart:
+            </div>
+            
+            <!--Items-->
+            <div class="ItemList">
+                
+                {% for item in cart_items %}
+                <li></li>
+                <div class="Item">
+
+                    <div class="description">
+
+                        <div class="menuTitle">
+                            <h1>
+                                {{ item.name }}
+                            </h1>
+                            <p>
+                                {{ item.description }}
+                            </p>
+                            <div class="remove">
+                                <a href="{{ url_for('remove_from_cart', item_id=item.item_id) }}">
+                                    Delete
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class ="amount"> 
+                            <div>x{{ item.quantity }}</div>
+                            <div class="price">${{ item.price }}</div>
+                        </div>
+                    </div>
+                </div>
+                </li>
+                {% endfor %}
+
+            </div>
+
+            <!--Checkout button:-->
+            <a href="{{ url_for('checkout') }}">
+                <div class="checkout">
+                        <h1>Checkout</h1>
+                </div>
+            </a>
+
+        </body>
+    </html>
