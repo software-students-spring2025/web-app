@@ -1,6 +1,7 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for
 import pymongo
+from bson.objectid import ObjectId
 from dotenv import load_dotenv, dotenv_values
 from datetime import datetime
 
@@ -59,17 +60,52 @@ def create_app():
     def logout():
         return redirect(url_for("login"))
     
-    @app.route("/add")
-    def show_add():
+    @app.route("/add", methods=["GET", "POST"])
+    def add_event():
+        if request.method == "POST":
+            event = {
+                "name": request.form["name"],
+                "date": request.form["date"],
+                "time": request.form["time"],
+                "location": request.form["location"],
+                "category": request.form["category"],
+                "description": request.form["description"],
+            }
+            db.events.insert_one(event)  
+            return redirect(url_for("show_home"))  
         return render_template("addEvent.html")
     
-    @app.route("/details")
-    def show_details():
-        return render_template("details.html")
+    @app.route("/edit/<event_id>", methods=["GET", "POST"])
+    def edit_event(event_id):
+        event = db.events.find_one({"_id": ObjectId(event_id)})
+
+        if request.method == "POST":
+            updated_event = {
+                "name": request.form["name"],
+                "date": request.form["date"],
+                "time": request.form["time"],
+                "location": request.form["location"],
+                "category": request.form["category"],
+                "description": request.form["description"],
+            }
+            db.events.update_one({"_id": ObjectId(event_id)}, {"$set": updated_event})
+            return redirect(url_for("show_home"))
+
+        return render_template("edit.html", event=event)
     
-    @app.route("/edit")
-    def show_edit():
-        return render_template("edit.html")
+    @app.route("/details/<event_id>")
+    def show_details(event_id):
+        event = db.events.find_one({"_id": ObjectId(event_id)})
+        
+        if event is None:
+            return "Event not found", 404  # Handle missing event
+
+        return render_template("details.html", event=event)
+    
+    @app.route("/delete/<event_id>")
+    def delete_event(event_id):
+        db.events.delete_one({"_id": ObjectId(event_id)})
+        return redirect(url_for("show_home"))
     
     @app.route("/search")
     def show_search():
