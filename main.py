@@ -6,10 +6,36 @@ import datetime
 
 from dotenv import load_dotenv
 import os
+
+from flask import Flask
+from routes.questions_routes import questions_bp  # Import the questions Blueprint
+
+app = Flask(__name__)
+app.secret_key = os.getenv("SECRET_KEY")  # Required for flash messages
+
+# Register the questions Blueprint
+app.register_blueprint(questions_bp)
+
+@app.route('/')
+def home():
+    return "Welcome to the Quiz App! <a href='/add_question'>Add Question</a>"
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+##########################################################
+# following is the original code
+# can be deleted after finishing set up
+
 load_dotenv()
+
 MONGO_DBNAME = os.getenv('MONGO_DBNAME')
 MONGO_URI = os.getenv('MONGO_URI')
 client = pymongo.MongoClient(MONGO_URI)
+
+# Debuggings
+if not MONGO_URI:
+    raise ValueError("MONGO_URI is missing! Check your .env file.")
 
 db = client["test-database"]
 
