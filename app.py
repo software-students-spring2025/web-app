@@ -65,6 +65,7 @@ def edit_task(task_id):
     new_name = request.form.get('new_name')
     new_description = request.form.get('new_description')
     new_due = request.form.get('new_due')
+    print(request.form)
     
     #structure i found to only update fields that the user chooses to edit, not all at once
     update_fields = {}
@@ -75,7 +76,7 @@ def edit_task(task_id):
         update_fields["description"] = new_description
     if new_due:
         update_fields["due_date"] = new_due
-    
+    print(update_fields)
     if update_fields:
         tasks_collection.update_one({"_id": ObjectId(task_id)}, {"$set": update_fields})
     

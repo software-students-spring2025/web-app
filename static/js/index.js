@@ -7,4 +7,8 @@ tasks.forEach(task => {
         // Displays edit menu
         task.querySelector('.edit-task').style.display = 'block'
     })
+
+    task.querySelector('.close').addEventListener('click', evt => {
+        task.querySelector('.edit-task').style.display = 'none'
+    })
 })
