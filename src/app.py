@@ -3,6 +3,8 @@ import os
 import config
 import pymongo
 import datetime
+import functools
+import operator
 from flask import Flask, render_template, request, redirect, abort, url_for, make_response
 
 app = Flask(__name__)
@@ -42,9 +44,10 @@ def show_home():
     #     },
     # ]
     
-    tasks = db.tasks.find()
+    tasks = list(db.tasks.find())
+    xp = functools.reduce(lambda acc, task: acc + task['xp_value'], tasks, 0)
 
-    return render_template('home.html', tasks=tasks)
+    return render_template('home.html', tasks=tasks, xp=xp)
 
 #added in routes to other pages
 
