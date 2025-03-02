@@ -23,9 +23,11 @@
             {% endfor %}
         </table>
     </div>
-    <a href="/newOrder"><button type="button">Add</button></a>
+    <div class = "home-add">
+        <a href="/newOrder"><button type="button">Add</button></a>
+    </div>
     <form action="/home" method="get" class="home-search">
-        <input type="text" name="search" placeholder="Search by Consumer Name">
+        <input type="text" name="search" placeholder="By Name">
         <button type="submit">Search</button>
     </form>
 {% endblock %}

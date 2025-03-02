@@ -90,10 +90,17 @@ input[type="password"] {
 	align-items: center;
 }
 
+.home-add a button {
+	margin: 20px auto;
+	text-align: center;
+	width: 50%;
+}
 .home-search {
 	margin: 20px auto;
 	text-align: center;
 	display: flex;
+	width: 90%;
+	justify-content: space-evenly;
 }
 
 .home-search input {
@@ -113,11 +120,13 @@ input[type="password"] {
 	border-radius: 4px;
 	cursor: pointer;
 	height: 50px;
+	width: 45%;
+	text-align: center;
 }
 
 
 form {
-	width: 50%;
+	width: 90%;
 	margin: 20px auto;
 	padding: 20px;
 	border: 1px solid #ccc;

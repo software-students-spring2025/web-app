@@ -139,5 +139,6 @@ def handle_order():
     return flask.redirect('/home')
 
 if __name__ == '__main__':
-    app.run(debug=True, port=config.PORT)
+    app.run(host="0.0.0.0", port=3000) # run this line can see it on phone or computer
+    # app.run(debug=True, port=config.PORT, ) # run this line can see it on computer
 
