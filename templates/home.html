@@ -22,19 +22,24 @@
 
     <div id="yourRestaurants">
         <p> ~ Your Restaurants ~ </p>
-        {% for restaurant in restaurants %}
-        <a id="restaurantLink" href="/edit/{{restaurant._id}}">
+            {% for restaurant in restaurants %}
+
             <div class="restaurant">
                 <div class="topHalf">
-                    <div class="restName">{{ restaurant.restaurantName }}</div>
-                    <div class="restLoc">{{ restaurant.restaurantLocation }}</div>
-                    <a href="/delete/{{restaurant._id}}">
-                        <div id="delete">
-                            Delete Restaurant
-                        </div>
+                    <a id="restaurantLink"  href="/edit/{{ restaurant._id }}">
+                        <div class="topLeft">
+                            
+                            <div class="restName">{{ restaurant.restaurantName }}</div>
+                            <div class="restLoc">{{ restaurant.restaurantLocation }}</div>
+                            <a href="/delete/{{ restaurant._id }}" class="deleteButton">
+                                X
+                            </a>
+                        
+                        </div> 
+                        
                     </a>
+                    
                 </div>
-
                 <div class="bottomHalf">
                     <div class="bottomLeft">
                         <div class="cuisine">{{ restaurant.cuisine }}</div>
@@ -46,14 +51,16 @@
                     </div>
                 </div>
             </div>
-        </a>
-        {% endfor %}
+            
 
-        <div id="addRestaurant">
-            <a href="/add">Add Restaurant</a>
-        </div>
-    </div>
-    </div>
+            
+            {% endfor %}
+        
+            <div id="addRestaurant">
+                <a href="/add">Add Restaurant</a>
+            </div>
+
+
     </div>
 
 

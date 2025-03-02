@@ -134,7 +134,7 @@ header{
     height: 10vh;
     align-items: center;
     padding-left: 0px;
-    padding-right: 10px;
+
 }
 #addFriends, #logOut, #profile, #appName{
     margin-left: 10%;
@@ -231,7 +231,7 @@ header{
     border-bottom-right-radius: 10px;
 
     display: flex;
-    padding-top: 5px;
+    padding-top: 15px;
 }
 
 .restName{
@@ -270,11 +270,12 @@ header{
     color: var(--secondary-color);
     padding-bottom: 5px;
     padding-top: 5px;
-    
+    height: 23px;
     width: 100%;
     text-align: center;
     font-weight: bold;
-    background-color: rgba(219, 103, 103, 0.541);
+    background-color: var(--primary-color);
+    opacity: 0.6;
     border-top: black solid;
     border-bottom: black solid;
 }
@@ -311,7 +312,7 @@ header{
 
     flex-direction: column;
 
-    margin-top: 20px;
+    margin-top: 20%;
 
 }
 
@@ -377,14 +378,31 @@ header{
    flex-direction: column; 
 }
 
-#delete{
-    background-color: black;
-    width: 50px;
-    height: 50px;
+.deleteButton{
+    cursor:pointer;
+    font-family: sans-serif;
+    background-color: white;
+    width: 30px;
+    height: 30px;
 
     position: relative;
-    top: 0;
-    right: 0;
+    top: -70%;
+    left: 84%;
+
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    
+    font-size: 14pt;
+    font-weight: 900;
+    z-index: 20;
+
+    color:var(--text-color1);
+}
+.deleteButton:link{
+    color:var(--text-color1);
 }
 #shuffleScreen{
     width: 100%;
@@ -395,10 +413,34 @@ header{
 
     flex-direction: column;
 }
+.topHalf{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+
+ #restaurantLink{
+    align-self: flex-start;
+    height:fit-content;
+}
+
+.topLeft{
+    width: 100%;
+    text-align: left;
+}
 
 header{
     position: absolute;
     top:0;
+    width: 100%;
+}
+a, a:visited{
+    text-decoration: none;
+}
+a:hover, a:active{
+    text-decoration: underline;
 }
 
 #aShuffle{
@@ -422,6 +464,11 @@ header{
     color: var(--text-color2);
     border-radius: 10px;  
     border: 2px solid var(--primary-color);
+}
+
+.restName, .restLoc{
+    position: relative;
+    left: -45%;
 }
 
 #tryAgain{
@@ -454,4 +501,45 @@ header{
 
 #shuffleResults{
     display: none;
+}
+
+#noFriends, #searchResults{
+    font-size: 16pt !important;
+    color:var(--text-color2) !important;
+    font-weight: 800;
+}
+
+#searchResults{
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+}
+#searchResults p{
+    margin-bottom: 10px;
+}
+.friend{
+    width: 300px;
+    display: flex;
+    flex-direction: row;
+    height: 35px;
+    margin-bottom: 20px;
+}
+.friend form{
+    margin-left: auto;
+    display: flex;
+    height: 35px;
+    
+}
+
+.friend form button{
+    background-color: var(--button-color);
+    border: solid 2px var(--secondary-color);
+    color: var(--secondary-color);
+    width: 90px;
+    height: 100%;
+    border-radius: 5px;
+    font-weight: 700;
 }
