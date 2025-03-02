@@ -97,23 +97,25 @@ def add_review_form():
 def add_review():
     if request.method == "POST":
         # Extract data from the form submission
-        restaurant_name = request.form.get("restaurant_name")  # Get restaurant name from form
-        rating = int(request.form.get("rating"))               # Get rating and convert to integer
-        review_text = request.form.get("review_text")          # Get the text of the review
+        restaurant_name = request.form.get("restaurant_name")
+        rating = int(request.form.get("rating"))
+        review_text = request.form.get("review_text")
+        cuisine = request.form.get("cuisine")  # Get the cuisine from the form
         
-        # Basic validation to ensure we have required data
+        # Basic validation
         if not restaurant_name:
-            return "Please provide a restaurant name", 400  # Return 400 Bad Request if no restaurant name
+            return "Please provide a restaurant name", 400
         
         if rating < 1 or rating > 5:
-            return "Rating must be between 1 and 5", 400    # Ensure rating is between 1-5
+            return "Rating must be between 1 and 5", 400
             
-        # Create a dictionary to represent the new review document for MongoDB
+        # Create the review object
         new_review = {
-            "restaurant_name": restaurant_name,  # Store restaurant name
-            "rating": rating,                    # Store the numerical rating
-            "review_text": review_text,          # Store the review content
-            "created_at": datetime.datetime.now()         # Add a timestamp for when review was created
+            "restaurant_name": restaurant_name,
+            "rating": rating,
+            "review_text": review_text,
+            "cuisine": cuisine,  # Add cuisine to the review
+            "created_at": datetime.datetime.now()
         }
         
         # Insert the review into reviews collection
@@ -123,22 +125,25 @@ def add_review():
         existing_restaurant = restaurants_collection.find_one({"name": restaurant_name})
         
         if existing_restaurant:
-            # If the restaurant exists, update it to add this review to its reviews list
+            # If the restaurant exists, update it
             restaurants_collection.update_one(
                 {"name": restaurant_name},
-                {"$push": {"reviews": new_review}}
+                {
+                    "$push": {"reviews": new_review},
+                    "$set": {"cuisine": cuisine}  # Update cuisine if it's a new review
+                }
             )
         else:
             # If the restaurant doesn't exist, create a new entry
             new_restaurant = {
                 "name": restaurant_name,
                 "rating": float(rating),
+                "cuisine": cuisine,  # Add cuisine to the restaurant
                 "reviews": [new_review],
                 "created_at": datetime.datetime.now()
             }
             restaurants_collection.insert_one(new_restaurant)
         
-        # After successful insertion, redirect user back to home page
         return redirect(url_for("index"))
 # ✅ Start Flask Application
 if __name__ == "__main__":
