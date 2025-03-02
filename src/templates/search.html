@@ -3,12 +3,16 @@
 {% block title %}SEARCH TASKS{% endblock %}
 
 {% block content %} 
-    
-        <div>
-            <h2>Search Tasks</h2>
-            <form action="{{ url_for('show_search_results') }}" method="get">
-                <input type="text" required name="search" placeholder="Search Query">
-                <button type="submit">Search</button>
+    <ul>
+        <li>
+            <form action="/search_results" method="get">
+                <input required type="text" name="search" id="search" placeholder="Search Query">
+                <select name="filter" id="filter">
+                    <option value="exp">By EXP Value</option>
+                    <option value="date">By Date</option>
+                </select>
+                <input type="submit" name="submit" value="Search">
             </form>
-        </div>
+        </li>
+    </ul>
 {% endblock %} 
