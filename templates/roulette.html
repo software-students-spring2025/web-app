@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/styles.css">
     <title>Restaurant Roulette</title>
 </head>
+
 <body id="shuffleScreen">
     <header>
         <div id="appName"><a href="/home">RR</a></div>
@@ -13,7 +15,6 @@
         <div id="addFriends"><a href="/friends">Friends</a></div>
         <div id="logOut"> <a href="/logout">Log Out</a></div>
     </header>
-
 
         <a id="aShuffle"><div id="shuffleButton">I'm Hungry!</div></a>
 
@@ -41,11 +42,11 @@
 
     <script>
         let button = document.getElementById('shuffleButton');
-        let results  =document.getElementById('shuffleResults');
-        button.addEventListener('click' , function(){
+        let results = document.getElementById('shuffleResults');
+        button.addEventListener('click', function() {
             results.style.display = "block"
         });
-
     </script>
 </body>
+
 </html>
