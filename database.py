@@ -1,13 +1,20 @@
 import pymongo
 from flask import Flask, redirect, render_template, request, url_for
 from bson.objectid import ObjectId
+from dotenv import load_dotenv
+import os
 
 app = Flask(__name__)
 
 # make a connection to the database server
 # do we leave it like this or hardcode it for our own?
-connection = pymongo.MongoClient("mongodb://your_username:your_username@your_host_name:27017") 
-db = connection["Forum"]    
+
+# i think something is wrong here (not working for me)
+load_dotenv()
+mongo_uri = os.getenv("MONGO_URI")
+
+connection = pymongo.MongoClient(mongo_uri) 
+db = connection["Forum"] 
 
 # with data from database
 @app.route("/")
