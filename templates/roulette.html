@@ -43,8 +43,11 @@
     <script>
         let button = document.getElementById('shuffleButton');
         let results = document.getElementById('shuffleResults');
+
         button.addEventListener('click', function() {
-            results.style.display = "block"
+            results.style.display = "flex"
+            button.style.display = 'none'
+
         });
     </script>
 </body>
