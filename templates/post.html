@@ -14,10 +14,29 @@
         <h4>Comments:</h4>
         <ul>
             {% for comment in post["comment"] %}
-            <li>{{ comment }}</li>
+            <li>{{ comment }}</li> <!--need some formatting for comments-->
             {% endfor %}
         </ul>
+
+        <div class="comment-form">
+            <h3>Add a Comment</h3> 
+            <form action="{{ url_for('add_comment', post_id=post._id|string) }}" method="POST">
+                <div class="form-group">
+                    <label for="user">Your Name:</label>
+                    <input type="text" id="user" name="user" required>
+                </div>
+                <div class="form-group">
+                    <label for="content">Your Comment:</label>
+                    <textarea id="content" name="content" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="submit-button">Post Comment</button>
+            </form>
+        </div>
+
+
+
         <a href="{{ url_for('index') }}" class="back-link">Back to Home</a>
     </div>
+
 </body>
 </html>
