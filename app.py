@@ -39,6 +39,12 @@ def create_app():
 
 
     ### Add your functions here: ###
+    ## For Gallery Owner login function!
+    class GalleryOwner(UserMixin):
+        def __init__(self, owner_id, username):
+            self.id = str(owner_id)
+            self.username = username
+
     @app.route("/")
     def home():
         try:
@@ -218,12 +224,6 @@ def create_app():
     login_manager.init_app(app)
     login_manager.login_view = "login"
 
-    @app.route("/login")
-    class GalleryOwner(UserMixin):
-        def __init__(self, owner_id, username):
-            self.id = str(owner_id)
-            self.username = username
-    
     @login_manager.user_loader
     def load_user(owner_id):
         owner_data = db.gallery_owners.find_one({"_id": ObjectId(owner_id)})
@@ -235,15 +235,16 @@ def create_app():
     @app.route("/login", methods=["GET", "POST"])
     def login():
         if request.method == "POST":
-            username = request.form["username"]
-            password = request.form["password"]
+            username = request.form.get("username")
+            password = request.form.get("password")
+
             owner_data = db.gallery_owners.find_one({"username": username})
 
             if owner_data and owner_data["password"] == password:
                 owner = GalleryOwner(owner_data["_id"], owner_data["username"])
-                login_user(owner)  # Start session for the gallery owner
+                login_user(owner) 
                 flash("Login successful!", "success")
-                return redirect(url_for("gallery_owner_page"))  # TEAMMATE NEED TO EDIT THIS!! THIS IS TEMPORRY
+                return redirect(url_for("gallery_owner_page"))
             else:
                 flash("Gallery not found in database!", "error")
 
