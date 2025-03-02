@@ -11,7 +11,7 @@
 <body id="homeScreen">
     <header>
         <div id="appName"><a href="/home">RR</a></div>
-        <div id="profile"><a href="/profile">Profile</a></div>
+        <div id="profile"><a href="/roulette">Roulette</a></div>
         <div id="addFriends"><a href="/friends">Friends</a></div>
         <div id="logOut"> <a href="/logout">Log Out</a></div>
     </header>
@@ -19,14 +19,6 @@
         Welcome, {{ user }}!
     </div>
 
-    <div id="shuffleScreen" data-visi="{{winner}}">
-
-        <a href="/shuffle"><div id="shuffleButton">I'm Hungry!</div></a>
-
-        <div id="shuffleResults">
-            You should go to: {{ winner }}
-        </div>
-    </div>
 
     <div id="yourRestaurants">
         <p> ~ Your Restaurants ~ </p>
@@ -63,20 +55,7 @@
         </div>
     </div>
     </div>
-    <script>
-        let shuffleScreen = document.getElementById('shuffleScreen');
-        let results = document.getElementById('shuffleResults');
-        let winnerExists = shuffleScreen.dataset.visi.trim() !== "";
     
-        // console.log("Winner:", shuffleScreen.dataset.visi);
-        // console.log("Should Show Result?", winnerExists);
-    
-        if (winnerExists) {
-            results.style.display = "block"; 
-        } else {
-            results.style.display = "none"; 
-        }
-    </script>
 
 </body>
 

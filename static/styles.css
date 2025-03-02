@@ -32,7 +32,7 @@
 }
 
 
-#loginScreen, #registerScreen, #homeScreen, #friendsScreen{
+#loginScreen, #registerScreen, #homeScreen, #friendsScreen, #shuffleScreen{
     background-color: var(--background-color);
     display: flex;
     align-items: center;
@@ -121,7 +121,7 @@ h1{
     color: var(--text-color1);
  }
 
-#homeScreen{
+#homeScreen , #shuffleScreen{
     display: block;
     flex-direction: column;
 }
@@ -387,6 +387,58 @@ header{
     position: relative;
     top: 0;
     right: 0;
+}
+#shuffleScreen{
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+}
+
+header{
+    position: absolute;
+    top:0;
+}
+
+#shuffleScreen a{
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    flex-direction: column;
+}
+
+#shuffleButton, #tryAgain{
+    background-color: var(--button-color);
+    width: 70%;
+    text-align: center;
+    height: 60px;
+    font-size: 30pt;
+    font-weight: 900;
+    color: var(--text-color2);
+    border-radius: 10px;  
+    border: 2px solid var(--primary-color);
+}
+
+#tryAgain{
+    width: 40%;
+    height: 40px;
+    font-size: 16pt;
+    font-weight: 700;
+    line-height: 40px;
+}
+
+#shuffleResults p{
+    padding-top: 40px;
+    padding-bottom: 15px;
+    color: var(--text-color1);
+    font-size: 16pt;
+    font-weight: 700;
+    color:var(--text-color1)
+
 }
 
 
