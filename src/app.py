@@ -5,23 +5,14 @@ import pymongo
 import datetime
 import functools
 import operator
+from bson.objectid import ObjectId
 from flask import Flask, render_template, request, redirect, abort, url_for, make_response
 
 app = Flask(__name__)
 
 
 @app.route('/')
-def show_home():
-    # put together an HTTP response with success code 200
-    
-    # response = make_response("Welcome!", 200)
-    # # set the HTTP Content-type header to inform the browser that the returned document is plain text, not HTML
-    # response.mimetype = "text/plain"
-
-    # Commented out MongoDB queries - these look correct:
-    #tasks = list(db.tasks.find())
-    #xp_counter = db.counters.find_one({"name": "xp_counter"})
-    
+def show_home():  
     # Dummy values that should look like mongodb. 
     # tasks = [
     #     {
@@ -54,6 +45,29 @@ def show_home():
 @app.route('/edit')
 def show_edit(): 
     return render_template('edit.html')
+
+@app.route('/new_post', methods = ['POST'])
+def create_new_post(): 
+    completed = request.form.get("completed", "")
+    if completed:
+        done_status = True
+    else:
+        done_status = False
+    newTask = {
+            "_id": ObjectId(),
+            "name": request.form.get("name", "").strip(),
+            "description": request.form.get("description", "").strip(),
+            "done_status": done_status,
+            "xp_value": int(request.form.get("xp", "").strip()),
+            "created_date": datetime.datetime.now(),
+            "due_date": datetime.datetime(
+                int(request.form.get("year", "").strip()),
+                int(request.form.get("month", "").strip()),
+                int(request.form.get("day", "").strip())
+            )
+    }
+    db.tasks.insert_one(newTask);
+    return redirect(url_for('show_home'))
 
 @app.route('/post')
 def show_post(): 
