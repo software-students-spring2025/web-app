@@ -29,7 +29,6 @@ def add_question():
         difficulty_level = request.form.get('difficulty')
 
         if not question_text or not answer_text:
-            flash("Please fill in all fields!", "error")
             return redirect(url_for('questions.add_question'))
 
         # Insert into MongoDB
@@ -41,7 +40,6 @@ def add_question():
         }
         questions_collection.insert_one(question)
 
-        flash("Question added successfully!", "success")
         return redirect(url_for('questions.add_question'))
 
     return render_template('add_question.html')

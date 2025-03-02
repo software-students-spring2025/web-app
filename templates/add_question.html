@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Add a New Question</h1>
-    <form action="{{ url_for('questions.add_question') }}" method="POST">
+    <form action="{{ url_for('questions.add_question') }}" method="POST" onsubmit="showSuccessMessage()">
         <label for="question">Question:</label>
         <input type="text" id="question" name="question" required>
         <br>
@@ -30,7 +30,7 @@
         <br>
 
         <button type="submit">Submit</button>
-    <form action="{{ url_for('questions.add_question') }}" method="POST" onsubmit="showSuccessMessage()">
+    </form>
     <script>
         function showSuccessMessage() {
             alert("✅ Question successfully added!");
