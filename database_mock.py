@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 import pymongo
 from database import db
+from bson.objectid import ObjectId
 
 app = Flask(__name__)
 
@@ -28,8 +29,9 @@ mock_data = [
         "comment": ["Interesting read.", "Fascinating!", "Looking forward to more updates."]
     }
 ]
-# test with mock up data
-@app.route("/")
+
+# test with mock data
+@app.route("/mock")
 def index():
     return render_template("index.html", data=mock_data)
 
@@ -39,10 +41,21 @@ def index2():
     posts = db.posts.find()
     return render_template("index.html", data=posts)
 
-@app.route("/post/<int:post_id>")
+# for testing
+@app.route("/post/mock/<int:post_id>")
 def post_detail(post_id):
     # Find the post by ID
     post = next((item for item in mock_data if item["id"] == post_id), None)
+    if post:
+        return render_template("post.html", post=post)
+    else:
+        return "<h1>Post Not Found</h1>", 404
+    
+# with database
+@app.route("/post/<int:post_id>")
+def post_detail2(post_id):
+    # Find the post by ID
+    post = db.posts.find_one({"_id": ObjectId(post_id)})
     if post:
         return render_template("post.html", post=post)
     else:
