@@ -25,7 +25,7 @@
         <h1>{{ category if category else 'Search Results' }} Menu</h1>
         <form method="GET" action="{{ url_for('order') }}">
             <input type="hidden" name="category" value="{{ category }}">
-            <input type="text" name="query" placeholder="Search {{ category }}s ..." value="{{ query }}">
+            <input type="text" name="query" placeholder="Search {{ category }} ..." value="{{ query }}">
             <button type="submit">Search</button>
         </form>
     
