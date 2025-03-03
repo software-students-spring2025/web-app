@@ -8,7 +8,7 @@ from bson.objectid import ObjectId
 
 load_dotenv()
 
-app = Flask(__name__, template_folder='templates')
+app = Flask(__name__, template_folder='templates', static_folder='public', static_url_path='/')
 app.secret_key = os.getenv("SECRET_KEY")
 
 bcrypt = Bcrypt(app)
