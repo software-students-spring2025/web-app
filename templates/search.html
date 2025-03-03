@@ -57,6 +57,17 @@
                         <option value="All">All</option>
                     </select>
                 </label>
+                
+                <!-- New Filters for Sinks and Toilets -->
+                <label class="block">
+                    <span class="text-gray-700 dark:text-gray-300">Number of Sinks:</span>
+                    <input type="number" id="sinksFilter" class="w-full p-2 border rounded dark:bg-neutral-700 dark:text-white">
+                </label>
+                
+                <label class="block">
+                    <span class="text-gray-700 dark:text-gray-300">Number of Toilets:</span>
+                    <input type="number" id="toiletsFilter" class="w-full p-2 border rounded dark:bg-neutral-700 dark:text-white">
+                </label>
             </div>
     
             <!-- Buttons -->
@@ -85,85 +96,66 @@
             const clearButton = document.getElementById("clearButton");
 
             const filters = {
-                "floor" : null,
-                "type" : null,
-                "orientation" : null
-            }
+                "floor": null,
+                "type": null,
+                "orientation": null,
+                "sinks": null,
+                "toilets": null
+            };
 
-
-            filterButton.addEventListener("click", ()=>{
+            filterButton.addEventListener("click", () => {
                 filterPopup.classList.remove("hidden");
-            })
+            });
 
-
-            document.getElementById("closeFilter").addEventListener("click", ()=>{
+            document.getElementById("closeFilter").addEventListener("click", () => {
                 filterPopup.classList.add("hidden");
-            })
+            });
 
-            document.getElementById("applyFilter").addEventListener("click", ()=>{
+            document.getElementById("applyFilter").addEventListener("click", () => {
                 filters["floor"] = document.getElementById("floorFilter").value || null;
                 filters["type"] = document.getElementById("typeFilter").value || null;
                 filters["orientation"] = document.getElementById("orientationFilter").value || null;
-                console.log(filters);
+                filters["sinks"] = document.getElementById("sinksFilter").value || null;
+                filters["toilets"] = document.getElementById("toiletsFilter").value || null;
                 filterPopup.classList.add("hidden");
                 search(searchInput.value);
-            })
+            });
 
-            clearButton.addEventListener("click", ()=>{
-                filters["floor"] = null;
-                filters["type"] = null;
-                filters["orientation"] = null;
-                document.getElementById("floorFilter").value = "";
-                document.getElementById("typeFilter").value = "";
-                document.getElementById("orientationFilter").value = "";
+            clearButton.addEventListener("click", () => {
+                Object.keys(filters).forEach(key => filters[key] = null);
+                document.querySelectorAll("#filterPopup input, #filterPopup select").forEach(el => el.value = "");
                 search(searchInput.value);
-            })
+            });
 
-            // filter and display search results function
             async function search(query) {
-                resultsList.innerHTML = ""; // clear previous results
-                if (!query.trim()) return;  // don't search empty input
+                resultsList.innerHTML = "";
+                if (!query.trim()) return;
 
                 try {
-                    
                     let url = `/api/search?q=${query}`;
-                    if (filters["floor"]) {
-                        url += `&floor=${filters["floor"]}`;
-                    }
-                    if (filters["type"]) {
-                        url += `&type=${filters["type"]}`;
-                    }
-                    if (filters["orientation"]) {
-                        url += `&orientation=${filters["orientation"]}`;
-                    }
+                    Object.keys(filters).forEach(key => {
+                        if (filters[key]) url += `&${key}=${filters[key]}`;
+                    });
 
                     const response = await fetch(url);
                     const data = await response.json();
-
-                    // check if bathrooms are found
+                    
                     if (data.bathrooms.length === 0) {
-                        resultsList.innerHTML = `<li class="text-gray-500 dark:text-neutral-400">No bathrooms found for this building</li>`;
+                        resultsList.innerHTML = `<li class="text-gray-500 dark:text-neutral-400">No bathrooms found</li>`;
                         return;
                     }
-
-                    // render bathrooms
+                    
                     data.bathrooms.forEach(bathroom => {
                         const listItem = document.createElement("li");
                         listItem.className = "p-3 bg-white rounded-lg shadow-md dark:bg-neutral-800";
-                        listItem.textContent = bathroom.label + " (Floor " + bathroom.floor + ")";
+                        listItem.textContent = `${bathroom.label} (Floor ${bathroom.floor}, ${bathroom.sinks} sinks, ${bathroom.toilets} toilets)`;
                         resultsList.appendChild(listItem);
                     });
                 } catch (error) {
                     console.error("Error fetching search results:", error);
                 }
             }
-
-            // event listener for search input
-            searchInput.addEventListener("input", () => {
-                search(searchInput.value);
-            });
         });
     </script>
-
 </body>
 </html>

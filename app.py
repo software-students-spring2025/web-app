@@ -92,6 +92,8 @@ def search_api():
     floor_filter = request.args.get("floor")
     type_filter = request.args.get("type")
     orientation_filter = request.args.get("orientation")
+    sinks_filter = request.args.get("sinks")
+    toilets_filter = request.args.get("toilets")
 
     # fetch building by name (case-insensitive)
     building = pins_collection.find_one({"name": {"$regex": query, "$options": "i"}})
@@ -108,6 +110,10 @@ def search_api():
         bathroom_query["type"] = type_filter  # Match bathroom type
     if orientation_filter:
         bathroom_query["orientation"] = orientation_filter
+    if sinks_filter:
+        bathroom_query["sinks"] = int(sinks_filter)  # Convert to integer
+    if toilets_filter:
+        bathroom_query["toilets"] = int(toilets_filter)  # Convert to integer
 
     # Fetch bathrooms that match filters
     bathrooms = list(bathrooms_collection.find(bathroom_query))
