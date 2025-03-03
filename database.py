@@ -80,20 +80,24 @@ def add_comment(post_id):
 
 @app.route("/post/<string:post_id>/edit", methods=['POST'])
 def edit_post(post_id):
-    post = db["posts"].find_one({"_id": ObjectId(post_id)}) #find post
+    post = db["posts"].find_one({"_id": ObjectId(post_id)}) #find post (for get)
 
-    new_title = request.form.get("title")
-    new_content = request.form.get("content")
+    if request.method == 'POST':
+        new_title = request.form.get("title")
+        new_content = request.form.get("content")
 
-    db["posts"].update_one(
-        {"_id": ObjectId(post_id)},
-        {"$set": {
-            "title": new_title,
-            "content": new_content
-        }}
-    )
+        result = db["posts"].update_one(
+            {"_id": ObjectId(post_id)},
+            {"$set": {
+                "title": new_title,
+                "content": new_content
+            }}
+        )
 
-    return redirect(url_for('post_detail', post_id=post_id))
+        if result.modified_count >= 1:
+            return redirect(url_for('post_detail', post_id=post_id))
+        
+    return render_template("edit_post.html", post=post)
 
 
 if __name__ == "__main__":
