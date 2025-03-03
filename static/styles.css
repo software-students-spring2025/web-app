@@ -72,6 +72,10 @@ li {
     text-decoration: underline;
 }
 
+.form-box {
+    margin-bottom: 15px;
+}
+
 /* Mobile Optimization */
 @media (max-width: 600px) {
     h2 {
@@ -86,3 +90,5 @@ li {
         font-size: 14px;
     }
 }
+
+
