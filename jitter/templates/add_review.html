@@ -10,62 +10,76 @@
             background-color: #f8f8f8;
             font-family: Arial, sans-serif;
         }
-        
+
         .main-content {
-            margin: 20px auto;
+            margin: 40px auto;
             max-width: 600px;
             text-align: center;
             padding: 20px;
         }
-        
+
         .box {
             background: white;
-            padding: 20px;
+            padding: 25px;
             border-radius: 10px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-        
-        .field {
-            margin-bottom: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
             text-align: left;
         }
-        
-        label {
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        .field label {
+            font-weight: bold;
             display: block;
             margin-bottom: 5px;
-            font-weight: bold;
+            font-size: 14px;
         }
-        
-        input, select, textarea {
+
+        .field input,
+        .field select,
+        .field textarea {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
+            margin-top: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
             font-size: 16px;
+            box-sizing: border-box;
         }
-        
-        textarea {
-            height: 150px;
+
+        .field textarea {
+            height: 120px;
             resize: vertical;
         }
-        
+
         button {
-            background: #d3b3d8;
+            width: 100%;
+            background: #a384b3;
+            color: white;
+            padding: 12px;
             border: none;
-            padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-            color: black;
+            transition: background 0.3s ease;
         }
-        
+
+        button:hover {
+            background: #8b6a9d;
+        }
+
         a {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
             color: #666;
             text-decoration: none;
         }
-        
+
         a:hover {
+            color: #a384b3;
             text-decoration: underline;
         }
     </style>
@@ -76,35 +90,41 @@
         <div class="box">
             <form method="POST" action="/add-review">
                 <div class="field">
+                    <label>Your Name:</label>
+                    <input type="text" name="user" placeholder="Enter your name" required>
+                </div>
+
+                <div class="field">
                     <label>Restaurant Name:</label>
                     <input type="text" name="restaurant_name" placeholder="Enter restaurant name" required>
                 </div>
-                <!-- In add_review.html -->
-<div class="field">
-    <label>Cuisine Type:</label>
-    <select name="cuisine" required>
-        <option value="American">American</option>
-        <option value="Italian">Italian</option>
-        <option value="Chinese">Chinese</option>
-        <option value="Japanese">Japanese</option>
-        <option value="Mexican">Mexican</option>
-        <option value="Indian">Indian</option>
-        <option value="Thai">Thai</option>
-        <option value="Mediterranean">Mediterranean</option>
-        <option value="French">French</option>
-        <option value="Korean">Korean</option>
-        <option value="Vietnamese">Vietnamese</option>
-        <option value="Greek">Greek</option>
-        <option value="Middle Eastern">Middle Eastern</option>
-        <option value="Vegetarian">Vegetarian</option>
-        <option value="Vegan">Vegan</option>
-        <option value="Seafood">Seafood</option>
-        <option value="Bakery">Bakery</option>
-        <option value="Café">Café</option>
-        <option value="Fast Food">Fast Food</option>
-        <option value="Other">Other</option>
-    </select>
-</div>
+
+                <div class="field">
+                    <label>Cuisine Type:</label>
+                    <select name="cuisine" required>
+                        <option value="American">American</option>
+                        <option value="Italian">Italian</option>
+                        <option value="Chinese">Chinese</option>
+                        <option value="Japanese">Japanese</option>
+                        <option value="Mexican">Mexican</option>
+                        <option value="Indian">Indian</option>
+                        <option value="Thai">Thai</option>
+                        <option value="Mediterranean">Mediterranean</option>
+                        <option value="French">French</option>
+                        <option value="Korean">Korean</option>
+                        <option value="Vietnamese">Vietnamese</option>
+                        <option value="Greek">Greek</option>
+                        <option value="Middle Eastern">Middle Eastern</option>
+                        <option value="Vegetarian">Vegetarian</option>
+                        <option value="Vegan">Vegan</option>
+                        <option value="Seafood">Seafood</option>
+                        <option value="Bakery">Bakery</option>
+                        <option value="Café">Café</option>
+                        <option value="Fast Food">Fast Food</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
                 <div class="field">
                     <label>Rating:</label>
                     <select name="rating" required>
@@ -115,16 +135,16 @@
                         <option value="1">1 Star - Poor</option>
                     </select>
                 </div>
-                
+
                 <div class="field">
                     <label>Your Review:</label>
                     <textarea name="review_text" placeholder="Share your experience..." required></textarea>
                 </div>
-                
+
                 <button type="submit">Submit Review</button>
             </form>
         </div>
-        
+
         <div>
             <a href="/">Back to Home</a>
         </div>

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Jitter - Restaurants</title>
+    <title>Jitter</title>
     <style>
         body {
             background-color: #f8f8f8;
@@ -123,6 +123,72 @@
             margin-right: 5px;
         }
 
+        /* Center the container */
+        .recent-reviews {
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+            text-align: center;
+            color: black; /* Ensures text is visible on a dark background */
+        }
+
+        /* Grid layout for reviews */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+            gap: 20px;
+            justify-content: center;
+        }
+
+        /* Review Card Styling */
+        .review-card {
+            background-color: white; /* Dark background for cards */
+            color: black;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.2);
+            text-align: left;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Rating Stars */
+        .rating {
+            font-size: 18px;
+            color: gold;
+        }
+
+        /* Date Styling */
+        .review-date {
+            font-size: 14px;
+            color: black;
+        }
+
+        /* Remove default link styling */
+        a {
+            text-decoration: none; /* Removes underline */
+            color: inherit; /* Uses the text color from parent */
+        }
+
+        /* Ensure hover effect still works */
+        a:hover {
+            color: #A94E19; /* Change to a color that matches your theme */
+            text-decoration: none;
+        }
+        /* Sidebar Icon Styling */
+        .sidebar img {
+            width: 30px;  /* Adjust icon width */
+            height: 30px; /* Adjust icon height */
+            object-fit: contain; /* Ensures icons maintain aspect ratio */
+            margin-bottom: 15px; /* Adds spacing between icons */
+        }
+
+
+
+
     </style>
 </head>
 
@@ -130,13 +196,13 @@
     <!-- Sidebar Navigation -->
 <div class="sidebar">
     <a href="/profile.html">
-        <img src="jitter/static/white-user.png" alt="User Profile">
+        <img src="{{ url_for('static', filename='profile-picture.png') }}" alt="User Profile">
     </a>
     <a href="/">
-        <img src="jitter/static/white-user.png" alt="Home">
+        <img src="{{ url_for('static', filename='building.png') }}" alt="Home">
     </a>
     <a href="/add-review">
-        <img src="jitter/static/plus-white.svg" alt="Add New">
+        <img src="{{ url_for('static', filename='add.png') }}" alt="Add New">
     </a>
 </div>
 
@@ -153,12 +219,11 @@
             </form>
         </div>
 
-        <!-- Restaurant List -->
+        <!-- Restaurant List 
         <div class="restaurant-container">
             {% if restaurants %}
                 {% for restaurant in restaurants %}
                 <div class="restaurant-card">
-                    <img src="{{ restaurant.image_url or 'https://via.placeholder.com/200' }}" alt="Restaurant Image">
                     <h3>{{ restaurant.name }}</h3>
                     <p><strong>${{ restaurant.price or '0' }}</strong></p>
                     <p><em>{{ restaurant.cuisine or 'Cuisine not specified' }}</em></p>
@@ -168,7 +233,22 @@
             {% else %}
                 <p>No restaurants found.</p>
             {% endif %}
+        </div>-->
+        <div class="restaurant-container">
+            {% if restaurants %}
+                {% for i in range(50) %}
+                <a href="{{ url_for('restaurant_details', restaurant_name=restaurants[i].name) }}" class="restaurant-card">
+                    <h3>{{ restaurants[i].name }}</h3>
+                    <p><strong>${{ restaurants[i].price or '0' }}</strong></p>
+                    <p><em>{{ restaurants[i].cuisine or 'Cuisine not specified' }}</em></p>
+                    <p>{{ restaurants[i].description or '' }}</p>
+                </a>
+                {% endfor %}
+            {% else %}
+                <p>No restaurants found.</p>
+            {% endif %}
         </div>
+        
         <div class="recent-reviews">
             <h2>Recent Reviews</h2>
             {% if recent_reviews %}
@@ -187,7 +267,6 @@
             {% endif %}
         </div>
         <!-- View Reviews and Add New -->
-        <p>view Shop reviews above.</p>
 
         <div class="add-review">
             <a href="/add-review">

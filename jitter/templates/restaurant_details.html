@@ -70,7 +70,43 @@
             width: 30px;  /* Adjust icon width */
             height: 30px; /* Adjust icon height */
             object-fit: contain; /* Ensures icons maintain aspect ratio */
-            margin-bottom: 15px; /* Adds spacing between icons */
+            margin-bottom: 15px; /* Adds 
+            spacing between icons */
+        }
+        .review-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+    
+        .edit-btn {
+            background-color: gray;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s ease;
+        }
+    
+        .edit-btn:hover {
+            background-color: #388E3C;
+        }
+    
+        .delete-btn {
+            background-color: #ff4c4c;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s ease;
+        }
+    
+        .delete-btn:hover {
+            background-color: #cc0000;
         }
     </style>
 </head>
@@ -107,11 +143,28 @@
                     </p>
                     <p>{{ review.comment or review.review_text }}</p>
                     <p class="review-date">{{ review.created_at.strftime('%B %d, %Y') if review.created_at else '' }}</p>
+                
+                     <!-- Edit and Delete Buttons -->
+                <div class="review-buttons">
+                    <!-- Edit Button - Links to the edit page -->
+                    <a href="{{ url_for('edit_review', review_id=review._id) }}" class="edit-btn">✏️ Edit</a>
+
+                <!-- Delete Button -->
+                <form action="{{ url_for('delete_review', review_id=review._id) }}" method="POST" style="margin-top: 10px;">
+                    <button type="submit" class="delete-btn">🗑️ Delete</button>
+                </form>
                 </div>
             {% endfor %}
         {% else %}
             <p>No reviews yet. Be the first to review!</p>
         {% endif %}
+
+        
+    </div>
+    <div class="add-review">
+        <a href="/add-review">
+            <i class="fas fa-plus-square plus-icon"></i> Add a review.
+        </a>
     </div>
 
     <br>

@@ -3,8 +3,8 @@ from flask import (
     render_template,
     request,
     jsonify,
-    redirect,     # Add this
-    url_for 
+    redirect,  # Add this
+    url_for,
 )
 from flask_pymongo import PyMongo
 import os
@@ -23,7 +23,8 @@ connection = pymongo.MongoClient(
 )
 db = connection["Jitter"]
 restaurants_collection = db["restaurants"]
-reviews_collection = db["reviews"] 
+reviews_collection = db["reviews"]
+
 
 # ✅ Home Route - Render the homepage
 @app.route("/")
@@ -31,9 +32,7 @@ def index():
     restaurants = list(
         restaurants_collection.find({}, {"_id": 0})
     )  # Fetch restaurants from MongoDB
-    recent_reviews = list(
-        reviews_collection.find().sort("created_at", -1).limit(5)
-    )
+    recent_reviews = list(reviews_collection.find().sort("created_at", -1).limit(5))
     return render_template(
         "index.html", restaurants=restaurants, recent_reviews=recent_reviews
     )  # FIX: render_template now works!
@@ -81,12 +80,14 @@ def search():
     # Extract reviews list (or empty list if none exist)
     reviews = restaurant.get("reviews", [])
 
-    return render_template("reviews.html", restaurant=restaurant, reviews=reviews)
+    return render_template("restaurant_details.html", restaurant=restaurant, reviews=reviews)
+
 
 # ✅ Profile Page
 @app.route("/profile")
 def profile():
     return render_template("profile.html")  # FIX: render_template works now!
+
 
 @app.route("/add-review", methods=["GET"])
 def add_review_form():
@@ -96,55 +97,129 @@ def add_review_form():
 @app.route("/add-review", methods=["POST"])
 def add_review():
     if request.method == "POST":
-        # Extract data from the form submission
+        # Extract form data
+        user = request.form.get("user")  # User's name
         restaurant_name = request.form.get("restaurant_name")
         rating = int(request.form.get("rating"))
         review_text = request.form.get("review_text")
-        cuisine = request.form.get("cuisine")  # Get the cuisine from the form
-        
-        # Basic validation
-        if not restaurant_name:
-            return "Please provide a restaurant name", 400
-        
+        cuisine = request.form.get("cuisine")
+
+        # Validation checks
+        if not restaurant_name or not user:
+            return "Please provide a restaurant name and your name", 400
+
         if rating < 1 or rating > 5:
             return "Rating must be between 1 and 5", 400
-            
-        # Create the review object
+
+        # Create a new review object
         new_review = {
+            "user": user,
             "restaurant_name": restaurant_name,
             "rating": rating,
             "review_text": review_text,
-            "cuisine": cuisine,  # Add cuisine to the review
-            "created_at": datetime.datetime.now()
+            "cuisine": cuisine,
+            "created_at": datetime.datetime.now(),
         }
-        
-        # Insert the review into reviews collection
+
+        # Insert the review into the `reviews` collection
         reviews_collection.insert_one(new_review)
-        
-        # Check if the restaurant exists and update or create it
+
+        # Check if the restaurant exists in `restaurants_collection`
         existing_restaurant = restaurants_collection.find_one({"name": restaurant_name})
-        
+
         if existing_restaurant:
-            # If the restaurant exists, update it
+            # Update existing restaurant: Append new review
             restaurants_collection.update_one(
                 {"name": restaurant_name},
-                {
-                    "$push": {"reviews": new_review},
-                    "$set": {"cuisine": cuisine}  # Update cuisine if it's a new review
-                }
+                {"$push": {"reviews": new_review}, "$set": {"cuisine": cuisine}}
             )
         else:
-            # If the restaurant doesn't exist, create a new entry
+            # Create new restaurant entry
             new_restaurant = {
                 "name": restaurant_name,
                 "rating": float(rating),
-                "cuisine": cuisine,  # Add cuisine to the restaurant
+                "cuisine": cuisine,
                 "reviews": [new_review],
-                "created_at": datetime.datetime.now()
+                "created_at": datetime.datetime.now(),
             }
             restaurants_collection.insert_one(new_restaurant)
-        
+
         return redirect(url_for("index"))
+
+
+
+@app.route("/restaurant/<restaurant_name>")
+def restaurant_details(restaurant_name):
+    # Find the restaurant by name
+    restaurant = restaurants_collection.find_one({"name": restaurant_name})
+
+    if not restaurant:
+        return "Restaurant not found", 404
+
+    # Fetch all reviews for this restaurant
+    reviews = reviews_collection.find({"restaurant_name": restaurant_name}).sort(
+        "created_at", -1
+    )
+
+    return render_template(
+        "restaurant_details.html", restaurant=restaurant, reviews=reviews
+    )
+
+@app.route("/delete-review/<review_id>", methods=["POST"])
+def delete_review(review_id):
+    # Find the review to delete
+    review = reviews_collection.find_one({"_id": ObjectId(review_id)})
+
+    if not review:
+        return "Review not found", 404
+
+    # Delete the review from the `reviews` collection
+    reviews_collection.delete_one({"_id": ObjectId(review_id)})
+
+    # Remove the review from the associated restaurant's review list
+    restaurants_collection.update_one(
+        {"name": review["restaurant_name"]},
+        {"$pull": {"reviews": {"_id": ObjectId(review_id)}}}
+    )
+
+    return redirect(url_for("restaurant_details", restaurant_name=review["restaurant_name"]))
+
+@app.route("/edit-review/<review_id>")
+def edit_review(review_id):
+    """Render the edit review page."""
+    review = reviews_collection.find_one({"_id": ObjectId(review_id)})
+
+    if not review:
+        return "Review not found", 404
+
+    return render_template("edit_review.html", review=review)
+
+
+@app.route("/update-review/<review_id>", methods=["POST"])
+def update_review(review_id):
+    """Update the review in the database."""
+    new_rating = int(request.form.get("rating"))
+    new_review_text = request.form.get("review_text")
+
+    # Update the review in the `reviews` collection
+    reviews_collection.update_one(
+        {"_id": ObjectId(review_id)},
+        {"$set": {"rating": new_rating, "review_text": new_review_text, "updated_at": datetime.datetime.now()}}
+    )
+
+    # Find the restaurant associated with this review
+    review = reviews_collection.find_one({"_id": ObjectId(review_id)})
+    restaurant_name = review["restaurant_name"]
+
+    # Update the review inside the restaurant's reviews list
+    restaurants_collection.update_one(
+        {"name": restaurant_name, "reviews._id": ObjectId(review_id)},
+        {"$set": {"reviews.$.rating": new_rating, "reviews.$.review_text": new_review_text}}
+    )
+
+    return redirect(url_for("restaurant_details", restaurant_name=restaurant_name))
+
+
 # ✅ Start Flask Application
 if __name__ == "__main__":
     app.run(debug=True)
