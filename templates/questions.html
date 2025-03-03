@@ -38,7 +38,7 @@
       <table id="data" class="table-container">
         <thead>
           <tr>
-            <th>Select</th>
+            <th><input type="checkbox" id="select-all"></th>
             <th>Question</th>
             <th>Answer</th>
             <th>Hint</th>
@@ -64,7 +64,23 @@
       <button type = "submit" name = "start_quiz" value = "true">Start Quiz</button>
       <button type = "submit" name = "start_flashcards" value = "true">Start Flashcards</button>
   </form>
+  <script>
+    document.getElementById("select-all").addEventListener("change", function() {
+        let checkboxes = document.querySelectorAll("input[name='selected']");
+        checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+    });
+  </script>
 </body>
 </html>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-messages">
+        {% for category, message in messages %}
+            <p class="flash-message {{ category }}">{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+{% endwith %}
 
 {% endblock %}
