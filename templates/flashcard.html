@@ -16,20 +16,20 @@
     </div>
 
     <div class="botton-group">
-        <button onclick="toggleHint()">Show/Hide Hint</button>
-        <button onclick="toggleAnswer()">Show/Hide Answer</button>
+        <button onclick="toggleHint()" class="button">Show/Hide Hint</button>
+        <button onclick="toggleAnswer()" class="button">Show/Hide Answer</button>
     <div>
 </div>
 
 <div class="navigation">
     {% if index > 0 %}
-        <a href="{{ url_for('flashcard.flashcard', index=index-1,shuffle=shuffle) }}">Previous</a>
+        <a href="{{ url_for('flashcard.flashcard', index=index-1,shuffle=shuffle) }}" class="button">Previous</a>
     {% endif %}
     {% if index < total - 1 %}
-        <a href="{{ url_for('flashcard.flashcard', index=index+1,shuffle=shuffle) }}">Next</a>
+        <a href="{{ url_for('flashcard.flashcard', index=index+1,shuffle=shuffle) }}" class="button">Next</a>
     {% else %}
         <p>You've reached the end of the flashcards!</p>
-        <a href="{{ url_for('flashcard.flashcard_options', index=0, shuffle=shuffle) }}" class="btn">Restart</a>
+        <a href="{{ url_for('flashcard.flashcard_options', index=0, shuffle=shuffle) }}" class="button">Restart</a>
     {% endif %}
 </div>
 

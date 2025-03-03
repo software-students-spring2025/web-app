@@ -24,16 +24,15 @@
 .table-container th {
     background-color: #9ac8f3;
     color: white;
-    text-transform: uppercase;
 }
 
 .table-container tr:hover {
-    background-color: #f1f1f1;
+    background-color: #dae8f5;
 }
-
+/*
 .table-container tbody tr:nth-child(even) {
     background-color: #f9f9f9;
-}
+}*/
 
 .table-container th:nth-child(4),
 .table-container td:nth-child(4) {
@@ -47,6 +46,19 @@
 
 .center-wrapper{
     text-align: center;
+}
+
+table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    border: 1px;
+}
+
+table, th, td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: left;
 }
 
 .button {
@@ -187,4 +199,85 @@ nav a, .dropdown {
     background-color: #f9f9f9; 
     margin: 20px auto; 
     text-align: center;
+}
+
+.content-container {
+    max-width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+}
+ 
+.search-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    max-width: 80%; 
+    margin: 20px auto; 
+    width: 100%; 
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px;
+    justify-content: center;
+}
+
+.add-form {
+    display: block;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    max-width: 40%; 
+    margin: 20px auto; 
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    gap: 5px; 
+    flex-wrap: nowrap; 
+    min-width: 0; 
+    justify-content: center;
+}
+
+.form-group label {
+    margin-right: 5px;
+    font-weight: bold;
+    white-space: nowrap; 
+    flex-shrink: 0; 
+    text-align: center;
+}
+
+.form-group input,
+.form-group select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    flex: 1; 
+    min-width: 0; 
+    max-width: 100%; 
+    text-align: left;
+}
+
+.search-form .button,
+.add-form .button {
+    flex-shrink: 0; 
+    white-space: nowrap; 
+    background-color: #9ac8f3; 
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+    text-align: center;
+}
+
+.search-form .button:hover,
+.add-form .button:hover {
+    background-color: #5696d1; 
 }

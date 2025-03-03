@@ -1,31 +1,36 @@
 {% extends "layout.html" %}
 {% block content %}
     <h1 style="text-align: center;">Search For Questions</h1>
-    <form action="{{ url_for('questions.search') }}" method="POST">
+    <form action="{{ url_for('questions.search') }}" method="POST" class="search-form">
+      <div class="form-group">
         <label for="question">Question:</label>
-        <input type="text" id="question" name="question" >
-        <br>
-        
-        <label for="answer">Answer:</label>
-        <input type="text" id="answer" name="answer" >
-        <br>
+        <input type="text" id="question" name="question">
+      </div>
+      
+      <div class="form-group">
+          <label for="answer">Answer:</label>
+          <input type="text" id="answer" name="answer">
+      </div>
 
-        <label for="hint">Hint:</label>
-        <input type="text" id="hint" name="hint">
-        <br>
+      <div class="form-group">
+          <label for="hint">Hint:</label>
+          <input type="text" id="hint" name="hint">
+      </div>
 
-        <label for="genre">Genre:</label>
-        <input type="text" id="genre" name="genre">
-        <br>
+      <div class="form-group">
+          <label for="genre">Genre:</label>
+          <input type="text" id="genre" name="genre">
+      </div>
 
-        <label for="difficulty">Difficulty Level:</label>
-        <select id="difficulty" name="difficulty">
-            <option value=""></option>
-            <option value="Easy">Easy</option>
-            <option value="Medium">Medium</option>
-            <option value="Hard">Hard</option>
-        </select>
-        <br>
+      <div class="form-group">
+          <label for="difficulty">Difficulty Level:</label>
+          <select id="difficulty" name="difficulty">
+              <option value=""></option>
+              <option value="Easy">Easy</option>
+              <option value="Medium">Medium</option>
+              <option value="Hard">Hard</option>
+          </select>
+      </div>
 
         <button type="submit" class="button">Search</button>
     </form>
