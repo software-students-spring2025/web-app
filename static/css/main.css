@@ -148,3 +148,12 @@ nav a, .dropdown {
     text-decoration: none;
     color: #333;
 }
+.stats-box {
+    border: 2px solid black; 
+    padding: 15px; 
+    width: fit-content; 
+    border-radius: 5px; 
+    background-color: #f9f9f9; 
+    margin: 20px auto; 
+    text-align: center;
+}
