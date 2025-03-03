@@ -44,8 +44,8 @@ def load_user(user_id):
     return User(user_data)
 
 @app.route('/')
-def index():
-    return redirect(url_for('home'))
+def landing():
+    return render_template('landing.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -98,13 +98,19 @@ def register():
 @app.route('/home')
 @login_required
 def home():
-    return render_template("home.html")
+    username = current_user.username
+
+    created_events = list(db.events.find({"creator": username}))
+    joined_events = list(db.events.find({"attending": username, "creator": {"$ne": username}}))
+
+    return render_template("home.html", created_events=created_events, joined_events=joined_events)
+    
 
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('login'))
+    return redirect(url_for('landing'))
 
 @app.route('/create_group', methods=['GET', 'POST'])
 @login_required
