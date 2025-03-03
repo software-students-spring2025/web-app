@@ -67,9 +67,9 @@ Make sure **[Docker](https://www.docker.com/)** is installed on your machine.
 git clone https://github.com/software-students-spring2025/2-web-app-ez-squad-2-0
 cd 2-web-app-ez-squad-2-0
 ```
-2. **Generate a .env file using the .env.example template:**
+2. **Generate a .env file:**
 ```bash
-cp .env.example .env
+touch .env
 ```
 
 
