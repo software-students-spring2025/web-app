@@ -1,0 +1,22 @@
+header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.top {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search-container {
+    border: 0.5px solid #000;
+    display: flex;
+}
+
+.search-container input {
+    border: none;
+    width: 100%;
+}
