@@ -29,6 +29,11 @@
               <option value="{{ difficulty }}" {% if difficulty == selected_difficulty %}selected{% endif %}>{{ difficulty }}</option>
           {% endfor %}
       </select>
+
+      <label>
+        <input type="checkbox" name="bookmarked" value="true" {% if bookmarked_filter %}checked{% endif %}>
+        Show Only Bookmarked Questions
+      </label>
       
       <button type="submit">Apply Filters</button>
     </form>
@@ -44,6 +49,7 @@
             <th>Hint</th>
             <th>Genre</th>
             <th>Difficulty</th>
+            <th>Bookmark</th>
           </tr>
         </thead>
         <tbody>
@@ -55,15 +61,22 @@
               <td>{{ question.hint }}</td>
               <td>{{ question.genre }}</td>
               <td>{{ question.difficulty }}</td>
+              <td>
+                <a href="{{ url_for('questions.toggle_bookmark', q_id=question._id) }}" style="text-decoration: none;">
+                  <button type="button" style="cursor:pointer;">
+                      {% if question.bookmarked %}❌ Unbookmark{% else %}🔖 Bookmark{% endif %}
+                  </button>
+                </a>                 
+              </td>
             </tr>
           {% endfor %}
         </tbody>
       </table>
-
       <!-- Buttons for Quiz and Flashcards -->
       <button type = "submit" name = "start_quiz" value = "true">Start Quiz</button>
       <button type = "submit" name = "start_flashcards" value = "true">Start Flashcards</button>
-  </form>
+    </form>
+
   <script>
     document.getElementById("select-all").addEventListener("change", function() {
         let checkboxes = document.querySelectorAll("input[name='selected']");

@@ -38,7 +38,8 @@ def add_question():
             "answer": answer_text,
             "hint": hint_text,
             "difficulty": difficulty_level,
-            "genre" : genre_text
+            "genre" : genre_text,
+            "bookmarked": False
         }
         questions_collection.insert_one(question)
 
@@ -53,14 +54,19 @@ def show_question():
     
     selected_genre = request.form.get('genre', '')
     selected_difficulty = request.form.get('difficulty', '')
+    bookmarked_filter = request.form.get('bookmarked', '') == 'true'
     
     query = {}
     if selected_genre:
         query["genre"] = selected_genre
     if selected_difficulty:
         query["difficulty"] = selected_difficulty
+    if bookmarked_filter:
+        query["bookmarked"] = True
     
     questions_to_show = list(questions_collection.find(query))
+    for question in questions_to_show:
+        question['_id'] = str(question['_id'])
     
     if request.method == 'POST':
         if 'start_quiz' in request.form or 'start_flashcards' in request.form:
@@ -161,9 +167,20 @@ def edit(q_id):
             }
         }
         questions_collection.update_one(
-            {'_id': ObjectId(q_id)}, #query
+            {'_id': ObjectId(q_id)},
             newvalues
             )
         return redirect(url_for("questions.show_question"))
     return render_template("question_edit.html", question = question_to_show)
 
+@questions_bp.route('/toggle_bookmark/<q_id>', methods=['GET'])
+def toggle_bookmark(q_id):
+    question = questions_collection.find_one({"_id": ObjectId(q_id)})
+    
+    new_bookmarked_status = not question.get("bookmarked", False)
+    questions_collection.update_one(
+        {"_id": ObjectId(q_id)},
+        {"$set": {"bookmarked": new_bookmarked_status}}
+    )
+
+    return redirect(url_for("questions.show_question"))
