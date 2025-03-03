@@ -56,3 +56,73 @@ h1 {
     margin: 10px;
     width: 250px;
 }
+
+/* Review Button in Sidebar */
+.review-button {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.review-box {
+    background: #d3b3d8;
+    color: black;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    transform: rotate(-90deg);
+    white-space: nowrap;
+    margin-top: 100px;
+}
+
+.review-box:hover {
+    background: #c095ca;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 120px; /* Increased width */
+    background: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 30px;
+    z-index: 1000;
+}
+
+.sidebar-icon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+.sidebar-link {
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.sidebar-text {
+    color: white;
+    transform: rotate(-90deg);
+    white-space: nowrap;
+    font-size: 16px; /* Larger text */
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+/* Adjust main content to accommodate larger sidebar */
+.main-content {
+    margin-left: 140px; /* Increased margin */
+    padding: 20px;
+}

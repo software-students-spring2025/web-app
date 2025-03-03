@@ -77,12 +77,20 @@ def search():
     if not restaurant:
         return "Restaurant not found", 404
 
-    # Extract reviews list (or empty list if none exist)
-    reviews = restaurant.get("reviews", [])
+    # Get all reviews for this restaurant
+    reviews = list(reviews_collection.find({"restaurant_name": restaurant["name"]}).sort("created_at", -1))
+    
+    # If the restaurant doesn't have its own reviews array, include the ones we just fetched
+    if "reviews" not in restaurant or not restaurant["reviews"]:
+        restaurant["reviews"] = reviews
 
+<<<<<<< HEAD
     return render_template("restaurant_details.html", restaurant=restaurant, reviews=reviews)
 
 
+=======
+    return render_template("reviews.html", restaurant=restaurant, reviews=reviews)
+>>>>>>> 254a6aad2edbebc4bdee129fb37d95b6108091c3
 # ✅ Profile Page
 @app.route("/profile")
 def profile():
@@ -102,12 +110,21 @@ def add_review():
         restaurant_name = request.form.get("restaurant_name")
         rating = int(request.form.get("rating"))
         review_text = request.form.get("review_text")
+<<<<<<< HEAD
         cuisine = request.form.get("cuisine")
 
         # Validation checks
         if not restaurant_name or not user:
             return "Please provide a restaurant name and your name", 400
 
+=======
+        cuisine = request.form.get("cuisine")  # Get cuisine from form
+        
+        # Basic validation
+        if not restaurant_name:
+            return "Please provide a restaurant name", 400
+        
+>>>>>>> 254a6aad2edbebc4bdee129fb37d95b6108091c3
         if rating < 1 or rating > 5:
             return "Rating must be between 1 and 5", 400
 
@@ -117,6 +134,7 @@ def add_review():
             "restaurant_name": restaurant_name,
             "rating": rating,
             "review_text": review_text,
+<<<<<<< HEAD
             "cuisine": cuisine,
             "created_at": datetime.datetime.now(),
         }
@@ -125,9 +143,23 @@ def add_review():
         reviews_collection.insert_one(new_review)
 
         # Check if the restaurant exists in `restaurants_collection`
+=======
+            "created_at": datetime.datetime.now()
+        }
+        
+        # Add cuisine only to new reviews
+        if cuisine:
+            new_review["cuisine"] = cuisine
+        
+        # Insert the review
+        reviews_collection.insert_one(new_review)
+        
+        # Check if the restaurant exists
+>>>>>>> 254a6aad2edbebc4bdee129fb37d95b6108091c3
         existing_restaurant = restaurants_collection.find_one({"name": restaurant_name})
 
         if existing_restaurant:
+<<<<<<< HEAD
             # Update existing restaurant: Append new review
             restaurants_collection.update_one(
                 {"name": restaurant_name},
@@ -139,12 +171,30 @@ def add_review():
                 "name": restaurant_name,
                 "rating": float(rating),
                 "cuisine": cuisine,
+=======
+            # Update the existing restaurant with the new review
+            restaurants_collection.update_one(
+                {"name": restaurant_name},
+                {"$push": {"reviews": new_review}}
+            )
+        else:
+            # Create a new restaurant
+            new_restaurant = {
+                "name": restaurant_name,
+                "rating": float(rating),
+>>>>>>> 254a6aad2edbebc4bdee129fb37d95b6108091c3
                 "reviews": [new_review],
                 "created_at": datetime.datetime.now(),
             }
+            
+            # Only add cuisine to new restaurants if provided
+            if cuisine:
+                new_restaurant["cuisine"] = cuisine
+                
             restaurants_collection.insert_one(new_restaurant)
 
         return redirect(url_for("index"))
+<<<<<<< HEAD
 
 
 
@@ -219,6 +269,17 @@ def update_review(review_id):
 
     return redirect(url_for("restaurant_details", restaurant_name=restaurant_name))
 
+=======
+    
+@app.route("/recent-reviews")
+def recent_reviews():
+    # Fetch the most recent reviews from your database
+    recent_reviews = list(
+        reviews_collection.find().sort("created_at", -1).limit(10)
+    )
+    
+    return render_template("recent_reviews.html", reviews=recent_reviews)
+>>>>>>> 254a6aad2edbebc4bdee129fb37d95b6108091c3
 
 # ✅ Start Flask Application
 if __name__ == "__main__":

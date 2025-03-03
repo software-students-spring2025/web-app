@@ -11,38 +11,71 @@
             background-color: #f8f8f8;
         }
 
-        /* Sidebar */
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 60px;
-            background: #1a1a1a;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 20px;
-        }
+        /* Sidebar Styling */
+/* Sidebar with improved spacing */
+.sidebar {
+    position: fixed !important;
+    left: 0 !important;
+    top: 0 !important;
+    height: 100% !important;
+    width: 150px !important;
+    background: #1a1a1a !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding-top: 30px !important;
+    z-index: 1000 !important;
+  }
+  
+  /* Top navigation icons */
+  .sidebar a:nth-child(1),
+  .sidebar a:nth-child(2) {
+    margin-bottom: 40px !important; /* More space after icons */
+  }
+  
+  /* Text navigation items */
+  .sidebar a:nth-child(3),
+  .sidebar a:nth-child(4) {
+    height: 150px !important; /* Increase height to provide more vertical space */
+    margin-bottom: 20px !important;
+  }
+  
+  /* Main content adjustment */
+  .main-content {
+    margin-left: 170px !important;
+    padding: 20px !important;
+  }
+  
+  /* Icons and links */
+  .sidebar img {
+    width: 40px !important;
+    height: 40px !important;
+  }
+  
+  .sidebar a {
+    width: 100% !important;
+    text-align: center !important;
+    color: white !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  
+  /* Text elements in sidebar */
+  .sidebar-text {
+    color: white !important;
+    transform: rotate(-90deg) !important;
+    white-space: nowrap !important;
+    font-size: 18px !important;
+    font-weight: bold !important;
+    letter-spacing: 1px !important; /* Add letter spacing for better readability */
+  }
 
-        .sidebar a {
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 20px 0;
-            font-size: 24px;
-        }
-
-        .sidebar a:hover {
-            background: #333;
-        }
-
-        /* Main Content */
-        .main-content {
-            margin-left: 80px;
-            text-align: center;
-            padding: 20px;
-        }
+/* Adjust main content to accommodate larger sidebar */
+.main-content {
+    margin-left: 140px; /* Increased margin */
+    padding: 20px;
+}
 
         /* Search Bar */
 .search-bar {
@@ -193,8 +226,9 @@
 </head>
 
 <body>
-    <!-- Sidebar Navigation -->
+<!-- Sidebar Navigation -->
 <div class="sidebar">
+<<<<<<< HEAD
     <a href="/profile.html">
         <img src="{{ url_for('static', filename='profile-picture.png') }}" alt="User Profile">
     </a>
@@ -203,9 +237,21 @@
     </a>
     <a href="/add-review">
         <img src="{{ url_for('static', filename='add.png') }}" alt="Add New">
+=======
+    <a href="/profile" title="Profile" class="sidebar-icon">
+        <img src="/static/white-user.png" alt="User Profile" width="40" height="40">
+    </a>
+    <a href="/" title="Home" class="sidebar-icon">
+        <img src="/static/home-icon.png" alt="Home" width="40" height="40">
+    </a>
+    <a href="/recent-reviews" title="Recent Reviews" class="sidebar-link">
+        <div class="sidebar-text">Recent Reviews</div>
+    </a>
+    <a href="/add-review" title="Leave a Review" class="sidebar-link">
+        <div class="sidebar-text">Leave a Review</div>
+>>>>>>> 254a6aad2edbebc4bdee129fb37d95b6108091c3
     </a>
 </div>
-
 
     <!-- Main Content -->
     <div class="main-content">
@@ -248,6 +294,7 @@
                 <p>No restaurants found.</p>
             {% endif %}
         </div>
+<<<<<<< HEAD
         
         <div class="recent-reviews">
             <h2>Recent Reviews</h2>
@@ -273,6 +320,8 @@
                 <i class="fas fa-plus-square plus-icon"></i> or make your own.
             </a>
         </div>
+=======
+>>>>>>> 254a6aad2edbebc4bdee129fb37d95b6108091c3
     </div>
 </body>
 
