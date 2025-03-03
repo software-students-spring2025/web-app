@@ -16,6 +16,7 @@ bcrypt = Bcrypt(app)
 connection = pymongo.MongoClient(os.getenv("MONGODB_URI"))
 db = connection[os.getenv("DB_NAME")]
 users_collection = db["users"]
+groups_collection = db["groups"]
 
 login_manager = LoginManager()
 login_manager.login_view = "login"
@@ -99,11 +100,20 @@ def logout():
 
 @app.route('/create_group', methods=['GET', 'POST'])
 def create_group():
+    if request.method == 'POST':
+        group_name = request.form['group_name']
+        members = []
+        member = request.form['member_name']
+        members.append(member)
+        new_group = groups_collection.insert_one({'owner_id': current_user.get_id(), 'group_name': group_name, 'members': members})
+        return redirect(url_for('groups'))
+        
     return render_template("create_group.html")
 
 @app.route('/groups')
 def groups():
-    return render_template("groups.html")
+    groups = groups_collection.find({'members': 'member3'})
+    return render_template("groups.html", groups=groups)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=os.environ.get('PORT', 5001), debug=False)
