@@ -17,7 +17,7 @@
         {% for doc in docs %}
         <div class = "databox"> 
             <h2 >{{doc.meal_name}}</h2>
-            <h3>{{doc.date.strftime("%H:%M on %d %B %Y")}}</h3>
+            <h3>{{doc.date.strftime("%d %B %Y")}}</h3>
             <div style="text-align: left; line-height: 25%;">
                 <h3>Calories: {{doc.calories}}</h3>
                 <p>Protein: {{doc.protein}}</p>

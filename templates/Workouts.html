@@ -18,7 +18,7 @@
       {% for doc in docs %}
       <div class = "databox"> 
         <h2 >{{doc.workout_description}}</h2>
-          <h3>{{doc.date.strftime("%H:%M on %d %B %Y")}}</h3>
+          <h3>{{doc.date.strftime("%d %B %Y")}}</h3>
           <p>{{doc.workout_type}}</p>
       </div>
       {%endfor%}

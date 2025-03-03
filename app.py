@@ -1,6 +1,6 @@
 import os
 import subprocess
-import datetime 
+import datetime
 from flask import Flask, render_template, request, redirect, url_for
 import pymongo 
 from bson.objectid import ObjectId
@@ -152,14 +152,20 @@ def create_app():
     def create_post(dbType):
         db = app.config['db']
         if db:
-            if dbType == 'Diet': #would it be called diet?
+            if request.form.get("time") == "":
+                    time = datetime.datetime.utcnow() - datetime.timedelta(hours=5)
+            else: 
+                time = datetime.datetime.strptime(request.form.get("time"), "%Y-%m-%d")
+
+            if dbType == 'Diet': #would it be called diet
                 data = {
                     "meal_name": request.form.get("meal_name"),
+                    "time" : request.form.get("time"), 
                     "calories": request.form.get("calories"),
                     "protein": request.form.get("protein"),
                     "carbohydrates": request.form.get("carbohydrates"),
                     "fat": request.form.get("fat"),
-                    "date": datetime.datetime.utcnow(),
+                    "date": time,
                     "dbType": "diet",
                     "user": current_user.username
                 }
@@ -169,7 +175,7 @@ def create_app():
                 data = {
                     "workout_description": request.form.get("Workout"),
                     "workout_type": request.form.get("WorkoutType"),
-                    "date": datetime.datetime.utcnow(),
+                    "date": time,
                     "dbType": "Workouts",
                     "user": current_user.username
                 }
