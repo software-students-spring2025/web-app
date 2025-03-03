@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Application - Job Tracker</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h2>Edit Application</h2>
+    <form method="POST">
+      <label for="company">Company:</label>
+      <input type="text" id="company" name="company" value="{{ application.company }}" required>
+
+      <label for="job_title">Job Title:</label>
+      <input type="text" id="job_title" name="job_title" value="{{ application.job_title }}" required>
+
+      <label for="status">Status:</label>
+      <select id="status" name="status">
+        <option value="Applied" {% if application.status == "Applied" %}selected{% endif %}>Applied</option>
+        <option value="Interview" {% if application.status == "Interview" %}selected{% endif %}>Interview</option>
+        <option value="Offered" {% if application.status == "Offered" %}selected{% endif %}>Offered</option>
+        <option value="Rejected" {% if application.status == "Rejected" %}selected{% endif %}>Rejected</option>
+      </select>
+
+      <label for="application_date">Application Date:</label>
+      <input type="date" id="application_date" name="application_date" value="{{ application.application_date }}" required>
+
+      <label for="note">Note:</label>
+      <input type="text" id="note" name="note" value="{{ application.note }}">
+
+      <button type="submit">Update</button>
+    </form>
+    <br>
+    <a href="{{ url_for('home') }}">Back to Home</a>
+  </div>
+</body>
+</html>

@@ -17,8 +17,10 @@
       
       <button type="submit">Login</button>
     </form>
-    <p>Don't have an account? <a href="{{ url_for('signup') }}">Sign Up</a></p>
     
+    <p>Don't have an account? <a href="{{ url_for('signup') }}">Sign Up</a></p>
+
+    <!-- 🔹 Show flash messages only if they exist -->
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         <ul class="flashes">

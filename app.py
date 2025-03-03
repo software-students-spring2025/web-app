@@ -51,21 +51,24 @@ def load_user(user_id):
 def index():
     return redirect(url_for("login"))
 
-# Route for user login
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         email = request.form.get("email")
         password = request.form.get("password")
         user_data = users_collection.find_one({"email": email})
+
         if user_data and check_password_hash(user_data["password"], password):
             user_obj = User(user_data)
             login_user(user_obj)
             flash("Logged in successfully", "success")
-            return redirect(url_for("home"))
+            return redirect(url_for("home"))  # Redirect clears the flash message
+
         else:
             flash("Invalid email or password", "danger")
-    return render_template("login.html")
+    
+    return render_template("login.html")  # Flash messages only shown after submission
+
 
 # Route for user signup (for creating new accounts)
 @app.route("/signup", methods=["GET", "POST"])
@@ -94,12 +97,24 @@ def signup():
     return render_template("signup.html")
 
 # Home screen (protected route)
-@app.route("/home")
+@app.route("/home", methods=["GET"])
 @login_required
 def home():
-    # Fetch job applications associated with the current user.
-    # For this example, we assume each application document has a "user_id" field.
-    applications = list(applications_collection.find({"user_id": current_user.id}))
+    search_query = request.args.get("search", "").strip()
+
+    if search_query:
+        applications = list(applications_collection.find({
+            "$and": [
+                {"user_id": current_user.id},
+                {"$or": [
+                    {"company": {"$regex": search_query, "$options": "i"}},
+                    {"job_title": {"$regex": search_query, "$options": "i"}}
+                ]}
+            ]
+        }))
+    else:
+        applications = list(applications_collection.find({"user_id": current_user.id}))
+
     total_apps = len(applications)
     interview_count = sum(1 for app in applications if app.get("status") == "Interview")
     offer_count = sum(1 for app in applications if app.get("status") == "Offered")
@@ -112,6 +127,7 @@ def home():
         interview_count=interview_count,
         offer_count=offer_count
     )
+
 @app.route("/add_application", methods=["GET", "POST"])
 @login_required
 def add_application():
@@ -143,6 +159,70 @@ def logout():
     logout_user()
     flash("Logged out successfully", "success")
     return redirect(url_for("login"))
+
+@app.route("/delete_application/<application_id>", methods=["GET"])
+@login_required
+def delete_application(application_id):
+    applications_collection.delete_one({"_id": ObjectId(application_id)})
+    flash("Application deleted successfully!", "success")
+    return redirect(url_for("home"))
+
+@app.route("/edit_application/<application_id>", methods=["GET", "POST"])
+@login_required
+def edit_application(application_id):
+    application = applications_collection.find_one({"_id": ObjectId(application_id)})
+
+    if request.method == "POST":
+        company = request.form.get("company")
+        job_title = request.form.get("job_title")
+        status = request.form.get("status")
+        application_date = request.form.get("application_date")
+        note = request.form.get("note")
+
+        applications_collection.update_one(
+            {"_id": ObjectId(application_id)},
+            {"$set": {
+                "company": company,
+                "job_title": job_title,
+                "status": status,
+                "application_date": application_date,
+                "note": note
+            }}
+        )
+        flash("Application updated successfully!", "success")
+        return redirect(url_for("home"))
+
+    return render_template("edit_application.html", application=application)
+@app.route("/search_application", methods=["GET", "POST"])
+@login_required
+def search_application():
+    if request.method == "POST":
+        company = request.form.get("company")
+        job_title = request.form.get("job_title")
+        status = request.form.get("status")
+        application_date = request.form.get("application_date")
+        note = request.form.get("note")
+
+        # Build search query
+        query = {"user_id": current_user.id}
+        if company:
+            query["company"] = {"$regex": company, "$options": "i"}
+        if job_title:
+            query["job_title"] = {"$regex": job_title, "$options": "i"}
+        if status:
+            query["status"] = {"$regex": status, "$options": "i"}
+        if application_date:
+            query["application_date"] = application_date
+        if note:
+            query["note"] = {"$regex": note, "$options": "i"}
+
+        # Perform search in MongoDB
+        search_results = list(applications_collection.find(query))
+
+        return render_template("search_results.html", results=search_results)
+
+    return render_template("search_application.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search for Applications</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h2>Search for Applications</h2>
+    <form method="POST">
+      <label for="company">Company:</label>
+      <input type="text" id="company" name="company">
+
+      <label for="job_title">Job Title:</label>
+      <input type="text" id="job_title" name="job_title">
+
+      <label for="status">Status:</label>
+      <input type="text" id="status" name="status">
+
+      <label for="application_date">Application Date (YYYY-MM-DD):</label>
+      <input type="text" id="application_date" name="application_date">
+
+      <label for="note">Note:</label>
+      <input type="text" id="note" name="note">
+
+      <button type="submit">Search</button>
+    </form>
+    <br>
+    <a href="{{ url_for('home') }}">Return to Home</a>
+  </div>
+</body>
+</html>
