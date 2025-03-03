@@ -37,10 +37,10 @@ def create_app():
 
     # user class
     class User(flask_login.UserMixin):
-        # initialize user
         def __init__(self, user):
-            self.id = str(user["_id"])
+            self.id = str(user["_id"])  
             self.email = user["email"]
+
 
     @login_manager.user_loader
     def user_loader(email):
@@ -60,7 +60,10 @@ def create_app():
 
     @app.route("/home")
     def show_home():
-        events = list(db.events.find({}))
+        user_id = flask_login.current_user.id
+
+        events = list(db.events.find({"user_id": user_id}))
+
         events.sort(key=lambda event: datetime.strptime(event["date"], "%m/%d/%Y"))
 
         return render_template('home.html', events=events)
@@ -110,7 +113,10 @@ def create_app():
     @app.route("/add", methods=["GET", "POST"])
     def add_event():
         if request.method == "POST":
+            user_id = flask_login.current_user.id
+        
             event = {
+                "user_id": user_id,
                 "name": request.form["name"],
                 "date": request.form["date"],
                 "time": request.form["time"],
@@ -124,7 +130,9 @@ def create_app():
     
     @app.route("/edit/<event_id>", methods=["GET", "POST"])
     def edit_event(event_id):
-        event = db.events.find_one({"_id": ObjectId(event_id)})
+        user_id = flask_login.current_user.id
+
+        event = db.events.find_one({"_id": ObjectId(event_id), "user_id": user_id})
 
         if not event:
             return "Event not found", 404  # Handle missing event
@@ -154,7 +162,13 @@ def create_app():
     
     @app.route("/delete/<event_id>")
     def delete_event(event_id):
-        db.events.delete_one({"_id": ObjectId(event_id)})
+        user_id = flask_login.current_user.id
+
+        result = db.events.delete_one({"_id": ObjectId(event_id), "user_id": user_id})
+        
+        if result.deleted_count == 0:
+            return "Unauthorized: You can only delete your own events", 403  # Forbidden error
+    
         return redirect(url_for("show_home"))
     
     @app.route("/search")
