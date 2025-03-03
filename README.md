@@ -12,7 +12,7 @@ A little exercise to build a web application following an agile development proc
 
 ## Team Members
 - **Chen Jun Hsu**: [Junpapadiamond](https://github.com/Junpapadiamond)
-- **Brandon**: [BAMOEQ](https://github.com/BAMOEQ)
+- **Brandon Morales**: [BAMOEQ](https://github.com/BAMOEQ)
 - **Steve Lin**: [Echoudexigaigu](https://github.com/Echoudexigaigu)
 - **Eric Zhao**: [Ericzzy675](https://github.com/Ericzzy675)
 
