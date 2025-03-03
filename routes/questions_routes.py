@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 import os
@@ -46,10 +46,41 @@ def add_question():
 
     return render_template('add_question.html')
 
-@questions_bp.route('/show', methods = ['GET'])
+@questions_bp.route('/show', methods = ['GET', 'POST'])
 def show_question():
-    questions_to_show = questions_collection.find({})
-    return render_template('questions.html', questions = questions_to_show)
+    genres = [g for g in questions_collection.distinct("genre") if g and g.strip()]
+    difficulties = questions_collection.distinct("difficulty")
+    
+    selected_genre = request.form.get('genre', '')
+    selected_difficulty = request.form.get('difficulty', '')
+    
+    query = {}
+    if selected_genre:
+        query["genre"] = selected_genre
+    if selected_difficulty:
+        query["difficulty"] = selected_difficulty
+    
+    questions_to_show = questions_collection.find(query)
+    if request.method == 'POST':
+        if 'start_quiz' in request.form or 'start_flashcards' in request.form:
+            selected_questions = request.form.getlist('selected')
+            if not selected_questions:
+                flash("Please select at least one question!", "error")
+                return redirect(url_for('questions.show_question'))
+
+            session['selected_questions'] = selected_questions
+
+            if 'start_quiz' in request.form:
+                return redirect(url_for('quiz.quiz'))
+            elif 'start_flashcards' in request.form:
+                return redirect(url_for('flashcard.flashcard'))
+
+    return render_template('questions.html', 
+                           questions = questions_to_show, 
+                           genres = genres, 
+                           difficulties = difficulties, 
+                           selected_genre = selected_genre, 
+                           selected_difficulty = selected_difficulty)
 
 @questions_bp.route('/delete', methods = ['GET', 'POST'])
 def delete():

@@ -29,10 +29,18 @@
     {% endif %}
     </p>
 
-    <!-- Next Question -->
-    <form action = "{{ url_for('quiz.quiz') }}" method = "POST">
-        <input type = "hidden" name = "next_question" value = "true">
-        <button type = "submit" class="button">Next Question</button>
+    <!-- Next Question (Hidden) -->
+    {% if submitted %}
+        <form action = "{{ url_for('quiz.quiz') }}" method = "POST">
+            <input type = "hidden" name = "next_question" value = "true">
+            <button type = "submit">Next Question</button>
+        </form>
+        <br>
+    {% endif %}
+
+    <!-- Restart Quiz -->
+    <form action="{{ url_for('quiz.restart_quiz') }}" method="POST">
+        <button type = "submit">Restart Quiz</button>
     </form>
 
     <script>
@@ -40,15 +48,17 @@
             document.getElementById("hint").style.display = "block";
         }
     </script>
+    
 {% else %}
-    <p>No questions available.<p>
+    <h2>🎉 Quiz Complete! 🎉</h2>
+    <p>You have answered all available questions.</p>
+    <p>🎯 Total Questions Answered: {{ total_questions }}</p>
+    <p>✅ Correct Answers: {{ correct_count }}</p>
+    <p>❌ Wrong Answers: {{ wrong_count }}</p>
+    
+    <form action="{{ url_for('quiz.restart_quiz') }}" method="POST">
+        <button type = "submit">Restart Quiz</button>
+    </form>
 {% endif %}
-
-<div class = "stats-box">
-    <p><strong>Statistic</strong></p>
-    <p>Total Questions Answered: {{ total_questions }}</p>
-    <p>Correct Answers: {{ correct_count }}</p>
-    <p>Wrong Answers: {{ wrong_count }}</p>
-</div>
 
 {% endblock %}
