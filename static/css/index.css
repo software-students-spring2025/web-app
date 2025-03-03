@@ -1,0 +1,16 @@
+.edit-task {
+    display: none;
+}
+#tasks {
+    list-style-type: none;
+}
+.task-info * {
+    margin: 0;
+}
+.task-info:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+.task {
+    margin-bottom: 30px
+}
