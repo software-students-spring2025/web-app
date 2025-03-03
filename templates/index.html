@@ -1,0 +1,36 @@
+{% extends 'base.html' %} 
+
+{% block container %}
+<h2>NYU Lost and Found Items</h2>
+<p>Welcome to the NYU Lost and Found system. Here you can report lost items or search for items that have been found.</p>
+
+<!-- Centered Add Item Button -->
+<div class="input-container">
+    <a href="{{ url_for('add_item') }}" class="add-item">+ Report a Lost Item</a>
+</div>
+
+{% if items %}
+<h3>Recently Reported Items</h3>
+<table>
+    <tr>
+        <th>Item</th>
+        <th>Location</th>
+        <th>Date</th>
+        <th>Actions</th>
+    </tr>
+    {% for doc in items %}
+    <tr>
+        <td><a href="{{ url_for('details', item_id=doc._id) }}">{{ doc.name }}</a></td>
+        <td>{{ doc.location }}</td>
+        <td>{{ doc.date_lost }}</td>
+        <td>
+            <a href="{{ url_for('edit_item', item_id=doc._id) }}" class="edit">Edit</a>
+            <a href="{{ url_for('delete_item', item_id=doc._id) }}" class="delete">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>No items have been reported yet.</p>
+{% endif %}
+{% endblock %}

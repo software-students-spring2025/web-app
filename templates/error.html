@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block container %}
+<section class="error-page">
+    <h2>Oops! Something went wrong!</h2>
+    <p>An error has occurred while processing your request.</p>
+    <p><strong>Error Code:</strong> {{ error_code }}</p>
+    <p><strong>Details:</strong> {{ error_message }}</p>
+    <a href="{{ url_for('home') }}" class="btn">Return to Home</a>
+</section>
+{% endblock %}
