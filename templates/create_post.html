@@ -4,18 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Your Post</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <h1>Create New Post</h1>
+    <div class = "container">
+        <h1>Create New Post</h1>
 
-    <form action="{{url_for('create_post')}}" method="POST">
-        <input type="text" name="user" placeholder="Your name">
-        <input type="text" name="title" placeholder="Post title">
-        <textarea name="content" placeholder="Post content"></textarea>
-        <button type="submit">Submit</button>
-    </form>
-
-    <!--make back button to index screen (this is not set up for mobile format yet)-->
-
+        <form action="{{url_for('create_post')}}" method="POST">
+            <div class = "form-box">
+                <input type="text" name="user" placeholder="Your name">
+            </div>
+            
+            <div class = "form-box">
+                <input type="text" name="title" placeholder="Post title">
+            </div>
+            
+            <div class = "form-box">
+                <textarea name="content" placeholder="Post content"></textarea>
+            </div>
+            
+            <button type="submit">Submit</button>
+        </form>
+    
+        <!--make back button to index screen (this is not set up for mobile format yet)-->
+        <a href="{{ url_for('index') }}" class="back-link">Back to Forum</a>
+    
+    </div>
+    
 </body>
 </html>
