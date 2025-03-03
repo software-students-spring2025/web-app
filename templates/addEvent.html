@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Event</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+</head>
+<body>
+    <div class="top-nav">
+        <a href="{{ url_for('show_home') }}" class="name">Eventify</a>
+        <a href="{{  url_for('logout') }}" class="logout">Logout</a>
+    </div>
+
+    <header class="heading">
+        <!-- TEMP: placeholder href link -->
+        <button class="back" onclick="location.href='/home'">&#8592</button>
+        <h1>Add Event</h1>
+    </header>
+
+    <form action="{{ url_for('add_event') }}" method="POST">
+        <br>
+        <label for="name">Event Name:</label>
+        <input type="text" id="name" name="name" required>
+        <br><br>
+        <label for="date">Date (MM/DD/YYYY):</label>
+        <input type="text" id="date" name="date" required>
+        <br><br>
+        <label for="time">Time:</label>
+        <input type="time" id="time" name="time" required>
+        <br><br>
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" required>
+        <br><br>
+        <label for="category">Category:</label>
+        <select id="category" name="category" required>
+            <option value="" disabled selected>Select a category</option>
+            <option value="Education">Education</option>
+            <option value="Networking">Networking/Professional Development</option>
+            <option value="Extracurricular">Extracurricular</option>
+            <option value="Other">Other</option>
+    
+        </select>
+        <br><br>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required></textarea>
+        <br><br>
+        <div class="save">
+            <button type="submit">Save Changes</button>
+        </div>
+    </form>
+
+
+    <!-- Bottom Navigation Bar -->
+    <div class="navbar">
+        <a href="{{  url_for('show_home') }}">Home</a>
+    </div>
+</form>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Page Title -->
+    <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}"/>
+  </head>
+
+  <body>
+    <div class="container">
+      <main>
+        <header>
+          <a href="{{ url_for('login') }}" class="name">Eventify</a>
+        </header>  
+        <h1 class="heading">Login</h1>
+
+          <!-- Login Error -->
+          {% if error %}
+            <div class="error">{{ error }}</div>
+          {% endif %}
+
+          <!-- Login Form-->
+        <div class="form-container">
+          <div class="form"> 
+            <form action="/" method="POST">
+              <!-- Email -->
+              <div class="email">
+                <p>Email</p>
+                <input type="email" name="email" class="input1" placeholder="email@example.com" required>
+              </div> 
+
+              <!-- Password -->
+              <div class="password">
+                <p>Password</p>
+                <input type="password" name="password" class="input2" placeholder="password" required>
+              </div>
+
+              <!-- Login Button-->
+              <div class="button">
+                <input type="submit" value="Login">
+              </div>
+
+              <div class="link">
+                <!-- Sign Up Link-->
+                <a class="register" href="/register">Don't have an account? Sign Up</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

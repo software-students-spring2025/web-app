@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .event-container {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+        }
+        a{
+            text-decoration: none;
+            color: black;
+        }
+        .event-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin: 10px 0;
+            overflow: hidden;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .event-card:hover {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .event-strip {
+            height: 10px;
+            width: 100%;
+        }
+        .education { background: #bbe7fe; }
+        .networking { background: #d3b5e5; }
+        .extracurricular { background: #ffd4db; }
+        .other { background: #eff1db; }
+        .event-content {
+            padding: 15px;
+        }
+        .event-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .event-info {
+            font-size: 14px;
+            color: #555;
+        }
+        .search-button {
+        position: fixed;
+        bottom: 90px; 
+        right: 20px;
+        background-color: #2196F3;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        font-size: 30px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .add-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            }
+        /* Top Navigation Bar Styling */
+        header{
+            background-color: #bbe7fe;
+            height: 50px;
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .name{
+            border: solid 0px black;
+            display: flex;
+            align-items: center;
+            padding-left: 40px;
+            padding-right: 40px;
+            font-size: 16pt;
+            font-weight: bold;
+            text-decoration: none;
+            color: black;
+        }
+        .logout{
+            border: solid 0px black;
+            display: flex;
+            align-items: center;
+            padding-left: 40px;
+            padding-right: 40px;
+            color: black;
+            font-size: 12pt;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+  
+
+    </style>
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <header>
+        <a href="{{ url_for('show_home') }}" class="name">Eventify</a>
+        <a href="{{ url_for('logout') }}" class="logout">Logout</a>
+    </header>
+    
+
+    <!-- Event Container -->
+    <div class="event-container">
+        {% for event in events %}
+        <a href="{{ url_for('show_details', event_id=event['_id']) }}">
+            <div class="event-card">
+              <div class="event-strip {{ event['category'] | lower }}"></div>
+              <div class="event-content">
+                <div class="event-title">{{ event["name"] }}</div>
+                <div class="event-info">📅 {{ event["date"] }}</div>
+                <div class="event-info">⏰ {{ event["time"] }}</div>
+                <div class="event-info">📍 {{ event["location"] }}</div>
+              </div>
+            </div>
+          </a>
+        {% endfor %}
+    </div>
+
+    <!-- Floating Search and Add Event Button -->
+    <a href="{{ url_for('show_search') }}">
+        <button class="search-button">🔍</button>
+    </a>
+    <a href="{{ url_for('add_event') }}">
+        <button class="add-button">+</button>
+    </a>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Page Title -->
+        <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+        <title>Event Details</title>
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+        <!-- CSS -->
+        <style>
+            /* Header */
+            header {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 40px;
+            }
+
+            body {
+                margin: 0;
+            }
+            
+            .details {
+                margin-left: 40px;
+            }
+
+            h2, p{
+                padding: 10px;
+            }
+
+            .buttons {
+                margin-left: 40px;
+                padding: 10px;
+            }
+
+            button{
+                width: 90px;
+                height: 30px;
+                border-radius: 8px;
+                border-color: darkgray;
+                margin-right: 15px;
+            }
+
+            .back {
+                margin-left: 10px;
+                font-size: 30px;
+                padding: 0px;
+                position: absolute;
+                left: 10px;
+                border: none;
+                background: none
+            }
+            a{
+                text-decoration: none;
+            }
+        </style>
+    </head>
+
+    <!-- Page Body-->
+    <body>
+        <!-- Top Navigation Bar -->
+        <div class="top-nav">
+            <a href="{{ url_for('show_home') }}" class="name">Eventify</a>
+            <a href="{{  url_for('logout') }}" class="logout">Logout</a>
+        </div>
+
+        <!-- Page Header -->
+        <header>
+            <!-- TEMP: placeholder href link -->
+            <button class="back" onclick="location.href='/home'">&#8592</button>
+            <h1>Event Details</h1>
+        </header>
+
+        <!-- Event Details -->
+        <div class="details">
+            <h2 id="name">{{ event["name"] }}</h2>
+            <p id="date"><b>Date:</b> {{ event["date"] }}</p>
+            <p id="time"><b>Time:</b> {{ event["time"] }}</p>
+            <p id="location"><b>Location:</b> {{ event["location"] }}</p>
+            <p id="category"><b>Category:</b> {{ event["category"] }}</p>
+            <p id="description"><b>Description:</b><br> {{ event["description"] }}</p>
+        </div>
+
+        <!-- Buttons -->
+        <div class="buttons">
+            <!-- Go to edit page-->
+            <!-- TEMP: placeholder href link -->
+            <a href="{{ url_for('edit_event', event_id=event['_id']) }}">
+                <button type="button" style="background-color: rgb(244, 216, 216); color: black;">Edit</button>
+            </a>     
+            <!-- Go to delete page-->
+            <!-- TEMP: placeholder href link -->
+            <a href="{{ url_for('delete_event', event_id=event['_id']) }}">
+                <button type="submit" style="background-color: rgb(244, 216, 216); color: black;">Delete</button>
+            </a>
+        </div>
+
+        <!-- Bottom Navigation Bar -->
+        <div class="navbar">
+            <a href="{{  url_for('show_home') }}">Home</a>
+        </div>
+    </body>
+</html>

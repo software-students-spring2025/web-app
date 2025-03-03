@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Register Account</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}"/>
+  </head>
+  <body>
+    <div class="container">
+      <main>
+        <header>
+          <a href="{{ url_for('register') }}" class="name">Eventify</a>
+        </header>
+        <h1 class="heading">Register Account</h1>
+
+        {% if error %}
+        <div class="error">{{ error }}</div>
+        {% endif %}
+
+        <div class="form-container">
+          <div class="form">
+              <form action="{{ url_for('register') }}" method="POST">
+                  <div class="email">
+                      <p>Email</p>
+                      <input type="email" name="email" class="input1" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}" placeholder="email@example.com" required/>
+                  </div>
+                  <div class="password">
+                      <p>Password</p>
+                      <input type="password" name="password" class="input2" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="at least 8 characters, 1 digit, and 1 uppercase" required/>
+                  </div>
+                  <div class="button">
+                      <input type="submit" value="Register"/>
+                  </div>
+                  <div class="link">
+                    <a href="{{ url_for('login') }}" class="login">Already have an account? Login</a>
+                  </div>
+                  
+              </form>
+          </div>
+        </div>
+       
+      </main>
+    </div>
+  </body>
+</html>
