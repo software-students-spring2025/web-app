@@ -89,7 +89,13 @@ def register():
 
 @app.route('/home')
 def home():
-    return render_template("home.html")
+    username = current_user.username
+
+    created_events = list(db.events.find({"creator": username}))
+    joined_events = list(db.events.find({"attending": username, "creator": {"$ne": username}}))
+
+    return render_template("home.html", created_events=created_events, joined_events=joined_events)
+    
 
 @app.route('/logout')
 @login_required
