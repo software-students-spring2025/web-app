@@ -9,13 +9,11 @@
   <div class="container">
     <h2>Welcome, {{ user.email }}</h2>
     <a href="{{ url_for('logout') }}">Logout</a>
-
     <hr>
     <p>Total applications: {{ total_apps }}</p>
     <p>Interviews: {{ interview_count }}</p>
     <p>Offers: {{ offer_count }}</p>
     <hr>
-
     <h3>Your Job Applications</h3>
     {% if applications %}
       <table>
@@ -40,12 +38,14 @@
           {% endfor %}
         </tbody>
       </table>
-
     {% else %}
       <p>No job applications found. Start by adding one!</p>
     {% endif %}
     <br>
     <a href="{{ url_for('add_application') }}">Add New Application</a>
+    <br><br>
+    <!-- Interview 模块入口 -->
+    <a href="{{ url_for('interview') }}">Go to Interview Section</a>
   </div>
 </body>
 </html>

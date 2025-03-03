@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Submission Result - Interview</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h2>Submission Successful</h2>
+    <p>Your submission has been successfully recorded.</p>
+    <p>Your correct rate: {{ correct_rate }}%</p>
+    <br>
+    <button onclick="location.href='{{ url_for('interview') }}'">Back to Interview</button>
+  </div>
+</body>
+</html>
