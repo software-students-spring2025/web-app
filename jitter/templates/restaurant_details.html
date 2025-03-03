@@ -24,10 +24,10 @@
         }
 
         .review-card {
-            max-width: 800px; /* Adjust width to match the restaurant details card */
-            margin: auto; /* Centers the review cards */
+            max-width: 800px;
+            margin: 20px auto; /* Adds spacing between review cards */
             background: white;
-            padding: 15px;
+            padding: 20px;
             border-radius: 8px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
             text-align: center;
@@ -42,41 +42,12 @@
             font-size: 14px;
             color: #555;
         }
-        /* Sidebar */
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 60px;
-            background: #1a1a1a;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 20px;
-        }
-        .sidebar a {
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 20px 0;
-            font-size: 24px;
-        }
-        .sidebar a:hover {
-            background: #333;
-        }
-        /* Sidebar Icon Styling */
-        .sidebar img {
-            width: 30px;  /* Adjust icon width */
-            height: 30px; /* Adjust icon height */
-            object-fit: contain; /* Ensures icons maintain aspect ratio */
-            margin-bottom: 15px; /* Adds 
-            spacing between icons */
-        }
+
         .review-buttons {
             display: flex;
-            gap: 10px;
-            margin-top: 10px;
+            gap: 15px; /* Increases spacing between buttons */
+            justify-content: center; /* Centers the buttons */
+            margin-top: 15px;
         }
     
         .edit-btn {
@@ -111,19 +82,6 @@
     </style>
 </head>
 <body>
-        <!-- Sidebar Navigation -->
-<div class="sidebar">
-    <a href="/profile.html">
-        <img src="{{ url_for('static', filename='profile-picture.png') }}" alt="User Profile">
-    </a>
-    <a href="/">
-        <img src="{{ url_for('static', filename='building.png') }}" alt="Home">
-    </a>
-    <a href="/add-review">
-        <img src="{{ url_for('static', filename='add.png') }}" alt="Add New">
-    </a>
-</div>
-
     <h1>{{ restaurant.name }}</h1>
     <div class="restaurant-details">
         <h2>Cuisine: {{ restaurant.cuisine or "Not specified" }}</h2>
@@ -144,29 +102,25 @@
                     <p>{{ review.comment or review.review_text }}</p>
                     <p class="review-date">{{ review.created_at.strftime('%B %d, %Y') if review.created_at else '' }}</p>
                 
-                     <!-- Edit and Delete Buttons -->
-                <div class="review-buttons">
-                    <!-- Edit Button - Links to the edit page -->
-                    <a href="{{ url_for('edit_review', review_id=review._id) }}" class="edit-btn">✏️ Edit</a>
-
-                <!-- Delete Button -->
-                <form action="{{ url_for('delete_review', review_id=review._id) }}" method="POST" style="margin-top: 10px;">
-                    <button type="submit" class="delete-btn">🗑️ Delete</button>
-                </form>
+                    <!-- Edit and Delete Buttons -->
+                    <div class="review-buttons">
+                        <a href="{{ url_for('edit_review', review_id=review._id) }}" class="edit-btn">✏️ Edit</a>
+                        <form action="{{ url_for('delete_review', review_id=review._id) }}" method="POST">
+                            <button type="submit" class="delete-btn">🗑️ Delete</button>
+                        </form>
+                    </div>
                 </div>
             {% endfor %}
         {% else %}
             <p>No reviews yet. Be the first to review!</p>
         {% endif %}
-
-        
     </div>
+
     <div class="add-review">
         <a href="/add-review">
             <i class="fas fa-plus-square plus-icon"></i> Add a review.
         </a>
     </div>
-
     <br>
     <a href="/">Back to Home</a>
 </body>

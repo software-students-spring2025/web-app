@@ -71,11 +71,6 @@
     letter-spacing: 1px !important; /* Add letter spacing for better readability */
   }
 
-/* Adjust main content to accommodate larger sidebar */
-.main-content {
-    margin-left: 140px; /* Increased margin */
-    padding: 20px;
-}
 
         /* Search Bar */
 .search-bar {
@@ -218,6 +213,12 @@
             object-fit: contain; /* Ensures icons maintain aspect ratio */
             margin-bottom: 15px; /* Adds spacing between icons */
         }
+        h1 {
+            text-align: center;  /* Centers the text */
+            display: block;  /* Ensures it's a block element */
+            margin: 0 auto;  /* Centers it horizontally */
+        }
+        
 
 
 
@@ -228,7 +229,6 @@
 <body>
 <!-- Sidebar Navigation -->
 <div class="sidebar">
-<<<<<<< HEAD
     <a href="/profile.html">
         <img src="{{ url_for('static', filename='profile-picture.png') }}" alt="User Profile">
     </a>
@@ -237,19 +237,6 @@
     </a>
     <a href="/add-review">
         <img src="{{ url_for('static', filename='add.png') }}" alt="Add New">
-=======
-    <a href="/profile" title="Profile" class="sidebar-icon">
-        <img src="/static/white-user.png" alt="User Profile" width="40" height="40">
-    </a>
-    <a href="/" title="Home" class="sidebar-icon">
-        <img src="/static/home-icon.png" alt="Home" width="40" height="40">
-    </a>
-    <a href="/recent-reviews" title="Recent Reviews" class="sidebar-link">
-        <div class="sidebar-text">Recent Reviews</div>
-    </a>
-    <a href="/add-review" title="Leave a Review" class="sidebar-link">
-        <div class="sidebar-text">Leave a Review</div>
->>>>>>> 254a6aad2edbebc4bdee129fb37d95b6108091c3
     </a>
 </div>
 
@@ -294,8 +281,6 @@
                 <p>No restaurants found.</p>
             {% endif %}
         </div>
-<<<<<<< HEAD
-        
         <div class="recent-reviews">
             <h2>Recent Reviews</h2>
             {% if recent_reviews %}
@@ -320,8 +305,6 @@
                 <i class="fas fa-plus-square plus-icon"></i> or make your own.
             </a>
         </div>
-=======
->>>>>>> 254a6aad2edbebc4bdee129fb37d95b6108091c3
     </div>
 </body>
 
