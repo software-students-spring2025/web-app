@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Home - Job Tracker</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h2>Welcome, {{ user.email }}</h2>
+    <a href="{{ url_for('logout') }}">Logout</a>
+    <hr>
+    <p>Total applications: {{ total_apps }}</p>
+    <p>Interviews: {{ interview_count }}</p>
+    <p>Offers: {{ offer_count }}</p>
+    <hr>
+    <h3>Your Job Applications</h3>
+    {% if applications %}
+      <table>
+        <thead>
+          <tr>
+            <th>Company</th>
+            <th>Job Title</th>
+            <th>Status</th>
+            <th>Application Date</th>
+            <th>Note</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for app in applications %}
+          <tr>
+            <td>{{ app.company }}</td>
+            <td>{{ app.job_title }}</td>
+            <td>{{ app.status }}</td>
+            <td>{{ app.application_date }}</td>
+            <td>{{ app.note }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No job applications found. Start by adding one!</p>
+    {% endif %}
+    <br>
+    <a href="{{ url_for('add_application') }}">Add New Application</a>
+    <br><br>
+    <!-- Interview 模块入口 -->
+    <a href="{{ url_for('interview') }}">Go to Interview Section</a>
+  </div>
+</body>
+</html>

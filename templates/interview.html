@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interview - Job Tracker</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h2>Interview Section</h2>
+    <ul>
+      <li><a href="{{ url_for('practice_filter') }}">Practice</a></li>
+      <li><a href="{{ url_for('mock_filter') }}">Mock</a></li>
+      <li><a href="{{ url_for('my_collection') }}">My Collection</a></li>
+    </ul>
+    <br>
+    <a href="{{ url_for('home') }}">Back to Home</a>
+  </div>
+</body>
+</html>
