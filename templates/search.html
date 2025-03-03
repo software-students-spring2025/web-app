@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Bathrooms</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 dark:bg-neutral-900 text-gray-900 dark:text-white">
+    {% include 'navbar.html' %}
+
+    <!-- Search Bar -->
+    <div class="p-4">
+        <input 
+            type="text" 
+            id="searchInput" 
+            class="w-full p-3 rounded-lg border border-gray-300 focus:ring focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:text-white"
+            placeholder="Search for a building..."
+        >
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="p-4 flex space-x-3">
+        <button id="filterButton" class="px-4 py-2 rounded-lg text-white bg-violet-600 hover:bg-violet-700 focus:ring focus:ring-violet-300 dark:bg-violet-500 dark:hover:bg-violet-600 dark:focus:ring-violet-400">
+            Filter
+        </button>
+        <button id="clearButton" class="px-4 py-2 rounded-lg text-white bg-gray-600 hover:bg-gray-700 focus:ring focus:ring-gray-300 dark:bg-gray-500 dark:hover:bg-gray-600 dark:focus:ring-gray-400">
+            Clear
+        </button>
+    </div>
+
+    <div id="filterPopup" class="fixed inset-0 bg-black bg-opacity-50 hidden flex justify-center items-center">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-lg shadow-lg w-80">
+            <h2 class="text-lg font-semibold mb-4">Filter Options</h2>
+    
+            <div class="space-y-2">
+                <label class="block">
+                    <span class="text-gray-700 dark:text-gray-300">Floor Number:</span>
+                    <input type="number" id="floorFilter" class="w-full p-2 border rounded dark:bg-neutral-700 dark:text-white">
+                </label>
+    
+                <label class="block">
+                    <span class="text-gray-700 dark:text-gray-300">Type:</span>
+                    <select id="typeFilter" class="w-full p-2 border rounded dark:bg-neutral-700 dark:text-white">
+                        <option value="">Any</option>
+                        <option value="Communal">Communal</option>
+                        <option value="Private">Private</option>
+                    </select>
+                </label>
+
+                <label class="block">
+                    <span class="text-gray-700 dark:text-gray-300">Orientation:</span>
+                    <select id="orientationFilter" class="w-full p-2 border rounded dark:bg-neutral-700 dark:text-white">
+                        <option value="">Any</option>
+                        <option value="Men's">Men's</option>
+                        <option value="Women's">Women's</option>
+                        <option value="All">All</option>
+                    </select>
+                </label>
+                
+                <!-- New Filters for Sinks and Toilets -->
+                <label class="block">
+                    <span class="text-gray-700 dark:text-gray-300">Number of Sinks:</span>
+                    <input type="number" id="sinksFilter" class="w-full p-2 border rounded dark:bg-neutral-700 dark:text-white">
+                </label>
+                
+                <label class="block">
+                    <span class="text-gray-700 dark:text-gray-300">Number of Toilets:</span>
+                    <input type="number" id="toiletsFilter" class="w-full p-2 border rounded dark:bg-neutral-700 dark:text-white">
+                </label>
+            </div>
+    
+            <!-- Buttons -->
+            <div class="mt-4 flex justify-end space-x-3">
+                <button id="closeFilter" class="px-4 py-2 rounded bg-gray-400 dark:bg-gray-600 hover:bg-gray-500 dark:hover:bg-gray-700 text-white">
+                    Close
+                </button>
+                <button id="applyFilter" class="px-4 py-2 rounded-lg text-white bg-violet-600 hover:bg-violet-700 focus:ring focus:ring-violet-300 dark:bg-violet-500 dark:hover:bg-violet-600 dark:focus:ring-violet-400">
+                    Apply
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Container -->
+    <div id="resultsContainer" class="p-4">
+        <ul id="resultsList" class="space-y-3"></ul>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async function() {
+            const searchInput = document.getElementById("searchInput");
+            const resultsList = document.getElementById("resultsList");
+            const filterButton = document.getElementById("filterButton");
+            const filterPopup = document.getElementById("filterPopup");
+            const clearButton = document.getElementById("clearButton");
+
+            const filters = {
+                "floor": null,
+                "type": null,
+                "orientation": null,
+                "sinks": null,
+                "toilets": null
+            };
+
+            filterButton.addEventListener("click", () => {
+                filterPopup.classList.remove("hidden");
+            });
+
+            document.getElementById("closeFilter").addEventListener("click", () => {
+                filterPopup.classList.add("hidden");
+            });
+
+            document.getElementById("applyFilter").addEventListener("click", () => {
+                filters["floor"] = document.getElementById("floorFilter").value || null;
+                filters["type"] = document.getElementById("typeFilter").value || null;
+                filters["orientation"] = document.getElementById("orientationFilter").value || null;
+                filters["sinks"] = document.getElementById("sinksFilter").value || null;
+                filters["toilets"] = document.getElementById("toiletsFilter").value || null;
+                filterPopup.classList.add("hidden");
+                search(searchInput.value);
+            });
+
+            clearButton.addEventListener("click", () => {
+                Object.keys(filters).forEach(key => filters[key] = null);
+                document.querySelectorAll("#filterPopup input, #filterPopup select").forEach(el => el.value = "");
+                search(searchInput.value);
+            });
+
+            async function search(query) {
+                resultsList.innerHTML = "";
+                if (!query.trim()) return;
+
+                try {
+                    let url = `/api/search?q=${query}`;
+                    Object.keys(filters).forEach(key => {
+                        if (filters[key]) url += `&${key}=${filters[key]}`;
+                    });
+
+                    const response = await fetch(url);
+                    const data = await response.json();
+                    
+                    if (data.bathrooms.length === 0) {
+                        resultsList.innerHTML = `<li class="text-gray-500 dark:text-neutral-400">No bathrooms found</li>`;
+                        return;
+                    }
+                    
+                    data.bathrooms.forEach(bathroom => {
+                        const listItem = document.createElement("li");
+                        listItem.className = "p-3 bg-white rounded-lg shadow-md dark:bg-neutral-800";
+                        listItem.textContent = `${bathroom.label} (Floor ${bathroom.floor}, ${bathroom.sinks} sinks, ${bathroom.toilets} toilets)`;
+                        resultsList.appendChild(listItem);
+                    });
+                } catch (error) {
+                    console.error("Error fetching search results:", error);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

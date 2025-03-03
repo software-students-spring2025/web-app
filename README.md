@@ -4,11 +4,11 @@ A little exercise to build a web application following an agile development proc
 
 ## Product vision statement
 
-See instructions. Delete this line and place the Product Vision Statement here.
+To help university students filter, search for, and find campus bathrooms.
 
-## User stories
+## User Stories
 
-See instructions. Delete this line and place a link to the user stories here.
+[User Stories Project Link](https://github.com/orgs/software-students-spring2025/projects/13/views/1)
 
 ## Steps necessary to run the software
 
@@ -16,4 +16,6 @@ See instructions. Delete this line and place instructions to download, configure
 
 ## Task boards
 
-See instructions. Delete this line and place a link to the task boards here.
+[Sprint 1 Project Link](https://github.com/orgs/software-students-spring2025/projects/36/views/1)
+
+Sprint 2 Project Link

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bathroom Overview</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!-- Tailwind CSS CDN for css -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; }
+        .reviews{
+            background-color:#999999;
+            border-radius:20px;
+            text-align: center;
+            padding-top: 10px;
+            border: 1px solid #222;
+            padding-bottom: 10px;
+        }
+        .location{
+            font-size:40px;
+            font-weight: bold;
+        }
+        .image{
+            border:1px #222;
+        }
+</style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <!--TODO: grab data based on id-->
+    <div class="text-xl font-semibold">{{bathroomLocation}}</div>
+    {{rating|safe}}
+    <div class="image">{{bathroomImage}}</div>
+    <!--TODO: INCLUDE LOCATION--><br>
+    <div class="description">{{bathroom.type}} {{bathroom.orientation}} Bathroom
+    <br>
+    Toilets: {{bathroom.toilets}}
+    <br>
+    Sinks: {{bathroom.sinks}}</div>
+    <br>
+    <div class="mt-4 space-y-3">
+        {%for review in bathroomReviews%}
+            <div id="stars" class="p-4 bg-white rounded-lg shadow-md dark:bg-neutral-800"></div>
+            {{(review.date|string).split(" ")[0]}} {{(review.date|string).split(" ")[1].split(".")[0]}}<br>     {{review.comment}}
+            <script>
+                j = {{review.rating}};
+                innerString = "";
+                for (let i=0;i<j;i++){
+                    innerString += '<i class="fa-solid fa-star"></i>';
+                }
+                for (let i=j;i<5;i++){
+                    innerString += '<i class="fa-regular fa-star"></i>';
+                }
+                document.getElementById('stars').innerHTML = innerString
+            </script>
+        {%endfor%}
+    </div>
+    <!--TODO: INCLUDE REVIEWS-->
+    
+</body>
+</html>

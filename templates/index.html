@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NYU Map with Pins</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!-- Tailwind CSS CDN for css -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; }
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 50px; /* space for navbar */
+            width: 100%;
+            height: 100%;
+            z-index: 10; /* placing map beneath navbar */
+        }
+
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+    <div id="map"></div>
+
+    <script>
+        // Initialize map
+        var map = L.map('map').setView([40.730908, -73.997595], 17);
+
+        // Load map
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://carto.com/">CARTO</a>',
+            subdomains: 'abcd'
+        }).addTo(map);
+
+        var violetPin = L.icon({
+            iconUrl: 'https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-violet.png',
+            iconSize: [22, 33],     // pin size
+            iconAnchor: [10, 33],   // pin anchor point
+            popupAnchor: [1, -28]   // pin popup anchor
+        });
+
+        // Get markers from Flask API
+        fetch('/api/pins')
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(pin => {
+                    console.log("Extracted ID:", pin);
+                    L.marker([pin.lat, pin.lng], { icon: violetPin })
+                        .addTo(map)
+                        .bindPopup(`
+                            <b>${pin.name}</b><br>
+                            <a href="/building/${pin._id}" class="text-blue-600 underline">View More</a>
+                        `);
+                });
+            })
+            .catch(error => console.error('Error loading pins:', error));
+
+    </script>
+</body>
+</html>
