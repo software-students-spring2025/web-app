@@ -55,7 +55,7 @@ def create_post():
 
         result = db["posts"].insert_one(new_post) # add post to database
 
-        if result.inserted_id:
+        if result.inserted_id: # check it was inserted
             # after making a post, where should user go?
             return redirect(url_for('index')) # this can change
         else:
@@ -77,6 +77,24 @@ def add_comment(post_id):
     )
 
     return redirect(url_for('post_detail', post_id=post_id))
+
+@app.route("/post/<string:post_id>/edit", methods=['POST'])
+def edit_post(post_id):
+    post = db["posts"].find_one({"_id": ObjectId(post_id)}) #find post
+
+    new_title = request.form.get("title")
+    new_content = request.form.get("content")
+
+    db["posts"].update_one(
+        {"_id": ObjectId(post_id)},
+        {"$set": {
+            "title": new_title,
+            "content": new_content
+        }}
+    )
+
+    return redirect(url_for('post_detail', post_id=post_id))
+
 
 if __name__ == "__main__":
     app.run(debug=True)
