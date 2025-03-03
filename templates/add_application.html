@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Application - Job Tracker</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h2>Add New Application</h2>
+    <form action="{{ url_for('add_application') }}" method="POST">
+      <label for="company">Company:</label>
+      <input type="text" id="company" name="company" required>
+
+      <label for="job_title">Job Title:</label>
+      <input type="text" id="job_title" name="job_title" required>
+
+      <label for="status">Status (Applied, Interview, Rejected, Offered):</label>
+      <input type="text" id="status" name="status" required>
+
+      <label for="application_date">Application Date (YYYY-MM-DD):</label>
+      <input type="text" id="application_date" name="application_date" required>
+
+      <label for="note">Note:</label>
+      <input type="text" id="note" name="note">
+
+      <button type="submit">Save</button>
+    </form>
+    <br>
+    <a href="{{ url_for('home') }}">Back to Home</a>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flashes">
+          {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+  </div>
+</body>
+</html>
