@@ -24,6 +24,11 @@
             <button type="submit" class="submit-button">Update Post</button>
         </form>
 
+        <!--delete post button-->
+        <form action="{{ url_for('delete_post', post_id=post._id|string) }}" method="POST" >
+            <button type="submit" class="delete-button" >Delete Post</button>
+        </form>
+
         <!--cancel button-->
         <a href="{{ url_for('post_detail', post_id=post._id|string) }}" class="back-link">Cancel</a> <!--go back to post detail after editing-->
 
