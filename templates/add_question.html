@@ -11,7 +11,7 @@
 </head>
 <body>
     <h1>Add a New Question</h1>
-    <form action="{{ url_for('questions.search') }}" method="POST" class="add-form">
+    <form action="{{ url_for('questions.add_question') }}" method="POST" class="add-form">
         <div class="form-group">
           <label for="question">Question:</label>
           <input type="text" id="question" name="question" required>
@@ -42,7 +42,7 @@
             </select>
         </div>
   
-          <button type="submit" class="button">Search</button>
+          <button type="submit" class="button">Submit</button>
       </form>
 
     <script>
