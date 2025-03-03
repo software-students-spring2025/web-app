@@ -1,4 +1,54 @@
 {% extends "layout.html" %}
 {% block content %}
 
+<h1>Quiz</h1>
+
+{% if question %}
+    <p><strong>Question: </strong>{{ question.question }}</p>
+
+    <!-- Answer -->
+    {% if not submitted %}
+        <form action = "{{ url_for('quiz.check_answer') }}" method = "POST">
+            <input type = "text" name = "user_answer" placeholder = "Enter your answer" >
+            <button onclick = "check_answer()">Submit</button>
+        </form>
+        <br>
+    {% endif %}
+
+    <!-- Hint (Hidden) -->
+    {% if not submitted %}
+        <button onclick = "show_hint()">Show Hint</button>
+        <p id = "hint" style = "display: none;">
+            <strong>Hint:</strong> {{ question.hint if question.hint else "No hint available" }}
+        </p>
+    {% endif %}
+
+    <!-- Result -->
+    {% if result %}
+        <p id= "result"> {{ result | safe }}</p>
+    {% endif %}
+    </p>
+
+    <!-- Next Question -->
+    <form action = "{{ url_for('quiz.quiz') }}" method = "POST">
+        <input type = "hidden" name = "next_question" value = "true">
+        <button type = "submit">Next Question</button>
+    </form>
+
+    <script>
+        function show_hint() {
+            document.getElementById("hint").style.display = "block";
+        }
+    </script>
+{% else %}
+    <p>No questions available.<p>
+{% endif %}
+
+<div class = "stats-box">
+    <p><strong>Statistic</strong></p>
+    <p>Total Questions Answered: {{ total_questions }}</p>
+    <p>Correct Answers: {{ correct_count }}</p>
+    <p>Wrong Answers: {{ wrong_count }}</p>
+</div>
+
 {% endblock %}
