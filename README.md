@@ -82,7 +82,7 @@ docker compose down
 ---
 ### **Note:**
 - If you edit any of the files in the project, you will have to **stop and restart** the containers for changes to take effect.
-```
+
 
 ### Option 2
 
