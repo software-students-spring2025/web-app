@@ -101,5 +101,10 @@ def edit_post(post_id):
     return render_template("edit_post.html", post=post)
 
 
+@app.route("/post/<string:post_id>/delete", methods=['POST'])
+def delete_post(post_id):
+    db["posts"].delete_one({"_id": ObjectId(post_id)}) #delete post (for get)
+    return redirect(url_for('index'))
+
 if __name__ == "__main__":
     app.run(debug=True)
