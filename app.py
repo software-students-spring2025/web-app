@@ -12,6 +12,8 @@ from pymongo import MongoClient
 from dotenv import load_dotenv
 from werkzeug.security import generate_password_hash, check_password_hash
 from bson.objectid import ObjectId
+from datetime import datetime
+from flask import session
 
 # Load environment variables from .env
 load_dotenv()
@@ -24,11 +26,25 @@ client = MongoClient(os.environ.get("MONGO_URI"))
 db = client.get_database("jobtracker")
 users_collection = db.get_collection("users")
 applications_collection = db.get_collection("applications")
+interview_collection = db.get_collection("interview_collection")
 
 # Set up Flask-Login
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
+
+practice_questions = [
+    {"difficulty": "Easy", "question_content": "Practice Question 1: ?????"},
+    {"difficulty": "Medium", "question_content": "Practice Question 2: ?????"},
+    {"difficulty": "Hard", "question_content": "Practice Question 3: ?????"}
+]
+
+mock_questions = [
+    {"difficulty": "Medium", "question_content": "Mock Question 1: ?????"},
+    {"difficulty": "Hard", "question_content": "Mock Question 2: ?????"},
+    {"difficulty": "Hard", "question_content": "Mock Question 3: ?????"}
+]
+
 
 # Define a User class that integrates with Flask-Login
 class User(UserMixin):
@@ -222,6 +238,190 @@ def search_application():
         return render_template("search_results.html", results=search_results)
 
     return render_template("search_application.html")
+@app.route("/interview")
+@login_required
+def interview():
+    return render_template("interview.html")
+
+# Practice 筛选页面
+@app.route("/interview/practice_filter", methods=["GET", "POST"])
+@login_required
+def practice_filter():
+    if request.method == "POST":
+        # 初始化 practice_answers
+        session['practice_answers'] = {}
+        return redirect(url_for("practice_question", index=0))
+    return render_template("practice_filter.html")
+
+# Mock 筛选页面
+@app.route("/interview/mock_filter", methods=["GET", "POST"])
+@login_required
+def mock_filter():
+    if request.method == "POST":
+        # 初始化 mock_answers
+        session['mock_answers'] = {}
+        return redirect(url_for("mock_question", index=0))
+    return render_template("mock_filter.html")
+
+# Practice 题目页面（支持题目导航及收藏）
+@app.route("/interview/practice_question/<int:index>", methods=["GET", "POST"])
+@login_required
+def practice_question(index):
+    total = len(practice_questions)
+    if 'practice_answers' not in session:
+        session['practice_answers'] = {}
+    if request.method == "POST":
+        action = request.form.get("action")
+        answer = request.form.get("answer")
+        practice_answers = session.get('practice_answers', {})
+        practice_answers[str(index)] = answer
+        session['practice_answers'] = practice_answers
+
+        if action == "next":
+            return redirect(url_for("practice_question", index=index+1))
+        elif action == "back":
+            return redirect(url_for("practice_question", index=index-1))
+        elif action == "submit":
+            correct_rate = 100
+            return redirect(url_for("result", mode="practice", correct_rate=correct_rate))
+        elif action == "add_to_collection":
+            collection_data = {
+                "user_id": current_user.id,
+                "question_name": f"Practice Question {index+1}",
+                "industry": "Demo Industry",
+                "role": "Demo Role",
+                "difficulty": practice_questions[index]["difficulty"],
+                "collected_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "question_content": practice_questions[index]["question_content"],
+                "correct_answer": "Correct answer placeholder",
+                "user_answer": answer
+            }
+            interview_collection.insert_one(collection_data)
+            flash("Question added to your collection", "success")
+            return redirect(url_for("practice_question", index=index))
+    
+    current_answer = session.get('practice_answers', {}).get(str(index), "")
+    question = practice_questions[index]
+    return render_template("question.html", mode="practice", index=index, total_questions=total, question=question, current_answer=current_answer)
+
+# Mock 题目页面（支持题目导航及收藏）
+@app.route("/interview/mock_question/<int:index>", methods=["GET", "POST"])
+@login_required
+def mock_question(index):
+    total = len(mock_questions)
+    if 'mock_answers' not in session:
+        session['mock_answers'] = {}
+    if request.method == "POST":
+        action = request.form.get("action")
+        answer = request.form.get("answer")
+        mock_answers = session.get('mock_answers', {})
+        mock_answers[str(index)] = answer
+        session['mock_answers'] = mock_answers
+
+        if action == "next":
+            return redirect(url_for("mock_question", index=index+1))
+        elif action == "back":
+            return redirect(url_for("mock_question", index=index-1))
+        elif action == "submit":
+            correct_rate = 100
+            return redirect(url_for("result", mode="mock", correct_rate=correct_rate))
+        elif action == "add_to_collection":
+            collection_data = {
+                "user_id": current_user.id,
+                "question_name": f"Mock Question {index+1}",
+                "industry": "Demo Industry",
+                "role": "Demo Role",
+                "difficulty": mock_questions[index]["difficulty"],
+                "collected_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "question_content": mock_questions[index]["question_content"],
+                "correct_answer": "Correct answer placeholder",
+                "user_answer": answer
+            }
+            interview_collection.insert_one(collection_data)
+            flash("Question added to your collection", "success")
+            return redirect(url_for("mock_question", index=index))
+    
+    current_answer = session.get('mock_answers', {}).get(str(index), "")
+    question = mock_questions[index]
+    return render_template("question.html", mode="mock", index=index, total_questions=total, question=question, current_answer=current_answer)
+
+# 提交结果页面
+@app.route("/interview/result")
+@login_required
+def result():
+    mode = request.args.get("mode")
+    correct_rate = request.args.get("correct_rate", 0)
+    return render_template("result.html", correct_rate=correct_rate)
+
+# 我的收藏页面（删除功能保持不变）
+@app.route("/interview/my_collection", methods=["GET"])
+@login_required
+def my_collection():
+    # Retrieve search parameters from the request
+    question_name = request.args.get("question_name", "").strip()
+    industry = request.args.get("industry", "").strip()
+    role = request.args.get("role", "").strip()
+    difficulty = request.args.get("difficulty", "").strip()
+    collected_time = request.args.get("collected_time", "").strip()
+
+    # Base query: Filter by user_id
+    query = {"user_id": current_user.id}
+
+    # Apply filters if user provides input
+    if question_name:
+        query["question_name"] = {"$regex": question_name, "$options": "i"}  # Case-insensitive
+    if industry:
+        query["industry"] = {"$regex": industry, "$options": "i"}
+    if role:
+        query["role"] = {"$regex": role, "$options": "i"}
+    if difficulty:
+        query["difficulty"] = difficulty  # Exact match for dropdown selection
+    if collected_time:
+        query["collected_time"] = {"$regex": collected_time, "$options": "i"}  # Date search
+
+    # Query the MongoDB collection
+    collections = list(interview_collection.find(query))
+
+    return render_template("my_collection.html", collections=collections)
+
+
+@app.route("/interview/my_collection/<collection_id>", methods=["GET", "POST"])
+@login_required
+def collection_question(collection_id):
+    collection_item = interview_collection.find_one({"_id": ObjectId(collection_id)})
+
+    if not collection_item:
+        flash("Question not found", "danger")
+        return redirect(url_for("my_collection"))
+
+    if request.method == "POST":
+        revised_answer = request.form.get("user_answer")
+        
+        interview_collection.update_one(
+            {"_id": ObjectId(collection_id)},
+            {"$set": {"user_answer": revised_answer}}
+        )
+        
+        flash("Your answer has been updated!", "success")
+        return redirect(url_for("collection_question", collection_id=collection_id))
+
+    return render_template("collection_question.html",
+                           difficulty=collection_item.get("difficulty"),
+                           question_content=collection_item.get("question_content"),
+                           correct_answer=collection_item.get("correct_answer", ""),
+                           user_answer=collection_item.get("user_answer", ""))
+
+
+# 删除收藏题目
+@app.route("/interview/delete_collection/<collection_id>")
+@login_required
+def delete_collection(collection_id):
+    interview_collection.delete_one({"_id": ObjectId(collection_id), "user_id": current_user.id})
+    flash("Question deleted from your collection", "success")
+    return redirect(url_for("my_collection"))
+
+
+
 
 
 if __name__ == "__main__":

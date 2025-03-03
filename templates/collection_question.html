@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interview Question - My Collection</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.4);
+    }
+    .modal-content {
+      background-color: #fff;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 50%;
+    }
+  </style>
+  <script>
+    function showHint() {
+      document.getElementById("hintModal").style.display = "block";
+    }
+    function closeHint() {
+      document.getElementById("hintModal").style.display = "none";
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h2>Interview Question (My Collection)</h2>
+    <p><strong>Difficulty:</strong> {{ difficulty }}</p>
+    
+    <button onclick="showHint()">Hint</button>
+    <div id="hintModal" class="modal">
+      <div class="modal-content">
+        <span onclick="closeHint()" style="float:right;cursor:pointer;">&times;</span>
+        <h3>Hint</h3>
+        <p>This is a hint box.</p>
+      </div>
+    </div>
+
+    <p><strong>Question:</strong> {{ question_content }}</p>
+    
+    <br>
+    <div>
+      <label for="correct_answer">Correct Answer:</label>
+      <textarea id="correct_answer" name="correct_answer" rows="4" cols="50" readonly>{{ correct_answer }}</textarea>
+    </div>
+    
+    <br>
+    <form method="POST">
+      <div>
+        <label for="user_answer">Your Answer:</label>
+        <textarea id="user_answer" name="user_answer" rows="4" cols="50">{{ user_answer }}</textarea>
+      </div>
+      <br>
+      <button type="submit">Save Answer</button>
+    </form>
+    
+    <br>
+    <button onclick="location.href='{{ url_for('my_collection') }}'">Back to My Collection</button>
+  </div>
+</body>
+</html>

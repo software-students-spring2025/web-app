@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mock Filter - Interview</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h2>Mock Interview Setup</h2>
+    <form action="{{ url_for('mock_filter') }}" method="POST">
+      <label for="company">Company:</label>
+      <input type="text" id="company" name="company" placeholder="Enter company name">
+      
+      <label for="industry">Industry:</label>
+      <input type="text" id="industry" name="industry" placeholder="Enter industry">
+      
+      <label for="role">Type of Role:</label>
+      <input type="text" id="role" name="role" placeholder="Enter role">
+      
+      <button type="submit">Finished</button>
+    </form>
+    <br>
+    <a href="{{ url_for('interview') }}">Back to Interview</a>
+  </div>
+</body>
+</html>
