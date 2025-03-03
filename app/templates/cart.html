@@ -48,7 +48,8 @@
 
                         <div class ="amount"> 
                             <div>x{{ item.quantity }}</div>
-                            <div class="price">${{ item.price }}</div>
+                            <div class="price">${{ item.price }} each</div>
+                            <div class="subtotal"> ${{ item.total }}.00 subtotal</div>
                         </div>
                     </div>
                 </div>
@@ -59,8 +60,8 @@
 
             <!--Checkout button:-->
             <a href="{{ url_for('clear_cart') }}">
-                <div class="Back">
-                        Clear Cart
+                <div class="clear">
+                        Clear
                 </div>
             </a>
 
