@@ -22,9 +22,6 @@ Delete Functionality
 
 ## Steps necessary to run the software
 
-Here's your complete **README** section in VS Code format, including cloning, clearing previous containers, and running the app. You can **copy and paste it directly** into your README file.  
-
-```md
 ### Option 1
 
 #### 1. **Clone the repository**
