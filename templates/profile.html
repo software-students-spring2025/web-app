@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Study Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>My Profile</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('show_dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('show_profile') }}">Profile</a></li>
+                <li><a href="{{ url_for('show_study') }}">Study</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <!-- Profile View Section -->
+        <section id="profile-view">
+            <div id="profile-picture">
+                <!-- Placeholder for profile picture -->
+                <img src="{{ url_for('static', filename='images/default_pfp.jpg') }}" alt="Profile Picture" id="profile-pic">
+            </div>
+            <div id="profile-details">
+                <h2 id="name">Welcome, {{data["user"].name}}</h2>
+                <p><strong>Username:</strong> <span id="username">{{data["user"].username}}</span></p>
+                <p><strong>Age:</strong> <span id="age">{{data["user"].age}}</span></p>
+                <p><strong>Bio:</strong> <span id="bio">{{data["user"].bio}}</span></p>
+            </div>
+            <button onclick="editProfile()">Edit Profile</button>
+        </section>
+
+        <!-- Profile Edit Section -->
+        <section id="profile-edit" style="display: none;">
+        <form method="post" action="/profile-edit">
+            <h2>Edit Profile</h2>
+            <div>
+                <label for="profile-pic-input">Profile Picture</label>
+                <input name="pic" type="file" id="profile-pic-input" accept="image/*">
+            </div>
+            <div>
+                <label for="name-input">Name</label>
+                <input name="name" type="text" id="name-input" value="John Doe">
+            </div>
+            <div>
+                <label for="age-input">Age</label>
+                <input name="age" type="number" id="age-input" value="25">
+            </div>
+            <div>
+                <label for="bio-input">Bio</label>
+                <input name="bio" id="bio-input" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit.">
+            </div>
+            <button onclick="saveProfile()">Save Changes</button>
+            
+        </form>
+        <button onclick="cancelEdit()">Cancel</button>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Study Tracker</p>
+    </footer>
+    
+    <script>
+        function editProfile() {
+            document.getElementById('profile-view').style.display = 'none';
+            document.getElementById('profile-edit').style.display = 'block';
+        }
+
+        // save the profile changes
+        function saveProfile() {
+            const name = document.getElementById('name-input').value;
+            const age = document.getElementById('age-input').value;
+            const bio = document.getElementById('bio-input').value;
+            
+            // implement logic here to save the data (e.g., saving to localStorage or backend)
+
+            // update the profile view with new data
+            document.getElementById('name').innerText = name;
+            document.getElementById('age').innerText = age;
+            document.getElementById('bio').innerText = bio;
+            
+            // switch back to profile view mode
+            document.getElementById('profile-view').style.display = 'block';
+            document.getElementById('profile-edit').style.display = 'none';
+        }
+
+        // cancel editing and return to the profile view without saving
+        function cancelEdit() {
+            document.getElementById('profile-view').style.display = 'block';
+            document.getElementById('profile-edit').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
