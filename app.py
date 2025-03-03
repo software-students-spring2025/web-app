@@ -110,7 +110,7 @@ def handle_detail(order_id):
     return flask.render_template('detail.html', order=order)
 
 # Delete Order in DetailPage
-@app.route('/detail/<order_id>')
+@app.route('/detail/<order_id>/delete') # Don't delete "/delete" 
 def delete_order(order_id):
     if 'user' not in flask.session:
         return flask.redirect('/login')
