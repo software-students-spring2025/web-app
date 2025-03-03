@@ -1,27 +1,26 @@
 <head>
-    <!-- Font Awesome CDN for icons -->
+    <!-- CDN for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 
-<!-- Navbar -->
 <div class="fixed bottom-3 left-0 right-0 bg-transparent z-50">
   <div class="flex justify-center bg-transparent p-1">
     <nav class="flex gap-x-2">
-      <!-- Map Icon Active -->
+
       <a class="py-3 px-5 inline-flex items-center justify-center gap-2 bg-white text-gray-700 font-medium rounded-lg shadow-sm focus:outline-none dark:bg-neutral-800 dark:text-neutral-400 text-lg" href="/" id="activeButton">
-        <i class="fas fa-map-marker-alt"></i> <!-- Map Icon Active -->
+        <i class="fas fa-map-marker-alt"></i>
       </a>
-      <!-- Search Icon -->
+
       <a class="py-3 px-5 inline-flex items-center justify-center gap-2 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 focus:outline-none dark:bg-neutral-800 dark:text-neutral-400 dark:hover:bg-neutral-700 text-lg" href="{{ url_for('search') }}" id="searchButton">
-        <i class="fas fa-search"></i> <!-- Search Icon -->
+        <i class="fas fa-search"></i>
       </a>
-      <!-- Profile Icon -->
-      <a class="py-3 px-5 inline-flex items-center justify-center gap-2 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 focus:outline-none dark:bg-neutral-800 dark:text-neutral-400 dark:hover:bg-neutral-700 text-lg" href="profile.html" id="profileButton">
-        <i class="fas fa-user"></i> <!-- Profile Icon -->
+
+      <a class="py-3 px-5 inline-flex items-center justify-center gap-2 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 focus:outline-none dark:bg-neutral-800 dark:text-neutral-400 dark:hover:bg-neutral-700 text-lg" href="{{ url_for('profile') }}" id="profileButton">
+        <i class="fas fa-user"></i>
       </a>
-      <!-- Disabled Back Icon -->
+
       <a class="py-3 px-5 inline-flex items-center justify-center gap-2 bg-gray-300 text-gray-400 font-medium rounded-lg pointer-events-none focus:outline-none dark:bg-neutral-800 dark:text-neutral-400 dark:hover:bg-neutral-600 dark:text-neutral-600 text-lg" href="#" id="backButton" aria-disabled="true">
-        <i class="fas fa-arrow-left"></i> <!-- Disabled Back Icon -->
+        <i class="fas fa-arrow-left"></i>
       </a>
     </nav>
   </div>
