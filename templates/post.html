@@ -18,6 +18,12 @@
             {% endfor %}
         </ul>
 
+
+        <!--edit post after comments but before comment form-->
+        <a href="{{ url_for('edit_post', post_id=post._id|string) }}" class="edit-button">Edit Post</a>
+        
+
+        <!--add comment form-->
         <div class="comment-form">
             <h3>Add a Comment</h3> 
             <form action="{{ url_for('add_comment', post_id=post._id|string) }}" method="POST">
