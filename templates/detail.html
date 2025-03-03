@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="detail-page">
+        <h2>Order Details</h2>
+        <a href="/home" class="home-btn">Back Home</a>
+        <br>
+        <br>
+        <a href ="/detail/{{ order._id }}/delete" class="delete-btn">Delete This Order</a>
+
+        <form action="/detail/{{ order._id }}" method="POST">
+            <label for="customerName">Customer:</label>
+            <input type="text" id="customerName" name="customerName" value="{{ order.consumer }}">
+        
+            <label for="dishName">Dish Name:</label>
+            <input type="text" id="dishName" name="dishName" value="{{ order.food }}">
+        
+            <label for="price">Price:</label>
+            <input type="number" id="price" name="price" value="{{ order.price }}" step="0.01">
+        
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" value="{{ order.address }}">
+
+            <label for="contact">Contact Info:</label>
+            <input type="text" id="contact" name="contact" value="{{ order.contact }}">
+
+            <button type="submit" class="save-btn">Save</button>
+        </form>       
+    </div>
+{% endblock %}
