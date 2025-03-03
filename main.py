@@ -35,7 +35,7 @@ def reset_quiz_session():
 
 @app.route('/')
 def home():
-    return redirect(url_for("questions.show_question"))
+    return redirect(url_for("quiz.quiz"))
 
 if __name__ == '__main__':
     app.run(debug=True)
