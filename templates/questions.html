@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Questions</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <h1 style="text-align: center;">Show Questions</h1>
+
+    <!-- Filter Form -->
+    <form method="POST" action="{{ url_for('questions.show_question') }}">
+      <label for="genre">Genre:</label>
+      <select name="genre" id="genre">
+          <option value="">All Genres</option>
+          {% for genre in genres %}
+              <option value="{{ genre }}" {% if genre == selected_genre %}selected{% endif %}>{{ genre }}</option>
+          {% endfor %}
+      </select>
+
+      <label for="difficulty">Difficulty:</label>
+      <select name="difficulty" id="difficulty">
+          <option value="">All Difficulties</option>
+          {% for difficulty in difficulties %}
+              <option value="{{ difficulty }}" {% if difficulty == selected_difficulty %}selected{% endif %}>{{ difficulty }}</option>
+          {% endfor %}
+      </select>
+      
+      <button type="submit">Apply Filters</button>
+    </form>
+
+    <!-- Questions Table -->
+    <form method="POST" action="{{ url_for('questions.show_question') }}">
+      <table id="data" class="table-container">
+        <thead>
+          <tr>
+            <th><input type="checkbox" id="select-all"></th>
+            <th>Question</th>
+            <th>Answer</th>
+            <th>Hint</th>
+            <th>Genre</th>
+            <th>Difficulty</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for question in questions %}
+            <tr>
+              <td><input type="checkbox" name="selected" value="{{ question._id }}"></td>
+              <td>{{ question.question }}</td>
+              <td>{{ question.answer }}</td>
+              <td>{{ question.hint }}</td>
+              <td>{{ question.genre }}</td>
+              <td>{{ question.difficulty }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <!-- Buttons for Quiz and Flashcards -->
+      <button type = "submit" name = "start_quiz" value = "true">Start Quiz</button>
+      <button type = "submit" name = "start_flashcards" value = "true">Start Flashcards</button>
+  </form>
+  <script>
+    document.getElementById("select-all").addEventListener("change", function() {
+        let checkboxes = document.querySelectorAll("input[name='selected']");
+        checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+    });
+  </script>
+</body>
+</html>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-messages">
+        {% for category, message in messages %}
+            <p class="flash-message {{ category }}">{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+{% endwith %}
+
+{% endblock %}

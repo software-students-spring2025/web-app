@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                {% if 'delete' in message %}
+                    <div class="alert {{ category }}">{{ message }}</div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <h1 style="text-align: center;">Delete Questions</h1>
+    <form action="{{ url_for('questions.delete') }}" method="POST">
+        <table id="data" class="table-container">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Question</th>
+                    <th>Answer</th>
+                    <th>Hint</th>
+                    <th>Genre</th>
+                    <th>Difficulty</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for question in questions %}
+                <tr>
+                    <td><input type="checkbox" name="selected" value="{{ question._id }}"></td>
+                    <td>{{ question.question }}</td>
+                    <td>{{ question.answer }}</td>
+                    <td>{{ question.hint }}</td>
+                    <td>{{ question.genre }}</td>
+                    <td>{{ question.difficulty }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class = "center-wrapper">
+            <button style="text-align: center;" type="submit" class="button">Delete!</button>
+        </div>
+    </form>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const alerts = document.querySelectorAll(".alert");
+            alerts.forEach(alert => {
+                alert.style.display = "block";  // Show the alert
+                setTimeout(() => alert.style.display = "none", 3000);  // Hide after 3 sec
+            });
+        });
+    </script>
+{% endblock %}
