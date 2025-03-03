@@ -65,13 +65,13 @@ a {
     align-items: center;
     font-size: 10vw;
     width: 45vw;
-    height: 10vh;
+    height: 8vh;
     flex-direction: column;
     color: #C88246;
 }
 
 .price {
-    margin-top: 18vw;
+    margin-top: 10vw;
     font-size: 6vw;
     color: #C88246;
 }
@@ -106,5 +106,29 @@ a {
 }
 
 a {
+    color: #C88246;
+}
+
+.subtotal {
+    font-size: 5vw;
+    margin-bottom: 2vh;
+}
+
+.quantity {
+    margin-top: 2vh;
+}
+
+.clear{
+    margin-top: 10%;
+    margin-left: 70%;
+    flex-direction: column;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    width: 20vw;
+    height: 5vh;
+    border: solid #B96B50;
+    font-size: 5vw;
+    background-color: #F9DFA0;
     color: #C88246;
 }
