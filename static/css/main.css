@@ -22,7 +22,7 @@
 }
 
 .table-container th {
-    background-color: #d2b79f;
+    background-color: #9ac8f3;
     color: white;
     text-transform: uppercase;
 }
@@ -35,20 +35,42 @@
     background-color: #f9f9f9;
 }
 
+.table-container th:nth-child(4),
+.table-container td:nth-child(4) {
+    width: 80px; /* Narrower Genre column */
+}
+
+.table-container th:nth-child(5),
+.table-container td:nth-child(5) {
+    width: 80px; /* Narrower Difficulty column */
+}
+
 .center-wrapper{
     text-align: center;
 }
 
 .button {
-    position: absolute;
+    /*position: absolute;*/
     top: 50%;
+    background-color: #9ac8f3;
+    color: white;
+    padding: 7px 15px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #4996df; 
 }
 
 .alert {
     padding: 10px;
     margin: 10px 0;
     border-radius: 5px;
-    display: none;  /* Initially hidden */
+    display: none; 
 }
 
 .alert.success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
@@ -64,7 +86,7 @@ body {
 }
 
 header {
-    background-color: #d2b79f;
+    background-color: #9ac8f3;
     padding: 15px;
     text-align: left;
 }
@@ -125,6 +147,37 @@ nav a, .dropdown {
     padding: 10px;
     text-decoration: none;
     color: #333;
+}
+
+/*Reserve sace for the answer even when hidden*/
+.answer {
+    visibility: hidden;  /* Hide the answer but reserve space */
+    opacity: 0;          /* Start fully transparent */
+    transition: opacity 0.3s ease;
+}
+
+.answer.visible {
+    visibility: visible; /* Make the answer visible */
+    opacity: 1;
+}
+
+.hint {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.hint.visible {
+    visibility: visible;
+    opacity: 1;
+}
+
+/*style for botton group*/
+.button-group {
+    display: flex;
+    gap: 10px;         /* Space between buttons */
+    justify-content: center; /* Center the buttons horizontally */
+    margin-top: 20px;  /* Space above the group */
 }
 .stats-box {
     border: 2px solid black; 

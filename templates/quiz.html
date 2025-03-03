@@ -10,14 +10,14 @@
     {% if not submitted %}
         <form action = "{{ url_for('quiz.check_answer') }}" method = "POST">
             <input type = "text" name = "user_answer" placeholder = "Enter your answer" >
-            <button onclick = "check_answer()">Submit</button>
+            <button onclick = "check_answer()" class="button">Submit</button>
         </form>
         <br>
     {% endif %}
 
     <!-- Hint (Hidden) -->
     {% if not submitted %}
-        <button onclick = "show_hint()">Show Hint</button>
+        <button onclick = "show_hint()" class="button">Show Hint</button>
         <p id = "hint" style = "display: none;">
             <strong>Hint:</strong> {{ question.hint if question.hint else "No hint available" }}
         </p>
