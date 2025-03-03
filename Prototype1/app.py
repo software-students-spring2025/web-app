@@ -20,10 +20,20 @@ def home():
     if 'user' not in session:
         return redirect(url_for('login'))
     # Retrieve all LFG posts from the database (displayed in index.html :contentReference[oaicite:4]{index=4})
-    posts = list(db.lfg.find())
+    search_query=request.args.get('search', '')
+    if search_query:
+        posts=list(db.lfg.find({
+            '$or':[
+                {'game':{'$regex':search_query,'$options':'i'}},
+                {'description':{'$regex':search_query,'$options':'i'}}
+            ]
+        }))
+    else: 
+        posts=list(db.lfg.find())
     for post in posts:
         post['_id_str'] = str(post['_id'])
     current_user = session['user']
+    
     return render_template('index.html', lfg_posts=posts, current_user=current_user)
 
 @app.route('/login', methods=['GET', 'POST'])
