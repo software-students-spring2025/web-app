@@ -101,7 +101,7 @@ docker-compose down -v
 
 
 ## Task Boards
-[Task Board Sprint 1 Link](https://github.com/orgs/software-students-spring2025/projects/30)
+[Task Board Sprint 1 Link](https://github.com/orgs/software-students-spring2025/projects/60/views/1)
 
 [Task Board Sprint 2 Link](https://github.com/orgs/software-students-spring2025/projects/124/views/1)
 
