@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Orders</title>
+    <link rel="stylesheet" href="../static/order_history.css">
+</head>
+<body>
+    <a href="{{ url_for('home') }}">
+        <div class="Back"> 
+            Back
+        </div>
+    </a>
+    <div class="Title">
+        <h1>Thank You for Your Patronage!</h1>
+    </div>
+    <br>
+    <div class="ordertitle">
+        <h2>Order History</h2>
+    </div>
+    
+    <!-- order list-->
+    <div class="orderlist">
+        {% for order in orders %}
+        <div class="order">
+            <div class="name">
+                <h1> {{ order.delivery_method | capitalize }} for {{ order.first_name | capitalize}} {{ order.last_name | capitalize}} </h1>
+            </div>
+
+            <div class="address">
+               Address for Delivery: {{ order.shipping_address }}
+            </div>
+
+            <div class="card">
+                **** **** **** {{ order.last_four }}
+            </div>
+
+            <div class="items">
+                {% for item in order['items'] %}
+                <!-- each item has a name + quanitity on one line-->
+                <div class="itemdesc">
+                    <div class="itemname">
+                        {{ item.name }}
+                    </div>
+                    <div class="itemquant">
+                        x{{ item.quantity }}
+                    </div>
+                </div>
+
+                <!-- each item has a price + subtotal on one line-->
+                <div class="itempricing">
+                    <div class="price">
+                        ${{ item.price }}.00 each 
+                    </div>
+                    <div class="subtotal">
+                        ${{ item.total }}.00
+                    </div>
+                </div>
+                {% endfor %}
+                <!-- total is at the end of the element block-->
+                <div class="end">
+                    <div class="total">
+                        Total Price: ${{ order.total_price }}
+                    </div>
+    
+                    <div class="remove">
+                        <a class="button" href="{{ url_for('delete_order', order_id=order.order_id) }}">Remove</a>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</body>
+</html>

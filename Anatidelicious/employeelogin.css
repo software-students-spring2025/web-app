@@ -1,0 +1,74 @@
+.Back {
+    margin-top: 10%;
+    margin-left: 10%;
+    flex-direction: column;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    width: 20vw;
+    height: 5vh;
+    border: solid;
+    font-size: 5vw;
+}
+
+a {
+    text-decoration: none;
+}
+
+.Title {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 5vw;
+    margin-top: 5%;
+    padding: 10vw;
+    flex-direction: column;
+}
+
+.Input {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 5vw;
+    margin-top: 5%;
+    padding: 10vw;
+    flex-direction: column;
+}
+
+.Email {
+    width: 50vw;
+    margin: 1vw;
+    font-size: 30px;
+    border: solid;
+    padding: 1vw;
+    padding-top: 1vh;
+}
+
+.firstlabel {
+    margin-left: 12vw;
+    align-self: flex-start;
+}
+
+.Pass {
+    width: 50vw;
+    margin: 1vw;
+    font-size: 30px;
+    border: solid;
+    padding: 1vw;
+    padding-top: 1vh;
+}
+
+.secondlabel {
+    margin-top: 6vw;
+    margin-left: 12vw;
+    align-self: flex-start;
+}
+
+.Submit {
+    margin-top: 2vw;
+    width: 30vw;
+    height: 5vh;
+    font-size: 3vw;
+}

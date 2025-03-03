@@ -1,0 +1,134 @@
+body {
+    background-color: #F7EDD3;
+}
+
+.Back {
+    margin-top: 10%;
+    margin-left: 10%;
+    flex-direction: column;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    width: 20vw;
+    height: 5vh;
+    border: solid #B96B50;
+    font-size: 5vw;
+    background-color: #F9DFA0;
+    color: #C88246;
+}
+
+a {
+    text-decoration: none;
+}
+
+.Title {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 5vw;
+    margin-top: 5%;
+    padding: 6vw;
+    flex-direction: column;
+    color: #B96B50;
+}
+
+.ItemList {
+    display: flex;
+    margin-left: 2vw;
+    margin-right: 2vw;
+    
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.description{
+    margin: 2vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    padding: 6vw;
+    background-color: #F8F5E5;
+}
+
+.menuTitle {
+    font-size: 3vw;
+    color: #B96B50;
+}
+
+.amount {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 10vw;
+    width: 45vw;
+    height: 8vh;
+    flex-direction: column;
+    color: #C88246;
+}
+
+.price {
+    margin-top: 10vw;
+    font-size: 6vw;
+    color: #C88246;
+}
+
+.total {
+    text-align: center;
+    font-size: 7vw;
+    margin-bottom: 3vw;
+    color: #B96B50;
+}
+
+.remove {
+    border: solid #B96B50;
+    width: 18vw;
+    height: 3vh;
+    text-align: center;
+    font-size: 5vw;
+    margin-top: 2vh;
+    background-color: #F9DFA0;
+    color: #C88246;
+    
+}
+
+.checkout {
+    text-align: center;
+    font-size: 4vw;
+    border: solid;
+    margin: 4vw;
+    background-color: #F9DFA0;
+    color: #B96B50;
+    border: solid #B96B50;
+}
+
+a {
+    color: #C88246;
+}
+
+.subtotal {
+    font-size: 5vw;
+    margin-bottom: 2vh;
+}
+
+.quantity {
+    margin-top: 2vh;
+}
+
+.clear{
+    margin-top: 10%;
+    margin-left: 70%;
+    flex-direction: column;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    width: 20vw;
+    height: 5vh;
+    border: solid #B96B50;
+    font-size: 5vw;
+    background-color: #F9DFA0;
+    color: #C88246;
+}
