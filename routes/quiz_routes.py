@@ -3,6 +3,7 @@ from pymongo import MongoClient
 import os
 import random
 from dotenv import load_dotenv
+from bson.objectid import ObjectId
 
 load_dotenv()
 
@@ -26,23 +27,38 @@ def quiz():
     session.setdefault('correct_count', 0)
     session.setdefault('wrong_count', 0)
     session.setdefault('answered_questions', [])
-        
-    if request.method == 'POST' and 'next_question' in request.form or 'current_question' not in session:
-        all_questions = list(questions_collection.find({}, {"_id": 1, "question": 1, "answer": 1, "hint": 1, "difficulty": 1, "genre": 1}))
-        for q in all_questions:
-            q['_id'] = str(q['_id'])
-        unanswered_questions = [q for q in all_questions if q['_id'] not in session['answered_questions']]
+    
+    if request.referrer and '/show' in request.referrer:
+        session['answered_questions'] = []
+        session['submitted'] = False
+    
+    if 'selected_questions' in session and session['selected_questions']:
+        selected_ids = [ObjectId(q_id) for q_id in session['selected_questions']]
+        all_questions = list(questions_collection.find({"_id": {"$in": selected_ids}}))
+    else:
+        all_questions = []
+    
+    for q in all_questions:
+        q['_id'] = str(q['_id'])
+    
+    unanswered_questions = [q for q in all_questions if q['_id'] not in session['answered_questions']]
 
-        if unanswered_questions:
-            session['current_question'] = random.choice(unanswered_questions)
-            session['submitted'] = False
-        else:
-            session['current_question'] = None
+    if unanswered_questions:
+        session['current_question'] = random.choice(unanswered_questions)
+        session['submitted'] = False
+    else:
+        session['current_question'] = None
     
     total_questions = session['correct_count'] + session['wrong_count']
     
-    return render_template('quiz.html', question = session['current_question'], correct_count = session['correct_count'], wrong_count = session['wrong_count'], total_questions = total_questions, submitted = session['submitted'])
-
+    return render_template(
+        'quiz.html',
+        question=session['current_question'],
+        correct_count=session['correct_count'],
+        wrong_count=session['wrong_count'],
+        total_questions=total_questions,
+        submitted=session.get('submitted', False))
+    
 @quiz_bp.route('/check_answer', methods = ['POST'])
 def check_answer():
     user_answer = request.form.get('user_answer','').strip().lower()
@@ -64,11 +80,20 @@ def check_answer():
    
     total_questions = session['correct_count'] + session['wrong_count']
         
-    return render_template('quiz.html', question = session['current_question'], result = result, correct_count = session['correct_count'], wrong_count = session['wrong_count'], total_questions = total_questions, submitted = session['submitted'])
+    return render_template('quiz.html', 
+                           question = session['current_question'],
+                           result = result, 
+                           correct_count = session['correct_count'], 
+                           wrong_count = session['wrong_count'], 
+                           total_questions = total_questions, 
+                           submitted = session['submitted'])
 
 @quiz_bp.route('/restart', methods=['POST'])
 def restart_quiz():
     """Resets quiz progress and starts fresh"""
-    session.clear()
+    session.pop('correct_count', None)
+    session.pop('wrong_count', None)
+    session.pop('answered_questions', None)
+    session.pop('submitted', None)
     session['visited_quiz'] = False
     return redirect(url_for('quiz.quiz'))

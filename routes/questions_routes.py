@@ -60,7 +60,8 @@ def show_question():
     if selected_difficulty:
         query["difficulty"] = selected_difficulty
     
-    questions_to_show = questions_collection.find(query)
+    questions_to_show = list(questions_collection.find(query))
+    
     if request.method == 'POST':
         if 'start_quiz' in request.form or 'start_flashcards' in request.form:
             selected_questions = request.form.getlist('selected')
