@@ -71,10 +71,7 @@ def new_account(mydb, username, password):
 ## Usage: get all deadlines belonging to a specific user
 ## 
 def get_deadlines(mydb, userID):
-    #get name from user database and user id
-   # Data_Base= myDb["users"] 
-   # exist= Data_Base.find_one({"_id":userID})
-   # use_id= exist["_id"]
+    
     deadline_table = mydb["DeadLines"]
     my_deadlines = deadline_table.find({"user_ID":ObjectId(userID)})
     deadlines_list= [doc for doc in my_deadlines]

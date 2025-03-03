@@ -49,8 +49,12 @@ data = {
                 {% for class in data["classes"] %}
                     <li>
                         <h3>{{class.name}}</h3>  
-                        <button onclick="manageClass('class._id')" id="manage-class-{{class.name}}">Manage Class</button> 
+                        <button onclick="manageClass('{{class._id}}', '{{class.name}}')" id="manage-class-{{class._id}}">Manage Class</button> 
                     </li>
+                
+                    
+                
+                
                 {% endfor %}
             </ul>
 
@@ -84,7 +88,7 @@ data = {
             <div id="study-sessions">
                 <h3>Study Sessions</h3>
                 <ul id="study-session-time">
-                    <p>Total time studied: {{class.time_studied_hours}}</p>
+                    <p>Total time studied: </p>
                 </ul>
             
                 <button onclick="startStudySession()">Start Study Session</button>
@@ -101,12 +105,10 @@ data = {
         <p>&copy; 2025 Study Tracker</p>
     </footer>
     
+    
     <script>
 
-        let classData = JSON.parse(localStorage.getItem('classData')) || {};
-        window.onload = function() {
-            loadClasses();
-        };
+        
         
 
         function deleteClass() {
@@ -122,12 +124,19 @@ data = {
             backToClasses();
         }
 
-        function manageClass(this_class_id) {
-            // hiding the class list and showing the task/session container
+        /*
+        This function is called when the "manage class" button for any class is pressed. 
+
+        The function will take in the id of the class being manipulated
+
+        */
+        function manageClass(this_class_id, this_class_name) {
+            // hiding the class list and showing the task/session container       
+            document.getElementById('class-name-header').innerText = `Manage Tasks and Study Sessions for ${this_class_name}`
+
             document.getElementById('class-list').style.display = 'none';
             document.getElementById('task-session-container').style.display = 'block';
-            document.getElementById('class-name-header').innerText = "Manage Tasks and Study Sessions for {% for class in data['classes'] if class['_id'] == " + this_class_id + " %}{{class['name']}}{% endfor %}";
-
+            
             // loading the tasks
             //document.getElementById('task-list').innerHTML = '';
             console.log('beep')

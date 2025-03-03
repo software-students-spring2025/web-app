@@ -54,7 +54,16 @@ def show_dashboard():
                 "classes": database.get_classes(myDb, ObjectId(session['userid'])), 
                 "tasks": database.get_tasks(myDb, ObjectId(session['userid'])) 
             }
-            print(data["deadlines"])
+            for i in range(0, len(data["deadlines"])):
+                data["deadlines"][i]["_id"] = str(data["deadlines"][i]["_id"])
+                data["deadlines"][i]["user_ID"] = str(data["deadlines"][i]["user_ID"])
+                data["deadlines"][i]["class_ID"] = str(data["deadlines"][i]["class_ID"])
+            for i in range(0, len(data["classes"])):
+                data["classes"][i]["_id"] = str(data["classes"][i]["_id"])
+                data["classes"][i]["user_ID"] = str(data["classes"][i]["user_ID"])
+        
+              
+            
             return render_template('dashboard.html', data=data) # render home page template 
         
         
