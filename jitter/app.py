@@ -27,7 +27,6 @@ restaurants_collection = db["restaurants"]
 reviews_collection = db["reviews"]
 
 
-
 # ✅ Home Route - Render the homepage
 @app.route("/")
 def index():
@@ -86,12 +85,15 @@ def search():
     if "reviews" not in restaurant or not restaurant["reviews"]:
         restaurant["reviews"] = reviews
 
+
     return render_template("reviews.html", restaurant=restaurant, reviews=reviews)
+
 
 
 # ✅ Profile Page
 @app.route("/profile")
 def profile():
+
     username = "ethan"
 
     print(f"🔍 Fetching reviews for: {username}")
@@ -110,6 +112,8 @@ def profile():
     print(f"✅ Rendering profile.html with {len(reviews)} reviews")
 
     return render_template("profile.html", user=user, reviews=reviews)
+
+
 
 
 @app.route("/add-review", methods=["GET"])
