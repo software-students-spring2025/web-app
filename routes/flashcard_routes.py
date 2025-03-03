@@ -30,13 +30,16 @@ def flashcard_options():
 
 def flashcard():
     """
-    Renders a flashcard page.
-    
-    This endpoint retrieves all questions from the database,
-    and then uses a query parameter 'index' to select which question to display.
+    Renders a flashcard page using the questions selected from the show page.
     """
-    # Retrieve all questions as a list
-    questions = list(questions_collection.find({}))
+    # Check if there are selected questions in the session
+    if 'selected_questions' in session and session['selected_questions']:
+        selected_ids = [ObjectId(q_id) for q_id in session['selected_questions']]
+        questions = list(questions_collection.find({"_id": {"$in": selected_ids}}))
+    else:
+        # Fallback: load all questions if none were selected
+        questions = list(questions_collection.find({}))
+        
     total = len(questions)
     
     # If no questions are available, notify the user and redirect to add questions
