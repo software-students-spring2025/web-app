@@ -27,11 +27,21 @@
 }
 
 .table-container tr:hover {
-    background-color: #c0dbf4;
+    background-color: #dae8f5;
 }
-
+/*
 .table-container tbody tr:nth-child(even) {
     background-color: #f9f9f9;
+}*/
+
+.table-container th:nth-child(4),
+.table-container td:nth-child(4) {
+    width: 80px; /* Narrower Genre column */
+}
+
+.table-container th:nth-child(5),
+.table-container td:nth-child(5) {
+    width: 80px; /* Narrower Difficulty column */
 }
 
 .center-wrapper{
@@ -211,6 +221,18 @@ nav a, .dropdown {
     justify-content: center;
 }
 
+.add-form {
+    display: block;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    max-width: 40%; 
+    margin: 20px auto; 
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px;
+}
+
 .form-group {
     display: flex;
     align-items: center;
@@ -237,10 +259,11 @@ nav a, .dropdown {
     flex: 1; 
     min-width: 0; 
     max-width: 100%; 
-    text-align: center;
+    text-align: left;
 }
 
-.search-form .button {
+.search-form .button,
+.add-form .button {
     flex-shrink: 0; 
     white-space: nowrap; 
     background-color: #9ac8f3; 
@@ -254,6 +277,7 @@ nav a, .dropdown {
     text-align: center;
 }
 
-.search-form .button:hover {
+.search-form .button:hover,
+.add-form .button:hover {
     background-color: #5696d1; 
 }
