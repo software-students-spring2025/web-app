@@ -11,3 +11,4 @@ connection = MongoClient(MONGO_URI)
 db = connection[MONGO_DBNAME]
 
 tasks = db.tasks
+deleted_tasks = db['deleted_tasks']
