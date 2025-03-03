@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filter & Sort</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='filterAndSortStyle.css') }}"
+    />
+</head>
+<body>
+    <div class="navbar">
+        <a href="{{ url_for('home') }}"><button class="back-btn">⬅</button></a>
+        <h1>BOOKSWAP</h1>
+    </div>
+
+    <h2>Filter/Sort</h2>
+
+    <form action="{{ url_for('filter_results') }}" method="GET">
+        <h3>Sort By</h3>
+        <label><input type="radio" name="sort" value="price-high"> Price (High to Low)</label>
+        <label><input type="radio" name="sort" value="price-low"> Price (Low to High)</label>
+        <label><input type="radio" name="sort" value="year"> Year Published (Old to New)</label>
+    
+        <hr>
+        <h3>Filter:</h3>
+        
+        <h3>By Condition</h3>
+        <label><input type="checkbox" name="condition" value="new"> New</label>
+        <label><input type="checkbox" name="condition" value="used"> Used</label>
+        <label><input type="checkbox" name="condition" value="like-new"> Like New</label>
+    
+        <h3>By Format</h3>
+        <label><input type="checkbox" name="format" value="hardcover"> Hardcover</label>
+        <label><input type="checkbox" name="format" value="paperback"> Paperback</label>
+    
+        <h3>By Edition</h3>
+        <label><input type="checkbox" name="edition" value="1-5"> 1st - 5th</label>
+        <label><input type="checkbox" name="edition" value="6-10"> 6th - 10th</label>
+        <label><input type="checkbox" name="edition" value=">10"> > 10th</label>
+    
+        <button type="submit">Apply Filters</button>
+    </form>    
+</body>
+</html>

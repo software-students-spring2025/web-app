@@ -4,7 +4,8 @@ A little exercise to build a web application following an agile development proc
 
 ## Product vision statement
 
-See instructions. Delete this line and place the Product Vision Statement here.
+NYU BookSwap aims to reduce student expenses on educational materials by providing a peer-to-peer textbook exchange platform exclusively for NYU students. This app enables students to buy and sell used textbooks, ensuring affordability, sustainability, and a seamless buying experience. 
+
 
 ## User stories
 
