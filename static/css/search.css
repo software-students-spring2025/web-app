@@ -41,7 +41,7 @@ header{
     color: black;
     font-size: 12pt;
     font-weight: bold;
-    text-decoration: none;
+    text-decoration: underline;
 }
 
 .heading{

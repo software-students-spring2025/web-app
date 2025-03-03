@@ -58,7 +58,7 @@ def create_app():
                 return User(user)
         return None
 
-    @app.route("/")
+    @app.route("/home")
     def show_home():
         events = list(db.events.find({}))
         events.sort(key=lambda event: datetime.strptime(event["date"], "%m/%d/%Y"))
@@ -84,7 +84,7 @@ def create_app():
 
         return render_template("register.html")
     
-    @app.route("/login", methods=["GET", "POST"])
+    @app.route("/", methods=["GET", "POST"])
     def login():
         if request.method == "POST":
             email = request.form.get("email")
