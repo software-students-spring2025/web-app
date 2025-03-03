@@ -50,7 +50,7 @@ def add_question():
 @questions_bp.route('/show', methods = ['GET', 'POST'])
 def show_question():
     genres = [g for g in questions_collection.distinct("genre") if g and g.strip()]
-    difficulties = questions_collection.distinct("difficulty")
+    difficulties = [d for d in questions_collection.distinct("difficulty") if d and d.strip()]
     
     selected_genre = request.form.get('genre', '')
     selected_difficulty = request.form.get('difficulty', '')
