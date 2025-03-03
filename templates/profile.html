@@ -1,0 +1,63 @@
+<!-- profile.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    {% include 'navbar.html' %}
+    
+    <div class="max-w-2xl mx-auto p-8">
+        <!-- Profile Content -->
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            <h1 class="text-2xl font-semibold">Your Profile</h1>
+            <p>Email: {{ current_user.email }}</p>
+            <p class="mt-2">Admin privileges: <strong>{{ 'Yes' if user.is_admin else 'No' }}</strong></p>
+            <!-- Logout Button -->
+            <form action="{{ url_for('logout') }}" method="POST" class="mt-4">
+                <button type="submit" class="bg-gray-500 text-white px-4 py-2 rounded-lg">Logout</button>
+            </form>
+            <!-- more profile information here later -->
+        </div>
+
+        <!-- Delete Profile Section -->
+        <div class="bg-red-100 p-6 rounded-lg shadow-lg mt-8">
+            <h2 class="text-xl font-semibold text-red-600">Danger Zone</h2>
+            <p class="text-sm text-red-600">Once you delete your profile, your credentials will be permanently removed.</p>
+            <button id="deleteProfileBtn" class="bg-red-500 text-white p-2 rounded mt-4">Delete Profile</button>
+        </div>
+
+        <!-- Delete Profile Modal for Confirmation -->
+        <div id="confirmModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
+            <div class="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full m-8">
+                <h3 class="text-2xl font-semibold">Are you sure?</h3>
+                <p class="mt-2">This will permanently delete your profile. Do you wish to continue?</p>
+                <div class="mt-4 flex justify-between">
+                    <button id="cancelDelete" class="bg-gray-500 text-white p-2 rounded">Cancel</button>
+                    <form action="{{ url_for('delete_profile') }}" method="POST">
+                        <button type="submit" class="bg-red-500 text-white p-2 rounded">Agree, Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Delete Profile Modal toggle
+        const deleteProfileBtn = document.getElementById("deleteProfileBtn");
+        const confirmModal = document.getElementById("confirmModal");
+        const cancelDelete = document.getElementById("cancelDelete");
+
+        deleteProfileBtn.addEventListener("click", () => {
+            confirmModal.classList.remove("hidden");
+        });
+
+        cancelDelete.addEventListener("click", () => {
+            confirmModal.classList.add("hidden");
+        });
+    </script>
+</body>
+</html>
