@@ -19,8 +19,6 @@
     <br>
     <a href="{{ url_for('create_lfg') }}">Create New LFG Post</a>
 
-    <hr>
-
     {% for post in lfg_posts %}
         <div class="post">
 			<strong>{{ post.game }} - {{ post.level_required }}</strong> <br>
