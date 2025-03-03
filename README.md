@@ -22,20 +22,70 @@ Delete Functionality
 
 ## Steps necessary to run the software
 
+Here's your complete **README** section in VS Code format, including cloning, clearing previous containers, and running the app. You can **copy and paste it directly** into your README file.  
+
+```md
 ### Option 1
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/software-students-spring2025/2-web-app-s2gb.git
-   cd 2-web-app-s2gb
-   docker-compose up --build
 
-Use Docker Compose to boot up both the mongodb database and the flask-app web app with one command.
+#### 1. **Clone the repository**
+```bash
+git clone https://github.com/software-students-spring2025/2-web-app-s2gb.git
+cd 2-web-app-s2gb
+```
 
-View the app in your browser:
+#### 2. **Clear previous Docker containers (if any)**
+If you have previously run the application and encountered port conflicts or old containers, clear them before proceeding:
 
-Open a web browser and go to http://localhost:5001 (or change 5001 to whatever port number you used for the flask-app.)
+```bash
+# Stop and remove existing containers
+docker compose down
 
-Note that you edit any of the files in the project, you will have to stop and then restart the containers, as indicated above.
+# List all containers (including stopped ones)
+docker ps -a
+
+# Remove any lingering containers
+docker rm $(docker ps -aq)
+
+# Remove any existing images related to the project (optional)
+docker rmi 2-web-app-s2gb-flask-app
+```
+
+#### 3. **Run the application**
+Use Docker Compose to boot up both the `mongodb` database and the `flask-app` web app with one command:
+
+```bash
+docker compose up --force-recreate --build
+```
+
+> _Add `-d` at the end to run in detached/background mode:_
+> ```bash
+> docker compose up --force-recreate --build -d
+> ```
+
+#### 4. **View the app in your browser**
+Open a web browser and go to:
+
+- **http://localhost:5001** _(or change `5001` to whatever port number you used for the `flask-app` in your `docker-compose.yml` file)._
+
+#### 5. **Stopping the application**
+To stop the containers when you're done, run:
+
+```bash
+docker compose down
+```
+---
+### **Troubleshooting:**
+- **Port conflict?** If you see an error message about a port being in use, select a different port for either the `flask-app` or `mongodb` service.  
+  - Edit the first port number in `docker-compose.yml`, for example:
+    ```yml
+    ports:
+      - "10000:5001"  # Changes the flask-app to run on port 10000
+    ```
+  - Also, update the `FLASK_PORT` environment variable in `docker-compose.yml` to match.
+---
+### **Note:**
+- If you edit any of the files in the project, you will have to **stop and restart** the containers for changes to take effect.
+```
 
 ### Option 2
 
