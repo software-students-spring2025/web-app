@@ -103,3 +103,7 @@ input[type=submit]:hover{
 .register:visited{
     color: #7baed1;
 }
+
+.error{
+    text-align: center;
+}
