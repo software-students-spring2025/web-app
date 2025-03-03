@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, redirect, url_for, request, flash
+from flask import Flask, render_template, redirect, url_for, request, flash, session
 from flask_login import (
     LoginManager,
     login_user,
@@ -15,6 +15,7 @@ from bson.objectid import ObjectId
 from datetime import datetime
 from flask import session
 
+
 # Load environment variables from .env
 load_dotenv()
 
@@ -26,6 +27,7 @@ client = MongoClient(os.environ.get("MONGO_URI"))
 db = client.get_database("jobtracker")
 users_collection = db.get_collection("users")
 applications_collection = db.get_collection("applications")
+
 interview_collection = db.get_collection("interview_collection")
 
 # Set up Flask-Login
@@ -44,7 +46,6 @@ mock_questions = [
     {"difficulty": "Hard", "question_content": "Mock Question 2: ?????"},
     {"difficulty": "Hard", "question_content": "Mock Question 3: ?????"}
 ]
-
 
 # Define a User class that integrates with Flask-Login
 class User(UserMixin):
@@ -86,7 +87,7 @@ def login():
     return render_template("login.html")  # Flash messages only shown after submission
 
 
-# Route for user signup (for creating new accounts)
+# 注册
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
@@ -96,11 +97,9 @@ def signup():
         if password != confirm_password:
             flash("Passwords do not match", "danger")
             return redirect(url_for("signup"))
-        # Check if the user already exists
         if users_collection.find_one({"email": email}):
             flash("Email already registered", "danger")
             return redirect(url_for("signup"))
-        # Hash the password and store the user data
         hashed_password = generate_password_hash(password)
         user_id = users_collection.insert_one(
             {"email": email, "password": hashed_password}
@@ -111,6 +110,7 @@ def signup():
         flash("Account created and logged in", "success")
         return redirect(url_for("home"))
     return render_template("signup.html")
+
 
 # Home screen (protected route)
 @app.route("/home", methods=["GET"])
@@ -130,7 +130,7 @@ def home():
         }))
     else:
         applications = list(applications_collection.find({"user_id": current_user.id}))
-
+        
     total_apps = len(applications)
     interview_count = sum(1 for app in applications if app.get("status") == "Interview")
     offer_count = sum(1 for app in applications if app.get("status") == "Offered")
@@ -168,13 +168,14 @@ def add_application():
 
     return render_template("add_application.html")
 
-# Route for logging out the user
+# 登出
 @app.route("/logout")
 @login_required
 def logout():
     logout_user()
     flash("Logged out successfully", "success")
     return redirect(url_for("login"))
+
 
 @app.route("/delete_application/<application_id>", methods=["GET"])
 @login_required
@@ -238,6 +239,7 @@ def search_application():
         return render_template("search_results.html", results=search_results)
 
     return render_template("search_application.html")
+
 @app.route("/interview")
 @login_required
 def interview():
@@ -353,7 +355,6 @@ def result():
     correct_rate = request.args.get("correct_rate", 0)
     return render_template("result.html", correct_rate=correct_rate)
 
-# 我的收藏页面（删除功能保持不变）
 @app.route("/interview/my_collection", methods=["GET"])
 @login_required
 def my_collection():
@@ -412,6 +413,28 @@ def collection_question(collection_id):
                            user_answer=collection_item.get("user_answer", ""))
 
 
+=======
+@app.route("/interview/my_collection")
+@login_required
+def my_collection():
+    collections = list(interview_collection.find({"user_id": current_user.id}))
+    return render_template("my_collection.html", collections=collections)
+
+# 收藏题目的详情页面（只读模式，显示正确答案和用户提交答案）
+@app.route("/interview/my_collection/<collection_id>")
+@login_required
+def collection_question(collection_id):
+    collection_item = interview_collection.find_one({"_id": ObjectId(collection_id)})
+    if not collection_item:
+        flash("Question not found", "danger")
+        return redirect(url_for("my_collection"))
+    return render_template("collection_question.html", 
+                           difficulty=collection_item.get("difficulty", "Unknown"),
+                           question_content=collection_item.get("question_content", "????"),
+                           correct_answer=collection_item.get("correct_answer", ""),
+                           user_answer=collection_item.get("user_answer", ""))
+
+
 # 删除收藏题目
 @app.route("/interview/delete_collection/<collection_id>")
 @login_required
@@ -422,7 +445,6 @@ def delete_collection(collection_id):
 
 
 
-
-
 if __name__ == "__main__":
     app.run(debug=True)
+

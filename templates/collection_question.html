@@ -36,7 +36,6 @@
   <div class="container">
     <h2>Interview Question (My Collection)</h2>
     <p><strong>Difficulty:</strong> {{ difficulty }}</p>
-    
     <button onclick="showHint()">Hint</button>
     <div id="hintModal" class="modal">
       <div class="modal-content">
@@ -46,13 +45,15 @@
       </div>
     </div>
 
+
     <p><strong>Question:</strong> {{ question_content }}</p>
-    
+
     <br>
     <div>
       <label for="correct_answer">Correct Answer:</label>
       <textarea id="correct_answer" name="correct_answer" rows="4" cols="50" readonly>{{ correct_answer }}</textarea>
     </div>
+
     
     <br>
     <form method="POST">
@@ -64,6 +65,12 @@
       <button type="submit">Save Answer</button>
     </form>
     
+    <br>
+    <div>
+      <label for="user_answer">Your Answer:</label>
+      <textarea id="user_answer" name="user_answer" rows="4" cols="50" readonly>{{ user_answer }}</textarea>
+    </div>
+
     <br>
     <button onclick="location.href='{{ url_for('my_collection') }}'">Back to My Collection</button>
   </div>
