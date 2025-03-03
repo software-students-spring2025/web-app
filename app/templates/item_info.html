@@ -8,6 +8,8 @@
     <a href="{{ url_for('order', category=item.category) }}">Back to {{ item.category }}</a>
     <h1>{{ item.name }}</h1>
     <p>{{ item.description }}</p>
+    <p>{{ item.description }}</p>
+    <p>Calories: {{ item.calories }}</p>
     <p>Allergens: {{ item.allergy_info }}</p>
     <b></b>
     <a href="{{ url_for('add_to_cart', item_id=item.item_id, category=category, query=query) }}">Add to Cart</a>
