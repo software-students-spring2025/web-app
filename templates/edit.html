@@ -80,7 +80,12 @@
         <input type="text" id="location" name="location" value= "{{ event['location']}}"required>
         <br><br>
         <label for="category">Category:</label>
-        <input type="text" id="category" name="category" value= "{{ event['category']}}"required>
+        <select id="category" name="category" required>
+            <option value="Education" {% if event['category'] == "Education" %} selected {% endif %}>Education</option>
+            <option value="Workshop" {% if event['category'] == "Networking" %} selected {% endif %}>Networking/Professional Development</option>
+            <option value="Extracurricular" {% if event['category'] == "Extracurricular" %} selected {% endif %}>Extracurricular</option>
+            <option value="Other" {% if event['category'] == "Other" %} selected {% endif %}>Other</option>
+        </select>
         <br><br>
         <label for="description">Description:</label>
         <textarea id="description" name="description" required>{{ event['description'] }}</textarea>

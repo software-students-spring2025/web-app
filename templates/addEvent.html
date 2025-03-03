@@ -34,7 +34,14 @@
         <input type="text" id="location" name="location" required>
         <br><br>
         <label for="category">Category:</label>
-        <input type="text" id="category" name="category" required>
+        <select id="category" name="category" required>
+            <option value="" disabled selected>Select a category</option>
+            <option value="Education">Education</option>
+            <option value="Networking">Networking/Professional Development</option>
+            <option value="Extracurricular">Extracurricular</option>
+            <option value="Other">Other</option>
+    
+        </select>
         <br><br>
         <label for="description">Description:</label>
         <textarea id="description" name="description" required></textarea>
