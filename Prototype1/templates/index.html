@@ -10,7 +10,11 @@
     <h3>Looking For Group (LFG) Listings</h3>
 
     <a href="{{ url_for('create_lfg') }}">Create New LFG Post</a>
-    
+    <form action="/" method="GET">
+        <input type="text" name="search" placeholder="Search by game" value="{{search_query}}">
+        <button type="submit">search</button>
+
+    </form>
     {% for post in lfg_posts %}
         <div>
             <h4>{{ post.game }} - {{ post.level_required }}</h4>
