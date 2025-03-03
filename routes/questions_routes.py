@@ -74,7 +74,7 @@ def show_question():
             if 'start_quiz' in request.form:
                 return redirect(url_for('quiz.quiz'))
             elif 'start_flashcards' in request.form:
-                return redirect(url_for('flashcard.flashcard'))
+                return redirect(url_for('flashcard.flashcard_options'))
 
     return render_template('questions.html', 
                            questions = questions_to_show, 
