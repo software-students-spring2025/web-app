@@ -27,21 +27,11 @@
 }
 
 .table-container tr:hover {
-    background-color: #f1f1f1;
+    background-color: #c0dbf4;
 }
 
 .table-container tbody tr:nth-child(even) {
     background-color: #f9f9f9;
-}
-
-.table-container th:nth-child(4),
-.table-container td:nth-child(4) {
-    width: 80px; /* Narrower Genre column */
-}
-
-.table-container th:nth-child(5),
-.table-container td:nth-child(5) {
-    width: 80px; /* Narrower Difficulty column */
 }
 
 .center-wrapper{

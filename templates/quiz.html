@@ -8,7 +8,7 @@
 
     <!-- Answer -->
     {% if not submitted %}
-        <form action = "{{ url_for('quiz.check_answer') }}" method = "POST">
+        <form action = "{{ url_for('quiz.check_answer') }}" method = "POST" class="search-form">
             <input type = "text" name = "user_answer" placeholder = "Enter your answer" >
             <button onclick = "check_answer()" class="button">Submit</button>
         </form>
@@ -57,7 +57,7 @@
     <p>❌ Wrong Answers: {{ wrong_count }}</p>
     
     <form action="{{ url_for('quiz.restart_quiz') }}" method="POST">
-        <button type = "submit">Restart Quiz</button>
+        <button type = "submit" class="button">Restart Quiz</button>
     </form>
 {% endif %}
 
