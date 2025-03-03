@@ -11,6 +11,7 @@ import pymongo
 from bson.objectid import ObjectId
 from dotenv import load_dotenv, dotenv_values
 
+# load environment variables from .env file
 load_dotenv()
 
 def create_app():
