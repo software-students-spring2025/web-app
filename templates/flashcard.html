@@ -7,7 +7,7 @@
     <p>
         <a href="{{ url_for('questions.toggle_bookmark', q_id=question._id) }}" style="text-decoration: none;">
             <button type="button" style="cursor:pointer;">
-                {% if question.bookmarked %}❌ Unbookmark{% else %}🔖 Bookmark{% endif %}
+                {% if question.bookmarked %}★{% else %}☆{% endif %}
             </button>
         </a>
     </p>
