@@ -112,7 +112,7 @@ def create_group():
     if request.method == 'POST':
         group_name = request.form['group_name']
         members = []
-        member = request.form['member_name']
+        member = request.form['member_name'] # can only add one at a time at the moment.
         members.append(member)
         new_group = groups_collection.insert_one({'owner_id': current_user.get_id(), 'group_name': group_name, 'members': members})
         return redirect(url_for('groups'))
