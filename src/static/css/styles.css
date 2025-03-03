@@ -1,0 +1,44 @@
+
+body {
+    max-width: 480px; 
+    /* I think that's good for mobile */ 
+    margin: 0 auto; 
+    padding: 10px; 
+    font-family: "Press Start 2P", serif;
+    
+}
+
+/*from google fonts */
+.press-start-2p-regular {
+    font-family: "Press Start 2P", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  h1,h2,h3 {
+    font-family: "Press Start 2P", serif; 
+  }
+
+/*nav barstyle*/ 
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #FFFFFF;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+
+/*for tables styling */
+table {
+    width: 100%; 
+    border-collapse: collapse; 
+    margin-top: 20px; 
+}
+
+th, td {
+    border: 1px solid #000000;
+    padding: 20px; 
+    text-align: center;
+}
