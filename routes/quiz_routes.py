@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+cfrom flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from pymongo import MongoClient
 import os
 import random

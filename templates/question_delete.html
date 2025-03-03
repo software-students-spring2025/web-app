@@ -20,6 +20,7 @@
                     <th>Hint</th>
                     <th>Genre</th>
                     <th>Difficulty</th>
+                    <th>Bookmark</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,6 +32,13 @@
                     <td>{{ question.hint }}</td>
                     <td>{{ question.genre }}</td>
                     <td>{{ question.difficulty }}</td>
+                    <td>
+                        <a href="{{ url_for('questions.toggle_bookmark', q_id=question._id) }}" style="text-decoration: none;">
+                            <button type="button" style="cursor:pointer;">
+                                {% if question.bookmarked %}❌ Unbookmark{% else %}🔖 Bookmark{% endif %}
+                            </button>
+                        </a>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

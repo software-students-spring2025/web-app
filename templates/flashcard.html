@@ -4,6 +4,14 @@
     <h2>Question:</h2>
     <p>{{ question.question }}</p>
 
+    <p>
+        <a href="{{ url_for('questions.toggle_bookmark', q_id=question._id) }}" style="text-decoration: none;">
+            <button type="button" style="cursor:pointer;">
+                {% if question.bookmarked %}❌ Unbookmark{% else %}🔖 Bookmark{% endif %}
+            </button>
+        </a>
+    </p>
+
     <!-- Hint section: hidden by default using the .hint class -->
     <div class="hint" id="hint">
         <h3>Hint:</h3>

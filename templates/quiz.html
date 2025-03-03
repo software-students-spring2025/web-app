@@ -6,6 +6,17 @@
 {% if question %}
     <p><strong>Question: </strong>{{ question.question }}</p>
 
+    <!-- Bookmark Button -->
+    {% if not submitted %}
+        <p>
+            <a href="{{ url_for('questions.toggle_bookmark', q_id=question._id) }}" style="text-decoration: none;">
+                <button type="button" style="cursor:pointer;">
+                    {% if question.bookmarked %}❌ Unbookmark{% else %}🔖 Bookmark{% endif %}
+                </button>
+            </a>
+        </p>
+    {% endif %}
+
     <!-- Answer -->
     {% if not submitted %}
         <form action = "{{ url_for('quiz.check_answer') }}" method = "POST" class="search-form">
