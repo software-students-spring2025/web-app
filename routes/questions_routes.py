@@ -183,4 +183,4 @@ def toggle_bookmark(q_id):
         {"$set": {"bookmarked": new_bookmarked_status}}
     )
 
-    return redirect(url_for("questions.show_question"))
+    return redirect(request.referrer or url_for("questions.show_question"))
