@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1 style="text-align: center;">Search For Questions</h1>
+    <form action="{{ url_for('questions.search') }}" method="POST" class="search-form">
+      <div class="form-group">
+        <label for="question">Question:</label>
+        <input type="text" id="question" name="question">
+      </div>
+      
+      <div class="form-group">
+          <label for="answer">Answer:</label>
+          <input type="text" id="answer" name="answer">
+      </div>
+
+      <div class="form-group">
+          <label for="hint">Hint:</label>
+          <input type="text" id="hint" name="hint">
+      </div>
+
+      <div class="form-group">
+          <label for="genre">Genre:</label>
+          <input type="text" id="genre" name="genre">
+      </div>
+
+      <div class="form-group">
+          <label for="difficulty">Difficulty Level:</label>
+          <select id="difficulty" name="difficulty">
+              <option value=""></option>
+              <option value="Easy">Easy</option>
+              <option value="Medium">Medium</option>
+              <option value="Hard">Hard</option>
+          </select>
+      </div>
+
+        <button type="submit" class="button">Search</button>
+    </form>
+    <table id="data" class="table-container">
+      <thead>
+        <tr>
+          <th>Question</th>
+          <th>Answer</th>
+          <th>Hint</th>
+          <th>Genre</th>
+          <th>Difficulty</th>
+          <th>Bookmark</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for question in questions %}
+          <tr>
+            <td>{{ question.question }}</td>
+            <td>{{ question.answer }}</td>
+            <td>{{ question.hint }}</td>
+            <td>{{ question.genre }}</td>
+            <td>{{ question.difficulty }}</td>
+            <td>
+              <a href="{{ url_for('questions.toggle_bookmark', q_id=question._id) }}" style="text-decoration: none;">
+                <button type="button" style="cursor:pointer;">
+                    {% if question.bookmarked %}★{% else %}☆{% endif %}
+                </button>
+              </a>
+            </td>
+            <th>
+              <form action="{{ url_for('questions.edit', q_id = question._id) }}" method="GET">
+                <button type="submit" class="button">Edit</button>
+              </form>
+            </th>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+{% endblock %}

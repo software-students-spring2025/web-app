@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h1>Quiz</h1>
+
+{% if question %}
+    <p><strong>Question: </strong>{{ question.question }}</p>
+
+    <!-- Bookmark Button -->
+    {% if not submitted %}
+        <p>
+            <a href="{{ url_for('questions.toggle_bookmark', q_id=question._id) }}" style="text-decoration: none;">
+                <button type="button" style="cursor:pointer;">
+                    {% if question.bookmarked %}★{% else %}☆{% endif %}
+                </button>
+            </a>
+        </p>
+    {% endif %}
+
+    <!-- Answer -->
+    {% if not submitted %}
+        <form action = "{{ url_for('quiz.check_answer') }}" method = "POST" class="search-form">
+            <input type = "text" name = "user_answer" placeholder = "Enter your answer" >
+            <button onclick = "check_answer()" class="button">Submit</button>
+        </form>
+        <br>
+    {% endif %}
+
+    <!-- Hint (Hidden) -->
+    {% if not submitted %}
+        <button onclick = "show_hint()" class="button">Show Hint</button>
+        <p id = "hint" style = "display: none;">
+            <strong>Hint:</strong> {{ question.hint if question.hint else "No hint available" }}
+        </p>
+    {% endif %}
+
+    <!-- Result -->
+    {% if result %}
+        <p id= "result"> {{ result | safe }}</p>
+    {% endif %}
+    </p>
+
+    <!-- Next Question (Hidden) -->
+    {% if submitted %}
+        <form action = "{{ url_for('quiz.quiz') }}" method = "POST">
+            <input type = "hidden" name = "next_question" value = "true">
+            <button type = "submit">Next Question</button>
+        </form>
+        <br>
+    {% endif %}
+
+    <!-- Restart Quiz -->
+    <form action="{{ url_for('quiz.restart_quiz') }}" method="POST">
+        <button type = "submit">Restart Quiz</button>
+    </form>
+
+    <script>
+        function show_hint() {
+            document.getElementById("hint").style.display = "block";
+        }
+    </script>
+    
+{% else %}
+    <h2>🎉 Quiz Complete! 🎉</h2>
+    <p>You have answered all available questions.</p>
+    <p>🎯 Total Questions Answered: {{ total_questions }}</p>
+    <p>✅ Correct Answers: {{ correct_count }}</p>
+    <p>❌ Wrong Answers: {{ wrong_count }}</p>
+    
+    <form action="{{ url_for('quiz.restart_quiz') }}" method="POST">
+        <button type = "submit" class="button">Restart Quiz</button>
+    </form>
+{% endif %}
+
+{% endblock %}

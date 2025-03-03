@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="flashcard">
+    <h2>Question:</h2>
+    <p>{{ question.question }}</p>
+
+    <p>
+        <a href="{{ url_for('questions.toggle_bookmark', q_id=question._id) }}" style="text-decoration: none;">
+            <button type="button" style="cursor:pointer;">
+                {% if question.bookmarked %}★{% else %}☆{% endif %}
+            </button>
+        </a>
+    </p>
+
+    <!-- Hint section: hidden by default using the .hint class -->
+    <div class="hint" id="hint">
+        <h3>Hint:</h3>
+        <p>{{ question.hint }}</p>
+    </div>
+    <!-- Answer section: The answer is hidden by default -->
+    <div id="answer" class="answer">
+        <h3>Answer:</h3>
+        <p>{{ question.answer }}</p>
+    </div>
+
+    <div class="botton-group">
+        <button onclick="toggleHint()" class="button">Show/Hide Hint</button>
+        <button onclick="toggleAnswer()" class="button">Show/Hide Answer</button>
+    <div>
+</div>
+
+<div class="navigation">
+    {% if index > 0 %}
+        <a href="{{ url_for('flashcard.flashcard', index=index-1,shuffle=shuffle) }}" class="button">Previous</a>
+    {% endif %}
+    {% if index < total - 1 %}
+        <a href="{{ url_for('flashcard.flashcard', index=index+1,shuffle=shuffle) }}" class="button">Next</a>
+    {% else %}
+        <p>You've reached the end of the flashcards!</p>
+        <a href="{{ url_for('flashcard.flashcard_options', index=0, shuffle=shuffle) }}" class="button">Restart</a>
+    {% endif %}
+</div>
+
+<script>
+function toggleAnswer() {
+    var answer = document.getElementById("answer");
+    answer.classList.toggle("visible");
+}
+function toggleHint() {
+    var hint = document.getElementById("hint");
+    hint.classList.toggle("visible");
+}
+</script>
+
+{% endblock %}
