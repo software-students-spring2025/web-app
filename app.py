@@ -73,7 +73,8 @@ def create_app():
 
             doc = db.users.find_one({"email": email})
             if doc:
-                redirect(url_for("register"))
+                error = "Email is already in use"
+                return render_template("register.html", error=error)
             else: 
                 db.users.insert_one({
                     "email": email,
