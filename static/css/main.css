@@ -148,6 +148,37 @@ nav a, .dropdown {
     text-decoration: none;
     color: #333;
 }
+
+/*Reserve sace for the answer even when hidden*/
+.answer {
+    visibility: hidden;  /* Hide the answer but reserve space */
+    opacity: 0;          /* Start fully transparent */
+    transition: opacity 0.3s ease;
+}
+
+.answer.visible {
+    visibility: visible; /* Make the answer visible */
+    opacity: 1;
+}
+
+.hint {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.hint.visible {
+    visibility: visible;
+    opacity: 1;
+}
+
+/*style for botton group*/
+.button-group {
+    display: flex;
+    gap: 10px;         /* Space between buttons */
+    justify-content: center; /* Center the buttons horizontally */
+    margin-top: 20px;  /* Space above the group */
+}
 .stats-box {
     border: 2px solid black; 
     padding: 15px; 
