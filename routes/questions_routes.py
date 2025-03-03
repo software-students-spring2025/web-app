@@ -115,11 +115,11 @@ def search():
     """
     questions_to_show = questions_collection.find({})
     if request.method == 'POST':
-        question_text = request.form.get('question')
-        answer_text = request.form.get('answer')
-        hint_text = request.form.get('hint')
-        difficulty_level = request.form.get('difficulty')
-        genre = request.form.get('genre')
+        question_text    = request.form.get( 'question'   )
+        answer_text      = request.form.get( 'answer'     )
+        hint_text        = request.form.get( 'hint'       )
+        difficulty_level = request.form.get( 'difficulty' )
+        genre            = request.form.get( 'genre'      )
 
         questions_to_show = questions_collection.find({
             '$and':[
@@ -131,3 +131,37 @@ def search():
             ]
         })
     return render_template('question_search.html', questions = questions_to_show)
+
+@questions_bp.route('/edit/<q_id>', methods = ['GET', 'POST'])
+def edit(q_id):
+    """
+    Edit Questions
+    """
+    print("editing question")
+    print(q_id)
+    question_to_show = questions_collection.find_one( { '_id': ObjectId(q_id) } )
+    if question_to_show is None:
+        print(q_id)
+        flash("Question not found!", "error")
+        return redirect(url_for("questions.show_question"))
+    if request.method == 'POST':
+        question_text    = request.form.get( 'question'   )
+        answer_text      = request.form.get( 'answer'     )
+        hint_text        = request.form.get( 'hint'       )
+        difficulty_level = request.form.get( 'difficulty' )
+        genre            = request.form.get( 'genre'      )
+        newvalues = {
+            "$set": { 
+                "question"     : question_text,
+                "answer"       : answer_text,
+                "hint"         : hint_text,
+                "difficulty"   : difficulty_level,
+                "genre"        : genre,
+            }
+        }
+        questions_collection.update_one(
+            {'_id': ObjectId(q_id)}, #query
+            newvalues
+            )
+        return redirect(url_for("questions.show_question"))
+    return render_template("question_edit.html", question = question_to_show)
