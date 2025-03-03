@@ -62,29 +62,36 @@ Make sure **[Docker](https://www.docker.com/)** is installed on your machine.
 ```bash
 git clone https://github.com/software-students-spring2025/2-web-app-ez-squad-2-0
 cd 2-web-app-ez-squad-2-0 
+```
 
 2. **Create a .env file based on the .env.example template:**
 ```bash
 cp .env.example .env
+```
 
 3. **Start the application with Docker Compose:**
 ```bash
 docker-compose up -d
+```
 
 4. **Access the application in your browser at:**
 ```bash
 http://localhost:5001
+```
 
 5. **To stop the application:**
 ```bash
 docker-compose down
+```
 
 6. **To stop the application and remove volumes:**
 ```bash
 docker-compose down -v
+```
 
 ---
 
 
 ## Task Boards
 [Task Board Sprint 1 Link](https://github.com/orgs/software-students-spring2025/projects/30)
+
