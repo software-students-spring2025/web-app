@@ -19,7 +19,6 @@ db = connection["Forum"]
 @app.route("/")
 def index():
     posts = db["posts"].find() 
-    
     return render_template("index.html", data=posts)
 
 # with database
@@ -78,7 +77,7 @@ def add_comment(post_id):
 
     return redirect(url_for('post_detail', post_id=post_id))
 
-@app.route("/post/<string:post_id>/edit", methods=['POST'])
+@app.route("/post/<string:post_id>/edit", methods=['GET','POST'])
 def edit_post(post_id):
     post = db["posts"].find_one({"_id": ObjectId(post_id)}) #find post (for get)
 
@@ -96,6 +95,8 @@ def edit_post(post_id):
 
         if result.modified_count >= 1:
             return redirect(url_for('post_detail', post_id=post_id))
+        else:
+            return "<h1>Failed to edit post</h1>", 404
         
     return render_template("edit_post.html", post=post)
 
