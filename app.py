@@ -102,6 +102,7 @@ def handle_detail(order_id):
         "food": flask.request.form.get("dishName"),
         "address": flask.request.form.get("address"),
         "price": float(flask.request.form.get("price")),  
+        "contact": flask.request.form.get("contact")
     }
     result = db.update_order(order_id, updated_data)
     if result: 
@@ -135,7 +136,7 @@ def handle_order():
     food = flask.request.form.get('food')
     address = flask.request.form.get('address')
     price = flask.request.form.get('price')
-    db.create_order(user_name, name, food, address, price)
+    db.create_order(user_name, name, food, address, price, contact)
     return flask.redirect('/home')
 
 if __name__ == '__main__':

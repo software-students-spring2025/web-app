@@ -58,7 +58,7 @@ def find_user_order(username):
         return []
         
 # Create a order
-def create_order(user_name, name, food, address, price):
+def create_order(user_name, name, food, address, price, contact):
     try:   
         user = mongo.db.users.find_one({"username": user_name})
         if not user:
@@ -69,7 +69,8 @@ def create_order(user_name, name, food, address, price):
                 "consumer": name,
                 "food": food,
                 "address": address,
-                "price": price
+                "price": price,
+                "contact": contact
             }
         
         order_result = mongo.db.orders.insert_one(order_data)
