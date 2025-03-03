@@ -76,6 +76,45 @@
                 }
             }, 1000);
         }
+
+        // adding goals
+        document.getElementById('add-goal').addEventListener('click', function() {
+        let goalInput = document.getElementById('goal-input');
+        let goalText = goalInput.value.trim();
+        
+        if (goalText === '') {
+            alert('Please enter a goal.');
+            return;
+        }
+        
+        let goalList = document.getElementById('goals-list');
+        let listItem = document.createElement('li');
+        listItem.innerHTML = `
+            <input type="checkbox" class="goal-checkbox"> 
+            <span class="goal-text">${goalText}</span>
+            <button class="delete-goal">delete</button>
+        `;
+        goalList.appendChild(listItem);
+        goalInput.value = '';
+    });
+    
+    document.getElementById('goals-list').addEventListener('click', function(event) {
+        if (event.target.classList.contains('goal-checkbox')) {
+            let goalText = event.target.nextElementSibling;
+            if (event.target.checked) {
+                goalText.style.textDecoration = 'line-through';
+                goalText.style.color = 'gray';
+            } else {
+                goalText.style.textDecoration = 'none';
+                goalText.style.color = 'black';
+            }
+        }
+        
+        if (event.target.classList.contains('delete-goal')) {
+            event.target.parentElement.remove();
+        }
+    });
+        
     </script>
 </body>
 <footer>
