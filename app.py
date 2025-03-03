@@ -18,7 +18,7 @@ def start_docker_compose():
         print(" * Return code:", e.returncode)
 
 def create_app(): 
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder='static')
     app.secret_key = os.getenv("SECRET_KEY", "default_secret_key")
     
     # Load environment variables
@@ -70,6 +70,7 @@ def create_app():
     
     @app.route("/")
     @login_required
+
     def home():
         return render_template('Home.html', username=current_user.username)
 
